@@ -1,6 +1,65 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import './App.css'
+
+const mountG1 = {
+  hp: 300,
+  str: 100,
+  leadership: 2,
+  initiative: 10,
+  vsRangedPercent: 65,
+  vsSiegePercent: 54
+}
+const mountG2 = {
+  hp: 54,
+  str: 180,
+  leadership: 2,
+  initiative: 10,
+  vsRangedPercent: 98,
+  vsSiegePercent: 81
+}
+const mountG3 = {
+  hp: 960,
+  str: 320,
+  leadership: 2,
+  initiative: 10,
+  vsRangedPercent: 146,
+  vsSiegePercent: 122
+}
+const mountG4 = {
+  hp: 1740,
+  str: 580,
+  leadership: 2,
+  initiative: 10,
+  vsRangedPercent: 219,
+  vsSiegePercent: 182
+}
+const mountG5 = {
+  hp: 3150,
+  str: 1050,
+  leadership: 2,
+  initiative: 10,
+  vsRangedPercent: 329,
+  vsSiegePercent: 273
+}
+
+//doomsday nigromante str 720, hp 2160
+//ancient/tinman arbalesteraAncestral str 720, hp 2160, ranged
+// doomsday? supervisor str 6500, hp 19500, ranged
+const ragnarokMagoDraug = {
+  hp: 2160,
+  str: 720,
+  leadership: 8,
+  initiative: 10,
+  bonoFlyPercent: 50
+}
+const doomsdaySupervisor = {
+  hp: 19500,
+  str: 7265000,
+  leadership: 8,
+  initiative: 10,
+  bonoFlyPercent: 50
+}
 
 function App() {
   // cuantos tropas puede llevar el capitan al ataque
@@ -35,6 +94,7 @@ function App() {
   )
 
   const [bonusStr, setBonusStr] = useState(parseFloat(localStorage.getItem('gralStr') || '0') || 86)
+  const [mobHealth, setmobHealth] = useState(0)
 
   const [g1MinCount, setG1MinCount] = useState(0)
   const [g2MinCount, setG2MinCount] = useState(0)
@@ -60,64 +120,21 @@ function App() {
   const [g4RiderStr, setG4RiderStr] = useState(0)
   const [g5RiderStr, setG5RiderStr] = useState(0)
 
-  const mountG1 = {
-    hp: 300,
-    str: 100,
-    leadership: 2,
-    initiative: 10,
-    vsRangedPercent: 65,
-    vsSiegePercent: 54
-  }
-  const mountG2 = {
-    hp: 54,
-    str: 180,
-    leadership: 2,
-    initiative: 10,
-    vsRangedPercent: 98,
-    vsSiegePercent: 81
-  }
-  const mountG3 = {
-    hp: 960,
-    str: 320,
-    leadership: 2,
-    initiative: 10,
-    vsRangedPercent: 146,
-    vsSiegePercent: 122
-  }
-  const mountG4 = {
-    hp: 1740,
-    str: 580,
-    leadership: 2,
-    initiative: 10,
-    vsRangedPercent: 219,
-    vsSiegePercent: 182
-  }
-  const mountG5 = {
-    hp: 3150,
-    str: 1050,
-    leadership: 2,
-    initiative: 10,
-    vsRangedPercent: 329,
-    vsSiegePercent: 273
-  }
+  useEffect(() => {
+    let health = ragnarokMagoDraug.hp
 
-  //doomsday nigromante str 720, hp 2160
-  //ancient/tinman arbalesteraAncestral str 720, hp 2160, ranged
-  // doomsday? supervisor str 6500, hp 19500, ranged
-  const ragnarokMagoDraug = {
-    hp: 2160,
-    str: 720,
-    leadership: 8,
-    initiative: 10,
-    bonoFlyPercent: 50
-  }
-  const doomsdaySupervisor = {
-    hp: 19500,
-    str: 7265000,
-    leadership: 8,
-    initiative: 10,
-    bonoFlyPercent: 50
-  }
+    if (selectedEvent === '0') {
+      health = ragnarokMagoDraug.hp
+    } else if (selectedEvent === '1') {
+      health = ragnarokMagoDraug.hp
+    } else if (selectedEvent === '2') {
+      health = ragnarokMagoDraug.hp
+    } else if (selectedEvent === '3') {
+      health = doomsdaySupervisor.hp
+    }
+
+    setmobHealth(health)
+  }, [selectedEvent])
 
   const setAndSaveBonusStr = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
     const value = parseFloat(e.target.value)
@@ -162,23 +179,12 @@ function App() {
     setG4RiderStr(g4TotalStr)
     setG5RiderStr(g5TotalStr)
 
-    let health = ragnarokMagoDraug.hp
-
-    if (selectedEvent === '0') {
-      health = ragnarokMagoDraug.hp
-    } else if (selectedEvent === '1') {
-      health = ragnarokMagoDraug.hp
-    } else if (selectedEvent === '2') {
-      health = ragnarokMagoDraug.hp
-    } else if (selectedEvent === '3') {
-      health = doomsdaySupervisor.hp
-    }
     // vs Ragnarok Mago Doug
-    const g1MinCount = Math.ceil(health / g1TotalStr)
-    const g2MinCount = Math.ceil(health / g2TotalStr)
-    const g3MinCount = Math.ceil(health / g3TotalStr)
-    const g4MinCount = Math.ceil(health / g4TotalStr)
-    const g5MinCount = Math.ceil(health / g5TotalStr)
+    const g1MinCount = Math.ceil(mobHealth / g1TotalStr)
+    const g2MinCount = Math.ceil(mobHealth / g2TotalStr)
+    const g3MinCount = Math.ceil(mobHealth / g3TotalStr)
+    const g4MinCount = Math.ceil(mobHealth / g4TotalStr)
+    const g5MinCount = Math.ceil(mobHealth / g5TotalStr)
     setG1MinCount(g1MinCount)
     setG2MinCount(g2MinCount)
     setG3MinCount(g3MinCount)
@@ -330,14 +336,32 @@ function App() {
     <>
       <h1>Troops calculation - totalbattle</h1>
       <div className='event'>
-        <label>Event </label>
-
-        <select value={selectedEvent} onChange={e => setSelectedEvent(e.target.value)}>
-          <option value='0'>Ragnarok/jörmungandr-fenrir/Doug Mage</option>
-          <option value='1'>Ancient/Tinman/Arbalest</option>
-          <option value='2'>720,2160/Nigromante</option>
-          <option value='3'>6500,19500/Supervisor</option>
-        </select>
+        <div>
+          <label>Event </label>
+          <select
+            value={selectedEvent}
+            onChange={e => {
+              setSelectedEvent(e.target.value)
+            }}
+          >
+            <option value='0'>Ragnarok/jörmungandr-fenrir/Doug Mage</option>
+            <option value='1'>Ancient/Tinman/Arbalest</option>
+            <option value='2'>720,2160/Nigromante</option>
+            <option value='3'>6500,19500/Supervisor</option>
+          </select>
+        </div>
+        <div>
+          <span>Health per unit: </span>{' '}
+          <input
+            type='number'
+            value={mobHealth}
+            onChange={e => {
+              setmobHealth(parseInt(e.target.value))
+            }}
+            required
+          />
+          <span className='small'>Change this value if you need a custom calculation health</span>
+        </div>
       </div>
       <div className='container'>
         <div className='configbar'>
@@ -351,6 +375,7 @@ function App() {
                 setLeadership(value)
                 localStorage.setItem('leadership', value.toString())
               }}
+              required
             />
           </div>
           <div className='card'>
@@ -362,13 +387,15 @@ function App() {
               onChange={e => {
                 setAndSaveBonusStr(e, 'gral')
               }}
+              required
             />
           </div>
         </div>
         <table>
           <tr>
-            <th>Use riders</th>
-            <th>Strength</th>
+            <th>Use</th>
+            {showRidersConfig && <th>Str base</th>}
+            <th>Str + bonus</th>
             <th>Min setup</th>
             <th>Max setup</th>
             <th>Kills expected</th>
@@ -387,6 +414,18 @@ function App() {
                 />
               </div>
             </td>
+            {showRidersConfig && (
+              <td>
+                <input
+                  type='number'
+                  step={0.1}
+                  value={g1MountBonusStr}
+                  onChange={e => {
+                    setAndSaveBonusStr(e, 'g1')
+                  }}
+                />
+              </td>
+            )}
             <td>{g1RiderStr}</td>
             <td>{g1MinCount}</td>
             <td className='bright'>{g1Mount}</td>
@@ -405,7 +444,19 @@ function App() {
                   }}
                 />
               </div>
-            </td>{' '}
+            </td>
+            {showRidersConfig && (
+              <td>
+                <input
+                  type='number'
+                  step={0.1}
+                  value={g2MountBonusStr}
+                  onChange={e => {
+                    setAndSaveBonusStr(e, 'g2')
+                  }}
+                />
+              </td>
+            )}
             <td>{g2RiderStr}</td>
             <td>{g2MinCount}</td>
             <td className='bright'>{g2Mount}</td> <td>{g2Kills}</td>
@@ -423,7 +474,19 @@ function App() {
                   }}
                 />
               </div>
-            </td>{' '}
+            </td>
+            {showRidersConfig && (
+              <td>
+                <input
+                  type='number'
+                  step={0.1}
+                  value={g3MountBonusStr}
+                  onChange={e => {
+                    setAndSaveBonusStr(e, 'g3')
+                  }}
+                />
+              </td>
+            )}
             <td>{g3RiderStr}</td>
             <td>{g3MinCount}</td>
             <td className='bright'>{g3Mount}</td> <td>{g3Kills}</td>
@@ -441,7 +504,19 @@ function App() {
                   }}
                 />
               </div>
-            </td>{' '}
+            </td>
+            {showRidersConfig && (
+              <td>
+                <input
+                  type='number'
+                  step={0.1}
+                  value={g4MountBonusStr}
+                  onChange={e => {
+                    setAndSaveBonusStr(e, 'g4')
+                  }}
+                />
+              </td>
+            )}
             <td>{g4RiderStr}</td>
             <td>{g4MinCount}</td>
             <td className='bright'>{g4Mount}</td> <td>{g4Kills}</td>
@@ -459,7 +534,19 @@ function App() {
                   }}
                 />
               </div>
-            </td>{' '}
+            </td>
+            {showRidersConfig && (
+              <td>
+                <input
+                  type='number'
+                  step={0.1}
+                  value={g5MountBonusStr}
+                  onChange={e => {
+                    setAndSaveBonusStr(e, 'g5')
+                  }}
+                />
+              </td>
+            )}
             <td>{g5RiderStr}</td>
             <td>{g5MinCount}</td>
             <td className='bright'>{g5Mount}</td> <td>{g5Kills}</td>
@@ -476,11 +563,8 @@ function App() {
           </tr>
         </table>
       </div>
-      <button className='gobtn' onClick={calc}>
-        CALCULATE
-      </button>
       <div className='card'>
-        <label>Show riders config</label>
+        <label>Show config</label>
         <input
           type='checkbox'
           checked={showRidersConfig}
@@ -490,71 +574,10 @@ function App() {
           }}
         />
       </div>
-      {showRidersConfig && (
-        <>
-          <h4>Riders vs. Ranged unit</h4>
-          <div className='card'>
-            <label>G1 Mount STR Bonus</label>
-            <input
-              type='number'
-              step={0.1}
-              value={g1MountBonusStr}
-              onChange={e => {
-                setAndSaveBonusStr(e, 'g1')
-              }}
-            />
-          </div>
+      <button className='gobtn' onClick={calc}>
+        CALCULATE
+      </button>
 
-          <div className='card'>
-            <label>G2 Mount STR Bonus</label>
-            <input
-              type='number'
-              value={g2MountBonusStr}
-              step={0.1}
-              onChange={e => {
-                setAndSaveBonusStr(e, 'g2')
-              }}
-            />
-          </div>
-          <div className='card'>
-            <label>G3 Mount STR Bonus</label>
-            <input
-              type='number'
-              step={0.1}
-              value={g3MountBonusStr}
-              onChange={e => {
-                setAndSaveBonusStr(e, 'g3')
-              }}
-            />
-          </div>
-          <div className='card'>
-            <label>G4 Mount STR Bonus</label>
-            <input
-              type='number'
-              step={0.1}
-              value={g4MountBonusStr}
-              onChange={e => {
-                setAndSaveBonusStr(e, 'g4')
-              }}
-            />
-          </div>
-          <div className='card'>
-            <label>G5 Mount STR Bonus</label>
-            <input
-              type='number'
-              step={0.1}
-              value={g5MountBonusStr}
-              onChange={e => {
-                setAndSaveBonusStr(e, 'g5')
-              }}
-            />
-          </div>
-        </>
-      )}
-      <p>
-        <span style={{ color: 'red' }}>ONE</span> Mago Draug (ragnarok) have {ragnarokMagoDraug.hp}{' '}
-        Health
-      </p>
       <h6>riders goes against Doug Mage, which is the weakest monster</h6>
       <br />
       <hr />
