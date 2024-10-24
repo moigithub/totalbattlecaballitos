@@ -1,7 +1,41 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 0.2em;
 }
- 
+table {
+  margin: 1rem auto;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+  border-collapse: collapse;
+}
+table th {
+  font-size: 14px;
+  padding: 0 10px;
+}
+.configbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.event {
+  margin: 1rem 0;
+}
+.bright {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: indigo;
+  color: blanchedalmond;
+}
+.gobtn {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: darkblue;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
