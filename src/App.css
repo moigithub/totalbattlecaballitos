@@ -23,6 +23,11 @@ table th {
 
 .event {
   margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+.group {
+  margin: 0 1rem;
 }
 .bright {
   font-size: 18px;
@@ -43,4 +48,8 @@ table th {
 .small {
   font-size: 10px;
   margin: 0 10px;
+}
+.btnGroupCount {
+  margin-left: 0.5rem;
+  padding: 0 1rem;
 }

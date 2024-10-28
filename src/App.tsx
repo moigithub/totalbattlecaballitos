@@ -1,47 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 
 import './App.css'
-
-const mountG1 = {
-  hp: 300,
-  str: 100,
-  leadership: 2,
-  initiative: 10,
-  vsRangedPercent: 65,
-  vsSiegePercent: 54
-}
-const mountG2 = {
-  hp: 54,
-  str: 180,
-  leadership: 2,
-  initiative: 10,
-  vsRangedPercent: 98,
-  vsSiegePercent: 81
-}
-const mountG3 = {
-  hp: 960,
-  str: 320,
-  leadership: 2,
-  initiative: 10,
-  vsRangedPercent: 146,
-  vsSiegePercent: 122
-}
-const mountG4 = {
-  hp: 1740,
-  str: 580,
-  leadership: 2,
-  initiative: 10,
-  vsRangedPercent: 219,
-  vsSiegePercent: 182
-}
-const mountG5 = {
-  hp: 3150,
-  str: 1050,
-  leadership: 2,
-  initiative: 10,
-  vsRangedPercent: 329,
-  vsSiegePercent: 273
-}
+import { useGuardsStore } from './guardStore'
+import { SwordmanG1, SpearmanG1, ArcherG1, CatapultG1 } from './soldiers'
 
 //doomsday nigromante str 720, hp 2160
 //ancient/tinman arbalesteraAncestral str 720, hp 2160, ranged
@@ -62,63 +23,46 @@ const doomsdaySupervisor = {
 }
 
 function App() {
+  const bonusHP = useGuardsStore(state => state.bonusHP)
+  const bonusSTR = useGuardsStore(state => state.bonusSTR)
+  const setBonusHP = useGuardsStore(state => state.setBonusHP)
+  const setBonusSTR = useGuardsStore(state => state.setBonusSTR)
+  const leadership = useGuardsStore(state => state.leadership)
+  const setLeadership = useGuardsStore(state => state.setLeadership)
+  const mobHealth = useGuardsStore(state => state.mobHealth)
+  const setMobHealth = useGuardsStore(state => state.setMobHealth)
+  const sacrifice = useGuardsStore(state => state.sacrifice)
+  const rider1 = useGuardsStore(state => state.rider1)
+  const rider2 = useGuardsStore(state => state.rider2)
+  const rider3 = useGuardsStore(state => state.rider3)
+  const rider4 = useGuardsStore(state => state.rider4)
+  const rider5 = useGuardsStore(state => state.rider5)
+  const setSacrifice = useGuardsStore(state => state.setSacrifice)
+  const setRider1 = useGuardsStore(state => state.setRider1)
+  const setRider2 = useGuardsStore(state => state.setRider2)
+  const setRider3 = useGuardsStore(state => state.setRider3)
+  const setRider4 = useGuardsStore(state => state.setRider4)
+  const setRider5 = useGuardsStore(state => state.setRider5)
+
   // cuantos tropas puede llevar el capitan al ataque
-  const [leadership, setLeadership] = useState(
-    parseFloat(localStorage.getItem('leadership') || '0') || 3575
-  )
+
   const [selectedEvent, setSelectedEvent] = useState('0')
-  const [showRidersConfig, setShowRidersConfig] = useState(
-    JSON.parse(localStorage.getItem('showRiderConfig') || 'false') || false
-  )
+  const [selectedSacrifice, setSelectedSacrifice] = useState('0')
+  const [sacrificeBase, setSacrificeBase] = useState({
+    BASEHP: 150,
+    BASESTR: 50,
+    LEADERSHIP: 0,
+    INITIATIVE: 0
+  })
+  const [showHealthData, setShowHealthData] = useState(false)
+  const [showStrengthData, setShowStrengthData] = useState(false)
 
-  const [useG1Mount, setUseG1Mount] = useState(true)
-  const [useG2Mount, setUseG2Mount] = useState(true)
-  const [useG3Mount, setUseG3Mount] = useState(false)
-  const [useG4Mount, setUseG4Mount] = useState(false)
-  const [useG5Mount, setUseG5Mount] = useState(false)
-
-  const [g1MountBonusStr, setG1MountBonusStr] = useState(
-    parseFloat(localStorage.getItem('g1MountStr') || '0') || 65
-  )
-  const [g2MountBonusStr, setG2MountBonusStr] = useState(
-    parseFloat(localStorage.getItem('g2MountStr') || '0') || 98
-  )
-  const [g3MountBonusStr, setG3MountBonusStr] = useState(
-    parseFloat(localStorage.getItem('g3MountStr') || '0') || 146
-  )
-  const [g4MountBonusStr, setG4MountBonusStr] = useState(
-    parseFloat(localStorage.getItem('g4MountStr') || '0') || 219
-  )
-  const [g5MountBonusStr, setG5MountBonusStr] = useState(
-    parseFloat(localStorage.getItem('g5MountStr') || '0') || 329
-  )
-
-  const [bonusStr, setBonusStr] = useState(parseFloat(localStorage.getItem('gralStr') || '0') || 86)
-  const [mobHealth, setmobHealth] = useState(0)
-
-  const [g1MinCount, setG1MinCount] = useState(0)
-  const [g2MinCount, setG2MinCount] = useState(0)
-  const [g3MinCount, setG3MinCount] = useState(0)
-  const [g4MinCount, setG4MinCount] = useState(0)
-  const [g5MinCount, setG5MinCount] = useState(0)
-
-  const [g1Mount, setG1Mount] = useState(0)
-  const [g2Mount, setG2Mount] = useState(0)
-  const [g3Mount, setG3Mount] = useState(0)
-  const [g4Mount, setG4Mount] = useState(0)
-  const [g5Mount, setG5Mount] = useState(0)
-
-  const [g1Kills, setG1Kills] = useState(0)
-  const [g2Kills, setG2Kills] = useState(0)
-  const [g3Kills, setG3Kills] = useState(0)
-  const [g4Kills, setG4Kills] = useState(0)
-  const [g5Kills, setG5Kills] = useState(0)
-
-  const [g1RiderStr, setG1RiderStr] = useState(0)
-  const [g2RiderStr, setG2RiderStr] = useState(0)
-  const [g3RiderStr, setG3RiderStr] = useState(0)
-  const [g4RiderStr, setG4RiderStr] = useState(0)
-  const [g5RiderStr, setG5RiderStr] = useState(0)
+  const [useSacrifices, setUseSacrifices] = useState(true)
+  const [useG1Rider, setUseG1Rider] = useState(true)
+  const [useG2Rider, setUseG2Rider] = useState(true)
+  const [useG3Rider, setUseG3Rider] = useState(false)
+  const [useG4Rider, setUseG4Rider] = useState(false)
+  const [useG5Rider, setUseG5Rider] = useState(false)
 
   useEffect(() => {
     let health = ragnarokMagoDraug.hp
@@ -133,464 +77,864 @@ function App() {
       health = doomsdaySupervisor.hp
     }
 
-    setmobHealth(health)
+    setMobHealth(health)
   }, [selectedEvent])
 
-  const setAndSaveBonusStr = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
-    const value = parseFloat(e.target.value)
-    if (key === 'gral') {
-      setBonusStr(value)
-      localStorage.setItem('gralStr', value.toString())
-    } else if (key === 'g1') {
-      setG1MountBonusStr(value)
-      localStorage.setItem('g1MountStr', value.toString())
-    } else if (key === 'g2') {
-      setG2MountBonusStr(parseInt(e.target.value))
-      localStorage.setItem('g2MountStr', value.toString())
-    } else if (key === 'g3') {
-      setG3MountBonusStr(parseInt(e.target.value))
-      localStorage.setItem('g3MountStr', value.toString())
-    } else if (key === 'g4') {
-      setG4MountBonusStr(parseInt(e.target.value))
-      localStorage.setItem('g4MountStr', value.toString())
-    } else if (key === 'g5') {
-      setG5MountBonusStr(parseInt(e.target.value))
-      localStorage.setItem('g5MountStr', value.toString())
+  useEffect(() => {
+    setSacrifice({ str: sacrificeBase.BASESTR /*+ (bonusSTR * sacrificeBase.str) / 100 */ })
+    setSacrifice({ hp: sacrificeBase.BASEHP /*+ (bonusHP * sacrificeBase.hp) / 100*/ })
+  }, [sacrificeBase.BASESTR, sacrificeBase.BASEHP])
+
+  const calculateStr = (bonusSTR: number) => {
+    // calculate hp and str with bonus, for GUARDIANS/EJERCITO (spearman, archer, rider)
+    setRider1({ str: rider1.BASESTR + (bonusSTR * rider1.BASESTR) / 100 })
+    setRider2({ str: rider2.BASESTR + (bonusSTR * rider2.BASESTR) / 100 })
+    setRider3({ str: rider3.BASESTR + (bonusSTR * rider3.BASESTR) / 100 })
+    setRider4({ str: rider4.BASESTR + (bonusSTR * rider4.BASESTR) / 100 })
+    setRider5({ str: rider5.BASESTR + (bonusSTR * rider5.BASESTR) / 100 })
+  }
+
+  const calculateHP = (bonusHP: number) => {
+    // calculate hp and str with bonus, for GUARDIANS/EJERCITO (spearman, archer, rider)
+    // hay un bono diferente para cada uno
+
+    // ESPECIALISTAS y TROPAS DE INGENIERIA, BESTIAS (gigantes, elementales y dragones)
+    // son otra categoria, diferente cada uno y tiene su propio bono
+    //
+
+    setRider1({ hp: rider1.BASEHP + (bonusHP * rider1.BASEHP) / 100 })
+    setRider2({ hp: rider2.BASEHP + (bonusHP * rider2.BASEHP) / 100 })
+    setRider3({ hp: rider3.BASEHP + (bonusHP * rider3.BASEHP) / 100 })
+    setRider4({ hp: rider4.BASEHP + (bonusHP * rider4.BASEHP) / 100 })
+    setRider5({ hp: rider5.BASEHP + (bonusHP * rider5.BASEHP) / 100 })
+  }
+
+  const changeMobHealth = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const mobHealth = parseInt(e.target.value)
+    setMobHealth(mobHealth)
+
+    // calc()
+  }
+
+  const changeMobEvent = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedEvent(e.target.value)
+
+    // calc()
+  }
+
+  const changeSacrifice = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedSacrifice = e.target.value
+    setSelectedSacrifice(selectedSacrifice)
+
+    let Sacrifice = SwordmanG1 // { hp: 150, str: 50, leadership: 1, initiative: 10 }
+
+    if (selectedSacrifice === '0') {
+      Sacrifice = SwordmanG1
+    } else if (selectedSacrifice === '1') {
+      Sacrifice = ArcherG1
+    } else if (selectedSacrifice === '2') {
+      Sacrifice = SpearmanG1
+    } else if (selectedSacrifice === '3') {
+      Sacrifice = CatapultG1
     }
 
-    calc()
+    setSacrificeBase({ ...Sacrifice })
+    calculateHP(bonusHP)
+    calculateStr(bonusSTR)
+    // calc()
+  }
+
+  const changeLeadership = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value)
+    setLeadership(value)
+    console.log('changing leadership', value)
+    // calc()
+  }
+
+  const setAndSaveBonusStr = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value)
+
+    setBonusSTR(value)
+
+    calculateStr(value)
+
+    // calc()
+  }
+
+  const setAndSaveBonusHp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value)
+
+    setBonusHP(value)
+    // localStorage.setItem('gralSTR', value.toString())
+    calculateHP(value)
+
+    // calc()
   }
 
   const calc = () => {
-    if (!useG1Mount && !useG2Mount && !useG3Mount && !useG4Mount && !useG5Mount) {
+    if (!useG1Rider && !useG2Rider && !useG3Rider && !useG4Rider && !useG5Rider) {
       // algo debe estar marcado
       return
     }
+    calculateHP(bonusHP)
+    calculateStr(bonusSTR)
+    const sacrifice = useGuardsStore.getState().sacrifice
+    const rider1 = useGuardsStore.getState().rider1
+    const rider2 = useGuardsStore.getState().rider2
+    const rider3 = useGuardsStore.getState().rider3
+    const rider4 = useGuardsStore.getState().rider4
+    const rider5 = useGuardsStore.getState().rider5
+    const leadership = useGuardsStore.getState().leadership
+    const mobHealth = useGuardsStore.getState().mobHealth
 
-    const g1TotalStr = mountG1.str + ((bonusStr + g1MountBonusStr) * mountG1.str) / 100
-    const g2TotalStr = mountG2.str + ((bonusStr + g2MountBonusStr) * mountG2.str) / 100
-    const g3TotalStr = mountG3.str + ((bonusStr + g3MountBonusStr) * mountG3.str) / 100
-    const g4TotalStr = mountG4.str + ((bonusStr + g4MountBonusStr) * mountG4.str) / 100
-    const g5TotalStr = mountG5.str + ((bonusStr + g5MountBonusStr) * mountG5.str) / 100
+    const sacrificesNeededToKillOneMob = Math.ceil(mobHealth / sacrifice.str)
+    const g1NeededToKillOneMob = Math.ceil(mobHealth / rider1.str)
+    const g2NeededToKillOneMob = Math.ceil(mobHealth / rider2.str)
+    const g3NeededToKillOneMob = Math.ceil(mobHealth / rider3.str)
+    const g4NeededToKillOneMob = Math.ceil(mobHealth / rider4.str)
+    const g5NeededToKillOneMob = Math.ceil(mobHealth / rider5.str)
 
-    setG1RiderStr(g1TotalStr)
-    setG2RiderStr(g2TotalStr)
-    setG3RiderStr(g3TotalStr)
-    setG4RiderStr(g4TotalStr)
-    setG5RiderStr(g5TotalStr)
-
-    // vs Ragnarok Mago Doug
-    const g1MinCount = Math.ceil(mobHealth / g1TotalStr)
-    const g2MinCount = Math.ceil(mobHealth / g2TotalStr)
-    const g3MinCount = Math.ceil(mobHealth / g3TotalStr)
-    const g4MinCount = Math.ceil(mobHealth / g4TotalStr)
-    const g5MinCount = Math.ceil(mobHealth / g5TotalStr)
-    setG1MinCount(g1MinCount)
-    setG2MinCount(g2MinCount)
-    setG3MinCount(g3MinCount)
-    setG4MinCount(g4MinCount)
-    setG5MinCount(g5MinCount)
-
-    console.log('g1 min ', g1MinCount)
-    console.log('g2 min ', g2MinCount)
-    console.log('g3 min ', g3MinCount)
-    console.log('g4 min ', g4MinCount)
-    console.log('g5 min ', g5MinCount)
+    {
+      /**el sacrificio debe tener mas juerza que todos, para que ataque primero */
+    }
 
     let maxLeaderShip = leadership
-    // if (useG1Mount || useG2Mount||useG3Mount) {
-    //   maxLeaderShip=Math.floor(maxLeaderShip/2)
-    // }
-    console.log('max leadership ', maxLeaderShip / 2)
+    let sacrificeGroupsCount = 0
+    let g1GroupsCount = 0
+    let g2GroupsCount = 0
+    let g3GroupsCount = 0
+    let g4GroupsCount = 0
+    let g5GroupsCount = 0
 
+    let sacrificeTroopsCount = 0
     let g1TroopsCount = 0
     let g2TroopsCount = 0
     let g3TroopsCount = 0
     let g4TroopsCount = 0
     let g5TroopsCount = 0
 
-    let g1KillsCount = 0
-    let g2KillsCount = 0
-    let g3KillsCount = 0
-    let g4KillsCount = 0
-    let g5KillsCount = 0
+    let sacrificeLeadershipConsumed = 0
+    let g1LeadershipConsumed = 0
+    let g2LeadershipConsumed = 0
+    let g3LeadershipConsumed = 0
+    let g4LeadershipConsumed = 0
+    let g5LeadershipConsumed = 0
 
+    const groupLeadershipCostG1 = g1NeededToKillOneMob * rider1.LEADERSHIP
+    const groupLeadershipCostG2 = g2NeededToKillOneMob * rider2.LEADERSHIP
+    const groupLeadershipCostG3 = g3NeededToKillOneMob * rider3.LEADERSHIP
+    const groupLeadershipCostG4 = g4NeededToKillOneMob * rider4.LEADERSHIP
+    const groupLeadershipCostG5 = g5NeededToKillOneMob * rider5.LEADERSHIP
+
+    console.log('groups leadership g1', groupLeadershipCostG1)
+    console.log('groups leadership g2', groupLeadershipCostG2)
+    console.log('groups leadership g3', groupLeadershipCostG3)
+    console.log('groups leadership g4', groupLeadershipCostG4)
+    console.log('groups leadership g5', groupLeadershipCostG5)
+
+    const toCheck = []
+    if (useG1Rider) toCheck.push(groupLeadershipCostG1)
+    if (useG2Rider) toCheck.push(groupLeadershipCostG2)
+    if (useG3Rider) toCheck.push(groupLeadershipCostG3)
+    if (useG4Rider) toCheck.push(groupLeadershipCostG4)
+    if (useG5Rider) toCheck.push(groupLeadershipCostG5)
+
+    let maxLoop = 10000 // to prevent infinite loop
     do {
-      if (useG5Mount) {
-        let mult = 1
+      if (useG5Rider) {
+        /*
+             ¿que pasa si mando varios stacks, g1,g2,g3?
+             el sacrificio solo debe ser igual al mayor de todos
+             G1 es el mas tropas tiene
+            */
+        //sacrifices, cuantos soldados estoy mandando
+        // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        if (!useG1Rider && !useG2Rider && !useG3Rider && !useG4Rider) {
+          // solo debe revisar sus predecesores, que tienen mas soldados
+          const sameAmountOfSacrificesAsG5 = g5NeededToKillOneMob
+          const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG5 * sacrifice.LEADERSHIP
+          if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
+            maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
+            sacrificeGroupsCount = sacrificeGroupsCount + 1
+            sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG5
+            sacrificeLeadershipConsumed =
+              sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
+          }
+        }
 
-        // if (useG4Mount) {
-        //   mult = 2;
+        // si tengo suficiente para este y el siguiente grupo, descontar
+        if (maxLeaderShip - groupLeadershipCostG5 /*- nextGroupLeadershipCost*/ >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG5
+          g5GroupsCount = g5GroupsCount + 1
+          g5TroopsCount = g5TroopsCount + g5NeededToKillOneMob
+          // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
+          // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
+          g5LeadershipConsumed = g5LeadershipConsumed + groupLeadershipCostG5
+        } else {
+          console.log(
+            'G5 not enough for next group: leadership ',
+            maxLeaderShip,
+            'group',
+            groupLeadershipCostG5
+          )
+          console.log('required ', groupLeadershipCostG5)
+        }
+
+        // if (maxLeaderShip - groupLeadershipCost < 0) {
+        //   console.log('maxLeaderShip-groupLeadershipCost g5', maxLeaderShip, groupLeadershipCost)
+        //   break // si ni pa este le queda, fin
         // }
-        maxLeaderShip = maxLeaderShip - g5MinCount * mountG5.leadership * mult
-        if (maxLeaderShip < 0) break
-        g5TroopsCount = g5TroopsCount + g5MinCount * mult
-        g5KillsCount++
-        // console.log('g5 calc', g5TroopsCount);
+
+        // console.log('g5 calc', g5TroopsCount)
       }
 
-      if (useG4Mount) {
-        let mult = 1
-
-        if (useG5Mount) {
-          mult = 2
+      if (useG4Rider) {
+        /*
+             ¿que pasa si mando varios stacks, g1,g2,g3?
+             el sacrificio solo debe ser igual al mayor de todos
+             G1 es el mas tropas tiene
+            */
+        //sacrifices, cuantos soldados estoy mandando
+        // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        if (!useG1Rider && !useG2Rider && !useG3Rider) {
+          // solo debe revisar sus predecesores, que tienen mas soldados
+          const sameAmountOfSacrificesAsG4 = g4NeededToKillOneMob
+          const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG4 * sacrifice.LEADERSHIP
+          if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
+            maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
+            sacrificeGroupsCount = sacrificeGroupsCount + 1
+            sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG4
+            sacrificeLeadershipConsumed =
+              sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
+          }
         }
-        maxLeaderShip = maxLeaderShip - g4MinCount * mountG4.leadership * mult
-        if (maxLeaderShip < 0) break
-        g4TroopsCount = g4TroopsCount + g4MinCount * mult
-        g4KillsCount++
-        // console.log('g4 calc', g4TroopsCount);
+
+        // si tengo suficiente para este y el siguiente grupo, descontar
+        if (maxLeaderShip - groupLeadershipCostG4 >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG4
+          g4GroupsCount = g4GroupsCount + 1
+          g4TroopsCount = g4TroopsCount + g4NeededToKillOneMob
+          // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
+          // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
+          g4LeadershipConsumed = g4LeadershipConsumed + groupLeadershipCostG4
+        } else {
+          console.log(
+            'G4 not enough for next group: leadership ',
+            maxLeaderShip,
+            'group',
+            groupLeadershipCostG4
+          )
+          console.log('required ', groupLeadershipCostG4)
+        }
+
+        // if (maxLeaderShip - groupLeadershipCost < 0) {
+        //   console.log('maxLeaderShip-groupLeadershipCost g4', maxLeaderShip, groupLeadershipCost)
+        //   break // si ni pa este le queda, fin
+        // }
+
+        // console.log('g4 calc', g4TroopsCount)
       }
 
-      if (useG3Mount) {
-        let mult = 1
+      if (useG3Rider) {
+        /*
+             ¿que pasa si mando varios stacks, g1,g2,g3?
+             el sacrificio solo debe ser igual al mayor de todos
+             G1 es el mas tropas tiene
+            */
+        //sacrifices, cuantos soldados estoy mandando
+        // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        if (!useG1Rider && !useG2Rider) {
+          // solo debe revisar sus predecesores, que tienen mas soldados
+          const sameAmountOfSacrificesAsG3 = g3NeededToKillOneMob
+          const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG3 * sacrifice.LEADERSHIP
+          if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
+            maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
+            sacrificeGroupsCount = sacrificeGroupsCount + 1
+            sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG3
+            sacrificeLeadershipConsumed =
+              sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
+          }
+        }
 
-        if (useG4Mount) {
-          mult = 2
+        // si tengo suficiente para este y el siguiente grupo, descontar
+        if (maxLeaderShip - groupLeadershipCostG3 >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG3
+          g3GroupsCount = g3GroupsCount + 1
+          g3TroopsCount = g3TroopsCount + g3NeededToKillOneMob
+          // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
+          // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
+          g3LeadershipConsumed = g3LeadershipConsumed + groupLeadershipCostG3
+        } else {
+          console.log(
+            'G3 not enough for next group: leadership ',
+            maxLeaderShip,
+            'group',
+            groupLeadershipCostG3
+          )
+          console.log('required ', groupLeadershipCostG3)
         }
-        if (useG5Mount) {
-          mult = 4
-        }
-        maxLeaderShip = maxLeaderShip - g3MinCount * mountG3.leadership * mult
-        if (maxLeaderShip < 0) break
-        g3TroopsCount = g3TroopsCount + g3MinCount * mult
-        g3KillsCount++
-        // console.log('g3 calc', g3TroopsCount);
+
+        // if (maxLeaderShip - groupLeadershipCost < 0) {
+        //   console.log('maxLeaderShip-groupLeadershipCost g3', maxLeaderShip, groupLeadershipCost)
+        //   break // si ni pa este le queda, fin
+        // }
       }
 
-      if (useG2Mount) {
-        let mult = 1
+      if (useG2Rider) {
+        /*
+             ¿que pasa si mando varios stacks, g1,g2,g3?
+             el sacrificio solo debe ser igual al mayor de todos
+             G1 es el mas tropas tiene
+            */
+        //sacrifices, cuantos soldados estoy mandando
+        // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        if (!useG1Rider) {
+          // solo debe revisar sus predecesores, que tienen mas soldados
+          const sameAmountOfSacrificesAsG2 = g2NeededToKillOneMob
+          const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG2 * sacrifice.LEADERSHIP
+          if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
+            maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
+            sacrificeGroupsCount = sacrificeGroupsCount + 1
+            sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG2
+            sacrificeLeadershipConsumed =
+              sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
+          }
+        }
 
-        if (useG3Mount) {
-          mult = 2
+        // si tengo suficiente para este y el siguiente grupo, descontar
+        if (maxLeaderShip - groupLeadershipCostG2 >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG2
+          g2GroupsCount = g2GroupsCount + 1
+          g2TroopsCount = g2TroopsCount + g2NeededToKillOneMob
+          // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
+          // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
+          g2LeadershipConsumed = g2LeadershipConsumed + groupLeadershipCostG2
+        } else {
+          console.log(
+            'G2 not enough for next group: leadership ',
+            maxLeaderShip,
+            'group',
+            groupLeadershipCostG2
+          )
+          console.log('required ', groupLeadershipCostG2)
         }
-        if (useG4Mount) {
-          mult = 4
-        }
-        if (useG5Mount) {
-          mult = 8
-        }
-        maxLeaderShip = maxLeaderShip - g2MinCount * mountG2.leadership * mult
-        if (maxLeaderShip < 0) break
-        g2TroopsCount = g2TroopsCount + g2MinCount * mult
-        g2KillsCount = g2KillsCount + mult
-        // console.log('g2 calc', g2TroopsCount);
+
+        // if (maxLeaderShip - groupLeadershipCost < 0) {
+        //   break // si ni pa este le queda, fin
+        // }
       }
 
-      if (useG1Mount) {
-        let mult = 1
-        if (useG2Mount) {
-          mult = 2
+      if (useG1Rider) {
+        /*
+             ¿que pasa si mando varios stacks, g1,g2,g3?
+             el sacrificio solo debe ser igual al mayor de todos
+             G1 es el mas tropas tiene
+            */
+        //sacrifices, cuantos soldados estoy mandando
+        // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        const sameAmountOfSacrificesAsG1 = g1NeededToKillOneMob
+        const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG1 * sacrifice.LEADERSHIP
+        if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
+          sacrificeGroupsCount = sacrificeGroupsCount + 1
+          sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG1
+          sacrificeLeadershipConsumed = sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
         }
-        if (useG3Mount) {
-          mult = 4
+
+        // si tengo suficiente para este y el siguiente grupo, descontar
+        if (maxLeaderShip - groupLeadershipCostG1 >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG1
+          g1GroupsCount = g1GroupsCount + 1
+          g1TroopsCount = g1TroopsCount + g1NeededToKillOneMob
+          // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
+          // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
+          g1LeadershipConsumed = g1LeadershipConsumed + groupLeadershipCostG1
+        } else {
+          console.log(
+            'G1 not enough for next group: leadership ',
+            maxLeaderShip,
+            'group',
+            groupLeadershipCostG1
+          )
+          console.log('required ', groupLeadershipCostG1)
         }
-        if (useG4Mount) {
-          mult = 8
-        }
-        if (useG5Mount) {
-          mult = 16
-        }
-        maxLeaderShip = maxLeaderShip - g1MinCount * mountG1.leadership * mult
-        if (maxLeaderShip < 0) break
-        g1TroopsCount = g1TroopsCount + g1MinCount * mult
-        g1KillsCount = g1KillsCount + mult
-        // console.log('g1 calc', g1TroopsCount);
+
+        // if (maxLeaderShip - groupLeadershipCost < 0) {
+        //   break // si ni pa este le queda, fin
+        // }
+
+        // console.log('g1 calc', g1TroopsCount)
       }
 
-      console.log('remaining leadership', maxLeaderShip)
-    } while (maxLeaderShip > 0)
-    console.log('troops count g1', g1TroopsCount)
-    console.log('troops count g2', g2TroopsCount)
-    console.log('troops count g3', g3TroopsCount)
-    console.log('troops count g4', g4TroopsCount)
-    console.log('troops count g5', g5TroopsCount)
-    setG1Mount(g1TroopsCount)
-    setG2Mount(g2TroopsCount)
-    setG3Mount(g3TroopsCount)
-    setG4Mount(g4TroopsCount)
-    setG5Mount(g5TroopsCount)
+      console.log('remaining leadership', maxLeaderShip, maxLoop)
 
-    console.log('g1 min ', g1MinCount)
-    console.log('g2 min ', g2MinCount)
-    console.log('g3 min ', g3MinCount)
-    console.log('g4 min ', g4MinCount)
-    console.log('g5 min ', g5MinCount)
-    console.log('expecting to kill with g1 ', g1KillsCount)
-    console.log('expecting to kill with g2 ', g2KillsCount)
-    console.log('expecting to kill with g3 ', g3KillsCount)
-    console.log('expecting to kill with g4 ', g4KillsCount)
-    console.log('expecting to kill with g5 ', g5KillsCount)
-    setG1Kills(g1KillsCount)
-    setG2Kills(g2KillsCount)
-    setG3Kills(g3KillsCount)
-    setG4Kills(g4KillsCount)
-    setG5Kills(g5KillsCount)
-    console.log(
-      'total kills',
-      g1KillsCount + g2KillsCount + g3KillsCount + g4KillsCount + g5KillsCount
-    )
+      if (
+        toCheck.every(leadershipRequired => maxLeaderShip < leadershipRequired) ||
+        maxLeaderShip <= 0
+      ) {
+        console.log('not enough leadership, ....ending')
+        break
+      }
+    } while (maxLeaderShip > 0 && maxLoop-- > 0)
+
+    setRider1({
+      groupCount: g1GroupsCount,
+      leadership: g1LeadershipConsumed,
+      minCount: g1NeededToKillOneMob,
+      maxCount: g1TroopsCount
+    })
+    setRider2({
+      groupCount: g2GroupsCount,
+      leadership: g2LeadershipConsumed,
+      minCount: g2NeededToKillOneMob,
+      maxCount: g2TroopsCount
+    })
+    setRider3({
+      groupCount: g3GroupsCount,
+      leadership: g3LeadershipConsumed,
+      minCount: g3NeededToKillOneMob,
+      maxCount: g3TroopsCount
+    })
+    setRider4({
+      groupCount: g4GroupsCount,
+      leadership: g4LeadershipConsumed,
+      minCount: g4NeededToKillOneMob,
+      maxCount: g4TroopsCount
+    })
+    setRider5({
+      groupCount: g5GroupsCount,
+      leadership: g5LeadershipConsumed,
+      minCount: g5NeededToKillOneMob,
+      maxCount: g5TroopsCount
+    })
+
+    // console.log('sacrifices', sacrificeGroupsCount)
+    setSacrifice({
+      groupCount: sacrificeGroupsCount,
+      leadership: sacrificeLeadershipConsumed,
+      minCount: sacrificesNeededToKillOneMob,
+      maxCount: sacrificeTroopsCount
+    })
   }
 
+  const handleDecGroupCount = (group: string) => {
+    if (group === 'xx') {
+      const groupCount = sacrifice.groupCount - 1
+      const leadership = sacrifice.LEADERSHIP * groupCount * 1
+      const troopsCount = sacrifice.maxCount - 1
+      setSacrifice({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g1') {
+      const groupCount = rider1.groupCount - 1
+      const leadership = rider1.LEADERSHIP * groupCount * rider1.minCount
+      const troopsCount = rider1.maxCount - rider1.minCount
+      setRider1({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g2') {
+      const groupCount = rider2.groupCount - 1
+      const leadership = rider2.LEADERSHIP * groupCount * rider2.minCount
+      const troopsCount = rider2.maxCount - rider2.minCount
+      setRider2({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g3') {
+      const groupCount = rider3.groupCount - 1
+      const leadership = rider3.LEADERSHIP * groupCount * rider3.minCount
+      const troopsCount = rider3.maxCount - rider3.minCount
+      setRider3({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g4') {
+      const groupCount = rider4.groupCount - 1
+      const leadership = rider4.LEADERSHIP * groupCount * rider4.minCount
+      const troopsCount = rider4.maxCount - rider4.minCount
+      setRider4({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g5') {
+      const groupCount = rider5.groupCount - 1
+      const leadership = rider5.LEADERSHIP * groupCount * rider5.minCount
+      const troopsCount = rider5.maxCount - rider5.minCount
+      setRider5({ groupCount, leadership, maxCount: troopsCount })
+    }
+  }
+
+  const handleIncGroupCount = (group: string) => {
+    if (group === 'xx') {
+      const groupCount = sacrifice.groupCount + 1
+      const leadership = sacrifice.LEADERSHIP * groupCount * 1
+      const troopsCount = sacrifice.maxCount + 1
+      setSacrifice({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g1') {
+      const groupCount = rider1.groupCount + 1
+      const leadership = rider1.LEADERSHIP * groupCount * rider1.minCount
+      const troopsCount = rider1.maxCount + rider1.minCount
+      setRider1({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g2') {
+      const groupCount = rider2.groupCount + 1
+      const leadership = rider2.LEADERSHIP * groupCount * rider2.minCount
+      const troopsCount = rider2.maxCount + rider2.minCount
+      setRider2({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g3') {
+      const groupCount = rider3.groupCount + 1
+      const leadership = rider3.LEADERSHIP * groupCount * rider3.minCount
+      const troopsCount = rider3.maxCount + rider3.minCount
+      setRider3({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g4') {
+      const groupCount = rider4.groupCount + 1
+      const leadership = rider4.LEADERSHIP * groupCount * rider4.minCount
+      const troopsCount = rider4.maxCount + rider4.minCount
+      setRider4({ groupCount, leadership, maxCount: troopsCount })
+    } else if (group === 'g5') {
+      const groupCount = rider5.groupCount + 1
+      const leadership = rider5.LEADERSHIP * groupCount * rider5.minCount
+      const troopsCount = rider5.maxCount + rider5.minCount
+      setRider5({ groupCount, leadership, maxCount: troopsCount })
+    }
+  }
+
+  //calc()
+  const leadershipConsumed =
+    sacrifice.leadership +
+    rider1.leadership +
+    rider2.leadership +
+    rider3.leadership +
+    rider4.leadership +
+    rider5.leadership
+
   return (
-    <>
+    <Fragment>
       <h1>Troops calculation - totalbattle</h1>
       <div className='event'>
-        <div>
+        <div className='group'>
           <label>Event </label>
-          <select
-            value={selectedEvent}
-            onChange={e => {
-              setSelectedEvent(e.target.value)
-            }}
-          >
+          <select value={selectedEvent} onChange={changeMobEvent}>
             <option value='0'>Ragnarok/jörmungandr-fenrir/Doug Mage</option>
             <option value='1'>Ancient/Tinman/Arbalest</option>
             <option value='2'>720,2160/Nigromante</option>
             <option value='3'>6500,19500/Supervisor</option>
           </select>
         </div>
-        <div>
+        <div className='group'>
           <span>Health per unit: </span>{' '}
-          <input
-            type='number'
-            value={mobHealth}
-            onChange={e => {
-              setmobHealth(parseInt(e.target.value))
-            }}
-            required
-          />
-          <span className='small'>Change this value if you need a custom calculation health</span>
+          <input type='number' value={mobHealth} onChange={changeMobHealth} required />
+          <span className='small'>&lt;-- Change this value if you need a custom calculation</span>
         </div>
       </div>
       <div className='container'>
         <div className='configbar'>
           <div className='card'>
             <label>Leadership </label>
-            <input
-              type='number'
-              value={leadership}
-              onChange={e => {
-                const value = parseInt(e.target.value)
-                setLeadership(value)
-                localStorage.setItem('leadership', value.toString())
-              }}
-              required
-            />
+            <input type='number' value={leadership} onChange={changeLeadership} required />
           </div>
           <div className='card'>
             <label>STR Bonus </label>
             <input
               type='number'
-              value={bonusStr}
+              value={bonusSTR}
               step={0.1}
-              onChange={e => {
-                setAndSaveBonusStr(e, 'gral')
-              }}
+              onChange={setAndSaveBonusStr}
               required
             />
           </div>
+          <div className='card'>
+            <label>HP Bonus </label>
+            <input type='number' value={bonusHP} step={0.1} onChange={setAndSaveBonusHp} required />
+          </div>
         </div>
         <table>
-          <tr>
-            <th>Use</th>
-            {showRidersConfig && <th>Str base</th>}
-            <th>Str + bonus</th>
-            <th>Min setup</th>
-            <th>Max setup</th>
-            <th>Kills expected</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Use</th>
 
-          <tr>
-            <td>
-              <div className='card'>
-                <label>G1</label>
-                <input
-                  type='checkbox'
-                  checked={useG1Mount}
-                  onChange={() => {
-                    setUseG1Mount(!useG1Mount)
-                  }}
-                />
-              </div>
-            </td>
-            {showRidersConfig && (
+              {showStrengthData && <th>Str + bonus</th>}
+              {showHealthData && <th>Health + bonus</th>}
+              <th>Min setup</th>
+              <th>Max setup</th>
+              <th>Groups count</th>
+              {showHealthData && <th>Stack Health</th>}
+              {showStrengthData && <th>Stack Strength</th>}
+              <th>Stack Initiative</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
               <td>
-                <input
-                  type='number'
-                  step={0.1}
-                  value={g1MountBonusStr}
-                  onChange={e => {
-                    setAndSaveBonusStr(e, 'g1')
-                  }}
-                />
+                <div className='card'>
+                  <label>Sacrifices</label>
+                  <input
+                    type='checkbox'
+                    checked={useSacrifices}
+                    onChange={() => {
+                      setUseSacrifices(!useSacrifices)
+                    }}
+                  />
+                </div>
               </td>
-            )}
-            <td>{g1RiderStr}</td>
-            <td>{g1MinCount}</td>
-            <td className='bright'>{g1Mount}</td>
-            <td>{g1Kills}</td>
-          </tr>
 
-          <tr>
-            <td>
-              <div className='card'>
-                <label>G2</label>
-                <input
-                  type='checkbox'
-                  checked={useG2Mount}
-                  onChange={() => {
-                    setUseG2Mount(!useG2Mount)
-                  }}
-                />
-              </div>
-            </td>
-            {showRidersConfig && (
+              {showStrengthData && <td>{sacrifice.str.toFixed(0)}</td>}
+              {showHealthData && <td>{sacrifice.hp.toFixed(0)}</td>}
+              <td>{sacrifice.minCount}</td>
+              <td className='bright'>{sacrifice.maxCount}</td>
               <td>
-                <input
-                  type='number'
-                  step={0.1}
-                  value={g2MountBonusStr}
-                  onChange={e => {
-                    setAndSaveBonusStr(e, 'g2')
-                  }}
-                />
+                {sacrifice.groupCount}
+                <button className='btnGroupCount' onClick={() => handleDecGroupCount('xx')}>
+                  -
+                </button>
+                <button className='btnGroupCount' onClick={() => handleIncGroupCount('xx')}>
+                  +
+                </button>
               </td>
-            )}
-            <td>{g2RiderStr}</td>
-            <td>{g2MinCount}</td>
-            <td className='bright'>{g2Mount}</td> <td>{g2Kills}</td>
-          </tr>
+              {showHealthData && <td>{(sacrifice.hp * sacrifice.maxCount).toFixed(0)}</td>}
+              {showStrengthData && <td>{(sacrifice.str * sacrifice.maxCount).toFixed(0)}</td>}
+              <td>{(sacrifice.INITIATIVE * sacrifice.maxCount).toFixed(0)}</td>
+            </tr>
 
-          <tr>
-            <td>
-              <div className='card'>
-                <label>G3</label>
-                <input
-                  type='checkbox'
-                  checked={useG3Mount}
-                  onChange={() => {
-                    setUseG3Mount(!useG3Mount)
-                  }}
-                />
-              </div>
-            </td>
-            {showRidersConfig && (
+            <tr>
               <td>
-                <input
-                  type='number'
-                  step={0.1}
-                  value={g3MountBonusStr}
-                  onChange={e => {
-                    setAndSaveBonusStr(e, 'g3')
-                  }}
-                />
+                <div className='card'>
+                  <label>G1 Riders</label>
+                  <input
+                    type='checkbox'
+                    checked={useG1Rider}
+                    onChange={() => {
+                      setUseG1Rider(!useG1Rider)
+                    }}
+                  />
+                </div>
               </td>
-            )}
-            <td>{g3RiderStr}</td>
-            <td>{g3MinCount}</td>
-            <td className='bright'>{g3Mount}</td> <td>{g3Kills}</td>
-          </tr>
 
-          <tr>
-            <td>
-              <div className='card'>
-                <label>G4</label>
-                <input
-                  type='checkbox'
-                  checked={useG4Mount}
-                  onChange={() => {
-                    setUseG4Mount(!useG4Mount)
-                  }}
-                />
-              </div>
-            </td>
-            {showRidersConfig && (
-              <td>
-                <input
-                  type='number'
-                  step={0.1}
-                  value={g4MountBonusStr}
-                  onChange={e => {
-                    setAndSaveBonusStr(e, 'g4')
-                  }}
-                />
+              {showStrengthData && <td>{rider1.str.toFixed(0)}</td>}
+              {showHealthData && <td>{rider1.hp.toFixed(0)}</td>}
+              <td>{rider1.minCount}</td>
+              <td className='bright'>
+                {rider1.maxCount} <span className='small'>(x{rider1.LEADERSHIP})</span>
               </td>
-            )}
-            <td>{g4RiderStr}</td>
-            <td>{g4MinCount}</td>
-            <td className='bright'>{g4Mount}</td> <td>{g4Kills}</td>
-          </tr>
+              <td>
+                {rider1.groupCount}
+                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g1')}>
+                  -
+                </button>
+                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g1')}>
+                  +
+                </button>
+              </td>
+              {showHealthData && <td>{(rider1.hp * rider1.maxCount).toFixed(0)}</td>}
+              {showStrengthData && <td>{(rider1.str * rider1.maxCount).toFixed(0)}</td>}
+              <td>{(rider1.INITIATIVE * rider1.maxCount).toFixed(0)}</td>
+            </tr>
 
-          <tr>
-            <td>
-              <div className='card'>
-                <label>G5</label>
-                <input
-                  type='checkbox'
-                  checked={useG5Mount}
-                  onChange={() => {
-                    setUseG5Mount(!useG5Mount)
-                  }}
-                />
-              </div>
-            </td>
-            {showRidersConfig && (
+            <tr>
               <td>
-                <input
-                  type='number'
-                  step={0.1}
-                  value={g5MountBonusStr}
-                  onChange={e => {
-                    setAndSaveBonusStr(e, 'g5')
-                  }}
-                />
+                <div className='card'>
+                  <label>G2 Riders</label>
+                  <input
+                    type='checkbox'
+                    checked={useG2Rider}
+                    onChange={() => {
+                      setUseG2Rider(!useG2Rider)
+                    }}
+                  />
+                </div>
               </td>
-            )}
-            <td>{g5RiderStr}</td>
-            <td>{g5MinCount}</td>
-            <td className='bright'>{g5Mount}</td> <td>{g5Kills}</td>
-          </tr>
-          <tr style={{ backgroundColor: 'purple' }}>
-            <td></td> <td></td>
-            <td>Total</td>
-            {g1Mount * mountG1.leadership +
-              g2Mount * mountG2.leadership +
-              g3Mount * mountG3.leadership +
-              g4Mount * mountG4.leadership +
-              g5Mount * mountG5.leadership}
-            <td>{g1Kills + g2Kills + g3Kills + g4Kills + g5Kills}</td>
-          </tr>
+              {showStrengthData && <td>{rider2.str.toFixed(0)}</td>}
+              {showHealthData && <td>{rider2.hp.toFixed(0)}</td>}
+              <td>{rider2.minCount}</td>
+              <td className='bright'>
+                {rider2.maxCount} <span className='small'>(x{rider2.LEADERSHIP})</span>
+              </td>
+              <td>
+                {rider2.groupCount}{' '}
+                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g2')}>
+                  -
+                </button>
+                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g2')}>
+                  +
+                </button>
+              </td>
+              {showHealthData && <td>{(rider2.hp * rider2.maxCount).toFixed(0)}</td>}
+              {showStrengthData && <td>{(rider2.str * rider2.maxCount).toFixed(0)}</td>}
+              <td>{(rider2.INITIATIVE * rider2.maxCount).toFixed(0)}</td>
+            </tr>
+
+            <tr>
+              <td>
+                <div className='card'>
+                  <label>G3 Riders</label>
+                  <input
+                    type='checkbox'
+                    checked={useG3Rider}
+                    onChange={() => {
+                      setUseG3Rider(!useG3Rider)
+                    }}
+                  />
+                </div>
+              </td>
+              {showStrengthData && <td>{rider3.str.toFixed(0)}</td>}
+              {showHealthData && <td>{rider3.hp.toFixed(0)}</td>}
+              <td>{rider3.minCount.toFixed(0)}</td>
+              <td className='bright'>
+                {rider3.maxCount} <span className='small'>(x{rider3.LEADERSHIP})</span>
+              </td>
+              <td>
+                {rider3.groupCount}{' '}
+                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g3')}>
+                  -
+                </button>
+                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g3')}>
+                  +
+                </button>
+              </td>
+              {showHealthData && <td>{(rider3.hp * rider3.maxCount).toFixed(0)}</td>}
+              {showStrengthData && <td>{(rider3.str * rider3.maxCount).toFixed(0)}</td>}
+              <td>{(rider3.INITIATIVE * rider3.maxCount).toFixed(0)}</td>
+            </tr>
+
+            <tr>
+              <td>
+                <div className='card'>
+                  <label>G4 Riders</label>
+                  <input
+                    type='checkbox'
+                    checked={useG4Rider}
+                    onChange={() => {
+                      setUseG4Rider(!useG4Rider)
+                    }}
+                  />
+                </div>
+              </td>
+              {showStrengthData && <td>{rider4.str.toFixed(0)}</td>}
+              {showHealthData && <td>{rider4.hp.toFixed(0)}</td>}
+              <td>{rider4.minCount.toFixed(0)}</td>
+              <td className='bright'>
+                {rider4.maxCount} <span className='small'>(x{rider4.LEADERSHIP})</span>
+              </td>
+              <td>
+                {rider4.groupCount}{' '}
+                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g4')}>
+                  -
+                </button>
+                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g4')}>
+                  +
+                </button>
+              </td>
+              {showHealthData && <td>{(rider4.hp * rider4.maxCount).toFixed(0)}</td>}
+              {showStrengthData && <td>{(rider4.str * rider4.maxCount).toFixed(0)}</td>}
+              <td>{(rider4.INITIATIVE * rider4.maxCount).toFixed(0)}</td>
+            </tr>
+
+            <tr>
+              <td>
+                <div className='card'>
+                  <label>G5 Riders</label>
+                  <input
+                    type='checkbox'
+                    checked={useG5Rider}
+                    onChange={() => {
+                      setUseG5Rider(!useG5Rider)
+                    }}
+                  />
+                </div>
+              </td>
+              {showStrengthData && <td>{rider5.str.toFixed(0)}</td>}
+              {showHealthData && <td>{rider5.hp.toFixed(0)}</td>}
+              <td>{rider5.minCount.toFixed(0)}</td>
+              <td className='bright'>
+                {rider5.maxCount} <span className='small'>(x{rider5.LEADERSHIP})</span>
+              </td>
+              <td>
+                {rider5.groupCount}{' '}
+                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g5')}>
+                  -
+                </button>
+                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g5')}>
+                  +
+                </button>
+              </td>
+              {showHealthData && <td>{(rider5.hp * rider5.maxCount).toFixed(0)}</td>}
+              {showStrengthData && <td>{(rider5.str * rider5.maxCount).toFixed(0)}</td>}
+              <td>{(rider5.INITIATIVE * rider5.maxCount).toFixed(0)}</td>
+            </tr>
+
+            <tr style={{ backgroundColor: 'purple' }}>
+              <td></td>
+              {showStrengthData && <td></td>}
+              {showHealthData && <td></td>}
+              <td>Leadership used</td>
+              <td> {leadershipConsumed}</td>
+              <td></td>
+              {showHealthData && <td></td>}
+              {showStrengthData && <td></td>}
+              <td></td>
+            </tr>
+          </tbody>
         </table>
+        <div className='card'>
+          <label>Show health info</label>
+          <input
+            type='checkbox'
+            checked={showHealthData}
+            onChange={() => {
+              setShowHealthData(!showHealthData)
+            }}
+          />
+        </div>
+        <div className='card'>
+          <label>Show strength info</label>
+          <input
+            type='checkbox'
+            checked={showStrengthData}
+            onChange={() => {
+              setShowStrengthData(!showStrengthData)
+            }}
+          />
+        </div>
+        <p>
+          Min Setup, shows how many soldiers is needed to kill <strong>one</strong> monster
+        </p>
+
+        {leadershipConsumed == 0 && (
+          <p style={{ color: 'red' }}>can't find a setup with this configuration</p>
+        )}
+        {leadershipConsumed > leadership && (
+          <p style={{ color: 'red' }}>you do NOT have enough leadership</p>
+        )}
+
+        <div className='group'>
+          <label>Sacrifies </label>
+          <select value={selectedSacrifice} onChange={changeSacrifice}>
+            <option value='0'>Swordman G1</option>
+            <option value='1'>Archer G1</option>
+            <option value='2'>Spearman G1</option>
+            {/* <option value='3'>Catapult G1</option> */}
+          </select>
+        </div>
       </div>
-      <div className='card'>
-        <label>Show config</label>
-        <input
-          type='checkbox'
-          checked={showRidersConfig}
-          onChange={() => {
-            setShowRidersConfig(!showRidersConfig)
-            localStorage.setItem('showRiderConfig', JSON.stringify(showRidersConfig))
-          }}
-        />
-      </div>
+
       <button className='gobtn' onClick={calc}>
         CALCULATE
       </button>
 
-      <h6>riders goes against Doug Mage, which is the weakest monster</h6>
+      <ul style={{ color: 'pink' }}>
+        <li>send sacrifices first</li>
+        <li>the cheapest group should go above</li>
+        <li>
+          from my understanding higher initiative should go first, but some people says higher HP
+          goes first
+        </li>
+        <li>
+          Riders goes against ranged/distance like Doug Mage, which is (usually) the weakest monster
+        </li>
+        <li>There are 4 big groups, guards(3),specialist(2),engineer(1),monster(4)</li>
+        <li>each group have subgroups</li>
+        <li>each subgroups have its own bonus value, im handling only guards as single bonus</li>
+        <li>
+          put more points on strength, or max strength first, leave health after you maxed strength
+          ;)
+        </li>
+      </ul>
+
       <br />
       <hr />
       <p>LOAD ALL your bonuses/buff (vip, personal-&gt;strenght, etc), before use this</p>
       <p>
-        you can find the bonus value on{' '}
-        <span>
-          <h6>Barracks -&gt; Guardsmen -&gt; (any) Rider</h6>
-        </span>
+        you can find the bonus value on <span>Barracks -&gt; Guardsmen -&gt; (any) Rider</span>
       </p>
-      <small>put more points on strength</small>
+
       <hr />
-      <p>we send higher amount of G1, so they attack (or get attacked) first</p>
+      <p>recommend to send higher amount of lowest soldiers like G1, so they attack (/die) first</p>
       <p>because they are cheaper/faster to rebuild</p>
       <p>the recomendation is to use 2 groups: example g1 and g2</p>
       <p>
@@ -601,13 +945,10 @@ function App() {
         if send two groups, and the first group get killed, the second group will get you experience
       </p>
       <hr />
-      <p>* use 3 groups only if you have a bigger player on raid with many groups/stacks</p>
+      <p>* use 3 groups or more only if you have a bigger player on raid with many groups/stacks</p>
       <hr />
-      <p>
-        didnt test because i dont have G4 yet, but using G4 or bigger might not go against Doug
-        Mage, because too much power/str vs Doug Mage life
-      </p>
-    </>
+      <p>and finally... do whatever you want</p>
+    </Fragment>
   )
 }
 
