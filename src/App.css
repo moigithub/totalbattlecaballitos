@@ -16,6 +16,11 @@ table th {
   font-size: 14px;
   padding: 0 10px;
 }
+
+.info {
+  display: flex;
+}
+
 .configbar {
   display: flex;
   justify-content: space-between;

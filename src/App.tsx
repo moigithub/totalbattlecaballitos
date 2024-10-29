@@ -27,6 +27,8 @@ function App() {
   const bonusSTR = useGuardsStore(state => state.bonusSTR)
   const setBonusHP = useGuardsStore(state => state.setBonusHP)
   const setBonusSTR = useGuardsStore(state => state.setBonusSTR)
+  const setSacrificeBonusSTR = useGuardsStore(state => state.setSacrificeBonusSTR)
+  const sacrificeBonusSTR = useGuardsStore(state => state.sacrificeBonusSTR)
   const leadership = useGuardsStore(state => state.leadership)
   const setLeadership = useGuardsStore(state => state.setLeadership)
   const mobHealth = useGuardsStore(state => state.mobHealth)
@@ -81,17 +83,28 @@ function App() {
   }, [selectedEvent])
 
   useEffect(() => {
-    setSacrifice({ str: sacrificeBase.BASESTR /*+ (bonusSTR * sacrificeBase.str) / 100 */ })
-    setSacrifice({ hp: sacrificeBase.BASEHP /*+ (bonusHP * sacrificeBase.hp) / 100*/ })
-  }, [sacrificeBase.BASESTR, sacrificeBase.BASEHP])
+    setSacrifice({ str: sacrificeBase.BASESTR + (sacrificeBonusSTR * sacrificeBase.BASESTR) / 100 })
+    setSacrifice({ hp: sacrificeBase.BASEHP /*+ (sacrificeBonusHP * sacrificeBase.BASEHP) / 100*/ })
+  }, [sacrificeBase.BASESTR, sacrificeBase.BASEHP, sacrificeBonusSTR])
 
   const calculateStr = (bonusSTR: number) => {
     // calculate hp and str with bonus, for GUARDIANS/EJERCITO (spearman, archer, rider)
-    setRider1({ str: rider1.BASESTR + (bonusSTR * rider1.BASESTR) / 100 })
-    setRider2({ str: rider2.BASESTR + (bonusSTR * rider2.BASESTR) / 100 })
-    setRider3({ str: rider3.BASESTR + (bonusSTR * rider3.BASESTR) / 100 })
-    setRider4({ str: rider4.BASESTR + (bonusSTR * rider4.BASESTR) / 100 })
-    setRider5({ str: rider5.BASESTR + (bonusSTR * rider5.BASESTR) / 100 })
+
+    setRider1({
+      str: rider1.BASESTR + ((rider1.bonusStrAgainstRanged + bonusSTR) * rider1.BASESTR) / 100
+    })
+    setRider2({
+      str: rider2.BASESTR + ((rider2.bonusStrAgainstRanged + bonusSTR) * rider2.BASESTR) / 100
+    })
+    setRider3({
+      str: rider3.BASESTR + ((rider3.bonusStrAgainstRanged + bonusSTR) * rider3.BASESTR) / 100
+    })
+    setRider4({
+      str: rider4.BASESTR + ((rider4.bonusStrAgainstRanged + bonusSTR) * rider4.BASESTR) / 100
+    })
+    setRider5({
+      str: rider5.BASESTR + ((rider5.bonusStrAgainstRanged + bonusSTR) * rider5.BASESTR) / 100
+    })
   }
 
   const calculateHP = (bonusHP: number) => {
@@ -151,6 +164,12 @@ function App() {
     // calc()
   }
 
+  const setAndSaveSacrificeBonusStr = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value)
+
+    setSacrificeBonusSTR(value)
+  }
+
   const setAndSaveBonusStr = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
 
@@ -169,6 +188,36 @@ function App() {
     calculateHP(value)
 
     // calc()
+  }
+  const g5Mult = () => {
+    let mult = 1
+    return mult
+  }
+  const g4Mult = () => {
+    let mult = 1
+    if (useG5Rider) mult = 2
+    return mult
+  }
+  const g3Mult = () => {
+    let mult = 1
+    if (useG4Rider) mult = 2
+    if (useG5Rider) mult = 4
+    return mult
+  }
+  const g2Mult = () => {
+    let mult = 1
+    if (useG3Rider) mult = 2
+    if (useG4Rider) mult = 4
+    if (useG5Rider) mult = 8
+    return mult
+  }
+  const g1Mult = () => {
+    let mult = 1
+    if (useG2Rider) mult = 2
+    if (useG3Rider) mult = 4
+    if (useG4Rider) mult = 8
+    if (useG5Rider) mult = 16
+    return mult
   }
 
   const calc = () => {
@@ -249,13 +298,15 @@ function App() {
             */
         //sacrifices, cuantos soldados estoy mandando
         // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        const mult = g5Mult()
         if (!useG1Rider && !useG2Rider && !useG3Rider && !useG4Rider) {
           // solo debe revisar sus predecesores, que tienen mas soldados
-          const sameAmountOfSacrificesAsG5 = g5NeededToKillOneMob
+          const doble = 2
+          const sameAmountOfSacrificesAsG5 = g5NeededToKillOneMob * mult * doble
           const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG5 * sacrifice.LEADERSHIP
           if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
             maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
-            sacrificeGroupsCount = sacrificeGroupsCount + 1
+            sacrificeGroupsCount = sacrificeGroupsCount + doble * mult
             sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG5
             sacrificeLeadershipConsumed =
               sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
@@ -263,13 +314,13 @@ function App() {
         }
 
         // si tengo suficiente para este y el siguiente grupo, descontar
-        if (maxLeaderShip - groupLeadershipCostG5 /*- nextGroupLeadershipCost*/ >= 0) {
-          maxLeaderShip = maxLeaderShip - groupLeadershipCostG5
-          g5GroupsCount = g5GroupsCount + 1
-          g5TroopsCount = g5TroopsCount + g5NeededToKillOneMob
+        if (maxLeaderShip - groupLeadershipCostG5 * mult >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG5 * mult
+          g5GroupsCount = g5GroupsCount + 1 * mult
+          g5TroopsCount = g5TroopsCount + g5NeededToKillOneMob * mult
           // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
           // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
-          g5LeadershipConsumed = g5LeadershipConsumed + groupLeadershipCostG5
+          g5LeadershipConsumed = g5LeadershipConsumed + groupLeadershipCostG5 * mult
         } else {
           console.log(
             'G5 not enough for next group: leadership ',
@@ -278,6 +329,7 @@ function App() {
             groupLeadershipCostG5
           )
           console.log('required ', groupLeadershipCostG5)
+          break
         }
 
         // if (maxLeaderShip - groupLeadershipCost < 0) {
@@ -296,13 +348,15 @@ function App() {
             */
         //sacrifices, cuantos soldados estoy mandando
         // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        const mult = g4Mult()
         if (!useG1Rider && !useG2Rider && !useG3Rider) {
           // solo debe revisar sus predecesores, que tienen mas soldados
-          const sameAmountOfSacrificesAsG4 = g4NeededToKillOneMob
+          const doble = 2
+          const sameAmountOfSacrificesAsG4 = g4NeededToKillOneMob * mult * doble
           const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG4 * sacrifice.LEADERSHIP
           if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
             maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
-            sacrificeGroupsCount = sacrificeGroupsCount + 1
+            sacrificeGroupsCount = sacrificeGroupsCount + doble * mult
             sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG4
             sacrificeLeadershipConsumed =
               sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
@@ -310,13 +364,13 @@ function App() {
         }
 
         // si tengo suficiente para este y el siguiente grupo, descontar
-        if (maxLeaderShip - groupLeadershipCostG4 >= 0) {
-          maxLeaderShip = maxLeaderShip - groupLeadershipCostG4
-          g4GroupsCount = g4GroupsCount + 1
-          g4TroopsCount = g4TroopsCount + g4NeededToKillOneMob
+        if (maxLeaderShip - groupLeadershipCostG4 * mult >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG4 * mult
+          g4GroupsCount = g4GroupsCount + 1 * mult
+          g4TroopsCount = g4TroopsCount + g4NeededToKillOneMob * mult
           // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
           // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
-          g4LeadershipConsumed = g4LeadershipConsumed + groupLeadershipCostG4
+          g4LeadershipConsumed = g4LeadershipConsumed + groupLeadershipCostG4 * mult
         } else {
           console.log(
             'G4 not enough for next group: leadership ',
@@ -325,6 +379,7 @@ function App() {
             groupLeadershipCostG4
           )
           console.log('required ', groupLeadershipCostG4)
+          break
         }
 
         // if (maxLeaderShip - groupLeadershipCost < 0) {
@@ -343,13 +398,15 @@ function App() {
             */
         //sacrifices, cuantos soldados estoy mandando
         // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        const mult = g3Mult()
         if (!useG1Rider && !useG2Rider) {
           // solo debe revisar sus predecesores, que tienen mas soldados
-          const sameAmountOfSacrificesAsG3 = g3NeededToKillOneMob
+          const doble = 2
+          const sameAmountOfSacrificesAsG3 = g3NeededToKillOneMob * mult * doble
           const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG3 * sacrifice.LEADERSHIP
           if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
             maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
-            sacrificeGroupsCount = sacrificeGroupsCount + 1
+            sacrificeGroupsCount = sacrificeGroupsCount + doble * mult
             sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG3
             sacrificeLeadershipConsumed =
               sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
@@ -357,13 +414,13 @@ function App() {
         }
 
         // si tengo suficiente para este y el siguiente grupo, descontar
-        if (maxLeaderShip - groupLeadershipCostG3 >= 0) {
-          maxLeaderShip = maxLeaderShip - groupLeadershipCostG3
-          g3GroupsCount = g3GroupsCount + 1
-          g3TroopsCount = g3TroopsCount + g3NeededToKillOneMob
+        if (maxLeaderShip - groupLeadershipCostG3 * mult >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG3 * mult
+          g3GroupsCount = g3GroupsCount + 1 * mult
+          g3TroopsCount = g3TroopsCount + g3NeededToKillOneMob * mult
           // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
           // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
-          g3LeadershipConsumed = g3LeadershipConsumed + groupLeadershipCostG3
+          g3LeadershipConsumed = g3LeadershipConsumed + groupLeadershipCostG3 * mult
         } else {
           console.log(
             'G3 not enough for next group: leadership ',
@@ -372,6 +429,7 @@ function App() {
             groupLeadershipCostG3
           )
           console.log('required ', groupLeadershipCostG3)
+          break
         }
 
         // if (maxLeaderShip - groupLeadershipCost < 0) {
@@ -388,13 +446,15 @@ function App() {
             */
         //sacrifices, cuantos soldados estoy mandando
         // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
+        const mult = g2Mult()
         if (!useG1Rider) {
           // solo debe revisar sus predecesores, que tienen mas soldados
-          const sameAmountOfSacrificesAsG2 = g2NeededToKillOneMob
+          const doble = 2
+          const sameAmountOfSacrificesAsG2 = g2NeededToKillOneMob * mult * doble
           const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG2 * sacrifice.LEADERSHIP
           if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
             maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
-            sacrificeGroupsCount = sacrificeGroupsCount + 1
+            sacrificeGroupsCount = sacrificeGroupsCount + doble * mult
             sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG2
             sacrificeLeadershipConsumed =
               sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
@@ -402,13 +462,13 @@ function App() {
         }
 
         // si tengo suficiente para este y el siguiente grupo, descontar
-        if (maxLeaderShip - groupLeadershipCostG2 >= 0) {
-          maxLeaderShip = maxLeaderShip - groupLeadershipCostG2
-          g2GroupsCount = g2GroupsCount + 1
-          g2TroopsCount = g2TroopsCount + g2NeededToKillOneMob
+        if (maxLeaderShip - groupLeadershipCostG2 * mult >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG2 * mult
+          g2GroupsCount = g2GroupsCount + 1 * mult
+          g2TroopsCount = g2TroopsCount + g2NeededToKillOneMob * mult
           // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
           // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
-          g2LeadershipConsumed = g2LeadershipConsumed + groupLeadershipCostG2
+          g2LeadershipConsumed = g2LeadershipConsumed + groupLeadershipCostG2 * mult
         } else {
           console.log(
             'G2 not enough for next group: leadership ',
@@ -417,6 +477,7 @@ function App() {
             groupLeadershipCostG2
           )
           console.log('required ', groupLeadershipCostG2)
+          break
         }
 
         // if (maxLeaderShip - groupLeadershipCost < 0) {
@@ -432,23 +493,25 @@ function App() {
             */
         //sacrifices, cuantos soldados estoy mandando
         // por cada G1 que mando,mandar dos sacrificio, por que el leadership del caballo es el doble
-        const sameAmountOfSacrificesAsG1 = g1NeededToKillOneMob
+        const mult = g1Mult()
+        const doble = 2
+        const sameAmountOfSacrificesAsG1 = g1NeededToKillOneMob * mult * doble
         const groupLeadershipCostSacrifices = sameAmountOfSacrificesAsG1 * sacrifice.LEADERSHIP
         if (useSacrifices && maxLeaderShip - groupLeadershipCostSacrifices >= 0) {
           maxLeaderShip = maxLeaderShip - groupLeadershipCostSacrifices
-          sacrificeGroupsCount = sacrificeGroupsCount + 1
+          sacrificeGroupsCount = sacrificeGroupsCount + doble * mult
           sacrificeTroopsCount = sacrificeTroopsCount + sameAmountOfSacrificesAsG1
           sacrificeLeadershipConsumed = sacrificeLeadershipConsumed + groupLeadershipCostSacrifices
         }
 
         // si tengo suficiente para este y el siguiente grupo, descontar
-        if (maxLeaderShip - groupLeadershipCostG1 >= 0) {
-          maxLeaderShip = maxLeaderShip - groupLeadershipCostG1
-          g1GroupsCount = g1GroupsCount + 1
-          g1TroopsCount = g1TroopsCount + g1NeededToKillOneMob
+        if (maxLeaderShip - groupLeadershipCostG1 * mult >= 0) {
+          maxLeaderShip = maxLeaderShip - groupLeadershipCostG1 * mult
+          g1GroupsCount = g1GroupsCount + 1 * mult
+          g1TroopsCount = g1TroopsCount + g1NeededToKillOneMob * mult
           // g*MinCount = cuantos soldados se necesitan para matar 1 monstruo
           // doubleFactorLevel = usar el doble para los soldados de level mas bajo, ejm: 200 g2, 100 g1
-          g1LeadershipConsumed = g1LeadershipConsumed + groupLeadershipCostG1
+          g1LeadershipConsumed = g1LeadershipConsumed + groupLeadershipCostG1 * mult
         } else {
           console.log(
             'G1 not enough for next group: leadership ',
@@ -457,6 +520,7 @@ function App() {
             groupLeadershipCostG1
           )
           console.log('required ', groupLeadershipCostG1)
+          break
         }
 
         // if (maxLeaderShip - groupLeadershipCost < 0) {
@@ -597,6 +661,7 @@ function App() {
   return (
     <Fragment>
       <h1>Troops calculation - totalbattle</h1>
+      <h6>Riders vs ranged</h6>
       <div className='event'>
         <div className='group'>
           <label>Event </label>
@@ -646,7 +711,6 @@ function App() {
               <th>Groups count</th>
               {showHealthData && <th>Stack Health</th>}
               {showStrengthData && <th>Stack Strength</th>}
-              <th>Stack Initiative</th>
             </tr>
           </thead>
           <tbody>
@@ -679,7 +743,6 @@ function App() {
               </td>
               {showHealthData && <td>{(sacrifice.hp * sacrifice.maxCount).toFixed(0)}</td>}
               {showStrengthData && <td>{(sacrifice.str * sacrifice.maxCount).toFixed(0)}</td>}
-              <td>{(sacrifice.INITIATIVE * sacrifice.maxCount).toFixed(0)}</td>
             </tr>
 
             <tr>
@@ -713,7 +776,6 @@ function App() {
               </td>
               {showHealthData && <td>{(rider1.hp * rider1.maxCount).toFixed(0)}</td>}
               {showStrengthData && <td>{(rider1.str * rider1.maxCount).toFixed(0)}</td>}
-              <td>{(rider1.INITIATIVE * rider1.maxCount).toFixed(0)}</td>
             </tr>
 
             <tr>
@@ -746,7 +808,6 @@ function App() {
               </td>
               {showHealthData && <td>{(rider2.hp * rider2.maxCount).toFixed(0)}</td>}
               {showStrengthData && <td>{(rider2.str * rider2.maxCount).toFixed(0)}</td>}
-              <td>{(rider2.INITIATIVE * rider2.maxCount).toFixed(0)}</td>
             </tr>
 
             <tr>
@@ -779,7 +840,6 @@ function App() {
               </td>
               {showHealthData && <td>{(rider3.hp * rider3.maxCount).toFixed(0)}</td>}
               {showStrengthData && <td>{(rider3.str * rider3.maxCount).toFixed(0)}</td>}
-              <td>{(rider3.INITIATIVE * rider3.maxCount).toFixed(0)}</td>
             </tr>
 
             <tr>
@@ -812,7 +872,6 @@ function App() {
               </td>
               {showHealthData && <td>{(rider4.hp * rider4.maxCount).toFixed(0)}</td>}
               {showStrengthData && <td>{(rider4.str * rider4.maxCount).toFixed(0)}</td>}
-              <td>{(rider4.INITIATIVE * rider4.maxCount).toFixed(0)}</td>
             </tr>
 
             <tr>
@@ -845,7 +904,6 @@ function App() {
               </td>
               {showHealthData && <td>{(rider5.hp * rider5.maxCount).toFixed(0)}</td>}
               {showStrengthData && <td>{(rider5.str * rider5.maxCount).toFixed(0)}</td>}
-              <td>{(rider5.INITIATIVE * rider5.maxCount).toFixed(0)}</td>
             </tr>
 
             <tr style={{ backgroundColor: 'purple' }}>
@@ -857,7 +915,6 @@ function App() {
               <td></td>
               {showHealthData && <td></td>}
               {showStrengthData && <td></td>}
-              <td></td>
             </tr>
           </tbody>
         </table>
@@ -891,15 +948,26 @@ function App() {
         {leadershipConsumed > leadership && (
           <p style={{ color: 'red' }}>you do NOT have enough leadership</p>
         )}
-
-        <div className='group'>
-          <label>Sacrifies </label>
-          <select value={selectedSacrifice} onChange={changeSacrifice}>
-            <option value='0'>Swordman G1</option>
-            <option value='1'>Archer G1</option>
-            <option value='2'>Spearman G1</option>
-            {/* <option value='3'>Catapult G1</option> */}
-          </select>
+        <div>
+          <div className='group'>
+            <label>Sacrifies </label>
+            <select value={selectedSacrifice} onChange={changeSacrifice}>
+              <option value='0'>Swordman G1</option>
+              <option value='1'>Archer G1</option>
+              <option value='2'>Spearman G1</option>
+              {/* <option value='3'>Catapult G1</option> */}
+            </select>
+          </div>
+          <div className='card'>
+            <label>Sacrifice STR Bonus </label>
+            <input
+              type='number'
+              value={sacrificeBonusSTR}
+              step={0.1}
+              onChange={setAndSaveSacrificeBonusStr}
+              required
+            />
+          </div>
         </div>
       </div>
 
@@ -907,47 +975,53 @@ function App() {
         CALCULATE
       </button>
 
-      <ul style={{ color: 'pink' }}>
-        <li>send sacrifices first</li>
-        <li>the cheapest group should go above</li>
-        <li>
-          from my understanding higher initiative should go first, but some people says higher HP
-          goes first
-        </li>
-        <li>
-          Riders goes against ranged/distance like Doug Mage, which is (usually) the weakest monster
-        </li>
-        <li>There are 4 big groups, guards(3),specialist(2),engineer(1),monster(4)</li>
-        <li>each group have subgroups</li>
-        <li>each subgroups have its own bonus value, im handling only guards as single bonus</li>
-        <li>
-          put more points on strength, or max strength first, leave health after you maxed strength
-          ;)
-        </li>
-      </ul>
+      <div className='info'>
+        <div>
+          <ul style={{ color: 'pink' }}>
+            <li>send sacrifices first</li>
+            <li>the cheapest group should go above</li>
+            <li>higher strength attack first</li>
+            <li>There are 4 big groups, guards(3),specialist(2),engineer(1),monster(4)</li>
+            <li>each group have subgroups</li>
+            <li>
+              each subgroups have its own bonus value, im handling only guards as single bonus
+            </li>
+            <li>
+              put more points on strength, or max strength first, leave health after you maxed
+              strength ;)
+            </li>
+          </ul>
 
-      <br />
-      <hr />
-      <p>LOAD ALL your bonuses/buff (vip, personal-&gt;strenght, etc), before use this</p>
-      <p>
-        you can find the bonus value on <span>Barracks -&gt; Guardsmen -&gt; (any) Rider</span>
-      </p>
+          <br />
+          <hr />
+          <p>LOAD ALL your bonuses/buff (vip, personal-&gt;strenght, etc), before use this</p>
+          <p>
+            you can find the bonus value on <span>Barracks -&gt; Guardsmen -&gt; (any) Rider</span>
+          </p>
 
-      <hr />
-      <p>recommend to send higher amount of lowest soldiers like G1, so they attack (/die) first</p>
-      <p>because they are cheaper/faster to rebuild</p>
-      <p>the recomendation is to use 2 groups: example g1 and g2</p>
-      <p>
-        because if you get attacked first and you sent only one group, you will not get any
-        kills/exp
-      </p>
-      <p>
-        if send two groups, and the first group get killed, the second group will get you experience
-      </p>
-      <hr />
-      <p>* use 3 groups or more only if you have a bigger player on raid with many groups/stacks</p>
-      <hr />
-      <p>and finally... do whatever you want</p>
+          <hr />
+          <p>
+            recommend to send higher amount of lowest soldiers like G1, so they attack (/die) first
+          </p>
+          <p>because they are cheaper/faster to rebuild</p>
+          <p>the recomendation is to use 2 groups: example g1 and g2</p>
+          <p>
+            because if you get attacked first and you sent only one group, you will not get any
+            kills/exp
+          </p>
+          <p>
+            if send two groups, and the first group get killed, the second group will get you
+            experience
+          </p>
+          <hr />
+          <p>
+            * use 3 groups or more only if you have a bigger player on raid with many groups/stacks
+          </p>
+          <hr />
+          <p>and finally... do whatever you want</p>
+        </div>
+        <img src='./bonus.jpg' alt='bonus' />
+      </div>
     </Fragment>
   )
 }

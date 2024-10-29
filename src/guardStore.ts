@@ -5,6 +5,7 @@ interface Stats {
   BASESTR: number
   LEADERSHIP: number
   INITIATIVE: number
+  bonusStrAgainstRanged: number
   hp: number
   str: number
   leadership: number
@@ -16,6 +17,7 @@ interface Stats {
 interface GuardsStore {
   bonusHP: number
   bonusSTR: number
+  sacrificeBonusSTR: number
   leadership: number
   mobHealth: number
   sacrifice: Stats
@@ -36,6 +38,7 @@ interface GuardsStore {
   // spearman5: Stats}
   setBonusHP: (value: number) => void
   setBonusSTR: (value: number) => void
+  setSacrificeBonusSTR: (value: number) => void
   setLeadership: (value: number) => void
   setMobHealth: (value: number) => void
   setSacrifice: (stats: Partial<Stats>) => void
@@ -49,6 +52,7 @@ interface GuardsStore {
 export const useGuardsStore = create<GuardsStore>(set => ({
   bonusHP: 0,
   bonusSTR: 0,
+  sacrificeBonusSTR: 0,
   leadership: 0,
   mobHealth: 2160,
   sacrifice: {
@@ -56,6 +60,7 @@ export const useGuardsStore = create<GuardsStore>(set => ({
     BASESTR: 100,
     INITIATIVE: 10,
     LEADERSHIP: 1,
+    bonusStrAgainstRanged: 0,
     hp: 300,
     str: 100,
     leadership: 0,
@@ -68,6 +73,7 @@ export const useGuardsStore = create<GuardsStore>(set => ({
     BASESTR: 100,
     INITIATIVE: 10,
     LEADERSHIP: 2,
+    bonusStrAgainstRanged: 65,
     hp: 300,
     str: 100,
     leadership: 0,
@@ -80,6 +86,7 @@ export const useGuardsStore = create<GuardsStore>(set => ({
     BASESTR: 180,
     INITIATIVE: 10,
     LEADERSHIP: 2,
+    bonusStrAgainstRanged: 98,
     hp: 540,
     str: 180,
     leadership: 0,
@@ -92,6 +99,7 @@ export const useGuardsStore = create<GuardsStore>(set => ({
     BASESTR: 320,
     INITIATIVE: 10,
     LEADERSHIP: 2,
+    bonusStrAgainstRanged: 146,
     hp: 960,
     str: 320,
     leadership: 0,
@@ -104,6 +112,7 @@ export const useGuardsStore = create<GuardsStore>(set => ({
     BASESTR: 580,
     INITIATIVE: 10,
     LEADERSHIP: 2,
+    bonusStrAgainstRanged: 219,
     hp: 1740,
     str: 580,
     leadership: 0,
@@ -116,6 +125,7 @@ export const useGuardsStore = create<GuardsStore>(set => ({
     BASESTR: 1050,
     INITIATIVE: 10,
     LEADERSHIP: 2,
+    bonusStrAgainstRanged: 329,
     hp: 3150,
     str: 1050,
     leadership: 0,
@@ -128,6 +138,9 @@ export const useGuardsStore = create<GuardsStore>(set => ({
   },
   setBonusSTR: value => {
     set(() => ({ bonusSTR: value }))
+  },
+  setSacrificeBonusSTR: value => {
+    set(() => ({ sacrificeBonusSTR: value }))
   },
   setLeadership: value => {
     set(() => ({ leadership: value }))
