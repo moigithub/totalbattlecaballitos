@@ -46,8 +46,6 @@ function App() {
   const setRider4 = useGuardsStore(state => state.setRider4)
   const setRider5 = useGuardsStore(state => state.setRider5)
 
-  // cuantos tropas puede llevar el capitan al ataque
-
   const [selectedEvent, setSelectedEvent] = useState('0')
   const [selectedSacrifice, setSelectedSacrifice] = useState('0')
   const [sacrificeBase, setSacrificeBase] = useState({
@@ -65,7 +63,6 @@ function App() {
   const [useG3Rider, setUseG3Rider] = useState(false)
   const [useG4Rider, setUseG4Rider] = useState(false)
   const [useG5Rider, setUseG5Rider] = useState(false)
-  // const [factorX, setFactorX] = useState(1)
 
   useEffect(() => {
     calculateHP(bonusHP)
@@ -199,18 +196,9 @@ function App() {
   const calc = () => {
     if (!useG1Rider && !useG2Rider && !useG3Rider && !useG4Rider && !useG5Rider) {
       // algo debe estar marcado
+      alert('pick riders')
       return
     }
-    // calculateHP(bonusHP)
-    // calculateStr(bonusSTR)
-    // const sacrifice = useGuardsStore.getState().sacrifice
-    // const rider1 = useGuardsStore.getState().rider1
-    // const rider2 = useGuardsStore.getState().rider2
-    // const rider3 = useGuardsStore.getState().rider3
-    // const rider4 = useGuardsStore.getState().rider4
-    // const rider5 = useGuardsStore.getState().rider5
-    // const leadership = useGuardsStore.getState().leadership
-    // const mobHealth = useGuardsStore.getState().mobHealth
 
     const sacrificesNeededToKillOneMob = Math.ceil(mobHealth / sacrifice.str)
     const g1NeededToKillOneMob = Math.ceil(mobHealth / rider1.str)
@@ -218,18 +206,6 @@ function App() {
     const g3NeededToKillOneMob = Math.ceil(mobHealth / rider3.str)
     const g4NeededToKillOneMob = Math.ceil(mobHealth / rider4.str)
     const g5NeededToKillOneMob = Math.ceil(mobHealth / rider5.str)
-
-    {
-      /**el sacrificio debe tener mas juerza que todos, para que ataque primero */
-    }
-
-    // let maxLeaderShip = leadership
-    // let sacrificeGroupsCount = 0
-    // let g1GroupsCount = 0
-    // let g2GroupsCount = 0
-    // let g3GroupsCount = 0
-    // let g4GroupsCount = 0
-    // let g5GroupsCount = 0
 
     let finalSacrificeTroopsCount = 0
     let finalG1TroopsCount = 0
@@ -258,7 +234,6 @@ function App() {
 
     let factor = 0
     let maxLoop = 1000
-    let maxLeadership = leadership
 
     let g1Leadership = g1TroopsCount * rider1.LEADERSHIP
     let g2Leadership = g2TroopsCount * rider2.LEADERSHIP
@@ -270,79 +245,94 @@ function App() {
     let totalLeadership =
       g1Leadership + g2Leadership + g3Leadership + g4Leadership + g5Leadership + sacrificeLeadership
 
-    while (totalLeadership < maxLeadership) {
+    while (totalLeadership < leadership) {
       factor = factor + 1
       // calculate how many troops needed for each group to kill one mob,based on leadership
       if (useG5Rider) {
-        // const g5GroupStrength = g5NeededToKillOneMob * rider5.str
         g5TroopsCount = g5NeededToKillOneMob * factor
       }
 
       if (useG4Rider) {
         //g4 needs to have more strength than g5
-        const g4GroupStrength = g4NeededToKillOneMob * rider4.str
-        const groupStrengths = [g4GroupStrength]
         if (useG5Rider) {
-          groupStrengths.push(g5TroopsCount * rider5.str)
-        }
-        const maxGroupStr = Math.max(...groupStrengths)
+          const g4GroupStrength = g4NeededToKillOneMob * rider4.str
+          const groupStrengths = [g4GroupStrength]
+          if (useG5Rider) {
+            groupStrengths.push(g5TroopsCount * rider5.str)
+          }
+          const maxGroupStr = Math.max(...groupStrengths)
 
-        const mult = Math.ceil(maxGroupStr / g4GroupStrength)
-        g4TroopsCount = g4NeededToKillOneMob * mult
+          const mult = Math.ceil(maxGroupStr / g4GroupStrength)
+          g4TroopsCount = g4NeededToKillOneMob * mult
+        } else {
+          g4TroopsCount = g4NeededToKillOneMob * factor
+        }
       }
 
       if (useG3Rider) {
-        //g4 needs to have more strength than g5
-        const g3GroupStrength = g3NeededToKillOneMob * rider3.str
-        const groupStrengths = [g3GroupStrength]
-        if (useG5Rider) {
-          groupStrengths.push(g5TroopsCount * rider5.str)
+        //g3 needs to have more strength than g4,g5
+        if (useG5Rider || useG4Rider) {
+          const g3GroupStrength = g3NeededToKillOneMob * rider3.str
+          const groupStrengths = [g3GroupStrength]
+          if (useG5Rider) {
+            groupStrengths.push(g5TroopsCount * rider5.str)
+          }
+          if (useG4Rider) {
+            groupStrengths.push(g4TroopsCount * rider4.str)
+          }
+          const maxGroupStr = Math.max(...groupStrengths)
+          const mult = Math.ceil(maxGroupStr / g3GroupStrength)
+          g3TroopsCount = g3NeededToKillOneMob * mult
+        } else {
+          g3TroopsCount = g3NeededToKillOneMob * factor
         }
-        if (useG4Rider) {
-          groupStrengths.push(g4TroopsCount * rider4.str)
-        }
-        const maxGroupStr = Math.max(...groupStrengths)
-        const mult = Math.ceil(maxGroupStr / g3GroupStrength)
-        g3TroopsCount = g3NeededToKillOneMob * mult
       }
 
       if (useG2Rider) {
-        //g4 needs to have more strength than g5
-        const g2GroupStrength = g2NeededToKillOneMob * rider2.str
-        const groupStrengths = [g2GroupStrength]
-        if (useG5Rider) {
-          groupStrengths.push(g5TroopsCount * rider5.str)
+        //g2 needs to have more strength than g3,g4,g5
+        if (useG5Rider || useG4Rider || useG3Rider) {
+          const g2GroupStrength = g2NeededToKillOneMob * rider2.str
+          const groupStrengths = [g2GroupStrength]
+          if (useG5Rider) {
+            groupStrengths.push(g5TroopsCount * rider5.str)
+          }
+          if (useG4Rider) {
+            groupStrengths.push(g4TroopsCount * rider4.str)
+          }
+          if (useG3Rider) {
+            groupStrengths.push(g3TroopsCount * rider3.str)
+          }
+          const maxGroupStr = Math.max(...groupStrengths)
+          const mult = Math.ceil(maxGroupStr / g2GroupStrength)
+          g2TroopsCount = g2NeededToKillOneMob * mult
+        } else {
+          g2TroopsCount = g2NeededToKillOneMob * factor
         }
-        if (useG4Rider) {
-          groupStrengths.push(g4TroopsCount * rider4.str)
-        }
-        if (useG3Rider) {
-          groupStrengths.push(g3TroopsCount * rider3.str)
-        }
-        const maxGroupStr = Math.max(...groupStrengths)
-        const mult = Math.ceil(maxGroupStr / g2GroupStrength)
-        g2TroopsCount = g2NeededToKillOneMob * mult
       }
 
       if (useG1Rider) {
-        //g4 needs to have more strength than g5
-        const g1GroupStrength = g1NeededToKillOneMob * rider1.str
-        const groupStrengths = [g1GroupStrength]
-        if (useG5Rider) {
-          groupStrengths.push(g5TroopsCount * rider5.str)
+        //g1 needs to have more strength than all rest
+        if (useG5Rider || useG4Rider || useG3Rider) {
+          const g1GroupStrength = g1NeededToKillOneMob * rider1.str
+          const groupStrengths = [g1GroupStrength]
+          if (useG5Rider) {
+            groupStrengths.push(g5TroopsCount * rider5.str)
+          }
+          if (useG4Rider) {
+            groupStrengths.push(g4TroopsCount * rider4.str)
+          }
+          if (useG3Rider) {
+            groupStrengths.push(g3TroopsCount * rider3.str)
+          }
+          if (useG2Rider) {
+            groupStrengths.push(g2TroopsCount * rider2.str)
+          }
+          const maxGroupStr = Math.max(...groupStrengths)
+          const mult = Math.ceil(maxGroupStr / g1GroupStrength)
+          g1TroopsCount = g1NeededToKillOneMob * mult
+        } else {
+          g1TroopsCount = g1NeededToKillOneMob * factor
         }
-        if (useG4Rider) {
-          groupStrengths.push(g4TroopsCount * rider4.str)
-        }
-        if (useG3Rider) {
-          groupStrengths.push(g3TroopsCount * rider3.str)
-        }
-        if (useG2Rider) {
-          groupStrengths.push(g2TroopsCount * rider2.str)
-        }
-        const maxGroupStr = Math.max(...groupStrengths)
-        const mult = Math.ceil(maxGroupStr / g1GroupStrength)
-        g1TroopsCount = g1NeededToKillOneMob * mult
       }
 
       if (useSacrifices) {
@@ -405,7 +395,7 @@ function App() {
       finalG4TroopsCount = g4TroopsCount
       finalG5TroopsCount = g5TroopsCount
 
-      // if (totalLeadership > leadership) break
+      if (totalLeadership > leadership) break
 
       if (maxLoop-- < 1) break
     }
