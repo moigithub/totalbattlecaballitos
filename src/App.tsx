@@ -312,7 +312,7 @@ function App() {
 
       if (useG1Rider) {
         //g1 needs to have more strength than all rest
-        if (useG5Rider || useG4Rider || useG3Rider) {
+        if (useG5Rider || useG4Rider || useG3Rider || useG2Rider) {
           const g1GroupStrength = g1NeededToKillOneMob * rider1.str
           const groupStrengths = [g1GroupStrength]
           if (useG5Rider) {
