@@ -24,11 +24,14 @@ const doomsdaySupervisor = {
 
 function App() {
   const bonusHP = useGuardsStore(state => state.bonusHP)
-  const bonusSTR = useGuardsStore(state => state.bonusSTR)
   const setBonusHP = useGuardsStore(state => state.setBonusHP)
+  const bonusSTR = useGuardsStore(state => state.bonusSTR)
   const setBonusSTR = useGuardsStore(state => state.setBonusSTR)
   const setSacrificeBonusSTR = useGuardsStore(state => state.setSacrificeBonusSTR)
   const sacrificeBonusSTR = useGuardsStore(state => state.sacrificeBonusSTR)
+  const setSacrificeBonusHP = useGuardsStore(state => state.setSacrificeBonusHP)
+  const sacrificeBonusHP = useGuardsStore(state => state.sacrificeBonusHP)
+
   const leadership = useGuardsStore(state => state.leadership)
   const setLeadership = useGuardsStore(state => state.setLeadership)
   const mobHealth = useGuardsStore(state => state.mobHealth)
@@ -87,8 +90,8 @@ function App() {
 
   useEffect(() => {
     setSacrifice({ str: sacrificeBase.BASESTR + (sacrificeBonusSTR * sacrificeBase.BASESTR) / 100 })
-    setSacrifice({ hp: sacrificeBase.BASEHP /*+ (sacrificeBonusHP * sacrificeBase.BASEHP) / 100*/ })
-  }, [sacrificeBase.BASESTR, sacrificeBase.BASEHP, sacrificeBonusSTR])
+    setSacrifice({ hp: sacrificeBase.BASEHP + (sacrificeBonusHP * sacrificeBase.BASEHP) / 100 })
+  }, [sacrificeBase.BASESTR, sacrificeBase.BASEHP, sacrificeBonusSTR, sacrificeBonusHP])
 
   const calculateStr = (bonusSTR: number) => {
     // calculate hp and str with bonus, for GUARDIANS/EJERCITO (spearman, archer, rider)
@@ -173,6 +176,12 @@ function App() {
     setSacrificeBonusSTR(value)
   }
 
+  const setAndSaveSacrificeBonusHp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value)
+
+    setSacrificeBonusHP(value)
+  }
+
   const setAndSaveBonusStr = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value)
 
@@ -214,27 +223,21 @@ function App() {
     let finalG4TroopsCount = 0
     let finalG5TroopsCount = 0
 
+    /*
+    el sacrificio debe tener mas "vida grupal" que todos, para que vaya primero
+     el resto puede tener cualquier valor siempre y cuando sea menor
+            */
+
+    let factor = 0
+    let maxLoop = 1000
+
     let sacrificeTroopsCount = 0
     let g1TroopsCount = 0
     let g2TroopsCount = 0
     let g3TroopsCount = 0
     let g4TroopsCount = 0
     let g5TroopsCount = 0
-
     /*
-             ¿que pasa si mando varios stacks, g1,g2,g3?
-             el sacrificio solo debe ser igual al mayor de todos
-             G1 es el mas tropas tiene
-            */
-    // debe tener mas fuerza que el grupo anterior, para que ataque primero
-    // no importa si completa un grupo para matar 1,
-    // calcular el monto minimo mayor al grupo anterior en fuerza
-
-    // calcular el factor/numero pa q al multiplicar se consuma el total leadership
-
-    let factor = 0
-    let maxLoop = 1000
-
     let g1Leadership = g1TroopsCount * rider1.LEADERSHIP
     let g2Leadership = g2TroopsCount * rider2.LEADERSHIP
     let g3Leadership = g3TroopsCount * rider3.LEADERSHIP
@@ -244,7 +247,13 @@ function App() {
 
     let totalLeadership =
       g1Leadership + g2Leadership + g3Leadership + g4Leadership + g5Leadership + sacrificeLeadership
-
+      */
+    let totalLeadership = 0
+    /**
+     * inicia con g5 troops,
+     * las siguientes tropas incrementa el "doble" (o un numero mayor)
+     * de esa forma tiene mas fuerza que el grupo anterior
+     */
     while (totalLeadership < leadership) {
       factor = factor + 1
       // calculate how many troops needed for each group to kill one mob,based on leadership
@@ -359,12 +368,12 @@ function App() {
         sacrificeTroopsCount = sacrificesNeededToKillOneMob * mult
       }
 
-      g1Leadership = g1TroopsCount * rider1.LEADERSHIP
-      g2Leadership = g2TroopsCount * rider2.LEADERSHIP
-      g3Leadership = g3TroopsCount * rider3.LEADERSHIP
-      g4Leadership = g4TroopsCount * rider4.LEADERSHIP
-      g5Leadership = g5TroopsCount * rider5.LEADERSHIP
-      sacrificeLeadership = sacrificeTroopsCount * sacrifice.LEADERSHIP
+      const g1Leadership = g1TroopsCount * rider1.LEADERSHIP
+      const g2Leadership = g2TroopsCount * rider2.LEADERSHIP
+      const g3Leadership = g3TroopsCount * rider3.LEADERSHIP
+      const g4Leadership = g4TroopsCount * rider4.LEADERSHIP
+      const g5Leadership = g5TroopsCount * rider5.LEADERSHIP
+      const sacrificeLeadership = sacrificeTroopsCount * sacrifice.LEADERSHIP
 
       totalLeadership =
         g1Leadership +
@@ -858,6 +867,16 @@ function App() {
               required
             />
           </div>
+          <div className='card'>
+            <label>Sacrifice HP Bonus </label>
+            <input
+              type='number'
+              value={sacrificeBonusHP}
+              step={0.1}
+              onChange={setAndSaveSacrificeBonusHp}
+              required
+            />
+          </div>
         </div>
       </div>
 
@@ -868,15 +887,24 @@ function App() {
       <div className='info'>
         <div>
           <ul style={{ color: 'pink' }}>
-            <li>Send sacrifices first</li>
-            <li>The cheapest group should go above</li>
-            <li>Higher strength attack first</li>
+            <li>
+              The cheapest group should go above, they might hit, or get killed at first round
+            </li>
+            <li>Higher health attack first</li>
+            <li>
+              Send sacrifices first (the stack with highest hp) ie: 500k health for the whole stack
+            </li>
+            <li>after sacrifices, set all rest of eachs stack with lower health, ie: 490k</li>
             <li>There are 4 big groups, guards(3),specialist(2),engineer(1),monster(4)</li>
             <li>Each group have subgroups</li>
             <li>Each subgroups have its own bonus value, im handling only riders guards bonus</li>
             <li>
               Put more points on strength, or max strength first, leave health after you maxed
-              strength ;)
+              strength,
+            </li>
+            <li>
+              you will lose your troops anyway (on events like doomsday), so better to kill the max
+              you can, and strength determines how hard you hit
             </li>
           </ul>
 

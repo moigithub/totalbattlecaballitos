@@ -17,6 +17,7 @@ interface Stats {
 interface GuardsStore {
   bonusHP: number
   bonusSTR: number
+  sacrificeBonusHP: number
   sacrificeBonusSTR: number
   leadership: number
   mobHealth: number
@@ -38,6 +39,7 @@ interface GuardsStore {
   // spearman5: Stats}
   setBonusHP: (value: number) => void
   setBonusSTR: (value: number) => void
+  setSacrificeBonusHP: (value: number) => void
   setSacrificeBonusSTR: (value: number) => void
   setLeadership: (value: number) => void
   setMobHealth: (value: number) => void
@@ -52,6 +54,7 @@ interface GuardsStore {
 export const useGuardsStore = create<GuardsStore>(set => ({
   bonusHP: 0,
   bonusSTR: 0,
+  sacrificeBonusHP: 0,
   sacrificeBonusSTR: 0,
   leadership: 0,
   mobHealth: 2160,
@@ -141,6 +144,9 @@ export const useGuardsStore = create<GuardsStore>(set => ({
   },
   setSacrificeBonusSTR: value => {
     set(() => ({ sacrificeBonusSTR: value }))
+  },
+  setSacrificeBonusHP: value => {
+    set(() => ({ sacrificeBonusHP: value }))
   },
   setLeadership: value => {
     set(() => ({ leadership: value }))
