@@ -189,7 +189,9 @@ function App() {
   const changeLeadership = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value)
     setLeadership(value)
+
     console.log('changing leadership', value)
+
     // calc()
   }
 
@@ -450,17 +452,6 @@ function App() {
 
       if (totalLeadership > leadership) break
 
-      console.log(
-        'loop',
-        maxLoop,
-        'leadership',
-        leadership,
-        'total leadership',
-        totalLeadership,
-        'factor',
-        factor
-      )
-
       // hold the previous value before overflow
       finalSacrificeTroopsCount = sacrificeTroopsCount
       finalG1TroopsCount = g1TroopsCount
@@ -473,37 +464,6 @@ function App() {
 
       if (maxLoop-- < 1) break
     }
-
-    console.log(
-      'g1',
-      finalG1TroopsCount,
-      g1NeededToKillOneMob,
-      finalG1TroopsCount / g1NeededToKillOneMob
-    )
-    console.log(
-      'g2',
-      finalG2TroopsCount,
-      g2NeededToKillOneMob,
-      finalG2TroopsCount / g2NeededToKillOneMob
-    )
-    console.log(
-      'g3',
-      finalG3TroopsCount,
-      g3NeededToKillOneMob,
-      finalG3TroopsCount / g3NeededToKillOneMob
-    )
-    console.log(
-      'g4',
-      finalG4TroopsCount,
-      g4NeededToKillOneMob,
-      finalG4TroopsCount / g4NeededToKillOneMob
-    )
-    console.log(
-      'g5',
-      finalG5TroopsCount,
-      g5NeededToKillOneMob,
-      finalG5TroopsCount / g5NeededToKillOneMob
-    )
 
     setRider1({
       groupCount: finalG1TroopsCount / g1NeededToKillOneMob,
@@ -572,7 +532,7 @@ function App() {
             */
 
     let factor = 0
-    let maxLoop = 1000
+    let maxLoop = 1000000
 
     let sacrificeTroopsCount = 0
     let g1TroopsCount = 0
@@ -627,7 +587,7 @@ function App() {
         sacrificeTroopsCount = sacrificeTroopsCount + 1
         sacrificeGroupHealth = sacrificeTroopsCount * sacrifice.hp
 
-        console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+        // console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
       }
 
       if (useG1Rider) {
@@ -635,26 +595,26 @@ function App() {
           const g1SmallGroupLeadership = g1NeededToKillOneMob * rider1.LEADERSHIP
           const g1SmallGroupHealth = g1NeededToKillOneMob * rider1.hp
           const g1GroupTotalHealth = g1TroopsCount * rider1.hp
-          console.log(
-            'g1smallGroupHealth: ',
-            g1SmallGroupHealth,
-            'g1GroupTotalHealth: ',
-            g1GroupTotalHealth
-          )
-          console.log('g1 total health', g1GroupTotalHealth + g1SmallGroupHealth)
+          // console.log(
+          //   'g1smallGroupHealth: ',
+          //   g1SmallGroupHealth,
+          //   'g1GroupTotalHealth: ',
+          //   g1GroupTotalHealth
+          // )
+          // console.log('g1 total health', g1GroupTotalHealth + g1SmallGroupHealth)
           if (
             g1GroupTotalHealth + g1SmallGroupHealth < sacrificeGroupHealth &&
             totalLeadership + g1SmallGroupLeadership <= leadership
           ) {
             g1TroopsCount = g1TroopsCount + g1NeededToKillOneMob
-            console.log('added g1 --------------------', g1TroopsCount)
+            // console.log('added g1 --------------------', g1TroopsCount)
           }
         } else {
           // uses g1 as sacrifice, check health based on this
           g1TroopsCount = g1TroopsCount + 1
           sacrificeGroupHealth = g1TroopsCount * rider1.hp
 
-          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+          // console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
         }
       }
 
@@ -663,26 +623,26 @@ function App() {
           const g2SmallGroupLeadership = g2NeededToKillOneMob * rider2.LEADERSHIP
           const g2SmallGroupHealth = g2NeededToKillOneMob * rider2.hp
           const g2GroupTotalHealth = g2TroopsCount * rider2.hp
-          console.log(
-            'g2smallGroupHealth: ',
-            g2SmallGroupHealth,
-            'g2GroupTotalHealth: ',
-            g2GroupTotalHealth
-          )
-          console.log('g2 total health', g2GroupTotalHealth + g2SmallGroupHealth)
+          // console.log(
+          //   'g2smallGroupHealth: ',
+          //   g2SmallGroupHealth,
+          //   'g2GroupTotalHealth: ',
+          //   g2GroupTotalHealth
+          // )
+          // console.log('g2 total health', g2GroupTotalHealth + g2SmallGroupHealth)
           if (
             g2GroupTotalHealth + g2SmallGroupHealth < sacrificeGroupHealth &&
             totalLeadership + g2SmallGroupLeadership <= leadership
           ) {
             g2TroopsCount = g2TroopsCount + g2NeededToKillOneMob
-            console.log('added g2 --------------------', g2TroopsCount)
+            // console.log('added g2 --------------------', g2TroopsCount)
           }
         } else {
           // uses g1 as sacrifice, check health based on this
           g2TroopsCount = g2TroopsCount + 1
           sacrificeGroupHealth = g2TroopsCount * rider2.hp
 
-          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+          // console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
         }
       }
 
@@ -691,26 +651,26 @@ function App() {
           const g3SmallGroupLeadership = g3NeededToKillOneMob * rider3.LEADERSHIP
           const g3SmallGroupHealth = g3NeededToKillOneMob * rider3.hp
           const g3GroupTotalHealth = g3TroopsCount * rider3.hp
-          console.log(
-            'g3smallGroupHealth: ',
-            g3SmallGroupHealth,
-            'g3GroupTotalHealth: ',
-            g3GroupTotalHealth
-          )
-          console.log('g3 total health', g3GroupTotalHealth + g3SmallGroupHealth)
+          // console.log(
+          //   'g3smallGroupHealth: ',
+          //   g3SmallGroupHealth,
+          //   'g3GroupTotalHealth: ',
+          //   g3GroupTotalHealth
+          // )
+          // console.log('g3 total health', g3GroupTotalHealth + g3SmallGroupHealth)
           if (
             g3GroupTotalHealth + g3SmallGroupHealth < sacrificeGroupHealth &&
             totalLeadership + g3SmallGroupLeadership <= leadership
           ) {
             g3TroopsCount = g3TroopsCount + g3NeededToKillOneMob
-            console.log('added g3 --------------------', g3TroopsCount)
+            // console.log('added g3 --------------------', g3TroopsCount)
           }
         } else {
           // uses g1 as sacrifice, check health based on this
           g3TroopsCount = g3TroopsCount + 1
           sacrificeGroupHealth = g3TroopsCount * rider3.hp
 
-          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+          // console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
         }
       }
 
@@ -719,26 +679,26 @@ function App() {
           const g4SmallGroupLeadership = g4NeededToKillOneMob * rider4.LEADERSHIP
           const g4SmallGroupHealth = g4NeededToKillOneMob * rider4.hp
           const g4GroupTotalHealth = g4TroopsCount * rider4.hp
-          console.log(
-            'g4smallGroupHealth: ',
-            g4SmallGroupHealth,
-            'g4GroupTotalHealth: ',
-            g4GroupTotalHealth
-          )
-          console.log('g4 total health', g4GroupTotalHealth + g4SmallGroupHealth)
+          // console.log(
+          //   'g4smallGroupHealth: ',
+          //   g4SmallGroupHealth,
+          //   'g4GroupTotalHealth: ',
+          //   g4GroupTotalHealth
+          // )
+          // console.log('g4 total health', g4GroupTotalHealth + g4SmallGroupHealth)
           if (
             g4GroupTotalHealth + g4SmallGroupHealth < sacrificeGroupHealth &&
             totalLeadership + g4SmallGroupLeadership <= leadership
           ) {
             g4TroopsCount = g4TroopsCount + g4NeededToKillOneMob
-            console.log('added g4 --------------------', g4TroopsCount)
+            // console.log('added g4 --------------------', g4TroopsCount)
           }
         } else {
           // uses g1 as sacrifice, check health based on this
           g4TroopsCount = g4TroopsCount + 1
           sacrificeGroupHealth = g4TroopsCount * rider4.hp
 
-          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+          // console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
         }
       }
 
@@ -747,26 +707,26 @@ function App() {
           const g5SmallGroupLeadership = g5NeededToKillOneMob * rider5.LEADERSHIP
           const g5SmallGroupHealth = g5NeededToKillOneMob * rider5.hp
           const g5GroupTotalHealth = g5TroopsCount * rider5.hp
-          console.log(
-            'g5smallGroupHealth: ',
-            g5SmallGroupHealth,
-            'g5GroupTotalHealth: ',
-            g5GroupTotalHealth
-          )
-          console.log('g5 total health', g5GroupTotalHealth + g5SmallGroupHealth)
+          // console.log(
+          //   'g5smallGroupHealth: ',
+          //   g5SmallGroupHealth,
+          //   'g5GroupTotalHealth: ',
+          //   g5GroupTotalHealth
+          // )
+          // console.log('g5 total health', g5GroupTotalHealth + g5SmallGroupHealth)
           if (
             g5GroupTotalHealth + g5SmallGroupHealth < sacrificeGroupHealth &&
             totalLeadership + g5SmallGroupLeadership <= leadership
           ) {
             g5TroopsCount = g5TroopsCount + g5NeededToKillOneMob
-            console.log('added g5 --------------------', g5TroopsCount)
+            // console.log('added g5 --------------------', g5TroopsCount)
           }
         } else {
           // uses g1 as sacrifice, check health based on this
           g5TroopsCount = g5TroopsCount + 1
           sacrificeGroupHealth = g5TroopsCount * rider5.hp
 
-          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+          // console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
         }
       }
 
@@ -790,40 +750,40 @@ function App() {
       finalG5TroopsCount = g5TroopsCount
 
       if (totalLeadership > leadership) break
-
+      console.log('loop protection', maxLoop)
       if (maxLoop-- < 1) break
     }
 
-    console.log(
-      'g1',
-      finalG1TroopsCount,
-      g1NeededToKillOneMob,
-      finalG1TroopsCount / g1NeededToKillOneMob
-    )
-    console.log(
-      'g2',
-      finalG2TroopsCount,
-      g2NeededToKillOneMob,
-      finalG2TroopsCount / g2NeededToKillOneMob
-    )
-    console.log(
-      'g3',
-      finalG3TroopsCount,
-      g3NeededToKillOneMob,
-      finalG3TroopsCount / g3NeededToKillOneMob
-    )
-    console.log(
-      'g4',
-      finalG4TroopsCount,
-      g4NeededToKillOneMob,
-      finalG4TroopsCount / g4NeededToKillOneMob
-    )
-    console.log(
-      'g5',
-      finalG5TroopsCount,
-      g5NeededToKillOneMob,
-      finalG5TroopsCount / g5NeededToKillOneMob
-    )
+    // console.log(
+    //   'g1',
+    //   finalG1TroopsCount,
+    //   g1NeededToKillOneMob,
+    //   finalG1TroopsCount / g1NeededToKillOneMob
+    // )
+    // console.log(
+    //   'g2',
+    //   finalG2TroopsCount,
+    //   g2NeededToKillOneMob,
+    //   finalG2TroopsCount / g2NeededToKillOneMob
+    // )
+    // console.log(
+    //   'g3',
+    //   finalG3TroopsCount,
+    //   g3NeededToKillOneMob,
+    //   finalG3TroopsCount / g3NeededToKillOneMob
+    // )
+    // console.log(
+    //   'g4',
+    //   finalG4TroopsCount,
+    //   g4NeededToKillOneMob,
+    //   finalG4TroopsCount / g4NeededToKillOneMob
+    // )
+    // console.log(
+    //   'g5',
+    //   finalG5TroopsCount,
+    //   g5NeededToKillOneMob,
+    //   finalG5TroopsCount / g5NeededToKillOneMob
+    // )
 
     setRider1({
       groupCount: finalG1TroopsCount / g1NeededToKillOneMob,
