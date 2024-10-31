@@ -22,6 +22,20 @@ const doomsdaySupervisor = {
   initiative: 10,
   bonoFlyPercent: 50
 }
+const doomsdayNecromancer = {
+  hp: 2160,
+  str: 720,
+  leadership: 8,
+  initiative: 10,
+  bonoFlyPercent: 50
+}
+const jacksReturnScarecrow = {
+  hp: 33000,
+  str: 11000,
+  leadership: 2,
+  initiative: 10,
+  bonoFlyPercent: 50
+}
 
 function App() {
   const bonusHP = useGuardsStore(state => state.bonusHP)
@@ -81,9 +95,13 @@ function App() {
     } else if (selectedEvent === '1') {
       health = ragnarokMagoDraug.hp
     } else if (selectedEvent === '2') {
-      health = ragnarokMagoDraug.hp
+      // doomsday -> Necromancer 2160 hp
+      health = doomsdayNecromancer.hp
     } else if (selectedEvent === '3') {
       health = doomsdaySupervisor.hp
+    } else if (selectedEvent === '4') {
+      // jacks return -> scarecrow (espantapajaro) 33k hp //11k str
+      health = jacksReturnScarecrow.hp
     }
 
     setMobHealth(health)
@@ -996,7 +1014,8 @@ function App() {
           <select value={selectedEvent} onChange={changeMobEvent}>
             <option value='0'>Ragnarok/jörmungandr-fenrir/Doug Mage</option>
             <option value='1'>Ancient/Tinman/Arbalest</option>
-            <option value='2'>720,2160/Nigromante</option>
+            <option value='2'>Doomsday/Necromancer</option>
+            <option value='4'>JacksReturn/Scarecrow</option>
             <option value='3'>6500,19500/Supervisor</option>
           </select>
         </div>
