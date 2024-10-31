@@ -207,7 +207,14 @@ function App() {
     // calc()
   }
 
-  const getTotalLeadershipConsumed = (g1, g2, g3, g4, g5, sac: number) => {
+  const getTotalLeadershipConsumed = (
+    g1: number,
+    g2: number,
+    g3: number,
+    g4: number,
+    g5: number,
+    sac: number
+  ) => {
     const g1Leadership = g1 * rider1.LEADERSHIP
     const g2Leadership = g2 * rider2.LEADERSHIP
     const g3Leadership = g3 * rider3.LEADERSHIP
