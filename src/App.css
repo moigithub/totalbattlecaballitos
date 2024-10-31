@@ -58,3 +58,7 @@ table th {
   margin-left: 0.5rem;
   padding: 0 1rem;
 }
+
+.red-text {
+  color: red;
+}

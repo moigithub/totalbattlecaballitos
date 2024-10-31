@@ -40,19 +40,19 @@
 // }
 
 export const SwordmanG1 = {
-  BASEHP: 1501,
+  BASEHP: 150,
   BASESTR: 50,
   LEADERSHIP: 1,
   INITIATIVE: 10
 }
 export const SpearmanG1 = {
-  BASEHP: 1502,
+  BASEHP: 150,
   BASESTR: 50,
   LEADERSHIP: 1,
   INITIATIVE: 10
 }
 export const ArcherG1 = {
-  BASEHP: 1503,
+  BASEHP: 150,
   BASESTR: 50,
   LEADERSHIP: 1,
   INITIATIVE: 10

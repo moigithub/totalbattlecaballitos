@@ -3,6 +3,7 @@ import { useState, useEffect, Fragment } from 'react'
 import './App.css'
 import { useGuardsStore } from './guardStore'
 import { SwordmanG1, SpearmanG1, ArcherG1, CatapultG1 } from './soldiers'
+import classNames from 'classnames'
 
 //doomsday nigromante str 720, hp 2160
 //ancient/tinman arbalesteraAncestral str 720, hp 2160, ranged
@@ -92,6 +93,10 @@ function App() {
     setSacrifice({ str: sacrificeBase.BASESTR + (sacrificeBonusSTR * sacrificeBase.BASESTR) / 100 })
     setSacrifice({ hp: sacrificeBase.BASEHP + (sacrificeBonusHP * sacrificeBase.BASEHP) / 100 })
   }, [sacrificeBase.BASESTR, sacrificeBase.BASEHP, sacrificeBonusSTR, sacrificeBonusHP])
+
+  useEffect(() => {
+    calcHP()
+  }, [useSacrifices, useG1Rider, useG2Rider, useG3Rider, useG4Rider, useG5Rider])
 
   const calculateStr = (bonusSTR: number) => {
     // calculate hp and str with bonus, for GUARDIANS/EJERCITO (spearman, archer, rider)
@@ -202,7 +207,20 @@ function App() {
     // calc()
   }
 
-  const calc = () => {
+  const getTotalLeadershipConsumed = (g1, g2, g3, g4, g5, sac: number) => {
+    const g1Leadership = g1 * rider1.LEADERSHIP
+    const g2Leadership = g2 * rider2.LEADERSHIP
+    const g3Leadership = g3 * rider3.LEADERSHIP
+    const g4Leadership = g4 * rider4.LEADERSHIP
+    const g5Leadership = g5 * rider5.LEADERSHIP
+    const sacrificeLeadership = sac * sacrifice.LEADERSHIP
+
+    return (
+      g1Leadership + g2Leadership + g3Leadership + g4Leadership + g5Leadership + sacrificeLeadership
+    )
+  }
+
+  const calcSTR = () => {
     if (!useG1Rider && !useG2Rider && !useG3Rider && !useG4Rider && !useG5Rider) {
       // algo debe estar marcado
       alert('pick riders')
@@ -249,10 +267,32 @@ function App() {
       g1Leadership + g2Leadership + g3Leadership + g4Leadership + g5Leadership + sacrificeLeadership
       */
     let totalLeadership = 0
-    /**
+    /***********************************************
+     *  basado en fuerza
+     * ==========================
      * inicia con g5 troops,
      * las siguientes tropas incrementa el "doble" (o un numero mayor)
+     * teniendo en cuenta el minimo de tropas para matar 1 mob
      * de esa forma tiene mas fuerza que el grupo anterior
+     * el ultimo grupo que seria el sacrificio, tendra mas fuerza que todos
+     */
+
+    /**********************************************
+     * basado en vitalidad
+     * =======================
+     * no interesa si tiene un grupo mas vida que otro
+     * siempre y cuando no sobrepase el del sacrificio, todo OK
+     * si prioritizo el G5, deberia tener mayor num de kills.. no?
+     * ------------------------
+     * inicio con el sacrificio, y luego de mayor a menor,,  g5,g4,g3,g2,g1
+     * agregar 1 (o un grupo) sacrificio
+     * calcular cuanto hp tiene grupalmente
+     * calcular el num de g5 para matar 1 mob
+     * si el leadership acumulado + el leadership de este grupo, sobrepasa al leadership disponible salir
+     * si la vitalidad grupal del g5 no sobrepasa la vitalidad grupal del sacrificio
+     * agregarlo a la cuenta del g5
+     * -- repetir para g4,g3,g2,g1
+     * si el total de leadership > al disponible salir
      */
     while (totalLeadership < leadership) {
       factor = factor + 1
@@ -480,6 +520,326 @@ function App() {
     })
   }
 
+  const calcHP = () => {
+    if (!useG1Rider && !useG2Rider && !useG3Rider && !useG4Rider && !useG5Rider) {
+      // algo debe estar marcado
+      alert('pick riders')
+      return
+    }
+
+    const sacrificesNeededToKillOneMob = Math.ceil(mobHealth / sacrifice.str)
+    const g1NeededToKillOneMob = Math.ceil(mobHealth / rider1.str)
+    const g2NeededToKillOneMob = Math.ceil(mobHealth / rider2.str)
+    const g3NeededToKillOneMob = Math.ceil(mobHealth / rider3.str)
+    const g4NeededToKillOneMob = Math.ceil(mobHealth / rider4.str)
+    const g5NeededToKillOneMob = Math.ceil(mobHealth / rider5.str)
+
+    let finalSacrificeTroopsCount = 0
+    let finalG1TroopsCount = 0
+    let finalG2TroopsCount = 0
+    let finalG3TroopsCount = 0
+    let finalG4TroopsCount = 0
+    let finalG5TroopsCount = 0
+
+    /*
+    el sacrificio debe tener mas "vida grupal" que todos, para que vaya primero
+     el resto puede tener cualquier valor siempre y cuando sea menor
+            */
+
+    let factor = 0
+    let maxLoop = 1000
+
+    let sacrificeTroopsCount = 0
+    let g1TroopsCount = 0
+    let g2TroopsCount = 0
+    let g3TroopsCount = 0
+    let g4TroopsCount = 0
+    let g5TroopsCount = 0
+    /*
+    let g1Leadership = g1TroopsCount * rider1.LEADERSHIP
+    let g2Leadership = g2TroopsCount * rider2.LEADERSHIP
+    let g3Leadership = g3TroopsCount * rider3.LEADERSHIP
+    let g4Leadership = g4TroopsCount * rider4.LEADERSHIP
+    let g5Leadership = g5TroopsCount * rider5.LEADERSHIP
+    let sacrificeLeadership = sacrificeTroopsCount * sacrifice.LEADERSHIP
+
+    let totalLeadership =
+      g1Leadership + g2Leadership + g3Leadership + g4Leadership + g5Leadership + sacrificeLeadership
+      */
+    let totalLeadership = 0
+    /***********************************************
+     *  basado en fuerza
+     * ==========================
+     * inicia con g5 troops,
+     * las siguientes tropas incrementa el "doble" (o un numero mayor)
+     * teniendo en cuenta el minimo de tropas para matar 1 mob
+     * de esa forma tiene mas fuerza que el grupo anterior
+     * el ultimo grupo que seria el sacrificio, tendra mas fuerza que todos
+     */
+
+    /**********************************************
+     * basado en vitalidad
+     * =======================
+     * no interesa si tiene un grupo mas vida que otro
+     * siempre y cuando no sobrepase el del sacrificio, todo OK
+     * si prioritizo el G5, deberia tener mayor num de kills.. no?
+     * ------------------------
+     * inicio con el sacrificio, y luego de mayor a menor,,  g5,g4,g3,g2,g1
+     * agregar 1 (o un grupo) sacrificio
+     * calcular cuanto hp tiene grupalmente
+     * calcular el num de g5 para matar 1 mob
+     * si el leadership acumulado + el leadership de este grupo, sobrepasa al leadership disponible salir
+     * si la vitalidad grupal del g5 no sobrepasa la vitalidad grupal del sacrificio
+     * agregarlo a la cuenta del g5
+     * -- repetir para g4,g3,g2,g1
+     * si el total de leadership > al disponible salir
+     */
+    let sacrificeGroupHealth = 0
+    while (totalLeadership < leadership) {
+      factor = factor + 1
+
+      if (useSacrifices) {
+        sacrificeTroopsCount = sacrificeTroopsCount + 1
+        sacrificeGroupHealth = sacrificeTroopsCount * sacrifice.hp
+
+        console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+      }
+
+      if (useG1Rider) {
+        if (useSacrifices) {
+          const g1SmallGroupLeadership = g1NeededToKillOneMob * rider1.LEADERSHIP
+          const g1SmallGroupHealth = g1NeededToKillOneMob * rider1.hp
+          const g1GroupTotalHealth = g1TroopsCount * rider1.hp
+          console.log(
+            'g1smallGroupHealth: ',
+            g1SmallGroupHealth,
+            'g1GroupTotalHealth: ',
+            g1GroupTotalHealth
+          )
+          console.log('g1 total health', g1GroupTotalHealth + g1SmallGroupHealth)
+          if (
+            g1GroupTotalHealth + g1SmallGroupHealth < sacrificeGroupHealth &&
+            totalLeadership + g1SmallGroupLeadership <= leadership
+          ) {
+            g1TroopsCount = g1TroopsCount + g1NeededToKillOneMob
+            console.log('added g1 --------------------', g1TroopsCount)
+          }
+        } else {
+          // uses g1 as sacrifice, check health based on this
+          g1TroopsCount = g1TroopsCount + 1
+          sacrificeGroupHealth = g1TroopsCount * rider1.hp
+
+          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+        }
+      }
+
+      if (useG2Rider) {
+        if (useSacrifices || useG1Rider) {
+          const g2SmallGroupLeadership = g2NeededToKillOneMob * rider2.LEADERSHIP
+          const g2SmallGroupHealth = g2NeededToKillOneMob * rider2.hp
+          const g2GroupTotalHealth = g2TroopsCount * rider2.hp
+          console.log(
+            'g2smallGroupHealth: ',
+            g2SmallGroupHealth,
+            'g2GroupTotalHealth: ',
+            g2GroupTotalHealth
+          )
+          console.log('g2 total health', g2GroupTotalHealth + g2SmallGroupHealth)
+          if (
+            g2GroupTotalHealth + g2SmallGroupHealth < sacrificeGroupHealth &&
+            totalLeadership + g2SmallGroupLeadership <= leadership
+          ) {
+            g2TroopsCount = g2TroopsCount + g2NeededToKillOneMob
+            console.log('added g2 --------------------', g2TroopsCount)
+          }
+        } else {
+          // uses g1 as sacrifice, check health based on this
+          g2TroopsCount = g2TroopsCount + 1
+          sacrificeGroupHealth = g2TroopsCount * rider2.hp
+
+          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+        }
+      }
+
+      if (useG3Rider) {
+        if (useSacrifices || useG1Rider || useG2Rider) {
+          const g3SmallGroupLeadership = g3NeededToKillOneMob * rider3.LEADERSHIP
+          const g3SmallGroupHealth = g3NeededToKillOneMob * rider3.hp
+          const g3GroupTotalHealth = g3TroopsCount * rider3.hp
+          console.log(
+            'g3smallGroupHealth: ',
+            g3SmallGroupHealth,
+            'g3GroupTotalHealth: ',
+            g3GroupTotalHealth
+          )
+          console.log('g3 total health', g3GroupTotalHealth + g3SmallGroupHealth)
+          if (
+            g3GroupTotalHealth + g3SmallGroupHealth < sacrificeGroupHealth &&
+            totalLeadership + g3SmallGroupLeadership <= leadership
+          ) {
+            g3TroopsCount = g3TroopsCount + g3NeededToKillOneMob
+            console.log('added g3 --------------------', g3TroopsCount)
+          }
+        } else {
+          // uses g1 as sacrifice, check health based on this
+          g3TroopsCount = g3TroopsCount + 1
+          sacrificeGroupHealth = g3TroopsCount * rider3.hp
+
+          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+        }
+      }
+
+      if (useG4Rider) {
+        if (useSacrifices || useG1Rider || useG2Rider || useG3Rider) {
+          const g4SmallGroupLeadership = g4NeededToKillOneMob * rider4.LEADERSHIP
+          const g4SmallGroupHealth = g4NeededToKillOneMob * rider4.hp
+          const g4GroupTotalHealth = g4TroopsCount * rider4.hp
+          console.log(
+            'g4smallGroupHealth: ',
+            g4SmallGroupHealth,
+            'g4GroupTotalHealth: ',
+            g4GroupTotalHealth
+          )
+          console.log('g4 total health', g4GroupTotalHealth + g4SmallGroupHealth)
+          if (
+            g4GroupTotalHealth + g4SmallGroupHealth < sacrificeGroupHealth &&
+            totalLeadership + g4SmallGroupLeadership <= leadership
+          ) {
+            g4TroopsCount = g4TroopsCount + g4NeededToKillOneMob
+            console.log('added g4 --------------------', g4TroopsCount)
+          }
+        } else {
+          // uses g1 as sacrifice, check health based on this
+          g4TroopsCount = g4TroopsCount + 1
+          sacrificeGroupHealth = g4TroopsCount * rider4.hp
+
+          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+        }
+      }
+
+      if (useG5Rider) {
+        if (useSacrifices || useG1Rider || useG2Rider || useG3Rider || useG4Rider) {
+          const g5SmallGroupLeadership = g5NeededToKillOneMob * rider5.LEADERSHIP
+          const g5SmallGroupHealth = g5NeededToKillOneMob * rider5.hp
+          const g5GroupTotalHealth = g5TroopsCount * rider5.hp
+          console.log(
+            'g5smallGroupHealth: ',
+            g5SmallGroupHealth,
+            'g5GroupTotalHealth: ',
+            g5GroupTotalHealth
+          )
+          console.log('g5 total health', g5GroupTotalHealth + g5SmallGroupHealth)
+          if (
+            g5GroupTotalHealth + g5SmallGroupHealth < sacrificeGroupHealth &&
+            totalLeadership + g5SmallGroupLeadership <= leadership
+          ) {
+            g5TroopsCount = g5TroopsCount + g5NeededToKillOneMob
+            console.log('added g5 --------------------', g5TroopsCount)
+          }
+        } else {
+          // uses g1 as sacrifice, check health based on this
+          g5TroopsCount = g5TroopsCount + 1
+          sacrificeGroupHealth = g5TroopsCount * rider5.hp
+
+          console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
+        }
+      }
+
+      totalLeadership = getTotalLeadershipConsumed(
+        g1TroopsCount,
+        g2TroopsCount,
+        g3TroopsCount,
+        g4TroopsCount,
+        g5TroopsCount,
+        sacrificeTroopsCount
+      )
+
+      if (totalLeadership > leadership) break
+
+      // hold the previous value before overflow
+      finalSacrificeTroopsCount = sacrificeTroopsCount
+      finalG1TroopsCount = g1TroopsCount
+      finalG2TroopsCount = g2TroopsCount
+      finalG3TroopsCount = g3TroopsCount
+      finalG4TroopsCount = g4TroopsCount
+      finalG5TroopsCount = g5TroopsCount
+
+      if (totalLeadership > leadership) break
+
+      if (maxLoop-- < 1) break
+    }
+
+    console.log(
+      'g1',
+      finalG1TroopsCount,
+      g1NeededToKillOneMob,
+      finalG1TroopsCount / g1NeededToKillOneMob
+    )
+    console.log(
+      'g2',
+      finalG2TroopsCount,
+      g2NeededToKillOneMob,
+      finalG2TroopsCount / g2NeededToKillOneMob
+    )
+    console.log(
+      'g3',
+      finalG3TroopsCount,
+      g3NeededToKillOneMob,
+      finalG3TroopsCount / g3NeededToKillOneMob
+    )
+    console.log(
+      'g4',
+      finalG4TroopsCount,
+      g4NeededToKillOneMob,
+      finalG4TroopsCount / g4NeededToKillOneMob
+    )
+    console.log(
+      'g5',
+      finalG5TroopsCount,
+      g5NeededToKillOneMob,
+      finalG5TroopsCount / g5NeededToKillOneMob
+    )
+
+    setRider1({
+      groupCount: finalG1TroopsCount / g1NeededToKillOneMob,
+      leadership: finalG1TroopsCount * rider1.LEADERSHIP,
+      minCount: g1NeededToKillOneMob,
+      maxCount: finalG1TroopsCount
+    })
+    setRider2({
+      groupCount: finalG2TroopsCount / g2NeededToKillOneMob,
+      leadership: finalG2TroopsCount * rider2.LEADERSHIP,
+      minCount: g2NeededToKillOneMob,
+      maxCount: finalG2TroopsCount
+    })
+    setRider3({
+      groupCount: finalG3TroopsCount / g3NeededToKillOneMob,
+      leadership: finalG3TroopsCount * rider3.LEADERSHIP,
+      minCount: g3NeededToKillOneMob,
+      maxCount: finalG3TroopsCount
+    })
+    setRider4({
+      groupCount: finalG4TroopsCount / g4NeededToKillOneMob,
+      leadership: finalG4TroopsCount * rider4.LEADERSHIP,
+      minCount: g4NeededToKillOneMob,
+      maxCount: finalG4TroopsCount
+    })
+    setRider5({
+      groupCount: finalG5TroopsCount / g5NeededToKillOneMob,
+      leadership: finalG5TroopsCount * rider5.LEADERSHIP,
+      minCount: g5NeededToKillOneMob,
+      maxCount: finalG5TroopsCount
+    })
+
+    // console.log('sacrifices', sacrificeGroupsCount)
+    setSacrifice({
+      groupCount: finalSacrificeTroopsCount / sacrificesNeededToKillOneMob,
+      leadership: finalSacrificeTroopsCount * sacrifice.LEADERSHIP,
+      minCount: sacrificesNeededToKillOneMob,
+      maxCount: finalSacrificeTroopsCount
+    })
+  }
+
   const handleDecGroupCount = (group: string) => {
     if (group === 'xx') {
       const groupCount = sacrifice.groupCount - 1
@@ -557,6 +917,68 @@ function App() {
     rider4.leadership +
     rider5.leadership
 
+  const totalSacrificeHP = sacrifice.hp * sacrifice.maxCount
+  const totalG1HP = rider1.hp * rider1.maxCount
+  const totalG2HP = rider2.hp * rider2.maxCount
+  const totalG3HP = rider3.hp * rider3.maxCount
+  const totalG4HP = rider4.hp * rider4.maxCount
+  const totalG5HP = rider5.hp * rider5.maxCount
+
+  let maxHealthAllowed = totalSacrificeHP
+  let isG1HealthValueWrong = totalG1HP >= maxHealthAllowed
+  let isG2HealthValueWrong = totalG2HP >= maxHealthAllowed
+  let isG3HealthValueWrong = totalG3HP >= maxHealthAllowed
+  let isG4HealthValueWrong = totalG4HP >= maxHealthAllowed
+  let isG5HealthValueWrong = totalG5HP >= maxHealthAllowed
+
+  if (!useSacrifices) {
+    if (useG1Rider) {
+      maxHealthAllowed = totalG1HP
+      isG1HealthValueWrong = false
+      isG2HealthValueWrong = totalG2HP >= maxHealthAllowed
+      isG3HealthValueWrong = totalG3HP >= maxHealthAllowed
+      isG4HealthValueWrong = totalG4HP >= maxHealthAllowed
+      isG5HealthValueWrong = totalG5HP >= maxHealthAllowed
+    } else {
+      if (useG2Rider) {
+        maxHealthAllowed = totalG2HP
+        isG1HealthValueWrong = false
+        isG2HealthValueWrong = false
+        isG3HealthValueWrong = totalG3HP >= maxHealthAllowed
+        isG4HealthValueWrong = totalG4HP >= maxHealthAllowed
+        isG5HealthValueWrong = totalG5HP >= maxHealthAllowed
+      } else {
+        if (useG3Rider) {
+          maxHealthAllowed = totalG3HP
+          isG1HealthValueWrong = false
+          isG2HealthValueWrong = false
+          isG3HealthValueWrong = false
+          isG4HealthValueWrong = totalG4HP >= maxHealthAllowed
+          isG5HealthValueWrong = totalG5HP >= maxHealthAllowed
+        } else {
+          if (useG4Rider) {
+            maxHealthAllowed = totalG4HP
+            isG1HealthValueWrong = false
+            isG2HealthValueWrong = false
+            isG3HealthValueWrong = false
+            isG4HealthValueWrong = false
+            isG5HealthValueWrong = totalG5HP >= maxHealthAllowed
+          } else {
+            if (useG5Rider) {
+              maxHealthAllowed = totalG5HP
+
+              isG1HealthValueWrong = false
+              isG2HealthValueWrong = false
+              isG3HealthValueWrong = false
+              isG4HealthValueWrong = false
+              isG5HealthValueWrong = false
+            }
+          }
+        }
+      }
+    }
+  }
+
   return (
     <Fragment>
       <h1>Troops calculation - totalbattle</h1>
@@ -632,15 +1054,15 @@ function App() {
               <td>{sacrifice.minCount}</td>
               <td className='bright'>{sacrifice.maxCount}</td>
               <td>
-                {sacrifice.groupCount}
-                <button className='btnGroupCount' onClick={() => handleDecGroupCount('xx')}>
+                {/* {sacrifice.groupCount} */}
+                {/* <button className='btnGroupCount' onClick={() => handleDecGroupCount('xx')}>
                   -
                 </button>
                 <button className='btnGroupCount' onClick={() => handleIncGroupCount('xx')}>
                   +
-                </button>
+                </button> */}
               </td>
-              {showHealthData && <td>{(sacrifice.hp * sacrifice.maxCount).toFixed(0)}</td>}
+              {showHealthData && <td>{totalSacrificeHP.toFixed(0)}</td>}
               {showStrengthData && <td>{(sacrifice.str * sacrifice.maxCount).toFixed(0)}</td>}
             </tr>
 
@@ -665,15 +1087,23 @@ function App() {
                 {rider1.maxCount} <span className='small'>(x{rider1.LEADERSHIP})</span>
               </td>
               <td>
-                {rider1.groupCount}
-                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g1')}>
-                  -
-                </button>
-                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g1')}>
-                  +
-                </button>
+                {useG1Rider && (
+                  <>
+                    {rider1.groupCount.toFixed(0)}
+                    <button className='btnGroupCount' onClick={() => handleDecGroupCount('g1')}>
+                      -
+                    </button>
+                    <button className='btnGroupCount' onClick={() => handleIncGroupCount('g1')}>
+                      +
+                    </button>
+                  </>
+                )}
               </td>
-              {showHealthData && <td>{(rider1.hp * rider1.maxCount).toFixed(0)}</td>}
+              {showHealthData && (
+                <td className={classNames({ 'red-text': isG1HealthValueWrong })}>
+                  {totalG1HP.toFixed(0)}
+                </td>
+              )}
               {showStrengthData && <td>{(rider1.str * rider1.maxCount).toFixed(0)}</td>}
             </tr>
 
@@ -697,15 +1127,24 @@ function App() {
                 {rider2.maxCount} <span className='small'>(x{rider2.LEADERSHIP})</span>
               </td>
               <td>
-                {rider2.groupCount}{' '}
-                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g2')}>
-                  -
-                </button>
-                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g2')}>
-                  +
-                </button>
+                {' '}
+                {useG2Rider && (
+                  <>
+                    {rider2.groupCount.toFixed(0)}{' '}
+                    <button className='btnGroupCount' onClick={() => handleDecGroupCount('g2')}>
+                      -
+                    </button>
+                    <button className='btnGroupCount' onClick={() => handleIncGroupCount('g2')}>
+                      +
+                    </button>
+                  </>
+                )}
               </td>
-              {showHealthData && <td>{(rider2.hp * rider2.maxCount).toFixed(0)}</td>}
+              {showHealthData && (
+                <td className={classNames({ 'red-text': isG2HealthValueWrong })}>
+                  {totalG2HP.toFixed(0)}
+                </td>
+              )}
               {showStrengthData && <td>{(rider2.str * rider2.maxCount).toFixed(0)}</td>}
             </tr>
 
@@ -729,15 +1168,23 @@ function App() {
                 {rider3.maxCount} <span className='small'>(x{rider3.LEADERSHIP})</span>
               </td>
               <td>
-                {rider3.groupCount}{' '}
-                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g3')}>
-                  -
-                </button>
-                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g3')}>
-                  +
-                </button>
+                {useG3Rider && (
+                  <>
+                    {rider3.groupCount.toFixed(0)}{' '}
+                    <button className='btnGroupCount' onClick={() => handleDecGroupCount('g3')}>
+                      -
+                    </button>
+                    <button className='btnGroupCount' onClick={() => handleIncGroupCount('g3')}>
+                      +
+                    </button>
+                  </>
+                )}
               </td>
-              {showHealthData && <td>{(rider3.hp * rider3.maxCount).toFixed(0)}</td>}
+              {showHealthData && (
+                <td className={classNames({ 'red-text': isG3HealthValueWrong })}>
+                  {totalG3HP.toFixed(0)}
+                </td>
+              )}
               {showStrengthData && <td>{(rider3.str * rider3.maxCount).toFixed(0)}</td>}
             </tr>
 
@@ -761,15 +1208,23 @@ function App() {
                 {rider4.maxCount} <span className='small'>(x{rider4.LEADERSHIP})</span>
               </td>
               <td>
-                {rider4.groupCount}{' '}
-                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g4')}>
-                  -
-                </button>
-                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g4')}>
-                  +
-                </button>
+                {useG4Rider && (
+                  <>
+                    {rider4.groupCount.toFixed(0)}{' '}
+                    <button className='btnGroupCount' onClick={() => handleDecGroupCount('g4')}>
+                      -
+                    </button>
+                    <button className='btnGroupCount' onClick={() => handleIncGroupCount('g4')}>
+                      +
+                    </button>
+                  </>
+                )}
               </td>
-              {showHealthData && <td>{(rider4.hp * rider4.maxCount).toFixed(0)}</td>}
+              {showHealthData && (
+                <td className={classNames({ 'red-text': isG4HealthValueWrong })}>
+                  {totalG4HP.toFixed(0)}
+                </td>
+              )}
               {showStrengthData && <td>{(rider4.str * rider4.maxCount).toFixed(0)}</td>}
             </tr>
 
@@ -793,15 +1248,23 @@ function App() {
                 {rider5.maxCount} <span className='small'>(x{rider5.LEADERSHIP})</span>
               </td>
               <td>
-                {rider5.groupCount}{' '}
-                <button className='btnGroupCount' onClick={() => handleDecGroupCount('g5')}>
-                  -
-                </button>
-                <button className='btnGroupCount' onClick={() => handleIncGroupCount('g5')}>
-                  +
-                </button>
+                {useG5Rider && (
+                  <>
+                    {rider5.groupCount.toFixed(0)}{' '}
+                    <button className='btnGroupCount' onClick={() => handleDecGroupCount('g5')}>
+                      -
+                    </button>
+                    <button className='btnGroupCount' onClick={() => handleIncGroupCount('g5')}>
+                      +
+                    </button>
+                  </>
+                )}
               </td>
-              {showHealthData && <td>{(rider5.hp * rider5.maxCount).toFixed(0)}</td>}
+              {showHealthData && (
+                <td className={classNames({ 'red-text': isG5HealthValueWrong })}>
+                  {totalG5HP.toFixed(0)}
+                </td>
+              )}
               {showStrengthData && <td>{(rider5.str * rider5.maxCount).toFixed(0)}</td>}
             </tr>
 
@@ -847,6 +1310,14 @@ function App() {
         {leadershipConsumed > leadership && (
           <p style={{ color: 'red' }}>you do NOT have enough leadership</p>
         )}
+
+        {isG1HealthValueWrong ||
+          isG2HealthValueWrong ||
+          isG3HealthValueWrong ||
+          isG4HealthValueWrong ||
+          (isG5HealthValueWrong && (
+            <p style={{ color: 'red' }}>too much troops, it surpases the sacrifices stack Health</p>
+          ))}
         <div>
           <div className='group'>
             <label>Sacrifies </label>
@@ -880,9 +1351,10 @@ function App() {
         </div>
       </div>
 
-      <button className='gobtn' onClick={calc}>
-        CALCULATE
+      <button className='gobtn' onClick={calcHP}>
+        CALCULATE (hp)
       </button>
+      <button onClick={calcSTR}>CALCULATE (str)</button>
 
       <div className='info'>
         <div>

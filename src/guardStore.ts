@@ -56,7 +56,7 @@ export const useGuardsStore = create<GuardsStore>(set => ({
   bonusSTR: 0,
   sacrificeBonusHP: 0,
   sacrificeBonusSTR: 0,
-  leadership: 0,
+  leadership: 1000,
   mobHealth: 2160,
   sacrifice: {
     BASEHP: 300,
