@@ -1,9 +1,9 @@
 #root {
   margin: 0 auto;
-  padding: 0.2em;
+  padding: 16px;
 }
 table {
-  margin: 1rem auto;
+  margin: 1rem 0;
 }
 
 table,
@@ -23,13 +23,14 @@ table th {
 
 .configbar {
   display: flex;
-  justify-content: space-between;
+  .card {
+    margin-left: 1rem;
+  }
 }
 
 .event {
   margin: 1rem 0;
   display: flex;
-  justify-content: space-between;
 }
 .group {
   margin: 0 1rem;
@@ -56,7 +57,7 @@ table th {
 }
 .btnGroupCount {
   margin-left: 0.5rem;
-  padding: 0 1rem;
+  padding: 0 0.2rem;
 }
 
 .red-text {
