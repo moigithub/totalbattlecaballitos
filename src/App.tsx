@@ -75,6 +75,8 @@ function App() {
   const [showHealthData, setShowHealthData] = useState(false)
   const [showStrengthData, setShowStrengthData] = useState(false)
 
+  const [maxSacrifices, setMaxSacrifices] = useState(0)
+  const [useMaxSacrifices, setUseMaxSacrifices] = useState(false)
   const [useSacrifices, setUseSacrifices] = useState(true)
   const [useG1Rider, setUseG1Rider] = useState(true)
   const [useG2Rider, setUseG2Rider] = useState(true)
@@ -531,8 +533,7 @@ function App() {
      el resto puede tener cualquier valor siempre y cuando sea menor
             */
 
-    let factor = 0
-    let maxLoop = 1000000
+    let maxLoop = 1000000 // should change it for a timer
 
     let sacrificeTroopsCount = 0
     let g1TroopsCount = 0
@@ -552,6 +553,7 @@ function App() {
       g1Leadership + g2Leadership + g3Leadership + g4Leadership + g5Leadership + sacrificeLeadership
       */
     let totalLeadership = 0
+    let lastLeadershipCalculated = 0 // to break the loop, if didnt changed (loop protection)
     /***********************************************
      *  basado en fuerza
      * ==========================
@@ -581,10 +583,10 @@ function App() {
      */
     let sacrificeGroupHealth = 0
     while (totalLeadership < leadership) {
-      factor = factor + 1
-
       if (useSacrifices) {
         sacrificeTroopsCount = sacrificeTroopsCount + 1
+        if (useMaxSacrifices) sacrificeTroopsCount = maxSacrifices
+
         sacrificeGroupHealth = sacrificeTroopsCount * sacrifice.hp
 
         // console.log('sacrificegrouphealth: ', sacrificeGroupHealth)
@@ -740,6 +742,10 @@ function App() {
       )
 
       if (totalLeadership > leadership) break
+      if (lastLeadershipCalculated === totalLeadership) {
+        console.log('no changes to leadership, ending')
+        break
+      }
 
       // hold the previous value before overflow
       finalSacrificeTroopsCount = sacrificeTroopsCount
@@ -748,6 +754,8 @@ function App() {
       finalG3TroopsCount = g3TroopsCount
       finalG4TroopsCount = g4TroopsCount
       finalG5TroopsCount = g5TroopsCount
+
+      lastLeadershipCalculated = totalLeadership
 
       if (totalLeadership > leadership) break
       console.log('loop protection', maxLoop)
@@ -818,19 +826,23 @@ function App() {
 
     // console.log('sacrifices', sacrificeGroupsCount)
     setSacrifice({
-      groupCount: finalSacrificeTroopsCount / sacrificesNeededToKillOneMob,
+      groupCount: finalSacrificeTroopsCount, // total of units, not groups
       leadership: finalSacrificeTroopsCount * sacrifice.LEADERSHIP,
       minCount: sacrificesNeededToKillOneMob,
       maxCount: finalSacrificeTroopsCount
     })
+    if (!useMaxSacrifices) {
+      setMaxSacrifices(finalSacrificeTroopsCount)
+    }
   }
 
   const handleDecGroupCount = (group: string) => {
     if (group === 'xx') {
-      const groupCount = sacrifice.groupCount - 1
-      const leadership = sacrifice.LEADERSHIP * groupCount * sacrifice.minCount
-      const troopsCount = sacrifice.maxCount - sacrifice.minCount
-      setSacrifice({ groupCount, leadership, maxCount: troopsCount })
+      // sacrifices, count 1 by 1
+      // const groupCount = sacrifice.groupCount - 1
+      // const leadership = sacrifice.LEADERSHIP * groupCount
+      // const troopsCount = sacrifice.maxCount - 1
+      // setSacrifice({ groupCount, leadership, maxCount: troopsCount })
     } else if (group === 'g1') {
       const groupCount = rider1.groupCount - 1
       const leadership = rider1.LEADERSHIP * groupCount * rider1.minCount
@@ -861,10 +873,10 @@ function App() {
 
   const handleIncGroupCount = (group: string) => {
     if (group === 'xx') {
-      const groupCount = sacrifice.groupCount + 1
-      const leadership = sacrifice.LEADERSHIP * groupCount * sacrifice.minCount
-      const troopsCount = sacrifice.maxCount + sacrifice.minCount
-      setSacrifice({ groupCount, leadership, maxCount: troopsCount })
+      // const groupCount = sacrifice.groupCount + 1
+      // const leadership = sacrifice.LEADERSHIP * groupCount
+      // const troopsCount = sacrifice.maxCount + 1
+      // setSacrifice({ groupCount, leadership, maxCount: troopsCount })
     } else if (group === 'g1') {
       const groupCount = rider1.groupCount + 1
       const leadership = rider1.LEADERSHIP * groupCount * rider1.minCount
@@ -1007,19 +1019,6 @@ function App() {
           </div>
         </div>
         <table>
-          <thead>
-            <tr>
-              <th>Use</th>
-
-              {showStrengthData && <th>Str + bonus</th>}
-              {showHealthData && <th>Health + bonus</th>}
-              <th>Min setup</th>
-              <th>Max setup</th>
-              <th>Groups count</th>
-              {showHealthData && <th>Stack Health</th>}
-              {showStrengthData && <th>Stack Strength</th>}
-            </tr>
-          </thead>
           <tbody>
             <tr>
               <td>
@@ -1040,16 +1039,79 @@ function App() {
               <td>{sacrifice.minCount}</td>
               <td className='bright'>{sacrifice.maxCount}</td>
               <td>
+                <div className='card'>
+                  <label>use limit</label>
+                  <input
+                    type='checkbox'
+                    checked={useMaxSacrifices}
+                    onChange={() => {
+                      setUseMaxSacrifices(!useMaxSacrifices)
+                    }}
+                  />
+                </div>
+                <div className='card'>
+                  <span>Count</span> {maxSacrifices}
+                </div>
                 {/* {sacrifice.groupCount} */}
-                {/* <button className='btnGroupCount' onClick={() => handleDecGroupCount('xx')}>
-                  -
+                <button
+                  className='btnGroupCount'
+                  onClick={() => {
+                    if (useMaxSacrifices) {
+                      if (maxSacrifices > 1) {
+                        setMaxSacrifices(n => n - 10)
+                      }
+                    }
+                  }}
+                >
+                  -10
                 </button>
-                <button className='btnGroupCount' onClick={() => handleIncGroupCount('xx')}>
-                  +
-                </button> */}
+                <button
+                  className='btnGroupCount'
+                  onClick={() => {
+                    if (useMaxSacrifices) {
+                      if (maxSacrifices > 1) {
+                        setMaxSacrifices(n => n - 1)
+                      }
+                    }
+                  }}
+                >
+                  -1
+                </button>
+                <button
+                  className='btnGroupCount'
+                  onClick={() => {
+                    if (useMaxSacrifices) {
+                      setMaxSacrifices(n => n + 1)
+                    }
+                  }}
+                >
+                  +1
+                </button>
+                <button
+                  className='btnGroupCount'
+                  onClick={() => {
+                    if (useMaxSacrifices) {
+                      setMaxSacrifices(n => n + 10)
+                    }
+                  }}
+                >
+                  +10
+                </button>
               </td>
               {showHealthData && <td>{totalSacrificeHP.toFixed(0)}</td>}
               {showStrengthData && <td>{(sacrifice.str * sacrifice.maxCount).toFixed(0)}</td>}
+            </tr>
+
+            <tr style={{ backgroundColor: '#115511', color: 'white', fontWeight: 'bold' }}>
+              <td>Use</td>
+
+              {showStrengthData && <td>Str + bonus</td>}
+              {showHealthData && <td>Health + bonus</td>}
+              <td>Min setup</td>
+              <td>Max setup</td>
+              <td>Groups count</td>
+              {showHealthData && <td>Stack Health</td>}
+              {showStrengthData && <td>Stack Strength</td>}
             </tr>
 
             <tr>
