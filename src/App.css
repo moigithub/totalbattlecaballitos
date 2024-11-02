@@ -17,6 +17,25 @@ table th {
   padding: 0 10px;
 }
 
+.navbar {
+  list-style: none;
+  display: flex;
+
+  li {
+    margin: 0;
+
+    a {
+      padding: 10px;
+      text-decoration: none;
+    }
+
+    .active {
+      background-color: burlywood;
+      color: black;
+    }
+  }
+}
+
 .info {
   display: flex;
 }
@@ -68,10 +87,16 @@ table th {
   display: flex;
 }
 .army-container {
-  width: 300px;
+  width: 250px;
 }
+.config-container,
+.stack-container {
+  min-width: 450px;
+}
+
 .troop {
-  padding: 1rem;
+  padding: 0.5rem;
+  font-size: 14px;
   border: 1px solid grey;
   margin: 8px;
   cursor: pointer;
