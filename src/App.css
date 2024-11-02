@@ -63,3 +63,97 @@ table th {
 .red-text {
   color: red;
 }
+
+.main-container {
+  display: flex;
+}
+.army-container {
+  width: 300px;
+}
+.troop {
+  padding: 1rem;
+  border: 1px solid grey;
+  margin: 8px;
+  cursor: pointer;
+  &:hover {
+    border: 1px solid green;
+    border-right: 10px solid green;
+  }
+}
+
+.stack-card {
+  display: grid;
+  grid-template-areas:
+    'units name name name health action'
+    'units limit strength leadership minSetup config';
+
+  width: 400px;
+  border: 1px solid grey;
+  margin: 10px 0;
+}
+.stack-units {
+  grid-area: units;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
+  color: black;
+  margin-right: 10px;
+}
+.stack-name {
+  grid-area: name;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.stack-health {
+  grid-area: health;
+  margin: 0;
+  /* background-color: rosybrown; */
+  color: brown;
+}
+.stack-strength {
+  grid-area: strength;
+  margin: 0;
+  /* background-color: aquamarine; */
+  color: aquamarine;
+  font-size: 0.8rem;
+}
+.stack-leadership {
+  grid-area: leadership;
+  margin: 0;
+  /* background-color: cadetblue; */
+  color: cadetblue;
+  font-size: 0.8rem;
+}
+.stack-minSetup {
+  grid-area: minSetup;
+  margin: 0;
+  /* background-color: darkgoldenrod; */
+  color: darkgoldenrod;
+  font-size: 0.8rem;
+}
+.stack-limit {
+  grid-area: limit;
+  margin: 0;
+  font-size: 0.8rem;
+}
+.action-btn {
+  padding: 0 15px;
+}
+.stack-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: action;
+  gap: 10px;
+  margin: 0;
+}
+.stack-config {
+  grid-area: config;
+  margin: 0;
+  font-size: 0.8rem;
+}

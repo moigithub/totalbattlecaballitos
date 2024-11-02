@@ -1,8 +1,18 @@
 import { useState, useEffect, Fragment } from 'react'
 
 import './App.css'
-import { useGuardsStore } from './guardStore'
-import { SwordmanG1, SpearmanG1, ArcherG1, CatapultG1 } from './soldiers'
+import { Stack, useGuardsStore, useStackStore } from './guardStore'
+import {
+  SwordmanG1,
+  SpearmanG1,
+  ArcherG1,
+  CatapultG1,
+  RiderG1,
+  RiderG2,
+  RiderG3,
+  RiderG5,
+  RiderG4
+} from './soldiers'
 import classNames from 'classnames'
 
 //doomsday nigromante str 720, hp 2160
@@ -63,6 +73,17 @@ function App() {
   const setRider3 = useGuardsStore(state => state.setRider3)
   const setRider4 = useGuardsStore(state => state.setRider4)
   const setRider5 = useGuardsStore(state => state.setRider5)
+  ///----------------.
+  const army = useStackStore(state => state.army)
+  const setArmy = useStackStore(state => state.setArmy)
+  const addArmy = useStackStore(state => state.addArmy)
+  const removeArmy = useStackStore(state => state.removeArmy)
+  const bonus = useStackStore(state => state.bonus)
+  const toggleLockMin = useStackStore(state => state.toggleLockMin)
+  const addUnits = useStackStore(state => state.addUnits)
+  const removeUnits = useStackStore(state => state.removeUnits)
+
+  //-------------------
 
   const [selectedEvent, setSelectedEvent] = useState('0')
   const [selectedSacrifice, setSelectedSacrifice] = useState('0')
@@ -905,6 +926,75 @@ function App() {
     }
   }
 
+  const addTroops = (type: string) => {
+    if (type === 'Rider G1') {
+      const stack: Stack = {
+        name: 'Rider G1',
+        health: RiderG1.BASEHP + (RiderG1.BASEHP * bonus.riderG1.hp) / 100,
+        strength: RiderG1.BASESTR + (RiderG1.BASESTR * bonus.riderG1.str) / 100,
+        leadership: RiderG1.LEADERSHIP,
+        units: 1,
+        unitType: 'riderG1',
+        minSetup: 1,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Rider G2') {
+      const stack: Stack = {
+        name: 'Rider G2',
+        health: RiderG2.BASEHP + (RiderG2.BASEHP * bonus.riderG2.hp) / 100,
+        strength: RiderG2.BASESTR + (RiderG2.BASESTR * bonus.riderG2.str) / 100,
+        leadership: RiderG2.LEADERSHIP,
+        units: 1,
+        unitType: 'riderG2',
+        minSetup: 3,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Rider G3') {
+      const stack: Stack = {
+        name: 'Rider G3',
+        health: RiderG3.BASEHP + (RiderG3.BASEHP * bonus.riderG3.hp) / 100,
+        strength: RiderG3.BASESTR + (RiderG3.BASESTR * bonus.riderG3.str) / 100,
+        leadership: RiderG3.LEADERSHIP,
+        units: 1,
+        unitType: 'riderG3',
+        minSetup: 1,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Rider G4') {
+      const stack: Stack = {
+        name: 'Rider G4',
+        health: RiderG4.BASEHP + (RiderG4.BASEHP * bonus.riderG4.hp) / 100,
+        strength: RiderG4.BASESTR + (RiderG4.BASESTR * bonus.riderG4.str) / 100,
+        leadership: RiderG4.LEADERSHIP,
+        units: 1,
+        unitType: 'riderG4',
+        minSetup: 1,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Rider G5') {
+      const stack: Stack = {
+        name: 'Rider G5',
+        health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.riderG5.hp) / 100,
+        strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.riderG5.str) / 100,
+        leadership: RiderG5.LEADERSHIP,
+        units: 1,
+        unitType: 'riderG5',
+        minSetup: 1,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    }
+  }
+
   //calc()
   const leadershipConsumed =
     sacrifice.leadership +
@@ -1457,6 +1547,296 @@ function App() {
           <p>and finally... do whatever you want</p>
         </div>
         <img src='./bonus.jpg' alt='bonus' />
+      </div>
+
+      {/* ---------------------- */}
+
+      <div className='main-container'>
+        <div className='army-container'>
+          <h2>Army</h2>
+          <div className='army-list'>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Spearman G1')
+              }}
+            >
+              Spearman G1
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Archer G1')
+              }}
+            >
+              Archer G1
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Rider G1')
+              }}
+            >
+              Rider G1
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Spearman G2')
+              }}
+            >
+              Spearman G2
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Archer G2')
+              }}
+            >
+              Archer G2
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Rider G2')
+              }}
+            >
+              Rider G2
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Spearman G3')
+              }}
+            >
+              Spearman G3
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Archer G3')
+              }}
+            >
+              Archer G3
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Rider G3')
+              }}
+            >
+              Rider G3
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Spearman G4')
+              }}
+            >
+              Spearman G4
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Archer G4')
+              }}
+            >
+              Archer G4
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Rider G4')
+              }}
+            >
+              Rider G4
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Spearman G5')
+              }}
+            >
+              Spearman G5
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Archer G5')
+              }}
+            >
+              Archer G5
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Rider G5')
+              }}
+            >
+              Rider G5
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Swordman S1')
+              }}
+            >
+              Swordman S1
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Spy S1')
+              }}
+            >
+              Spy S1
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Swordman S2')
+              }}
+            >
+              Swordman S2
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Spy S2')
+              }}
+            >
+              Spy S2
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Catapult E1')
+              }}
+            >
+              Catapult E1
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Catapult E2')
+              }}
+            >
+              Catapult E2
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Water Elemental')
+              }}
+            >
+              Water Elemental M3
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Battle Boar')
+              }}
+            >
+              Battle Boar M3
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Emerald Dragon')
+              }}
+            >
+              Emerald Dragon M3
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Stone Gargole')
+              }}
+            >
+              Stone Gargole M3
+            </div>
+            <hr />
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Epic Monster')
+              }}
+            >
+              Epic Monster Hunter VI
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Chariot VI')
+              }}
+            >
+              Chariot VI
+            </div>
+            <div
+              className='troop'
+              onClick={() => {
+                addTroops('Legionary VI')
+              }}
+            >
+              Legionary VI
+            </div>
+          </div>
+        </div>
+
+        <div className='army-list'>
+          {army.map(stack => {
+            return (
+              <div className='stack-card'>
+                <p className='stack-units'>{stack.units}</p>
+                <p className='stack-name'>{stack.name}</p>
+                <p className='stack-health'>HP {stack.health}</p>
+                <p className='stack-strength'>STR {stack.strength}</p>
+                <p className='stack-leadership'>Lead {stack.leadership}</p>
+                <p className='stack-minSetup'>Min {stack.minSetup}</p>
+                <p className='stack-limit'>Limit {stack.limit}</p>
+                <div className='stack-action'>
+                  <button
+                    className='action-btn'
+                    onClick={() => {
+                      addUnits(stack.position!)
+                    }}
+                  >
+                    +
+                  </button>
+                  <button
+                    className='action-btn'
+                    onClick={() => {
+                      removeUnits(stack.position!)
+                    }}
+                  >
+                    -
+                  </button>
+                </div>
+                <div className='stack-config'>
+                  <label>lock Min</label>
+
+                  <input
+                    type='checkbox'
+                    checked={stack.lockMinSetup}
+                    onChange={() => {
+                      toggleLockMin(stack.position!)
+                    }}
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        <div></div>
       </div>
     </Fragment>
   )
