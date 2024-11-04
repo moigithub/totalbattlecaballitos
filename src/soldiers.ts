@@ -109,6 +109,7 @@ export const SwordmanG1: Unit = {
   category: 'melee',
   level: 'S1'
 }
+
 export const SpearmanG1: Unit = {
   name: 'SpearmanG1',
   BASEHP: 150,
@@ -127,6 +128,78 @@ export const SpearmanG1: Unit = {
   category: 'melee',
   level: 'G1'
 }
+export const SpearmanG2: Unit = {
+  name: 'SpearmanG2',
+  BASEHP: 270,
+  BASESTR: 90,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 120,
+  vsHumanPercent: 0,
+  vsMountedPercent: 59,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'spearman',
+  category: 'melee',
+  level: 'G2'
+}
+export const SpearmanG3: Unit = {
+  name: 'SpearmanG3',
+  BASEHP: 480,
+  BASESTR: 160,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 180,
+  vsHumanPercent: 0,
+  vsMountedPercent: 88,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'spearman',
+  category: 'melee',
+  level: 'G3'
+}
+export const SpearmanG4: Unit = {
+  name: 'SpearmanG4',
+  BASEHP: 870,
+  BASESTR: 290,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 270,
+  vsHumanPercent: 0,
+  vsMountedPercent: 132,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'spearman',
+  category: 'melee',
+  level: 'G4'
+}
+export const SpearmanG5: Unit = {
+  name: 'SpearmanG5',
+  BASEHP: 1560,
+  BASESTR: 520,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 405,
+  vsHumanPercent: 0,
+  vsMountedPercent: 197,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'spearman',
+  category: 'melee',
+  level: 'G5'
+}
 export const ArcherG1: Unit = {
   name: 'Archer G1',
   BASEHP: 150,
@@ -142,7 +215,79 @@ export const ArcherG1: Unit = {
   vsMeleePercent: 52,
   vsFortificationsPercent: 0,
   troop: 'archer',
-  category: 'mounted',
+  category: 'ranged',
+  level: 'G1'
+}
+export const ArcherG2: Unit = {
+  name: 'Archer G2',
+  BASEHP: 270,
+  BASESTR: 90,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 101,
+  vsMeleePercent: 78,
+  vsFortificationsPercent: 0,
+  troop: 'archer',
+  category: 'ranged',
+  level: 'G2'
+}
+export const ArcherG3: Unit = {
+  name: 'Archer G3',
+  BASEHP: 480,
+  BASESTR: 160,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 151,
+  vsMeleePercent: 117,
+  vsFortificationsPercent: 0,
+  troop: 'archer',
+  category: 'ranged',
+  level: 'G3'
+}
+export const ArcherG4: Unit = {
+  name: 'Archer G4',
+  BASEHP: 870,
+  BASESTR: 290,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 226,
+  vsMeleePercent: 176,
+  vsFortificationsPercent: 0,
+  troop: 'archer',
+  category: 'ranged',
+  level: 'G4'
+}
+export const ArcherG5: Unit = {
+  name: 'Archer G5',
+  BASEHP: 1560,
+  BASESTR: 520,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 339,
+  vsMeleePercent: 263,
+  vsFortificationsPercent: 0,
+  troop: 'archer',
+  category: 'ranged',
   level: 'G5'
 }
 export const CatapultG1: Unit = {

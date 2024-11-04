@@ -243,54 +243,6 @@ interface StackStore {
     legionaryVI: BasicStats
   }
  */
-// const xx = {
-//   // guardsmen
-//   archer: {
-//     G1: { str: 0, hp: 0 },
-//     G2: { str: 0, hp: 0 },
-//     G3: { str: 0, hp: 0 },
-//     G4: { str: 0, hp: 0 },
-//     G5: { str: 0, hp: 0 }
-//   },
-//   spearman: {
-//     G1: { str: 0, hp: 0 },
-//     G2: { str: 0, hp: 0 },
-//     G3: { str: 0, hp: 0 },
-//     G4: { str: 0, hp: 0 },
-//     G5: { str: 0, hp: 0 }
-//   },
-//   rider: {
-//     G1: { str: 0, hp: 0 },
-//     G2: { str: 0, hp: 0 },
-//     G3: { str: 0, hp: 0 },
-//     G4: { str: 0, hp: 0 },
-//     G5: { str: 0, hp: 0 }
-//   },
-//   // Engineer corps
-//   catapult: {
-//     E1: { str: 0, hp: 0 },
-//     E2: { str: 0, hp: 0 },
-//     E3: { str: 0, hp: 0 },
-//     E4: { str: 0, hp: 0 },
-//     E5: { str: 0, hp: 0 }
-//   },
-
-//   // specialist
-//   swordsman: {
-//     S1: { str: 0, hp: 0 },
-//     S2: { str: 0, hp: 0 },
-//     S3: { str: 0, hp: 0 },
-//     S4: { str: 0, hp: 0 },
-//     S5: { str: 0, hp: 0 }
-//   },
-//   spy: {
-//     S1: { str: 0, hp: 0 },
-//     S2: { str: 0, hp: 0 },
-//     S3: { str: 0, hp: 0 },
-//     S4: { str: 0, hp: 0 },
-//     S5: { str: 0, hp: 0 }
-//   },
-// }
 
 export const getHPWithBonus = (unit: Unit, bonus: Bonus) => {
   //const hp = bonus[unit.troop][unit.level].hp ?? 0
@@ -548,6 +500,7 @@ export const useStackStore = create<StackStore>((set, get) => ({
         } else return stack
       })
     }))
+    // TODO: add more units
   },
   getStackStrength: (position: number, against: string) => {
     const stack = get().army.find(army => army.position === position)
@@ -648,6 +601,7 @@ export const useStackStore = create<StackStore>((set, get) => ({
         }
       }
     }
+    // TODO : add more units
     return 0
   },
   getStackHealth: (position: number) => {

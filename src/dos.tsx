@@ -158,7 +158,7 @@ function Dos() {
     //   }
     // }
 
-    return doomsdayFireswordRider // retornar el que tiene mas hp ?
+    return doomsdayOverseer //doomsdayFireswordRider // retornar el que tiene mas hp ?
   }
 
   // const getMonsterStack = () => {

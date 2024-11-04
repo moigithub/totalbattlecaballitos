@@ -1,5 +1,21 @@
 import { Stack, useStackStore } from './guardStore'
-import { RiderG1, RiderG2, RiderG3, RiderG4, RiderG5 } from './soldiers'
+import {
+  ArcherG1,
+  ArcherG2,
+  ArcherG3,
+  ArcherG4,
+  ArcherG5,
+  RiderG1,
+  RiderG2,
+  RiderG3,
+  RiderG4,
+  RiderG5,
+  SpearmanG1,
+  SpearmanG2,
+  SpearmanG3,
+  SpearmanG4,
+  SpearmanG5
+} from './soldiers'
 
 export const ArmyList = () => {
   const addArmy = useStackStore(state => state.addArmy)
@@ -60,6 +76,126 @@ export const ArmyList = () => {
         // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
         leadership: 0, //sRiderG5.LEADERSHIP,
         unit: RiderG5,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Spearman G1') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: SpearmanG1,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Spearman G2') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: SpearmanG2,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Spearman G3') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: SpearmanG3,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Spearman G4') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: SpearmanG4,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Spearman G5') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: SpearmanG5,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Archer G1') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: ArcherG1,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Archer G2') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: ArcherG2,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Archer G3') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: ArcherG3,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Archer G4') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: ArcherG4,
+        units: 0,
+        minSetup: 0,
+        lockMinSetup: true,
+        limit: 0
+      }
+      addArmy(stack)
+    } else if (type === 'Archer G5') {
+      const stack: Stack = {
+        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
+        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
+        leadership: 0, //sRiderG5.LEADERSHIP,
+        unit: ArcherG5,
         units: 0,
         minSetup: 0,
         lockMinSetup: true,
