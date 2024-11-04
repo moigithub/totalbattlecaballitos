@@ -1,7 +1,7 @@
 //doomsday nigromante strength 720, health 2160
 //ancient/tinman arbalesteraAncestrengthal strength 720, health 2160, ranged
 
-import { Category } from './guardStore'
+import { Category, Unit } from './guardStore'
 
 export type MonsterType = 'jormungandr' | 'swarm' | 'elemental' | 'ancient' | 'guardsman' | 'demon'
 // |'ancient'
