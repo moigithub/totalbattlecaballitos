@@ -4,6 +4,7 @@ import './App.css'
 import {
   getHPWithBonus,
   GuardsmanLevel,
+  MercUnit,
   TroopType,
   Unit,
   useGuardsStore,
@@ -52,6 +53,7 @@ function Dos() {
   //-------------------
 
   const [selectedEvent, setSelectedEvent] = useState('0')
+  const [addUnitMode, setAddUnitMode] = useState('sacrificeHealthLimit')
 
   useEffect(() => {
     let army = doomsdayArmy
@@ -154,10 +156,10 @@ function Dos() {
   //   }
   // }
 
-  const calculateUnitsMobKill = (monster: MonsterUnit, unit: Unit): number => {
+  const calculateUnitsMobKill = (monster: MonsterUnit, unit: Unit | MercUnit): number => {
     const monsterHealth = monster.BASEHP
     let soldierStrength = unit.BASESTR
-
+    // TODO: add more combinations
     // mounted vs ranged
 
     if (unit.category === 'mounted' && monster.category === 'ranged') {
@@ -217,6 +219,7 @@ function Dos() {
         const monster = getMobTarget(stack.unit.troop)
         console.log('monster target', monster)
 
+        // TODO: move calc minsetup when add the soldier (left panel)
         const unitsNeededToKill1Mob = calculateUnitsMobKill(monster, stack.unit)
         updateMinSetup(stack.id!, unitsNeededToKill1Mob)
         console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
@@ -247,10 +250,21 @@ function Dos() {
             sacrificeGroupHealth
           )
 
-          if (stackHealth + newStackHealth < sacrificeGroupHealth) {
-            // 9. agregar al stack
-            console.log('agregando units en ', stack.id)
-            addUnits(stack.id!)
+          if (addUnitMode === 'sacrificeHealthLimit') {
+            if (stackHealth + newStackHealth < sacrificeGroupHealth) {
+              // 9. agregar al stack
+              console.log('agregando units en ', stack.id)
+              addUnits(stack.id!)
+            }
+          }
+          if (addUnitMode === 'previousStackHealthLimit') {
+            const previousGroupHealth = getStackHealth(army[i - 1].id)
+
+            if (stackHealth + newStackHealth < previousGroupHealth) {
+              // 9. agregar al stack
+              console.log('agregando units en ', stack.id)
+              addUnits(stack.id!)
+            }
           }
         }
       }
@@ -310,6 +324,32 @@ function Dos() {
           <div className='card'>
             <label>Leadership </label>
             <input type='number' value={leadership} onChange={changeLeadership} required />
+          </div>
+        </div>
+        <div>
+          <div>
+            <label>Sacrifice health limit</label>
+            <input
+              type='radio'
+              value='sacrificeHealthLimit'
+              name='healthLimit'
+              checked={addUnitMode === 'sacrificeHealthLimit'}
+              onChange={() => {
+                setAddUnitMode('sacrificeHealthLimit')
+              }}
+            />
+          </div>
+          <div>
+            <label>Previous stack health limit</label>
+            <input
+              type='radio'
+              value='previousStackHealthLimit'
+              name='healthLimit'
+              checked={addUnitMode === 'previousStackHealthLimit'}
+              onChange={() => {
+                setAddUnitMode('previousStackHealthLimit')
+              }}
+            />
           </div>
         </div>
 

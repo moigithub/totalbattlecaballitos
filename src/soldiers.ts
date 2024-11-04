@@ -1,4 +1,4 @@
-import { Unit } from './guardStore'
+import { MercUnit, Unit } from './guardStore'
 
 export const RiderG1: Unit = {
   name: 'RiderG1',
@@ -553,4 +553,44 @@ export const CatapultE5: Unit = {
   troop: 'catapult',
   category: 'siege',
   level: 'E5'
+}
+
+//------------------------
+export const mercEpicMonsterHunter: MercUnit = {
+  name: 'mercEpicMonsterHunter',
+  BASEHP: 6090,
+  BASESTR: 2030,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 329,
+  vsSiegePercent: 273,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  vsEpicMonster: 609,
+  troop: 'merc',
+  category: 'merc',
+  level: 'VI'
+}
+export const mercChariot: MercUnit = {
+  name: 'mercChariot',
+  BASEHP: 11400,
+  BASESTR: 3800,
+  AUTHORITY: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 493,
+  vsSiegePercent: 410,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
+  troop: 'rider',
+  category: 'mounted',
+  level: 'VI'
 }

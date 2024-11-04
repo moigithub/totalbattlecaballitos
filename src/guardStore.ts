@@ -99,7 +99,25 @@ export interface Unit {
   category: Category
   level: Level
 }
-
+export interface MercUnit {
+  name: string
+  BASEHP: number
+  BASESTR: number
+  AUTHORITY: number
+  INITIATIVE: number
+  vsRangedPercent: number
+  vsSiegePercent: number
+  vsBeastPercent: number
+  vsHumanPercent: number
+  vsMountedPercent: number
+  vsFlyingPercent: number
+  vsMeleePercent: number
+  vsFortificationsPercent: number
+  vsEpicMonster: number
+  troop: string
+  category: string
+  level: string
+}
 export type GuardsmanLevel = 'G1' | 'G2' | 'G3' | 'G4' | 'G5'
 export type EngineerLevel = 'E1' | 'E2' | 'E3' | 'E4' | 'E5'
 export type SpecialistLevel = 'S1' | 'S2' | 'S3' | 'S4' | 'S5'

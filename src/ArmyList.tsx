@@ -10,6 +10,8 @@ import {
   CatapultE3,
   CatapultE4,
   CatapultE5,
+  mercChariot,
+  mercEpicMonsterHunter,
   RiderG1,
   RiderG2,
   RiderG3,
@@ -98,6 +100,10 @@ export const ArmyList = () => {
       unitType = CatapultE4
     } else if (type === 'Catapult E5') {
       unitType = CatapultE5
+    } else if (type === 'mercEpicMonsterHunter') {
+      unitType = mercEpicMonsterHunter
+    } else if (type === 'mercChariot') {
+      unitType = mercChariot
     }
 
     if (!unitType) {
@@ -384,7 +390,7 @@ export const ArmyList = () => {
         <div
           className='troop mercs'
           onClick={() => {
-            addTroops('Epic Monster')
+            addTroops('mercEpicMonsterHunter')
           }}
         >
           Epic Monster Hunter VI
@@ -392,7 +398,7 @@ export const ArmyList = () => {
         <div
           className='troop mercs'
           onClick={() => {
-            addTroops('Chariot VI')
+            addTroops('mercChariot')
           }}
         >
           Chariot VI
