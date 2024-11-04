@@ -1,7 +1,7 @@
 //doomsday nigromante strength 720, health 2160
 //ancient/tinman arbalesteraAncestrengthal strength 720, health 2160, ranged
 
-import { Category, Unit } from './guardStore'
+import { Category, MercUnit, Unit } from './guardStore'
 
 export type MonsterType = 'jormungandr' | 'swarm' | 'elemental' | 'ancient' | 'guardsman' | 'demon'
 // |'ancient'
@@ -620,7 +620,7 @@ const shadowCorax: MonsterUnit = {
 | 'mounted'| 'ranged'| 'melee'| 'flying'| 'fortification'| 'siege'
 | 'elemental'| 'beast'| 'dragon'| 'giant'
 */
-export const whoCanIAttack = (unit: MonsterUnit | Unit) => {
+export const whoCanIAttack = (unit: MonsterUnit | Unit | MercUnit) => {
   const target = []
   if (unit.vsRangedPercent > 0) {
     target.push('ranged')

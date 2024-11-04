@@ -101,7 +101,7 @@ table th {
 }
 .config-container,
 .stack-container {
-  min-width: 550px;
+  min-width: 600px;
 }
 
 .troop {
@@ -145,6 +145,10 @@ table th {
   margin: 0;
   font-size: 1.2rem;
   font-weight: 500;
+  width: 100%;
+  max-width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .stack-health {
   grid-area: health;

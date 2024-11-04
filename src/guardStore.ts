@@ -74,7 +74,7 @@ export interface Stack {
   //healthLeft o damageTaken
   // strength: number // (base str+bonus) *units// calculado basado contra que esta atacando// recalculado, no guardado
   leadership: number
-  unit: Unit
+  unit: Unit | MercUnit
   units: number
   minSetup: number // used to calculate how many units are needed to kill one monster
   lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount
@@ -103,6 +103,7 @@ export interface MercUnit {
   name: string
   BASEHP: number
   BASESTR: number
+  LEADERSHIP: number
   AUTHORITY: number
   INITIATIVE: number
   vsRangedPercent: number
@@ -261,21 +262,21 @@ interface StackStore {
   }
  */
 
-export const getHPWithBonus = (unit: Unit, bonus: Bonus) => {
+export const getHPWithBonus = (unit: Unit | MercUnit, bonus: Bonus) => {
   //const hp = bonus[unit.troop][unit.level].hp ?? 0
   let hp = 0
   if (unit.troop === 'archer') {
-    hp = bonus[unit.troop][unit.level as GuardsmanLevel].hp ?? 0
+    hp = bonus[unit.troop][unit.level as GuardsmanLevel]?.hp ?? 0
   } else if (unit.troop == 'spearman') {
-    hp = bonus[unit.troop][unit.level as GuardsmanLevel].hp ?? 0
+    hp = bonus[unit.troop][unit.level as GuardsmanLevel]?.hp ?? 0
   } else if (unit.troop == 'rider') {
-    hp = bonus[unit.troop][unit.level as GuardsmanLevel].hp ?? 0
+    hp = bonus[unit.troop][unit.level as GuardsmanLevel]?.hp ?? 0
   } else if (unit.troop == 'spy') {
-    hp = bonus[unit.troop][unit.level as SpecialistLevel].hp ?? 0
+    hp = bonus[unit.troop][unit.level as SpecialistLevel]?.hp ?? 0
   } else if (unit.troop == 'swordsman') {
-    hp = bonus[unit.troop][unit.level as SpecialistLevel].hp ?? 0
+    hp = bonus[unit.troop][unit.level as SpecialistLevel]?.hp ?? 0
   } else if (unit.troop == 'catapult') {
-    hp = bonus[unit.troop][unit.level as EngineerLevel].hp ?? 0
+    hp = bonus[unit.troop][unit.level as EngineerLevel]?.hp ?? 0
   }
 
   const bonusHP = (unit.BASEHP * hp) / 100

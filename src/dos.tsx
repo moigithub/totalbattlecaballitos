@@ -24,8 +24,16 @@ import {
 } from './monsters'
 import { ArmyList } from './ArmyList'
 import { Card } from './Card'
-import { DndContext, DragEndEvent } from '@dnd-kit/core'
-import { arrayMove, SortableContext } from '@dnd-kit/sortable'
+import {
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core'
+import { arrayMove, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 
 function Dos() {
   // const mobHealth = useGuardsStore(state => state.mobHealth)
@@ -54,6 +62,30 @@ function Dos() {
 
   const [selectedEvent, setSelectedEvent] = useState('0')
   const [addUnitMode, setAddUnitMode] = useState('sacrificeHealthLimit')
+
+  // const sensors = useSensor(PointerSensor, {
+  //   activationConstraint: {
+  //     delay: 100,
+  //     tolerance: 5,
+  //   },
+  // });
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: { delay: 250, tolerance: 5, distance: 8 }
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+        distance: 8
+      }
+    }),
+    useSensor(KeyboardSensor, {
+      // Disable smooth scrolling in Cypress automated tests
+      scrollBehavior: 'Cypress' in window ? 'auto' : undefined,
+      coordinateGetter: sortableKeyboardCoordinates
+    })
+  )
 
   useEffect(() => {
     let army = doomsdayArmy
@@ -84,7 +116,7 @@ function Dos() {
     console.log('changing leadership', value)
   }
 
-  const getMobTarget = (iam: TroopType) => {
+  const getMobTarget = (iam: TroopType | string) => {
     //getMobTarget, usa getMonsterStack, y escoje un monster
     /**
      * mounted vs ranged
@@ -168,7 +200,7 @@ function Dos() {
 
       // incluir el bono de los heroes/capitanes/equipo/clan/buff/vip
       // const otherBonus = bonus.rider.G1.str ?? 0
-      const otherBonus = bonus.rider[level as GuardsmanLevel].str ?? 0
+      const otherBonus = bonus.rider[level as GuardsmanLevel]?.str ?? 0
 
       const strBonus = ((otherBonus + unit.vsRangedPercent) * soldierStrength) / 100
       soldierStrength = soldierStrength + strBonus
@@ -368,7 +400,7 @@ function Dos() {
             <h2>Stacks</h2> <p>Army leadership {getArmyLeadership()}</p>
           </div>
           <div className='stack-list'>
-            <DndContext onDragEnd={handleDrag}>
+            <DndContext onDragEnd={handleDrag} sensors={sensors}>
               <SortableContext items={army}>
                 {army.map(stack => {
                   return <Card stack={stack} key={stack.id} />

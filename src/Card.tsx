@@ -26,12 +26,15 @@ export const Card = ({ stack }: { stack: Stack }) => {
     transition
   }
 
+  const stackHealth = getStackHealth(stack.id!)
+  const stackStrength = getStackStrength(stack.id!, draugMage.category)
+
   return (
     <div className='stack-card' ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <p className='stack-units'>{stack.units}</p>
       <p className='stack-name'>{stack.unit.name}</p>
-      <p className='stack-health'>HP {getStackHealth(stack.id!)}</p>
-      <p className='stack-strength'>STR {getStackStrength(stack.id!, draugMage.category)}</p>
+      <p className='stack-health'>HP {stackHealth.toFixed(0)}</p>
+      <p className='stack-strength'>STR {stackStrength.toFixed(2)}</p>
       <p className='stack-leadership'>Lead {stack.leadership}</p>
       <p className='stack-minSetup'>Min {stack.minSetup}</p>
       <p className='stack-limit'>Limit {stack.limit}</p>
