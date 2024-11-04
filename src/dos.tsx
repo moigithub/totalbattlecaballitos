@@ -4,29 +4,15 @@ import './App.css'
 import {
   getHPWithBonus,
   GuardsmanLevel,
-  // GuardsmanStats,
-  // Level,
-  // Stack,
   TroopType,
   Unit,
-  // UnitType,
   useGuardsStore,
   useStackStore
 } from './guardStore'
-// import {
-//   SwordmanG1,
-//   SpearmanG1,
-//   ArcherG1,
-//   CatapultG1,
-//   RiderG1,
-//   RiderG2,
-//   RiderG3,
-//   RiderG5,
-//   RiderG4
-// } from './soldiers'
+
 // import classNames from 'classnames'
 import {
-  doomsdayFireswordRider,
+  // doomsdayFireswordRider,
   // doomsdayHellBlacksmith,
   // doomsdayIfrit,
   doomsdayNecromancer,
@@ -36,6 +22,9 @@ import {
   ragnarokMagoDraug
 } from './monsters'
 import { ArmyList } from './ArmyList'
+import { Card } from './Card'
+import { DndContext, DragEndEvent } from '@dnd-kit/core'
+import { arrayMove, SortableContext } from '@dnd-kit/sortable'
 
 function Dos() {
   const leadership = useGuardsStore(state => state.leadership)
@@ -44,9 +33,12 @@ function Dos() {
   const setMobHealth = useGuardsStore(state => state.setMobHealth)
 
   const army = useStackStore(state => state.army)
-  // const setArmy = useStackStore(state => state.setArmy)
+  const setArmy = useStackStore(state => state.setArmy)
   // const addArmy = useStackStore(state => state.addArmy)
-  // const removeArmy = useStackStore(state => state.removeArmy)
+  const removeStack = useStackStore(state => state.removeStack)
+  const resetStack = useStackStore(state => state.resetStack)
+  const resetAllStacks = useStackStore(state => state.resetAllStacks)
+
   const bonus = useStackStore(state => state.bonus)
   const toggleLockMin = useStackStore(state => state.toggleLockMin)
   const addUnits = useStackStore(state => state.addUnits)
@@ -197,70 +189,91 @@ function Dos() {
       return
     }
 
-    // minSetup === how many units on the stack should be used to kill one monster
-    // calculate the minSetup for each stack
+    /* NOTAS:
+     minSetup === how many units on the stack should be used to kill one monster
+     calculate the minSetup for each stack
 
-    // hay un selector de monstruos/evento que tiene un stack (varios tipos de) mounstruos, un array de objetos
-    // el getmobtarget, deberia iterar el array y devolver el tipo de mostruo
-    // de acuerdo al tipo de soldado que tengo.. ejm. mount vs ranged
-    // y si no hay, deberia retornar el que tiene mayor hp ??
-    // 4. check leadership acumulado del army
-    let totalLeadership = getArmyLeadership()
-    if (totalLeadership >= leadership) {
-      return
-    }
+     hay un selector de monstruos/evento que tiene un stack (varios tipos de) mounstruos, un array de objetos
+     el getmobtarget, deberia iterar el array y devolver el tipo de mostruo
+     de acuerdo al tipo de soldado que tengo.. ejm. mount vs ranged
+     y si no hay, deberia retornar el que tiene mayor hp ??
+*/
 
-    // 1. agregar 1 unit al sacrificio
-    addUnits(0)
-    // 2. calcular hp del sacrificio
-    const sacrificeGroupHealth = getStackHealth(0)
-    console.log('sacrifice healt', sacrificeGroupHealth)
+    resetAllStacks()
 
-    for (let i = 1; i < army.length; i++) {
-      const stack = army[i]
+    let maxLoop = 1000000 // should change it for a timer
+    let totalLeadership = 0
+    let lastLeadershipCalculated = 0 // to break the loop, if didnt changed (loop protection)
+    while (totalLeadership < leadership) {
+      // 1. check leadership acumulado del army
+      // totalLeadership = getArmyLeadership()
+      // if (totalLeadership >= leadership) {
+      //   break
+      // }
 
-      // 3. calcular cuantos unit necesita pa matar 1 mob
-      const monster = getMobTarget(stack.unit.troop)
-      console.log('monster target', monster)
+      // 2. agregar 1 unit al sacrificio
+      addUnits(army[0].id)
+      // 3. calcular hp del sacrificio
+      const sacrificeGroupHealth = getStackHealth(army[0].id)
+      console.log('sacrifice healt', sacrificeGroupHealth)
 
-      const unitsNeededToKill1Mob = calculateUnitsMobKill(monster, stack.unit)
-      updateMinSetup(stack.position!, unitsNeededToKill1Mob)
-      console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
+      for (let i = 1; i < army.length; i++) {
+        const stack = army[i]
 
-      // 4. check leadership acumulado del army
-      totalLeadership = getArmyLeadership()
+        // 4. calcular cuantos unit necesita pa matar 1 mob
+        const monster = getMobTarget(stack.unit.troop)
+        console.log('monster target', monster)
 
-      //5. check leadership del nuevo grupo
-      const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
-      const newStackLeadership = stack.unit.LEADERSHIP * unitsCount
+        const unitsNeededToKill1Mob = calculateUnitsMobKill(monster, stack.unit)
+        updateMinSetup(stack.id!, unitsNeededToKill1Mob)
+        console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
 
-      // 5.1 check leadership acumulado + leadership nuevo sea menor que el disponible
-      if (totalLeadership + newStackLeadership <= leadership) {
-        // 6. check HP acumulado + hp nuevo sea menor que el del sacrificio
-        const stackHealth = getStackHealth(stack.position!)
-        const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
-        const newStackHealth = totalHPPerUnit * unitsCount
+        // 5. check leadership acumulado del army
+        totalLeadership = getArmyLeadership()
 
-        console.log(
-          'stackhp+newHP',
-          stack.position,
-          ' // ',
-          stackHealth,
-          newStackHealth,
-          '=',
-          stackHealth + newStackHealth,
-          '<',
-          sacrificeGroupHealth
-        )
+        // 6. check leadership del nuevo grupo
+        const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
+        const newStackLeadership = stack.unit.LEADERSHIP * unitsCount
 
-        if (stackHealth + newStackHealth < sacrificeGroupHealth) {
-          // 7. agregar al stack
-          console.log('agregando units en ', stack.position)
-          addUnits(stack.position!)
+        // 7 check leadership acumulado + leadership nuevo sea menor que el disponible
+        if (totalLeadership + newStackLeadership <= leadership) {
+          // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
+          const stackHealth = getStackHealth(stack.id!)
+          const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
+          const newStackHealth = totalHPPerUnit * unitsCount
+
+          console.log(
+            'stackhp+newHP',
+            stack.id,
+            ' // ',
+            stackHealth,
+            newStackHealth,
+            '=',
+            stackHealth + newStackHealth,
+            '<',
+            sacrificeGroupHealth
+          )
+
+          if (stackHealth + newStackHealth < sacrificeGroupHealth) {
+            // 9. agregar al stack
+            console.log('agregando units en ', stack.id)
+            addUnits(stack.id!)
+          }
         }
       }
-    }
 
+      totalLeadership = getArmyLeadership()
+
+      if (totalLeadership > leadership) break
+      if (lastLeadershipCalculated === totalLeadership) {
+        console.log('no changes to leadership, ending')
+        break
+      }
+      lastLeadershipCalculated = totalLeadership
+
+      console.log('loop protection', maxLoop)
+      if (maxLoop-- < 1) break
+    }
     /**********************************************
      * basado en vitalidad
      * =======================
@@ -268,6 +281,18 @@ function Dos() {
      * el sacrificio siempre incrementa de 1 en 1 sus unidades
      *
      */
+  }
+
+  const handleDrag = (event: DragEndEvent) => {
+    console.log('event dragend', event)
+    const { active, over } = event
+    console.log({ active, over })
+
+    if (over && active.id !== over.id) {
+      const index1 = army.findIndex(stack => stack.id === active.id)
+      const index2 = army.findIndex(stack => stack.id === over.id)
+      setArmy(arrayMove(army, index1, index2))
+    }
   }
 
   return (
@@ -314,50 +339,13 @@ function Dos() {
             <h2>Stacks</h2> <p>Army leadership {getArmyLeadership()}</p>
           </div>
           <div className='stack-list'>
-            {army.map((stack, i) => {
-              return (
-                <div className='stack-card' key={i}>
-                  <p className='stack-units'>{stack.units}</p>
-                  <p className='stack-name'>{stack.unit.name}</p>
-                  <p className='stack-health'>HP {getStackHealth(stack.position!)}</p>
-                  <p className='stack-strength'>
-                    STR {getStackStrength(stack.position!, ragnarokMagoDraug.category)}
-                  </p>
-                  <p className='stack-leadership'>Lead {stack.leadership}</p>
-                  <p className='stack-minSetup'>Min {stack.minSetup}</p>
-                  <p className='stack-limit'>Limit {stack.limit}</p>
-                  <div className='stack-action'>
-                    <button
-                      className='action-btn'
-                      onClick={() => {
-                        addUnits(stack.position!)
-                      }}
-                    >
-                      +
-                    </button>
-                    <button
-                      className='action-btn'
-                      onClick={() => {
-                        removeUnits(stack.position!)
-                      }}
-                    >
-                      -
-                    </button>
-                  </div>
-                  <div className='stack-config'>
-                    <label>lock Min</label>
-
-                    <input
-                      type='checkbox'
-                      checked={stack.lockMinSetup}
-                      onChange={() => {
-                        toggleLockMin(stack.position!)
-                      }}
-                    />
-                  </div>
-                </div>
-              )
-            })}
+            <DndContext onDragEnd={handleDrag}>
+              <SortableContext items={army}>
+                {army.map(stack => {
+                  return <Card stack={stack} key={stack.id} />
+                })}
+              </SortableContext>
+            </DndContext>
           </div>
         </div>
 

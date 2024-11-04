@@ -3,10 +3,10 @@ import { useState, useEffect, Fragment } from 'react'
 import './App.css'
 import { useGuardsStore } from './guardStore'
 import {
-  SwordmanG1,
+  SwordmanS1,
   SpearmanG1,
   ArcherG1,
-  CatapultG1
+  CatapultE1
   // RiderG1,
   // RiderG2,
   // RiderG3,
@@ -156,16 +156,16 @@ function Uno() {
     const selectedSacrifice = e.target.value
     setSelectedSacrifice(selectedSacrifice)
 
-    let Sacrifice = SwordmanG1 // { hp: 150, str: 50, leadership: 1, initiative: 10 }
+    let Sacrifice = SwordmanS1 // { hp: 150, str: 50, leadership: 1, initiative: 10 }
 
     if (selectedSacrifice === '0') {
-      Sacrifice = SwordmanG1
+      Sacrifice = SwordmanS1
     } else if (selectedSacrifice === '1') {
       Sacrifice = ArcherG1
     } else if (selectedSacrifice === '2') {
       Sacrifice = SpearmanG1
     } else if (selectedSacrifice === '3') {
-      Sacrifice = CatapultG1
+      Sacrifice = CatapultE1
     }
 
     setSacrificeBase({ ...Sacrifice })

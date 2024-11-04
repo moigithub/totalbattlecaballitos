@@ -1,7 +1,13 @@
 #root {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 16px;
 }
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
 table {
   margin: 1rem 0;
 }
@@ -39,7 +45,9 @@ table th {
 .info {
   display: flex;
 }
-
+.tiny {
+  font-size: 8px;
+}
 .configbar {
   display: flex;
   .card {
@@ -85,17 +93,19 @@ table th {
 
 .main-container {
   display: flex;
+  max-height: 100vh;
+  height: 100%;
 }
 .army-container {
   width: 250px;
 }
 .config-container,
 .stack-container {
-  min-width: 450px;
+  min-width: 550px;
 }
 
 .troop {
-  padding: 0.5rem;
+  padding: 0.1rem 0.5rem;
   font-size: 14px;
   border: 1px solid grey;
   margin: 8px;
@@ -109,8 +119,9 @@ table th {
 .stack-card {
   display: grid;
   grid-template-areas:
-    'units name name name health action'
-    'units limit strength leadership minSetup config';
+    'units name   name    name       health   action delete'
+    'units limit strength leadership minSetup config reset'
+    'units    id     id       id         id      id     id';
 
   width: 400px;
   border: 1px solid grey;
@@ -170,10 +181,10 @@ table th {
   padding: 0 15px;
 }
 .stack-action {
+  grid-area: action;
   display: flex;
   justify-content: center;
   align-items: center;
-  grid-area: action;
   gap: 10px;
   margin: 0;
 }
@@ -181,4 +192,47 @@ table th {
   grid-area: config;
   margin: 0;
   font-size: 0.8rem;
+}
+.stack-delete {
+  grid-area: delete;
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+
+  .remove-btn {
+    background-color: red;
+    color: white;
+  }
+}
+.stack-reset {
+  grid-area: reset;
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
+
+  .reset-btn {
+    background-color: cornflowerblue;
+    color: white;
+  }
+}
+
+.stack-id {
+  grid-area: id;
+}
+
+.monsters {
+  background-color: mediumorchid;
+}
+.guardsmen {
+  background-color: darkcyan;
+}
+.engineer {
+  background-color: sienna;
+}
+.specialists {
+  background-color: lightcoral;
+  color: black;
+}
+.mercs {
+  background-color: brown;
 }

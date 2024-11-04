@@ -5,6 +5,11 @@ import {
   ArcherG3,
   ArcherG4,
   ArcherG5,
+  CatapultE1,
+  CatapultE2,
+  CatapultE3,
+  CatapultE4,
+  CatapultE5,
   RiderG1,
   RiderG2,
   RiderG3,
@@ -14,195 +19,102 @@ import {
   SpearmanG2,
   SpearmanG3,
   SpearmanG4,
-  SpearmanG5
+  SpearmanG5,
+  SpyS1,
+  SpyS2,
+  SpyS3,
+  SpyS4,
+  SpyS5,
+  SwordmanS1,
+  SwordmanS2,
+  SwordmanS3,
+  SwordmanS4,
+  SwordmanS5
 } from './soldiers'
 
 export const ArmyList = () => {
-  const addArmy = useStackStore(state => state.addArmy)
+  const addStack = useStackStore(state => state.addStack)
   // const bonus = useStackStore(state => state.bonus)
 
   const addTroops = (type: string) => {
+    let unitType = null
     if (type === 'Rider G1') {
-      const stack: Stack = {
-        // health: RiderG1.BASEHP + (RiderG1.BASEHP * bonus.rider.G1.hp) / 100,
-        // strength: RiderG1.BASESTR + (RiderG1.BASESTR * bonus.rider.G1.str) / 100,
-        leadership: 0, //RiderG1.LEADERSHIP,
-        unit: RiderG1,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = RiderG1
     } else if (type === 'Rider G2') {
-      const stack: Stack = {
-        // health: RiderG2.BASEHP + (RiderG2.BASEHP * bonus.rider.G2.hp) / 100,
-        // strength: RiderG2.BASESTR + (RiderG2.BASESTR * bonus.rider.G2.str) / 100,
-        leadership: 0, //RiderG2.LEADERSHIP,
-        unit: RiderG2,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = RiderG2
     } else if (type === 'Rider G3') {
-      const stack: Stack = {
-        // health: RiderG3.BASEHP + (RiderG3.BASEHP * bonus.rider.G3.hp) / 100,
-        // strength: RiderG3.BASESTR + (RiderG3.BASESTR * bonus.rider.G3.str) / 100,
-        leadership: 0, //RiderG3.LEADERSHIP,
-        unit: RiderG3,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = RiderG3
     } else if (type === 'Rider G4') {
-      const stack: Stack = {
-        // health: RiderG4.BASEHP + (RiderG4.BASEHP * bonus.rider.G4.hp) / 100,
-        // strength: RiderG4.BASESTR + (RiderG4.BASESTR * bonus.rider.G4.str) / 100,
-        leadership: 0, //RiderG4.LEADERSHIP,
-        unit: RiderG4,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = RiderG4
     } else if (type === 'Rider G5') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: RiderG5,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = RiderG5
     } else if (type === 'Spearman G1') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: SpearmanG1,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = SpearmanG1
     } else if (type === 'Spearman G2') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: SpearmanG2,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = SpearmanG2
     } else if (type === 'Spearman G3') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: SpearmanG3,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = SpearmanG3
     } else if (type === 'Spearman G4') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: SpearmanG4,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = SpearmanG4
     } else if (type === 'Spearman G5') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: SpearmanG5,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = SpearmanG5
     } else if (type === 'Archer G1') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: ArcherG1,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = ArcherG1
     } else if (type === 'Archer G2') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: ArcherG2,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = ArcherG2
     } else if (type === 'Archer G3') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: ArcherG3,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = ArcherG3
     } else if (type === 'Archer G4') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: ArcherG4,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = ArcherG4
     } else if (type === 'Archer G5') {
-      const stack: Stack = {
-        // health: RiderG5.BASEHP + (RiderG5.BASEHP * bonus.rider.G5.hp) / 100,
-        // strength: RiderG5.BASESTR + (RiderG5.BASESTR * bonus.rider.G5.str) / 100,
-        leadership: 0, //sRiderG5.LEADERSHIP,
-        unit: ArcherG5,
-        units: 0,
-        minSetup: 0,
-        lockMinSetup: true,
-        limit: 0
-      }
-      addArmy(stack)
+      unitType = ArcherG5
+    } else if (type === 'Swordsman S1') {
+      unitType = SwordmanS1
+    } else if (type === 'Swordsman S2') {
+      unitType = SwordmanS2
+    } else if (type === 'Swordsman S3') {
+      unitType = SwordmanS3
+    } else if (type === 'Swordsman S4') {
+      unitType = SwordmanS4
+    } else if (type === 'Swordsman S5') {
+      unitType = SwordmanS5
+    } else if (type === 'Spy S1') {
+      unitType = SpyS1
+    } else if (type === 'Spy S2') {
+      unitType = SpyS2
+    } else if (type === 'Spy S3') {
+      unitType = SpyS3
+    } else if (type === 'Spy S4') {
+      unitType = SpyS4
+    } else if (type === 'Spy S5') {
+      unitType = SpyS5
+    } else if (type === 'Catapult E1') {
+      unitType = CatapultE1
+    } else if (type === 'Catapult E2') {
+      unitType = CatapultE2
+    } else if (type === 'Catapult E3') {
+      unitType = CatapultE3
+    } else if (type === 'Catapult E4') {
+      unitType = CatapultE4
+    } else if (type === 'Catapult E5') {
+      unitType = CatapultE5
     }
+
+    if (!unitType) {
+      return
+    }
+
+    const stack: Omit<Stack, 'id'> = {
+      // health: RiderG1.BASEHP + (RiderG1.BASEHP * bonus.rider.G1.hp) / 100,
+      // strength: RiderG1.BASESTR + (RiderG1.BASESTR * bonus.rider.G1.str) / 100,
+      leadership: 0, //RiderG1.LEADERSHIP,
+      unit: unitType,
+      units: 0,
+      minSetup: 0,
+      lockMinSetup: true,
+      limit: 0
+    }
+    addStack(stack)
   }
 
   return (
@@ -210,7 +122,7 @@ export const ArmyList = () => {
       <h2>Army</h2>
       <div className='army-list'>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Spearman G1')
           }}
@@ -218,7 +130,7 @@ export const ArmyList = () => {
           Spearman G1
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Archer G1')
           }}
@@ -226,7 +138,7 @@ export const ArmyList = () => {
           Archer G1
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Rider G1')
           }}
@@ -235,7 +147,7 @@ export const ArmyList = () => {
         </div>
         <hr />
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Spearman G2')
           }}
@@ -243,7 +155,7 @@ export const ArmyList = () => {
           Spearman G2
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Archer G2')
           }}
@@ -251,7 +163,7 @@ export const ArmyList = () => {
           Archer G2
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Rider G2')
           }}
@@ -260,7 +172,7 @@ export const ArmyList = () => {
         </div>
         <hr />
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Spearman G3')
           }}
@@ -268,7 +180,7 @@ export const ArmyList = () => {
           Spearman G3
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Archer G3')
           }}
@@ -276,7 +188,7 @@ export const ArmyList = () => {
           Archer G3
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Rider G3')
           }}
@@ -285,7 +197,7 @@ export const ArmyList = () => {
         </div>
         <hr />
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Spearman G4')
           }}
@@ -293,7 +205,7 @@ export const ArmyList = () => {
           Spearman G4
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Archer G4')
           }}
@@ -301,7 +213,7 @@ export const ArmyList = () => {
           Archer G4
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Rider G4')
           }}
@@ -310,7 +222,7 @@ export const ArmyList = () => {
         </div>
         <hr />
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Spearman G5')
           }}
@@ -318,7 +230,7 @@ export const ArmyList = () => {
           Spearman G5
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Archer G5')
           }}
@@ -326,7 +238,7 @@ export const ArmyList = () => {
           Archer G5
         </div>
         <div
-          className='troop'
+          className='troop guardsmen'
           onClick={() => {
             addTroops('Rider G5')
           }}
@@ -335,32 +247,59 @@ export const ArmyList = () => {
         </div>
         <hr />
         <div
-          className='troop'
+          className='troop specialists'
           onClick={() => {
-            addTroops('Swordman S1')
+            addTroops('Swordsman S1')
           }}
         >
-          Swordman S1
+          Swordsman S1
+        </div>
+
+        <div
+          className='troop specialists'
+          onClick={() => {
+            addTroops('Swordsman S2')
+          }}
+        >
+          Swordsman S2
+        </div>
+
+        <div
+          className='troop specialists'
+          onClick={() => {
+            addTroops('Swordsman S3')
+          }}
+        >
+          Swordsman S3
+        </div>
+
+        <div
+          className='troop specialists'
+          onClick={() => {
+            addTroops('Swordsman S4')
+          }}
+        >
+          Swordsman S4
+        </div>
+
+        <div
+          className='troop specialists'
+          onClick={() => {
+            addTroops('Swordsman S5')
+          }}
+        >
+          Swordsman S5
         </div>
         <div
-          className='troop'
+          className='troop specialists'
           onClick={() => {
             addTroops('Spy S1')
           }}
         >
           Spy S1
         </div>
-        <hr />
         <div
-          className='troop'
-          onClick={() => {
-            addTroops('Swordman S2')
-          }}
-        >
-          Swordman S2
-        </div>
-        <div
-          className='troop'
+          className='troop specialists'
           onClick={() => {
             addTroops('Spy S2')
           }}
@@ -369,7 +308,7 @@ export const ArmyList = () => {
         </div>
         <hr />
         <div
-          className='troop'
+          className='troop engineer'
           onClick={() => {
             addTroops('Catapult E1')
           }}
@@ -377,16 +316,40 @@ export const ArmyList = () => {
           Catapult E1
         </div>
         <div
-          className='troop'
+          className='troop engineer'
           onClick={() => {
             addTroops('Catapult E2')
           }}
         >
           Catapult E2
         </div>
+        <div
+          className='troop engineer'
+          onClick={() => {
+            addTroops('Catapult E3')
+          }}
+        >
+          Catapult E3
+        </div>
+        <div
+          className='troop engineer'
+          onClick={() => {
+            addTroops('Catapult E4')
+          }}
+        >
+          Catapult E4
+        </div>
+        <div
+          className='troop engineer'
+          onClick={() => {
+            addTroops('Catapult E5')
+          }}
+        >
+          Catapult E5
+        </div>
         <hr />
         <div
-          className='troop'
+          className='troop monsters'
           onClick={() => {
             addTroops('Water Elemental')
           }}
@@ -394,7 +357,7 @@ export const ArmyList = () => {
           Water Elemental M3
         </div>
         <div
-          className='troop'
+          className='troop monsters'
           onClick={() => {
             addTroops('Battle Boar')
           }}
@@ -402,7 +365,7 @@ export const ArmyList = () => {
           Battle Boar M3
         </div>
         <div
-          className='troop'
+          className='troop monsters'
           onClick={() => {
             addTroops('Emerald Dragon')
           }}
@@ -410,7 +373,7 @@ export const ArmyList = () => {
           Emerald Dragon M3
         </div>
         <div
-          className='troop'
+          className='troop monsters'
           onClick={() => {
             addTroops('Stone Gargole')
           }}
@@ -419,7 +382,7 @@ export const ArmyList = () => {
         </div>
         <hr />
         <div
-          className='troop'
+          className='troop mercs'
           onClick={() => {
             addTroops('Epic Monster')
           }}
@@ -427,7 +390,7 @@ export const ArmyList = () => {
           Epic Monster Hunter VI
         </div>
         <div
-          className='troop'
+          className='troop mercs'
           onClick={() => {
             addTroops('Chariot VI')
           }}
@@ -435,7 +398,7 @@ export const ArmyList = () => {
           Chariot VI
         </div>
         <div
-          className='troop'
+          className='troop mercs'
           onClick={() => {
             addTroops('Legionary VI')
           }}

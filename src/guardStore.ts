@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { v4 as uuidv4 } from 'uuid'
 // import { RiderG1, RiderG2, RiderG3, RiderG4, RiderG5 } from './soldiers'
 
 interface Stats {
@@ -74,7 +75,7 @@ export type Category =
   | 'giant'
 
 export interface Stack {
-  position?: number // whichever at first position will be used as sacrifice, increases 1 by 1, ignoring lockMinSetup
+  id: string // whichever at first position will be used as sacrifice, increases 1 by 1, ignoring lockMinSetup
   // health: number // (base hp+bonus) *units // DEBE ser calculado y no guardado, por si cambia el bono no tener que recalcular de nuevo
   //healthLeft o damageTaken
   // strength: number // (base str+bonus) *units// calculado basado contra que esta atacando// recalculado, no guardado
@@ -150,19 +151,21 @@ interface StackStore {
   //   catapult: { G1: { str: number; hp: number } }
   // }
   setArmy: (data: Stack[]) => void
-  addArmy: (data: Stack) => void
-  removeArmy: (position: number) => void
+  addStack: (data: Omit<Stack, 'id'>) => void
+  removeStack: (id: string) => void
+  resetStack: (id: string) => void
+  resetAllStacks: () => void
   getArmyLeadership: () => number
-  setStackPosition: (position: number, newPosition: number) => void
+  // setStackPosition: (id:string, newPosition: number) => void
   recalculatePosition: () => void
-  updateMinSetup: (position: number, minSetup: number) => void
-  addUnits: (position: number) => void
-  removeUnits: (position: number) => void
-  fixStackUnits: (position: number, maxHealth: number) => void
-  getStackStrength: (position: number, against: string) => number
-  getStackHealth: (position: number) => number
-  getStackLeadership: (position: number) => number
-  toggleLockMin: (position: number) => void
+  updateMinSetup: (id: string, minSetup: number) => void
+  addUnits: (id: string) => void
+  removeUnits: (id: string) => void
+  fixStackUnits: (id: string, maxHealth: number) => void
+  getStackStrength: (id: string, against: string) => number
+  getStackHealth: (id: string) => number
+  getStackLeadership: (id: string) => number
+  toggleLockMin: (id: string) => void
 
   setArcherG1Bonus: (bonus: BasicStats) => void
   setArcherG2Bonus: (bonus: BasicStats) => void
@@ -357,25 +360,51 @@ export const useStackStore = create<StackStore>((set, get) => ({
     }
   },
   setArmy: (data: Stack[]) => {
+    //TODO: generate id for each stack
     set(() => ({ army: data }))
   },
-  addArmy: (data: Stack) => {
-    set(state => ({ army: [...state.army, { ...data, position: state.army.length }] }))
+  addStack: (data: Omit<Stack, 'id'>) => {
+    set(state => ({ army: [...state.army, { ...data, id: uuidv4() }] }))
   },
-  removeArmy: (position: number) => {
-    set(state => ({ army: state.army.filter((_, pos) => pos !== position) }))
+  removeStack: (id: string) => {
+    set(state => ({ army: state.army.filter(stack => stack.id !== id) }))
   },
-  setStackPosition: (position: number, newPosition: number) => {
-    const army = get().army
-    const stack1 = army[newPosition]
-    army[newPosition] = army[position]
-    army[position] = stack1
-    set(() => ({ army }))
-  },
-  updateMinSetup: (position: number, minSetup: number) => {
+  resetStack: (id: string) => {
     set(state => ({
       army: state.army.map(stack => {
-        if (stack.position === position) {
+        if (stack.id === id) {
+          return {
+            ...stack,
+            units: 0,
+            leadership: 0
+          }
+        }
+        return stack
+      })
+    }))
+  },
+  resetAllStacks: () => {
+    set(state => ({
+      army: state.army.map(stack => {
+        return {
+          ...stack,
+          units: 0,
+          leadership: 0
+        }
+      })
+    }))
+  },
+  // setStackPosition: (id: string, newPosition: number) => {
+  //   const army = get().army
+  //   const stack1 = army[newPosition]
+  //   army[newPosition] = army[position]
+  //   army[position] = stack1
+  //   set(() => ({ army }))
+  // },
+  updateMinSetup: (id: string, minSetup: number) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
           return {
             ...stack,
             minSetup
@@ -389,10 +418,10 @@ export const useStackStore = create<StackStore>((set, get) => ({
     set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
   },
 
-  addUnits: (position: number) => {
+  addUnits: (id: string) => {
     set(state => ({
       army: state.army.map((stack, index) => {
-        if (stack.position === position) {
+        if (stack.id === id) {
           const leadership = stack.unit.LEADERSHIP
 
           // index === 0 ,its a sacrifice, increase 1 by 1, this MUST have the highest hp
@@ -418,13 +447,13 @@ export const useStackStore = create<StackStore>((set, get) => ({
       })
     }))
   },
-  removeUnits: (position: number) => {
+  removeUnits: (id: string) => {
     set(state => ({
-      army: state.army.map(stack => {
-        if (stack.position === position) {
+      army: state.army.map((stack, index) => {
+        if (stack.id === id) {
           const leadership = stack.unit.LEADERSHIP
 
-          const unitToRemove = stack.lockMinSetup ? stack.minSetup : 1
+          const unitToRemove = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
 
           if (stack.units - unitToRemove >= 0) {
             const totalUnits = stack.units - unitToRemove
@@ -447,10 +476,10 @@ export const useStackStore = create<StackStore>((set, get) => ({
       })
     }))
   },
-  fixStackUnits: (position: number, maxHealth: number) => {
+  fixStackUnits: (id: string, maxHealth: number) => {
     set(state => ({
       army: state.army.map(stack => {
-        if (stack.position === position) {
+        if (stack.id === id) {
           // reduce the units amount, so the total stack health is lower than maxHealth
           let stackUnits = stack.units
 
@@ -502,121 +531,182 @@ export const useStackStore = create<StackStore>((set, get) => ({
     }))
     // TODO: add more units
   },
-  getStackStrength: (position: number, against: string) => {
-    const stack = get().army.find(army => army.position === position)
+  getStackStrength: (id: string, against: string) => {
+    const stack = get().army.find(army => army.id === id)
     const bonus = get().bonus
 
     if (stack) {
       const stackUnits = stack.units
 
-      if (stack.unit.troop === 'rider' && stack.unit.level === 'G1') {
-        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
-        if (against === 'ranged') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else if (against === 'siege') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else {
-          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
+      let otherBonus = 0
+      let percent = 0
+
+      if (stack.unit.troop === 'rider') {
+        switch (stack.unit.level) {
+          case 'G1':
+            otherBonus = bonus.rider.G1.str ?? 0
+            break
+          case 'G2':
+            otherBonus = bonus.rider.G2.str ?? 0
+            break
+          case 'G3':
+            otherBonus = bonus.rider.G3.str ?? 0
+            break
+          case 'G4':
+            otherBonus = bonus.rider.G4.str ?? 0
+            break
+          case 'G5':
+            otherBonus = bonus.rider.G5.str ?? 0
+            break
         }
-      } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G2') {
-        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
+
         if (against === 'ranged') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
+          percent = stack.unit.vsRangedPercent
         } else if (against === 'siege') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else {
-          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
+          percent = stack.unit.vsSiegePercent
         }
-      } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G3') {
-        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
-        if (against === 'ranged') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else if (against === 'siege') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else {
-          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
+      } else if (stack.unit.troop === 'spearman') {
+        /* spearmans, melee vs beast||mounted  */
+        switch (stack.unit.level) {
+          case 'G1':
+            otherBonus = bonus.rider.G1.str ?? 0
+            break
+          case 'G2':
+            otherBonus = bonus.rider.G2.str ?? 0
+            break
+          case 'G3':
+            otherBonus = bonus.rider.G3.str ?? 0
+            break
+          case 'G4':
+            otherBonus = bonus.rider.G4.str ?? 0
+            break
+          case 'G5':
+            otherBonus = bonus.rider.G5.str ?? 0
+            break
         }
-      } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G4') {
-        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
-        if (against === 'ranged') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else if (against === 'siege') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else {
-          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
+
+        if (against === 'beast') {
+          percent = stack.unit.vsBeastPercent
+        } else if (against === 'mounted') {
+          percent = stack.unit.vsMountedPercent
         }
-      } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G5') {
-        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
-        if (against === 'ranged') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else if (against === 'siege') {
-          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
-        } else {
-          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
-          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
-          const stackStrength = totalSTRPerUnit * stackUnits
-          return stackStrength
+      } else if (stack.unit.troop === 'archer') {
+        /* spearmans, melee vs beast||mounted  */
+        switch (stack.unit.level) {
+          case 'G1':
+            otherBonus = bonus.archer.G1.str ?? 0
+            break
+          case 'G2':
+            otherBonus = bonus.archer.G2.str ?? 0
+            break
+          case 'G3':
+            otherBonus = bonus.archer.G3.str ?? 0
+            break
+          case 'G4':
+            otherBonus = bonus.archer.G4.str ?? 0
+            break
+          case 'G5':
+            otherBonus = bonus.archer.G5.str ?? 0
+            break
+        }
+
+        if (against === 'flying') {
+          percent = stack.unit.vsFlyingPercent
+        } else if (against === 'melee') {
+          percent = stack.unit.vsMeleePercent
+        }
+      } else if (stack.unit.troop === 'swordsman') {
+        /* spearmans, melee vs beast||mounted  */
+        switch (stack.unit.level) {
+          case 'S1':
+            otherBonus = bonus.swordsman.S1.str ?? 0
+            break
+          case 'S2':
+            otherBonus = bonus.swordsman.S2.str ?? 0
+            break
+          case 'S3':
+            otherBonus = bonus.swordsman.S3.str ?? 0
+            break
+          case 'S4':
+            otherBonus = bonus.swordsman.S4.str ?? 0
+            break
+          case 'S5':
+            otherBonus = bonus.swordsman.S5.str ?? 0
+            break
+        }
+
+        if (against === 'beast') {
+          percent = stack.unit.vsBeastPercent
+        } else if (against === 'human') {
+          percent = stack.unit.vsHumanPercent
+        } else if (against === 'mounted') {
+          percent = stack.unit.vsMountedPercent
+        }
+      } else if (stack.unit.troop === 'spy') {
+        /* spearmans, melee vs beast||mounted  */
+        switch (stack.unit.level) {
+          case 'S1':
+            otherBonus = bonus.spy.S1.str ?? 0
+            break
+          case 'S2':
+            otherBonus = bonus.spy.S2.str ?? 0
+            break
+          case 'S3':
+            otherBonus = bonus.spy.S3.str ?? 0
+            break
+          case 'S4':
+            otherBonus = bonus.spy.S4.str ?? 0
+            break
+          case 'S5':
+            otherBonus = bonus.spy.S5.str ?? 0
+            break
+        }
+      } else if (stack.unit.troop === 'catapult') {
+        /* spearmans, melee vs beast||mounted  */
+        switch (stack.unit.level) {
+          case 'E1':
+            otherBonus = bonus.catapult.E1.str ?? 0
+            break
+          case 'E2':
+            otherBonus = bonus.catapult.E2.str ?? 0
+            break
+          case 'E3':
+            otherBonus = bonus.catapult.E3.str ?? 0
+            break
+          case 'E4':
+            otherBonus = bonus.catapult.E4.str ?? 0
+            break
+          case 'E5':
+            otherBonus = bonus.catapult.E5.str ?? 0
+            break
+        }
+
+        if (against === 'fortification') {
+          percent = stack.unit.vsFortificationsPercent
         }
       }
+
+      const bonusSTR = (stack.unit.BASESTR * (percent + otherBonus)) / 100
+      const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
+      const stackStrength = totalSTRPerUnit * stackUnits
+      return stackStrength
     }
     // TODO : add more units
     return 0
   },
-  getStackHealth: (position: number) => {
+  getStackHealth: (id: string) => {
     // const stack = get().army.find(army => army.position === position)
     // return stack?.health ?? 0
 
-    const stack = get().army.find(army => army.position === position)
+    const stack = get().army.find(army => army.id === id)
     if (!stack) return 0
 
     const bonus = get().bonus
     const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
     return totalHPPerUnit * stack.units
   },
-  getStackLeadership: (position: number) => {
-    const stack = get().army.find(army => army.position === position)
+  getStackLeadership: (id: string) => {
+    const stack = get().army.find(army => army.id === id)
     return stack?.leadership ?? 0
   },
   getArmyLeadership: () => {
@@ -633,10 +723,10 @@ export const useStackStore = create<StackStore>((set, get) => ({
     }, 0)
     return health
   },
-  toggleLockMin: (position: number) => {
+  toggleLockMin: (id: string) => {
     set(state => ({
       army: state.army.map(stack => {
-        if (stack.position === position) {
+        if (stack.id === id) {
           return { ...stack, lockMinSetup: !stack.lockMinSetup }
         } else return stack
       })

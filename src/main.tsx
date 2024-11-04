@@ -7,6 +7,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import Uno from './uno.tsx'
 import Dos from './dos.tsx'
+import { Info } from './info.tsx'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: 'v2',
         element: <Dos />
+      },
+      {
+        path: 'info',
+        element: <Info />
       }
     ]
   }
