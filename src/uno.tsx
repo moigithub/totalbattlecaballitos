@@ -14,12 +14,7 @@ import {
   // RiderG4
 } from './soldiers'
 import classNames from 'classnames'
-import {
-  doomsdayNecromancer,
-  doomsdayOverseer,
-  jacksReturnScarecrow,
-  ragnarokMagoDraug
-} from './monsters'
+import { doomsdayNecromancer, draugMage, jacksReturnScarecrow, overseer } from './monsters'
 
 function Uno() {
   const bonusHP = useGuardsStore(state => state.bonusHP)
@@ -76,17 +71,17 @@ function Uno() {
   }, [])
 
   useEffect(() => {
-    let health = ragnarokMagoDraug.BASEHP
+    let health = draugMage.BASEHP
 
     if (selectedEvent === '0') {
-      health = ragnarokMagoDraug.BASEHP
+      health = draugMage.BASEHP
     } else if (selectedEvent === '1') {
-      health = ragnarokMagoDraug.BASEHP
+      health = draugMage.BASEHP
     } else if (selectedEvent === '2') {
       // doomsday -> Necromancer 2160 health
       health = doomsdayNecromancer.BASEHP
     } else if (selectedEvent === '3') {
-      health = doomsdayOverseer.BASEHP
+      health = overseer.BASEHP
     } else if (selectedEvent === '4') {
       // jacks return -> scarecrow (espantapajaro) 33k health //11k str
       health = jacksReturnScarecrow.BASEHP

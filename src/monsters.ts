@@ -1,9 +1,12 @@
 //doomsday nigromante strength 720, health 2160
 //ancient/tinman arbalesteraAncestrengthal strength 720, health 2160, ranged
 
-import { Category, MonsterType } from './guardStore'
+import { Category } from './guardStore'
 
-export interface Monster {
+export type MonsterType = 'jormungandr' | 'swarm' | 'elemental' | 'ancient' | 'guardsman' | 'demon'
+// |'ancient'
+
+export interface MonsterUnit {
   name: string
   BASEHP: number
   BASESTR: number
@@ -17,13 +20,20 @@ export interface Monster {
   vsFlyingPercent: number
   vsMeleePercent: number
   vsFortificationsPercent: number
-  unitType: MonsterType
+  troop: MonsterType
   category: Category
   level: string
 }
 
-export const ragnarokMagoDraug: Monster = {
-  // 50 epic jormungandr squad
+export interface MobStack {
+  id: string // whichever at first position will be used as sacrifice, increases 1 by 1, ignoring lockMinSetup
+  leadership: number
+  unit: MonsterUnit
+  units: number
+}
+//-------------------------------------------------
+export const draugMage: MonsterUnit = {
+  // 50 epic jormungandr squad/ragnarok
   name: 'DraugMage',
   BASEHP: 2160,
   BASESTR: 720,
@@ -37,12 +47,101 @@ export const ragnarokMagoDraug: Monster = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
-  unitType: 'demon',
+  troop: 'jormungandr',
   category: 'ranged',
   level: 'II'
 }
+const jormungandr: MonsterUnit = {
+  // 50 epic jormungandr squad/ragnarok
+  name: 'jormungandr',
+  BASEHP: 300000,
+  BASESTR: 100000,
+  LEADERSHIP: 74,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 45,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'jormungandr',
+  category: 'melee',
+  level: 'VI'
+}
+const valkyrie: MonsterUnit = {
+  // 50 epic jormungandr squad/ragnarok
+  name: 'valkyrie',
+  BASEHP: 171000,
+  BASESTR: 57000,
+  LEADERSHIP: 60,
+  INITIATIVE: 10,
+  vsRangedPercent: 60,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'jormungandr',
+  category: 'mounted',
+  level: 'VI'
+}
+export const darkElf: MonsterUnit = {
+  // 50 epic jormungandr squad/ragnarok
+  name: 'darkElf',
+  BASEHP: 210000,
+  BASESTR: 70000,
+  LEADERSHIP: 10,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 80,
+  vsFortificationsPercent: 0,
+  troop: 'jormungandr',
+  category: 'flying',
+  level: 'III'
+}
+const draugMageStack: MobStack = {
+  id: 'draugMageStack1',
+  unit: draugMage,
+  units: 216161657,
+  leadership: 216161657 * draugMage.LEADERSHIP
+}
+const jormungandrStack: MobStack = {
+  id: 'jormungandrStack1',
+  unit: jormungandr,
+  units: 2238740,
+  leadership: 2238740 * jormungandr.LEADERSHIP
+}
+const valkyrieStack: MobStack = {
+  id: 'valkyrieStack1',
+  unit: valkyrie,
+  units: 2733905,
+  leadership: 2733905 * valkyrie.LEADERSHIP
+}
+const darkElfStack: MobStack = {
+  id: 'darkElfStack1',
+  unit: darkElf,
+  units: 2525002,
+  leadership: 2525002 * darkElf.LEADERSHIP
+}
+export const ragnarokArmy = [
+  draugMageStack, // x4
+  jormungandrStack, // x4
+  valkyrieStack, // x4
+  darkElfStack // x4
+]
 
-export const doomsdayOverseer: Monster = {
+//-------------------
+
+export const overseer: MonsterUnit = {
   // 50 epic inferno squad
   name: 'overseer',
   BASEHP: 19500,
@@ -57,12 +156,11 @@ export const doomsdayOverseer: Monster = {
   vsFlyingPercent: 70,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
-  unitType: 'demon',
+  troop: 'demon',
   category: 'ranged',
   level: 'III'
 }
-
-export const doomsdayIfrit: Monster = {
+const ifrit: MonsterUnit = {
   // 50 epic inferno squad
   name: 'ifrit',
   BASEHP: 132000,
@@ -77,13 +175,13 @@ export const doomsdayIfrit: Monster = {
   vsFlyingPercent: 0,
   vsMeleePercent: 70,
   vsFortificationsPercent: 0,
-  unitType: 'demon',
+  troop: 'demon',
   category: 'flying',
   // subtype: 'demon',
-  level: 'III'
+  level: 'V'
 }
 
-export const doomsdayFireswordRider: Monster = {
+const fireswordRider: MonsterUnit = {
   // 50 epic inferno squad
   name: 'FireswordRider',
   BASEHP: 150000,
@@ -98,14 +196,14 @@ export const doomsdayFireswordRider: Monster = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
-  unitType: 'demon',
+  troop: 'demon',
   category: 'mounted',
   level: 'V'
 }
 
-export const doomsdayHellBlacksmith: Monster = {
+const fireHidra: MonsterUnit = {
   // 50 epic inferno squad
-  name: 'HellBlacksmith',
+  name: 'fireHidra',
   BASEHP: 300000,
   BASESTR: 100000,
   LEADERSHIP: 10,
@@ -118,12 +216,59 @@ export const doomsdayHellBlacksmith: Monster = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
-  unitType: 'demon',
-  category: 'melee',
-  level: 'III'
+  troop: 'demon',
+  category: 'mounted',
+  level: 'V'
 }
+const overseerStack: MobStack = {
+  id: 'overseerStack1',
+  unit: overseer,
+  units: 33651592,
+  leadership: 33651592 * overseer.LEADERSHIP
+}
+const ifritStack: MobStack = {
+  id: 'ifritStack1',
+  unit: ifrit,
+  units: 4165631,
+  leadership: 4165631 * ifrit.LEADERSHIP
+}
+const fireswordRiderStack: MobStack = {
+  id: 'fireswordRiderStack1',
+  unit: fireswordRider,
+  units: 4071044,
+  leadership: 4071044 * fireswordRider.LEADERSHIP
+}
+const fireHidraStack: MobStack = {
+  id: 'fireHidraStack1',
+  unit: fireHidra,
+  units: 2263309,
+  leadership: 2263309 * fireHidra.LEADERSHIP
+}
+export const doomsdayArmy = [overseerStack, ifritStack, fireswordRiderStack, fireHidraStack]
 
-export const doomsdayNecromancer: Monster = {
+//---------------------------------------
+
+// const hellBlacksmith: MonsterUnit = {
+//   // 50 epic inferno squad
+//   name: 'HellBlacksmith',
+//   BASEHP: 300000,
+//   BASESTR: 100000,
+//   LEADERSHIP: 10,
+//   INITIATIVE: 10,
+//   vsRangedPercent: 0,
+//   vsSiegePercent: 0,
+//   vsBeastPercent: 0,
+//   vsHumanPercent: 0,
+//   vsMountedPercent: 75,
+//   vsFlyingPercent: 0,
+//   vsMeleePercent: 0,
+//   vsFortificationsPercent: 0,
+//   troop: 'demon',
+//   category: 'melee',
+//   level: 'III'
+// }
+
+export const doomsdayNecromancer: MonsterUnit = {
   name: 'necromancer',
   BASEHP: 2160,
   BASESTR: 720,
@@ -137,11 +282,11 @@ export const doomsdayNecromancer: Monster = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
-  unitType: 'elemental',
+  troop: 'elemental',
   category: 'ranged',
   level: 'II'
 }
-export const jacksReturnScarecrow: Monster = {
+export const jacksReturnScarecrow: MonsterUnit = {
   // 50 epic pumpkin squad
   name: 'scarecrow',
   BASEHP: 33000,
@@ -156,12 +301,178 @@ export const jacksReturnScarecrow: Monster = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
-  unitType: 'elemental',
+  troop: 'elemental',
   category: 'ranged',
   level: 'II'
 }
 
-export const arachneMercilessArachne: Monster = {
+//------------------------------------
+const mechanicalGriffin: MonsterUnit = {
+  // ancient/tinman
+  name: 'mechanicalGriffin',
+  BASEHP: 210000,
+  BASESTR: 70000,
+  LEADERSHIP: 10,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 80,
+  vsFortificationsPercent: 0,
+  troop: 'ancient',
+  category: 'flying',
+  level: 'II'
+}
+const ancientArbalest: MonsterUnit = {
+  // ancient/tinman
+  name: 'ancientArbalest',
+  BASEHP: 2160,
+  BASESTR: 720,
+  LEADERSHIP: 8,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 50,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'ancient',
+  category: 'ranged',
+  level: 'II'
+}
+const tigerRider: MonsterUnit = {
+  // ancient/tinman
+  name: 'tigerRider',
+  BASEHP: 171000,
+  BASESTR: 57000,
+  LEADERSHIP: 60,
+  INITIATIVE: 10,
+  vsRangedPercent: 60,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'ancient',
+  category: 'mounted',
+  level: 'II'
+}
+const goldenGuardian: MonsterUnit = {
+  // ancient/tinman
+  name: 'goldenGuardian',
+  BASEHP: 300000,
+  BASESTR: 100000,
+  LEADERSHIP: 74,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 45,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'ancient',
+  category: 'melee',
+  level: 'III'
+}
+const mechanicalGriffinStack: MobStack = {
+  id: 'mechanicalGriffinStack1',
+  unit: mechanicalGriffin,
+  units: 16770,
+  leadership: 16770 * mechanicalGriffin.LEADERSHIP
+}
+const ancientArbalestStack: MobStack = {
+  id: 'ancientArbalestStack1',
+  unit: ancientArbalest,
+  units: 1550411,
+  leadership: 1550411 * ancientArbalest.LEADERSHIP
+}
+const tigerRiderStack: MobStack = {
+  id: 'tigerRiderStack1',
+  unit: tigerRider,
+  units: 18015,
+  leadership: 18015 * tigerRider.LEADERSHIP
+}
+const goldenGuardianStack: MobStack = {
+  id: 'goldenGuardianStack1',
+  unit: goldenGuardian,
+  units: 20202,
+  leadership: 20202 * goldenGuardian.LEADERSHIP
+}
+export const ancientArmy = [
+  goldenGuardianStack,
+  mechanicalGriffinStack,
+  ancientArbalestStack,
+  tigerRiderStack
+]
+//----------------------------------
+
+const maliciousMantis: MonsterUnit = {
+  // 50 epic squad arachne swarm
+  name: 'MaliciousMantis',
+  BASEHP: 33000,
+  BASESTR: 11000,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 50,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'swarm',
+  category: 'melee',
+  level: 'II'
+}
+const caterpillarCavalry: MonsterUnit = {
+  // 50 epic squad arachne swarm
+  name: 'caterpillarCavalry',
+  BASEHP: 33000,
+  BASESTR: 11000,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 50,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'swarm',
+  category: 'mounted',
+  level: 'II'
+}
+const elusiveWasp: MonsterUnit = {
+  // 50 epic squad arachne swarm
+  name: 'elusiveWasp',
+  BASEHP: 33000,
+  BASESTR: 11000,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 50,
+  vsFortificationsPercent: 0,
+  troop: 'swarm',
+  category: 'flying',
+  level: 'II'
+}
+const mercilesArachne: MonsterUnit = {
   // 50 epic squad arachne swarm
   name: 'mercilesArachne',
   BASEHP: 150000,
@@ -176,21 +487,197 @@ export const arachneMercilessArachne: Monster = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
-  unitType: 'elemental',
+  troop: 'swarm',
   category: 'ranged',
   level: 'III'
 }
-
-export const jormungandr = {
-  name: '50:ragnark-jormungandr',
-  monsters: [
-    {
-      strength: 3200,
-      health: 9600,
-      name: 'ogro chaman',
-      units: 4,
-      bonusVsMounted: 60,
-      type: 'melee'
-    }
-  ]
+const maliciousMantisStack: MobStack = {
+  id: 'maliciousMantisStack1',
+  unit: maliciousMantis,
+  units: 5088165,
+  leadership: 5088165 * maliciousMantis.LEADERSHIP
 }
+const caterpillarCavalryStack: MobStack = {
+  id: 'caterpillarCavalryStack1',
+  unit: caterpillarCavalry,
+  units: 4252506,
+  leadership: 4252506 * caterpillarCavalry.LEADERSHIP
+}
+const elusiveWaspStack: MobStack = {
+  id: 'elusiveWaspStack1',
+  unit: elusiveWasp,
+  units: 4138056,
+  leadership: 4138056 * elusiveWasp.LEADERSHIP
+}
+const mercilesArachneStack: MobStack = {
+  id: 'mercilesArachneStack1',
+  unit: mercilesArachne,
+  units: 1111690,
+  leadership: 1111690 * mercilesArachne.LEADERSHIP
+}
+export const arachneArmy = [
+  maliciousMantisStack, //x2
+  caterpillarCavalryStack, //x2
+  elusiveWaspStack, //x2
+  mercilesArachneStack //x2
+]
+
+// export const jormungandr = {
+//   name: '50:ragnark-jormungandr',
+//   monsters: [
+//     {
+//       strength: 3200,
+//       health: 9600,
+//       name: 'ogro chaman',
+//       units: 4,
+//       bonusVsMounted: 60,
+//       type: 'melee'
+//     }
+//   ]
+// }
+
+const shadowWarrior: MonsterUnit = {
+  // OK
+  name: 'shadowWarrior',
+  BASEHP: 29760,
+  BASESTR: 9920,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 50,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+
+  troop: 'guardsman',
+  category: 'melee', // melee
+  level: 'III'
+}
+const shadowRanged: MonsterUnit = {
+  // OK
+  name: 'shadowRanged',
+  BASEHP: 29760,
+  BASESTR: 9920,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 50,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+
+  troop: 'guardsman',
+  category: 'ranged', // melee
+  level: 'III'
+}
+const shadowRider: MonsterUnit = {
+  // OK
+  name: 'shadowRider',
+  BASEHP: 59520,
+  BASESTR: 19840,
+  LEADERSHIP: 4,
+  INITIATIVE: 10,
+  vsRangedPercent: 50,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+
+  troop: 'guardsman',
+  category: 'mounted', // melee
+  level: 'III'
+}
+const shadowCorax: MonsterUnit = {
+  // OK
+  name: 'shadowCorax',
+  BASEHP: 297600,
+  BASESTR: 99200,
+  LEADERSHIP: 20,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 50,
+  vsFortificationsPercent: 0,
+
+  troop: 'guardsman',
+  category: 'flying', // melee
+  level: 'III'
+}
+/*category
+| 'mounted'| 'ranged'| 'melee'| 'flying'| 'fortification'| 'siege'
+| 'elemental'| 'beast'| 'dragon'| 'giant'
+*/
+export const whoCanIAttack = (unit: MonsterUnit | Unit) => {
+  const target = []
+  if (unit.vsRangedPercent > 0) {
+    target.push('ranged')
+  }
+  if (unit.vsSiegePercent > 0) {
+    target.push('siege')
+  }
+  if (unit.vsBeastPercent > 0) {
+    target.push('beast')
+  }
+
+  if (unit.vsHumanPercent) {
+    target.push('human')
+  }
+  if (unit.vsMountedPercent) {
+    target.push('mounted')
+  }
+  if (unit.vsFlyingPercent) {
+    target.push('flying')
+  }
+  if (unit.vsMeleePercent) {
+    target.push('melee')
+  }
+  if (unit.vsFortificationsPercent) {
+    target.push('fortification')
+  }
+  return target.join(', ')
+}
+
+const shadowWarriorStack: MobStack = {
+  id: 'shadowWarriorStack1',
+  unit: shadowWarrior,
+  units: 121963341,
+  leadership: 121963341 * shadowWarrior.LEADERSHIP
+}
+const shadowRangedStack: MobStack = {
+  id: 'shadowRangedStack1',
+  unit: shadowRanged,
+  units: 115395036,
+  leadership: 115395036 * shadowRanged.LEADERSHIP
+}
+const shadowRiderStack: MobStack = {
+  id: 'shadowRiderStack1',
+  unit: shadowRider,
+  units: 57203657,
+  leadership: 57203657 * shadowRider.LEADERSHIP
+}
+const shadowCoraxStack: MobStack = {
+  id: 'shadowCoraxStack1',
+  unit: shadowCorax,
+  units: 12121748,
+  leadership: 12121748 * shadowCorax.LEADERSHIP
+}
+
+export const shadowCastleArmy = [
+  shadowWarriorStack,
+  shadowRangedStack,
+  shadowRiderStack,
+  shadowCoraxStack
+]

@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { v4 as uuidv4 } from 'uuid'
+import { MobStack } from './monsters'
 // import { RiderG1, RiderG2, RiderG3, RiderG4, RiderG5 } from './soldiers'
 
 interface Stats {
@@ -54,13 +55,6 @@ interface GuardsStore {
 }
 
 export type TroopType = 'archer' | 'spearman' | 'rider' | 'spy' | 'swordsman' | 'catapult'
-
-export type MonsterType =
-  | 'elemental'
-  | 'undead'
-  // | 'human'
-  | 'demon'
-// |'ancient'
 
 export type Category =
   | 'mounted'
@@ -141,6 +135,7 @@ interface Bonus {
 
 interface StackStore {
   army: Stack[]
+  mobArmy: MobStack[]
   bonus: Bonus
   // {
   //   archer: { G1: { str: number; hp: number } }
@@ -150,6 +145,7 @@ interface StackStore {
   //   swordsman: { G1: { str: number; hp: number } }
   //   catapult: { G1: { str: number; hp: number } }
   // }
+  setMobArmy: (data: MobStack[]) => void
   setArmy: (data: Stack[]) => void
   addStack: (data: Omit<Stack, 'id'>) => void
   removeStack: (id: string) => void
@@ -271,6 +267,7 @@ export const getHPWithBonus = (unit: Unit, bonus: Bonus) => {
 }
 
 export const useStackStore = create<StackStore>((set, get) => ({
+  mobArmy: [],
   army: [],
   bonus: {
     // guardsmen
@@ -358,6 +355,10 @@ export const useStackStore = create<StackStore>((set, get) => ({
       str: 0,
       hp: 0
     }
+  },
+  setMobArmy: (data: MobStack[]) => {
+    //TODO: generate id for each stack
+    set(() => ({ mobArmy: data }))
   },
   setArmy: (data: Stack[]) => {
     //TODO: generate id for each stack

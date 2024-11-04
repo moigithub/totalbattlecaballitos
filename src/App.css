@@ -119,9 +119,10 @@ table th {
 .stack-card {
   display: grid;
   grid-template-areas:
-    'units name   name    name       health   action delete'
-    'units limit strength leadership minSetup config reset'
-    'units    id     id       id         id      id     id';
+    'units name   name     name       health   action delete'
+    'units limit  strength leadership minSetup config reset'
+    'units atk    atk      atk        atk      atk    atk'
+    'units id     id       id         id       id     id';
 
   width: 400px;
   border: 1px solid grey;
@@ -220,6 +221,10 @@ table th {
   grid-area: id;
 }
 
+.stack-attack-info {
+  grid-area: atk;
+}
+
 .monsters {
   background-color: mediumorchid;
 }
@@ -235,4 +240,23 @@ table th {
 }
 .mercs {
   background-color: brown;
+}
+
+.mob-army-stack {
+  padding: 1rem;
+  border: 1px solid green;
+  margin: 8px 0;
+
+  .name {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .units {
+    color: brown;
+  }
+
+  .hp {
+    color: gray;
+  }
 }

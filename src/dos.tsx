@@ -12,14 +12,14 @@ import {
 
 // import classNames from 'classnames'
 import {
-  // doomsdayFireswordRider,
-  // doomsdayHellBlacksmith,
-  // doomsdayIfrit,
-  doomsdayNecromancer,
-  doomsdayOverseer,
-  jacksReturnScarecrow,
-  Monster,
-  ragnarokMagoDraug
+  ancientArmy,
+  arachneArmy,
+  doomsdayArmy,
+  draugMage,
+  MonsterUnit,
+  ragnarokArmy,
+  shadowCastleArmy,
+  whoCanIAttack
 } from './monsters'
 import { ArmyList } from './ArmyList'
 import { Card } from './Card'
@@ -27,56 +27,49 @@ import { DndContext, DragEndEvent } from '@dnd-kit/core'
 import { arrayMove, SortableContext } from '@dnd-kit/sortable'
 
 function Dos() {
+  // const mobHealth = useGuardsStore(state => state.mobHealth)
+  // const setMobHealth = useGuardsStore(state => state.setMobHealth)
+  // const addArmy = useStackStore(state => state.addArmy)
+  // const removeStack = useStackStore(state => state.removeStack)
+  // const resetStack = useStackStore(state => state.resetStack)
+  // const toggleLockMin = useStackStore(state => state.toggleLockMin)
+  // const removeUnits = useStackStore(state => state.removeUnits)
+  // const getStackStrength = useStackStore(state => state.getStackStrength)
+  // const getStackLeadership = useStackStore(state => state.getStackLeadership)
   const leadership = useGuardsStore(state => state.leadership)
   const setLeadership = useGuardsStore(state => state.setLeadership)
-  const mobHealth = useGuardsStore(state => state.mobHealth)
-  const setMobHealth = useGuardsStore(state => state.setMobHealth)
-
   const army = useStackStore(state => state.army)
   const setArmy = useStackStore(state => state.setArmy)
-  // const addArmy = useStackStore(state => state.addArmy)
-  const removeStack = useStackStore(state => state.removeStack)
-  const resetStack = useStackStore(state => state.resetStack)
   const resetAllStacks = useStackStore(state => state.resetAllStacks)
-
   const bonus = useStackStore(state => state.bonus)
-  const toggleLockMin = useStackStore(state => state.toggleLockMin)
   const addUnits = useStackStore(state => state.addUnits)
-  const removeUnits = useStackStore(state => state.removeUnits)
   const getStackHealth = useStackStore(state => state.getStackHealth)
-  const getStackStrength = useStackStore(state => state.getStackStrength)
-
   const getArmyLeadership = useStackStore(state => state.getArmyLeadership)
-  // const getStackLeadership = useStackStore(state => state.getStackLeadership)
   const updateMinSetup = useStackStore(state => state.updateMinSetup)
+
+  const mobArmy = useStackStore(state => state.mobArmy)
+  const setMobArmy = useStackStore(state => state.setMobArmy)
   //-------------------
 
   const [selectedEvent, setSelectedEvent] = useState('0')
 
   useEffect(() => {
-    let health = ragnarokMagoDraug.BASEHP
+    let army = doomsdayArmy
 
     if (selectedEvent === '0') {
-      health = ragnarokMagoDraug.BASEHP
+      army = ragnarokArmy
     } else if (selectedEvent === '1') {
-      health = ragnarokMagoDraug.BASEHP
+      army = ancientArmy
     } else if (selectedEvent === '2') {
-      // doomsday -> Necromancer 2160 health
-      health = doomsdayNecromancer.BASEHP
+      army = doomsdayArmy
     } else if (selectedEvent === '3') {
-      health = doomsdayOverseer.BASEHP
+      army = shadowCastleArmy
     } else if (selectedEvent === '4') {
-      // jacks return -> scarecrow (espantapajaro) 33k health //11k str
-      health = jacksReturnScarecrow.BASEHP
+      army = arachneArmy
     }
 
-    setMobHealth(health)
+    setMobArmy(army)
   }, [selectedEvent])
-
-  const changeMobHealth = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const mobHealth = parseInt(e.target.value)
-    setMobHealth(mobHealth)
-  }
 
   const changeMobEvent = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedEvent(e.target.value)
@@ -116,7 +109,7 @@ function Dos() {
      */
     if (iam === 'rider') {
       /** */
-      return doomsdayOverseer
+      return draugMage
     }
     //  else if (iam === 'archer') {
     //   // vs melee, loquequeda
@@ -150,7 +143,7 @@ function Dos() {
     //   }
     // }
 
-    return doomsdayOverseer //doomsdayFireswordRider // retornar el que tiene mas hp ?
+    return draugMage //doomsdayFireswordRider // retornar el que tiene mas hp ?
   }
 
   // const getMonsterStack = () => {
@@ -161,7 +154,7 @@ function Dos() {
   //   }
   // }
 
-  const calculateUnitsMobKill = (monster: Monster, unit: Unit): number => {
+  const calculateUnitsMobKill = (monster: MonsterUnit, unit: Unit): number => {
     const monsterHealth = monster.BASEHP
     let soldierStrength = unit.BASESTR
 
@@ -306,14 +299,10 @@ function Dos() {
             <option value='0'>Ragnarok/jörmungandr-fenrir/Doug Mage</option>
             <option value='1'>Ancient/Tinman/Arbalest</option>
             <option value='2'>Doomsday/Necromancer</option>
-            <option value='4'>JacksReturn/Scarecrow</option>
-            <option value='3'>6500,19500/Supervisor</option>
+            <option value='3'>Shadow castle</option>
+            <option value='4'>Arachne</option>
+            {/* <option value='54'>JacksReturn/Scarecrow</option> */}
           </select>
-        </div>
-        <div className='group'>
-          <span>Health per unit: </span>{' '}
-          <input type='number' value={mobHealth} onChange={changeMobHealth} required />
-          <span className='small'>&lt;-- Change this value if you need a custom calculation</span>
         </div>
       </div>
       <div className='container'>
@@ -349,7 +338,22 @@ function Dos() {
           </div>
         </div>
 
-        <div className='config-container'>skkkkkkkkkkkk</div>
+        <div className='config-container'>
+          {mobArmy.map(army => {
+            return (
+              <div className='mob-army-stack' key={army.id}>
+                <div className='name'>
+                  {army.unit.name} {army.unit.level} {army.unit.category}
+                </div>
+                <div className='units'>Units {army.units}</div>
+                <div className='hp'>Stack HP {army.units * army.unit.BASEHP}</div>
+                <div style={{ color: 'gray' }}>
+                  i attack <span style={{ color: 'green' }}>{whoCanIAttack(army.unit)}</span>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </Fragment>
   )

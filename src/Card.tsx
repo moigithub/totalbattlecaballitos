@@ -1,7 +1,7 @@
 import { useStackStore, Stack } from './guardStore'
-import { ragnarokMagoDraug } from './monsters'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { draugMage, whoCanIAttack } from './monsters'
 
 export const Card = ({ stack }: { stack: Stack }) => {
   // const army = useStackStore(state => state.army)
@@ -31,9 +31,7 @@ export const Card = ({ stack }: { stack: Stack }) => {
       <p className='stack-units'>{stack.units}</p>
       <p className='stack-name'>{stack.unit.name}</p>
       <p className='stack-health'>HP {getStackHealth(stack.id!)}</p>
-      <p className='stack-strength'>
-        STR {getStackStrength(stack.id!, ragnarokMagoDraug.category)}
-      </p>
+      <p className='stack-strength'>STR {getStackStrength(stack.id!, draugMage.category)}</p>
       <p className='stack-leadership'>Lead {stack.leadership}</p>
       <p className='stack-minSetup'>Min {stack.minSetup}</p>
       <p className='stack-limit'>Limit {stack.limit}</p>
@@ -77,6 +75,9 @@ export const Card = ({ stack }: { stack: Stack }) => {
         </button>
       </div>
       <span className='stack-id tiny'>(id.{stack.id})</span>
+      <div className='stack-attack-info' style={{ color: 'gray', fontSize: 14 }}>
+        i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit)}</span>
+      </div>
     </div>
   )
 }
