@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { RiderG1, RiderG2, RiderG3, RiderG4, RiderG5 } from './soldiers'
+// import { RiderG1, RiderG2, RiderG3, RiderG4, RiderG5 } from './soldiers'
 
 interface Stats {
   BASEHP: number
@@ -51,267 +51,344 @@ interface GuardsStore {
   setRider4: (stats: Partial<Stats>) => void
   setRider5: (stats: Partial<Stats>) => void
 }
-export type UnitType = 'riderG1' | 'riderG2' | 'riderG3' | 'riderG4' | 'riderG5'
+
+export type TroopType = 'archer' | 'spearman' | 'rider' | 'spy' | 'swordsman' | 'catapult'
+
+export type MonsterType =
+  | 'elemental'
+  | 'undead'
+  // | 'human'
+  | 'demon'
+// |'ancient'
+
+export type Category =
+  | 'mounted'
+  | 'ranged'
+  | 'melee'
+  | 'flying'
+  | 'fortification'
+  | 'siege'
+  | 'elemental'
+  | 'beast'
+  | 'dragon'
+  | 'giant'
+
 export interface Stack {
   position?: number // whichever at first position will be used as sacrifice, increases 1 by 1, ignoring lockMinSetup
-  name: string
-  health: number // (base hp+bonus) *units
-  strength: number // (base str+bonus) *units// calculado basado contra que esta atacando
+  // health: number // (base hp+bonus) *units // DEBE ser calculado y no guardado, por si cambia el bono no tener que recalcular de nuevo
+  //healthLeft o damageTaken
+  // strength: number // (base str+bonus) *units// calculado basado contra que esta atacando// recalculado, no guardado
   leadership: number
+  unit: Unit
   units: number
-  unitType: UnitType
   minSetup: number // used to calculate how many units are needed to kill one monster
   lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount
   limit: number // max unit value
 }
-interface Bonus {
+
+export interface Unit {
+  name: string
+  BASEHP: number
+  BASESTR: number
+  LEADERSHIP: number
+  INITIATIVE: number
+  vsRangedPercent: number
+  vsSiegePercent: number
+  vsBeastPercent: number
+  vsHumanPercent: number
+  vsMountedPercent: number
+  vsFlyingPercent: number
+  vsMeleePercent: number
+  vsFortificationsPercent: number
+  troop: TroopType
+  category: Category
+  level: Level
+}
+
+export type GuardsmanLevel = 'G1' | 'G2' | 'G3' | 'G4' | 'G5'
+export type EngineerLevel = 'E1' | 'E2' | 'E3' | 'E4' | 'E5'
+export type SpecialistLevel = 'S1' | 'S2' | 'S3' | 'S4' | 'S5'
+export type Level = GuardsmanLevel | EngineerLevel | SpecialistLevel
+
+interface BasicStats {
   str: number
   hp: number
 }
 
+type Staaats<L extends Level> = {
+  [E in L]: BasicStats
+}
+
+export type GuardsmanStats = Staaats<GuardsmanLevel>
+export type RiderStats = Staaats<GuardsmanLevel>
+
+// export type GuardsmanStats = Record<GuardsmanLevel, BasicStats>
+export type SpearmanStats = Record<GuardsmanLevel, BasicStats>
+// export type RiderStats = Record<GuardsmanLevel, BasicStats>
+export type SpyStats = Record<SpecialistLevel, BasicStats>
+export type SwordsmanStats = Record<SpecialistLevel, BasicStats>
+export type CatapultStats = Record<EngineerLevel, BasicStats>
+
+interface Bonus {
+  archer: GuardsmanStats
+  spearman: SpearmanStats
+  rider: RiderStats
+  spy: SpyStats
+  swordsman: SwordsmanStats
+  catapult: CatapultStats
+}
+
 interface StackStore {
   army: Stack[]
-  bonus: {
-    // guardsmen
-    archerG1: Bonus
-    archerG2: Bonus
-    archerG3: Bonus
-    archerG4: Bonus
-    archerG5: Bonus
-    spearmanG1: Bonus
-    spearmanG2: Bonus
-    spearmanG3: Bonus
-    spearmanG4: Bonus
-    spearmanG5: Bonus
-    riderG1: Bonus
-    riderG2: Bonus
-    riderG3: Bonus
-    riderG4: Bonus
-    riderG5: Bonus
-    // Engineer corps
-    catapultE1: Bonus
-    catapultE2: Bonus
-    catapultE3: Bonus
-    catapultE4: Bonus
-    catapultE5: Bonus
-    // specialist
-    swordsmanS1: Bonus
-    spyS1: Bonus
-    swordsmanS2: Bonus
-    spyS2: Bonus
-    swordsmanS3: Bonus
-    spyS3: Bonus
-    swordsmanS4: Bonus
-    spyS4: Bonus
-    swordsmanS5: Bonus
-    spyS5: Bonus
-    // monsters
-    waterElementalM3: Bonus
-    battleBoarM3: Bonus
-    emeraldDragonM3: Bonus
-    stoneGargoleM3: Bonus
-    //---- mercenaries
-    epicMonsterHunterVI: Bonus
-    chariotVI: Bonus
-    legionaryVI: Bonus
-  }
+  bonus: Bonus
+  // {
+  //   archer: { G1: { str: number; hp: number } }
+  //   spearman: { G1: { str: number; hp: number } }
+  //   rider: { G1: { str: number; hp: number } }
+  //   spy: { G1: { str: number; hp: number } }
+  //   swordsman: { G1: { str: number; hp: number } }
+  //   catapult: { G1: { str: number; hp: number } }
+  // }
   setArmy: (data: Stack[]) => void
   addArmy: (data: Stack) => void
   removeArmy: (position: number) => void
+  getArmyLeadership: () => number
   setStackPosition: (position: number, newPosition: number) => void
   recalculatePosition: () => void
+  updateMinSetup: (position: number, minSetup: number) => void
   addUnits: (position: number) => void
   removeUnits: (position: number) => void
   fixStackUnits: (position: number, maxHealth: number) => void
-  getStackStrength: (position: number, against: string) => void
-  getStackHealth: (position: number) => void
+  getStackStrength: (position: number, against: string) => number
+  getStackHealth: (position: number) => number
+  getStackLeadership: (position: number) => number
   toggleLockMin: (position: number) => void
 
-  setArcherG1Bonus: (bonus: Bonus) => void
-  setArcherG2Bonus: (bonus: Bonus) => void
-  setArcherG3Bonus: (bonus: Bonus) => void
-  setArcherG4Bonus: (bonus: Bonus) => void
-  setArcherG5Bonus: (bonus: Bonus) => void
-  setSpearmanG1Bonus: (bonus: Bonus) => void
-  setSpearmanG2Bonus: (bonus: Bonus) => void
-  setSpearmanG3Bonus: (bonus: Bonus) => void
-  setSpearmanG4Bonus: (bonus: Bonus) => void
-  setSpearmanG5Bonus: (bonus: Bonus) => void
-  setRiderG1Bonus: (bonus: Bonus) => void
-  setRiderG2Bonus: (bonus: Bonus) => void
-  setRiderG3Bonus: (bonus: Bonus) => void
-  setRiderG4Bonus: (bonus: Bonus) => void
-  setRiderG5Bonus: (bonus: Bonus) => void
+  setArcherG1Bonus: (bonus: BasicStats) => void
+  setArcherG2Bonus: (bonus: BasicStats) => void
+  setArcherG3Bonus: (bonus: BasicStats) => void
+  setArcherG4Bonus: (bonus: BasicStats) => void
+  setArcherG5Bonus: (bonus: BasicStats) => void
+  setSpearmanG1Bonus: (bonus: BasicStats) => void
+  setSpearmanG2Bonus: (bonus: BasicStats) => void
+  setSpearmanG3Bonus: (bonus: BasicStats) => void
+  setSpearmanG4Bonus: (bonus: BasicStats) => void
+  setSpearmanG5Bonus: (bonus: BasicStats) => void
+  setRiderG1Bonus: (bonus: BasicStats) => void
+  setRiderG2Bonus: (bonus: BasicStats) => void
+  setRiderG3Bonus: (bonus: BasicStats) => void
+  setRiderG4Bonus: (bonus: BasicStats) => void
+  setRiderG5Bonus: (bonus: BasicStats) => void
 
-  setCatapultE1Bonus: (bonus: Bonus) => void
-  setCatapultE2Bonus: (bonus: Bonus) => void
-  setCatapultE3Bonus: (bonus: Bonus) => void
-  setCatapultE4Bonus: (bonus: Bonus) => void
-  setCatapultE5Bonus: (bonus: Bonus) => void
+  setCatapultE1Bonus: (bonus: BasicStats) => void
+  setCatapultE2Bonus: (bonus: BasicStats) => void
+  setCatapultE3Bonus: (bonus: BasicStats) => void
+  setCatapultE4Bonus: (bonus: BasicStats) => void
+  setCatapultE5Bonus: (bonus: BasicStats) => void
 
-  setSwordsmanS1Bonus: (bonus: Bonus) => void
-  setSpyS1Bonus: (bonus: Bonus) => void
-  setSwordsmanS2Bonus: (bonus: Bonus) => void
-  setSpyS2Bonus: (bonus: Bonus) => void
-  setSwordsmanS3Bonus: (bonus: Bonus) => void
-  setSpyS3Bonus: (bonus: Bonus) => void
-  setSwordsmanS4Bonus: (bonus: Bonus) => void
-  setSpyS4Bonus: (bonus: Bonus) => void
-  setSwordsmanS5Bonus: (bonus: Bonus) => void
-  setSpyS5Bonus: (bonus: Bonus) => void
+  setSwordsmanS1Bonus: (bonus: BasicStats) => void
+  setSpyS1Bonus: (bonus: BasicStats) => void
+  setSwordsmanS2Bonus: (bonus: BasicStats) => void
+  setSpyS2Bonus: (bonus: BasicStats) => void
+  setSwordsmanS3Bonus: (bonus: BasicStats) => void
+  setSpyS3Bonus: (bonus: BasicStats) => void
+  setSwordsmanS4Bonus: (bonus: BasicStats) => void
+  setSpyS4Bonus: (bonus: BasicStats) => void
+  setSwordsmanS5Bonus: (bonus: BasicStats) => void
+  setSpyS5Bonus: (bonus: BasicStats) => void
 
-  setWaterElementalM3Bonus: (bonus: Bonus) => void
-  setBattleBoarM3Bonus: (bonus: Bonus) => void
-  setEmeraldDragonM3Bonus: (bonus: Bonus) => void
-  setStoneGargoleM3Bonus: (bonus: Bonus) => void
+  setWaterElementalM3Bonus: (bonus: BasicStats) => void
+  setBattleBoarM3Bonus: (bonus: BasicStats) => void
+  setEmeraldDragonM3Bonus: (bonus: BasicStats) => void
+  setStoneGargoleM3Bonus: (bonus: BasicStats) => void
 
-  setEpicMonsterHunterVIBonus: (bonus: Bonus) => void
-  setChariotVIBonus: (bonus: Bonus) => void
-  setLegionaryVIBonus: (bonus: Bonus) => void
+  setEpicMonsterHunterVIBonus: (bonus: BasicStats) => void
+  setChariotVIBonus: (bonus: BasicStats) => void
+  setLegionaryVIBonus: (bonus: BasicStats) => void
+}
+
+/**
+ {
+    // guardsmen
+    archer: { G1: BasicStats; G2: BasicStats; G3: BasicStats; G4: BasicStats; G5: BasicStats }
+    spearman: { G1: BasicStats; G2: BasicStats; G3: BasicStats; G4: BasicStats; G5: BasicStats }
+    rider: {
+      G1: BasicStats
+      G2: BasicStats
+      G3: BasicStats
+      G4: BasicStats
+      G5: BasicStats
+    }
+    // Engineer corps (catapults)
+    catapult: { E1: BasicStats; E2: BasicStats; E3: BasicStats; E4: BasicStats; E5: BasicStats }
+    // specialist
+
+    swordsman: {
+      S1: BasicStats
+      S2: BasicStats
+      S3: BasicStats
+      S4: BasicStats
+      S5: BasicStats
+    }
+    spy: { S1: BasicStats; S2: BasicStats; S3: BasicStats; S4: BasicStats; S5: BasicStats }
+
+    // monsters
+    waterElemental: { M3: BasicStats }
+    battleBoar: { M3: BasicStats }
+    emeraldDragon: { M3: BasicStats }
+    stoneGargole: { M3: BasicStats }
+    //---- mercenaries
+    epicMonsterHunterVI: BasicStats
+    chariotVI: BasicStats
+    legionaryVI: BasicStats
+  }
+ */
+// const xx = {
+//   // guardsmen
+//   archer: {
+//     G1: { str: 0, hp: 0 },
+//     G2: { str: 0, hp: 0 },
+//     G3: { str: 0, hp: 0 },
+//     G4: { str: 0, hp: 0 },
+//     G5: { str: 0, hp: 0 }
+//   },
+//   spearman: {
+//     G1: { str: 0, hp: 0 },
+//     G2: { str: 0, hp: 0 },
+//     G3: { str: 0, hp: 0 },
+//     G4: { str: 0, hp: 0 },
+//     G5: { str: 0, hp: 0 }
+//   },
+//   rider: {
+//     G1: { str: 0, hp: 0 },
+//     G2: { str: 0, hp: 0 },
+//     G3: { str: 0, hp: 0 },
+//     G4: { str: 0, hp: 0 },
+//     G5: { str: 0, hp: 0 }
+//   },
+//   // Engineer corps
+//   catapult: {
+//     E1: { str: 0, hp: 0 },
+//     E2: { str: 0, hp: 0 },
+//     E3: { str: 0, hp: 0 },
+//     E4: { str: 0, hp: 0 },
+//     E5: { str: 0, hp: 0 }
+//   },
+
+//   // specialist
+//   swordsman: {
+//     S1: { str: 0, hp: 0 },
+//     S2: { str: 0, hp: 0 },
+//     S3: { str: 0, hp: 0 },
+//     S4: { str: 0, hp: 0 },
+//     S5: { str: 0, hp: 0 }
+//   },
+//   spy: {
+//     S1: { str: 0, hp: 0 },
+//     S2: { str: 0, hp: 0 },
+//     S3: { str: 0, hp: 0 },
+//     S4: { str: 0, hp: 0 },
+//     S5: { str: 0, hp: 0 }
+//   },
+// }
+
+export const getHPWithBonus = (unit: Unit, bonus: Bonus) => {
+  //const hp = bonus[unit.troop][unit.level].hp ?? 0
+  let hp = 0
+  if (unit.troop === 'archer') {
+    hp = bonus[unit.troop][unit.level as GuardsmanLevel].hp ?? 0
+  } else if (unit.troop == 'spearman') {
+    hp = bonus[unit.troop][unit.level as GuardsmanLevel].hp ?? 0
+  } else if (unit.troop == 'rider') {
+    hp = bonus[unit.troop][unit.level as GuardsmanLevel].hp ?? 0
+  } else if (unit.troop == 'spy') {
+    hp = bonus[unit.troop][unit.level as SpecialistLevel].hp ?? 0
+  } else if (unit.troop == 'swordsman') {
+    hp = bonus[unit.troop][unit.level as SpecialistLevel].hp ?? 0
+  } else if (unit.troop == 'catapult') {
+    hp = bonus[unit.troop][unit.level as EngineerLevel].hp ?? 0
+  }
+
+  const bonusHP = (unit.BASEHP * hp) / 100
+  const totalHPPerUnit = unit.BASEHP + bonusHP
+
+  return totalHPPerUnit
 }
 
 export const useStackStore = create<StackStore>((set, get) => ({
   army: [],
   bonus: {
     // guardsmen
-    archerG1: {
-      str: 0,
-      hp: 0
+    archer: {
+      G1: { str: 0, hp: 0 },
+      G2: { str: 0, hp: 0 },
+      G3: { str: 0, hp: 0 },
+      G4: { str: 0, hp: 0 },
+      G5: { str: 0, hp: 0 }
     },
-    archerG2: {
-      str: 0,
-      hp: 0
+    spearman: {
+      G1: { str: 0, hp: 0 },
+      G2: { str: 0, hp: 0 },
+      G3: { str: 0, hp: 0 },
+      G4: { str: 0, hp: 0 },
+      G5: { str: 0, hp: 0 }
     },
-    archerG3: {
-      str: 0,
-      hp: 0
-    },
-    archerG4: {
-      str: 0,
-      hp: 0
-    },
-    archerG5: {
-      str: 0,
-      hp: 0
-    },
-    spearmanG1: {
-      str: 0,
-      hp: 0
-    },
-    spearmanG2: {
-      str: 0,
-      hp: 0
-    },
-    spearmanG3: {
-      str: 0,
-      hp: 0
-    },
-    spearmanG4: {
-      str: 0,
-      hp: 0
-    },
-    spearmanG5: {
-      str: 0,
-      hp: 0
-    },
-    riderG1: {
-      str: 0,
-      hp: 0
-    },
-    riderG2: {
-      str: 0,
-      hp: 0
-    },
-    riderG3: {
-      str: 0,
-      hp: 0
-    },
-    riderG4: {
-      str: 0,
-      hp: 0
-    },
-    riderG5: {
-      str: 0,
-      hp: 0
+    rider: {
+      G1: { str: 0, hp: 0 },
+      G2: { str: 0, hp: 0 },
+      G3: { str: 0, hp: 0 },
+      G4: { str: 0, hp: 0 },
+      G5: { str: 0, hp: 0 }
     },
     // Engineer corps
-    catapultE1: {
-      str: 0,
-      hp: 0
+    catapult: {
+      E1: { str: 0, hp: 0 },
+      E2: { str: 0, hp: 0 },
+      E3: { str: 0, hp: 0 },
+      E4: { str: 0, hp: 0 },
+      E5: { str: 0, hp: 0 }
     },
-    catapultE2: {
-      str: 0,
-      hp: 0
-    },
-    catapultE3: {
-      str: 0,
-      hp: 0
-    },
-    catapultE4: {
-      str: 0,
-      hp: 0
-    },
-    catapultE5: {
-      str: 0,
-      hp: 0
-    },
+
     // specialist
-    swordsmanS1: {
-      str: 0,
-      hp: 0
+    swordsman: {
+      S1: { str: 0, hp: 0 },
+      S2: { str: 0, hp: 0 },
+      S3: { str: 0, hp: 0 },
+      S4: { str: 0, hp: 0 },
+      S5: { str: 0, hp: 0 }
     },
-    spyS1: {
-      str: 0,
-      hp: 0
+    spy: {
+      S1: { str: 0, hp: 0 },
+      S2: { str: 0, hp: 0 },
+      S3: { str: 0, hp: 0 },
+      S4: { str: 0, hp: 0 },
+      S5: { str: 0, hp: 0 }
     },
-    swordsmanS2: {
-      str: 0,
-      hp: 0
-    },
-    spyS2: {
-      str: 0,
-      hp: 0
-    },
-    swordsmanS3: {
-      str: 0,
-      hp: 0
-    },
-    spyS3: {
-      str: 0,
-      hp: 0
-    },
-    swordsmanS4: {
-      str: 0,
-      hp: 0
-    },
-    spyS4: {
-      str: 0,
-      hp: 0
-    },
-    swordsmanS5: {
-      str: 0,
-      hp: 0
-    },
-    spyS5: {
-      str: 0,
-      hp: 0
-    },
+
     // monsters
-    waterElementalM3: {
-      str: 0,
-      hp: 0
+    waterElemental: {
+      M3: {
+        str: 0,
+        hp: 0
+      }
     },
-    battleBoarM3: {
-      str: 0,
-      hp: 0
+    battleBoar: {
+      M3: {
+        str: 0,
+        hp: 0
+      }
     },
-    emeraldDragonM3: {
-      str: 0,
-      hp: 0
+    emeraldDragon: {
+      M3: {
+        str: 0,
+        hp: 0
+      }
     },
-    stoneGargoleM3: {
-      str: 0,
-      hp: 0
+    stoneGargole: {
+      M3: {
+        str: 0,
+        hp: 0
+      }
     },
     //---- mercenaries
     epicMonsterHunterVI: {
@@ -343,62 +420,47 @@ export const useStackStore = create<StackStore>((set, get) => ({
     army[position] = stack1
     set(() => ({ army }))
   },
-  recalculatePosition: () => {
-    set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
-  },
-  addUnits: (position: number) => {
+  updateMinSetup: (position: number, minSetup: number) => {
     set(state => ({
       army: state.army.map(stack => {
         if (stack.position === position) {
-          let leadership = 1
-          let totalHPPerUnit = 0
-          if (stack.unitType === 'riderG1') {
-            leadership = RiderG1.LEADERSHIP
-
-            const bonusHP = (RiderG1.BASEHP * state.bonus.riderG1.hp) / 100
-            totalHPPerUnit = RiderG1.BASEHP + bonusHP
-          } else if (stack.unitType === 'riderG2') {
-            leadership = RiderG2.LEADERSHIP
-
-            const bonusHP = (RiderG2.BASEHP * state.bonus.riderG2.hp) / 100
-            totalHPPerUnit = RiderG2.BASEHP + bonusHP
-          } else if (stack.unitType === 'riderG3') {
-            leadership = RiderG3.LEADERSHIP
-
-            const bonusHP = (RiderG3.BASEHP * state.bonus.riderG3.hp) / 100
-            totalHPPerUnit = RiderG3.BASEHP + bonusHP
-          } else if (stack.unitType === 'riderG4') {
-            leadership = RiderG4.LEADERSHIP
-
-            const bonusHP = (RiderG4.BASEHP * state.bonus.riderG4.hp) / 100
-            totalHPPerUnit = RiderG4.BASEHP + bonusHP
-          } else if (stack.unitType === 'riderG5') {
-            leadership = RiderG5.LEADERSHIP
-
-            const bonusHP = (RiderG5.BASEHP * state.bonus.riderG5.hp) / 100
-            totalHPPerUnit = RiderG5.BASEHP + bonusHP
+          return {
+            ...stack,
+            minSetup
           }
+        }
+        return stack
+      })
+    }))
+  },
+  recalculatePosition: () => {
+    set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
+  },
 
-          if (stack.lockMinSetup) {
-            const totalUnits = stack.units + stack.minSetup
-            const stackHealth = totalHPPerUnit * totalUnits
+  addUnits: (position: number) => {
+    set(state => ({
+      army: state.army.map((stack, index) => {
+        if (stack.position === position) {
+          const leadership = stack.unit.LEADERSHIP
 
-            return {
-              ...stack,
-              units: totalUnits,
-              leadership: totalUnits * leadership,
-              health: stackHealth
-            }
-          } else {
-            const totalUnits = stack.units + 1
-            const stackHealth = totalHPPerUnit * totalUnits
+          // index === 0 ,its a sacrifice, increase 1 by 1, this MUST have the highest hp
+          // all others stack should check index 0 health, and keep lower health
+          const unitToAdd = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
 
-            return {
-              ...stack,
-              units: totalUnits,
-              leadership: totalUnits * leadership,
-              health: stackHealth
-            }
+          const totalUnits = stack.units + unitToAdd
+
+          console.log(
+            'adding units',
+            totalUnits,
+
+            'lead',
+            totalUnits * leadership
+          )
+
+          return {
+            ...stack,
+            units: totalUnits,
+            leadership: totalUnits * leadership
           }
         } else return stack
       })
@@ -408,60 +470,27 @@ export const useStackStore = create<StackStore>((set, get) => ({
     set(state => ({
       army: state.army.map(stack => {
         if (stack.position === position) {
-          let leadership = 1
-          let totalHPPerUnit = 0
-          if (stack.unitType === 'riderG1') {
-            leadership = RiderG1.LEADERSHIP
+          const leadership = stack.unit.LEADERSHIP
 
-            const bonusHP = (RiderG1.BASEHP * state.bonus.riderG1.hp) / 100
-            totalHPPerUnit = RiderG1.BASEHP + bonusHP
-          } else if (stack.unitType === 'riderG2') {
-            leadership = RiderG2.LEADERSHIP
+          const unitToRemove = stack.lockMinSetup ? stack.minSetup : 1
 
-            const bonusHP = (RiderG2.BASEHP * state.bonus.riderG2.hp) / 100
-            totalHPPerUnit = RiderG2.BASEHP + bonusHP
-          } else if (stack.unitType === 'riderG3') {
-            leadership = RiderG3.LEADERSHIP
+          if (stack.units - unitToRemove >= 0) {
+            const totalUnits = stack.units - unitToRemove
 
-            const bonusHP = (RiderG3.BASEHP * state.bonus.riderG3.hp) / 100
-            totalHPPerUnit = RiderG3.BASEHP + bonusHP
-          } else if (stack.unitType === 'riderG4') {
-            leadership = RiderG4.LEADERSHIP
+            console.log(
+              'removing units',
+              totalUnits,
 
-            const bonusHP = (RiderG4.BASEHP * state.bonus.riderG4.hp) / 100
-            totalHPPerUnit = RiderG4.BASEHP + bonusHP
-          } else if (stack.unitType === 'riderG5') {
-            leadership = RiderG5.LEADERSHIP
+              'lead',
+              totalUnits * leadership
+            )
 
-            const bonusHP = (RiderG5.BASEHP * state.bonus.riderG5.hp) / 100
-            totalHPPerUnit = RiderG5.BASEHP + bonusHP
-          }
-
-          if (stack.lockMinSetup) {
-            if (stack.units - stack.minSetup >= 0) {
-              const totalUnits = stack.units - stack.minSetup
-              const stackHealth = totalHPPerUnit * totalUnits
-
-              return {
-                ...stack,
-                units: totalUnits,
-                leadership: totalUnits * leadership,
-                health: stackHealth
-              }
-            } else return stack
-          } else {
-            if (stack.units >= 0) {
-              const totalUnits = stack.units - 1
-              const stackHealth = totalHPPerUnit * totalUnits
-
-              return {
-                ...stack,
-                units: totalUnits,
-                leadership: totalUnits * leadership,
-                health: stackHealth
-              }
-            } else return stack
-          }
+            return {
+              ...stack,
+              units: totalUnits,
+              leadership: totalUnits * leadership
+            }
+          } else return stack
         } else return stack
       })
     }))
@@ -472,53 +501,47 @@ export const useStackStore = create<StackStore>((set, get) => ({
         if (stack.position === position) {
           // reduce the units amount, so the total stack health is lower than maxHealth
           let stackUnits = stack.units
-          const unitType = stack.unitType
 
-          if (unitType === 'riderG1') {
-            const bonusHP = (RiderG1.BASEHP * state.bonus.riderG1.hp) / 100
-            const totalHPPerUnit = RiderG1.BASEHP + bonusHP
+          if (stack.unit.troop === 'rider' && stack.unit.level === 'G1') {
+            const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
             let stackHealth = totalHPPerUnit * stackUnits
             while (stackHealth >= maxHealth && stackUnits > 0) {
               stackUnits = stackUnits - 1
               stackHealth = totalHPPerUnit * stackUnits
             }
-            return { ...stack, units: stackUnits, health: stackHealth }
-          } else if (unitType === 'riderG2') {
-            const bonusHP = (RiderG2.BASEHP * state.bonus.riderG2.hp) / 100
-            const totalHPPerUnit = RiderG2.BASEHP + bonusHP
+            return { ...stack, units: stackUnits }
+          } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G2') {
+            const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
             let stackHealth = totalHPPerUnit * stackUnits
             while (stackHealth >= maxHealth && stackUnits > 0) {
               stackUnits = stackUnits - 1
               stackHealth = totalHPPerUnit * stackUnits
             }
-            return { ...stack, units: stackUnits, health: stackHealth }
-          } else if (unitType === 'riderG3') {
-            const bonusHP = (RiderG3.BASEHP * state.bonus.riderG3.hp) / 100
-            const totalHPPerUnit = RiderG3.BASEHP + bonusHP
+            return { ...stack, units: stackUnits }
+          } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G3') {
+            const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
             let stackHealth = totalHPPerUnit * stackUnits
             while (stackHealth >= maxHealth && stackUnits > 0) {
               stackUnits = stackUnits - 1
               stackHealth = totalHPPerUnit * stackUnits
             }
-            return { ...stack, units: stackUnits, health: stackHealth }
-          } else if (unitType === 'riderG4') {
-            const bonusHP = (RiderG4.BASEHP * state.bonus.riderG4.hp) / 100
-            const totalHPPerUnit = RiderG4.BASEHP + bonusHP
+            return { ...stack, units: stackUnits }
+          } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G4') {
+            const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
             let stackHealth = totalHPPerUnit * stackUnits
             while (stackHealth >= maxHealth && stackUnits > 0) {
               stackUnits = stackUnits - 1
               stackHealth = totalHPPerUnit * stackUnits
             }
-            return { ...stack, units: stackUnits, health: stackHealth }
-          } else if (unitType === 'riderG5') {
-            const bonusHP = (RiderG5.BASEHP * state.bonus.riderG5.hp) / 100
-            const totalHPPerUnit = RiderG5.BASEHP + bonusHP
+            return { ...stack, units: stackUnits }
+          } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G5') {
+            const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
             let stackHealth = totalHPPerUnit * stackUnits
             while (stackHealth >= maxHealth && stackUnits > 0) {
               stackUnits = stackUnits - 1
               stackHealth = totalHPPerUnit * stackUnits
             }
-            return { ...stack, units: stackUnits, health: stackHealth }
+            return { ...stack, units: stackUnits }
           }
 
           return stack
@@ -532,99 +555,129 @@ export const useStackStore = create<StackStore>((set, get) => ({
 
     if (stack) {
       const stackUnits = stack.units
-      const unitType = stack.unitType
 
-      if (unitType === 'riderG1') {
+      if (stack.unit.troop === 'rider' && stack.unit.level === 'G1') {
+        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
         if (against === 'ranged') {
-          const bonusSTR = (RiderG1.BASESTR * (RiderG1.vsRangedPercent + bonus.riderG1.str)) / 100
-          const totalSTRPerUnit = RiderG1.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else if (against === 'siege') {
-          const bonusSTR = (RiderG1.BASESTR * (RiderG1.vsSiegePercent + bonus.riderG1.str)) / 100
-          const totalSTRPerUnit = RiderG1.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else {
-          const bonusSTR = (RiderG1.BASESTR * bonus.riderG1.str) / 100
-          const totalSTRPerUnit = RiderG1.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         }
-      } else if (unitType === 'riderG2') {
+      } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G2') {
+        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
         if (against === 'ranged') {
-          const bonusSTR = (RiderG2.BASESTR * (RiderG2.vsRangedPercent + bonus.riderG2.str)) / 100
-          const totalSTRPerUnit = RiderG2.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else if (against === 'siege') {
-          const bonusSTR = (RiderG2.BASESTR * (RiderG2.vsSiegePercent + bonus.riderG2.str)) / 100
-          const totalSTRPerUnit = RiderG2.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else {
-          const bonusSTR = (RiderG2.BASESTR * bonus.riderG2.str) / 100
-          const totalSTRPerUnit = RiderG2.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         }
-      } else if (unitType === 'riderG3') {
+      } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G3') {
+        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
         if (against === 'ranged') {
-          const bonusSTR = (RiderG3.BASESTR * (RiderG3.vsRangedPercent + bonus.riderG3.str)) / 100
-          const totalSTRPerUnit = RiderG3.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else if (against === 'siege') {
-          const bonusSTR = (RiderG3.BASESTR * (RiderG3.vsSiegePercent + bonus.riderG3.str)) / 100
-          const totalSTRPerUnit = RiderG3.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else {
-          const bonusSTR = (RiderG3.BASESTR * bonus.riderG3.str) / 100
-          const totalSTRPerUnit = RiderG3.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         }
-      } else if (unitType === 'riderG4') {
+      } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G4') {
+        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
         if (against === 'ranged') {
-          const bonusSTR = (RiderG4.BASESTR * (RiderG4.vsRangedPercent + bonus.riderG4.str)) / 100
-          const totalSTRPerUnit = RiderG4.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else if (against === 'siege') {
-          const bonusSTR = (RiderG4.BASESTR * (RiderG4.vsSiegePercent + bonus.riderG4.str)) / 100
-          const totalSTRPerUnit = RiderG4.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else {
-          const bonusSTR = (RiderG4.BASESTR * bonus.riderG4.str) / 100
-          const totalSTRPerUnit = RiderG4.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         }
-      } else if (unitType === 'riderG5') {
+      } else if (stack.unit.troop === 'rider' && stack.unit.level === 'G5') {
+        const otherBonus = bonus[stack.unit.troop][stack.unit.level].str ?? 0
         if (against === 'ranged') {
-          const bonusSTR = (RiderG5.BASESTR * (RiderG5.vsRangedPercent + bonus.riderG5.str)) / 100
-          const totalSTRPerUnit = RiderG5.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsRangedPercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else if (against === 'siege') {
-          const bonusSTR = (RiderG5.BASESTR * (RiderG5.vsSiegePercent + bonus.riderG5.str)) / 100
-          const totalSTRPerUnit = RiderG5.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * (stack.unit.vsSiegePercent + otherBonus)) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         } else {
-          const bonusSTR = (RiderG5.BASESTR * bonus.riderG5.str) / 100
-          const totalSTRPerUnit = RiderG5.BASESTR + bonusSTR
+          const bonusSTR = (stack.unit.BASESTR * otherBonus) / 100
+          const totalSTRPerUnit = stack.unit.BASESTR + bonusSTR
           const stackStrength = totalSTRPerUnit * stackUnits
           return stackStrength
         }
       }
     }
+    return 0
   },
   getStackHealth: (position: number) => {
+    // const stack = get().army.find(army => army.position === position)
+    // return stack?.health ?? 0
+
     const stack = get().army.find(army => army.position === position)
-    if (stack) return stack.health
+    if (!stack) return 0
+
+    const bonus = get().bonus
+    const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
+    return totalHPPerUnit * stack.units
+  },
+  getStackLeadership: (position: number) => {
+    const stack = get().army.find(army => army.position === position)
+    return stack?.leadership ?? 0
+  },
+  getArmyLeadership: () => {
+    const leadership = get().army.reduce((l, stack) => {
+      return l + stack.leadership
+    }, 0)
+    return leadership
+  },
+
+  getArmyHealth: () => {
+    const bonus = get().bonus
+    const health = get().army.reduce((hp, stack) => {
+      return hp + getHPWithBonus(stack.unit, bonus) * stack.units
+    }, 0)
+    return health
   },
   toggleLockMin: (position: number) => {
     set(state => ({
@@ -636,120 +689,120 @@ export const useStackStore = create<StackStore>((set, get) => ({
     }))
   },
 
-  setArcherG1Bonus: (bonus: Bonus) => {
+  setArcherG1Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, archerG1: bonus } }))
   },
-  setArcherG2Bonus: (bonus: Bonus) => {
+  setArcherG2Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, archerG2: bonus } }))
   },
-  setArcherG3Bonus: (bonus: Bonus) => {
+  setArcherG3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, archerG3: bonus } }))
   },
-  setArcherG4Bonus: (bonus: Bonus) => {
+  setArcherG4Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, archerG4: bonus } }))
   },
-  setArcherG5Bonus: (bonus: Bonus) => {
+  setArcherG5Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, archerG5: bonus } }))
   },
-  setSpearmanG1Bonus: (bonus: Bonus) => {
+  setSpearmanG1Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spearmanG1: bonus } }))
   },
-  setSpearmanG2Bonus: (bonus: Bonus) => {
+  setSpearmanG2Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spearmanG2: bonus } }))
   },
-  setSpearmanG3Bonus: (bonus: Bonus) => {
+  setSpearmanG3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spearmanG3: bonus } }))
   },
-  setSpearmanG4Bonus: (bonus: Bonus) => {
+  setSpearmanG4Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spearmanG4: bonus } }))
   },
-  setSpearmanG5Bonus: (bonus: Bonus) => {
+  setSpearmanG5Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spearmanG5: bonus } }))
   },
-  setRiderG1Bonus: (bonus: Bonus) => {
+  setRiderG1Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, riderG1: bonus } }))
   },
-  setRiderG2Bonus: (bonus: Bonus) => {
+  setRiderG2Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, riderG2: bonus } }))
   },
-  setRiderG3Bonus: (bonus: Bonus) => {
+  setRiderG3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, riderG3: bonus } }))
   },
-  setRiderG4Bonus: (bonus: Bonus) => {
+  setRiderG4Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, riderG4: bonus } }))
   },
-  setRiderG5Bonus: (bonus: Bonus) => {
+  setRiderG5Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, riderG5: bonus } }))
   },
 
-  setCatapultE1Bonus: (bonus: Bonus) => {
+  setCatapultE1Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, catapultE1: bonus } }))
   },
-  setCatapultE2Bonus: (bonus: Bonus) => {
+  setCatapultE2Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, catapultE2: bonus } }))
   },
-  setCatapultE3Bonus: (bonus: Bonus) => {
+  setCatapultE3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, catapultE3: bonus } }))
   },
-  setCatapultE4Bonus: (bonus: Bonus) => {
+  setCatapultE4Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, catapultE4: bonus } }))
   },
-  setCatapultE5Bonus: (bonus: Bonus) => {
+  setCatapultE5Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, catapultE5: bonus } }))
   },
 
-  setSwordsmanS1Bonus: (bonus: Bonus) => {
+  setSwordsmanS1Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, swordsmanS1: bonus } }))
   },
-  setSwordsmanS2Bonus: (bonus: Bonus) => {
+  setSwordsmanS2Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, swordsmanS12: bonus } }))
   },
-  setSwordsmanS3Bonus: (bonus: Bonus) => {
+  setSwordsmanS3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, swordsmanS3: bonus } }))
   },
-  setSwordsmanS4Bonus: (bonus: Bonus) => {
+  setSwordsmanS4Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, swordsmanS4: bonus } }))
   },
-  setSwordsmanS5Bonus: (bonus: Bonus) => {
+  setSwordsmanS5Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, swordsmanS5: bonus } }))
   },
 
-  setSpyS1Bonus: (bonus: Bonus) => {
+  setSpyS1Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spyS1: bonus } }))
   },
-  setSpyS2Bonus: (bonus: Bonus) => {
+  setSpyS2Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spyS2: bonus } }))
   },
-  setSpyS3Bonus: (bonus: Bonus) => {
+  setSpyS3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spyS3: bonus } }))
   },
-  setSpyS4Bonus: (bonus: Bonus) => {
+  setSpyS4Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spyS4: bonus } }))
   },
-  setSpyS5Bonus: (bonus: Bonus) => {
+  setSpyS5Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, spyS5: bonus } }))
   },
 
-  setWaterElementalM3Bonus: (bonus: Bonus) => {
+  setWaterElementalM3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, waterElementalM3: bonus } }))
   },
-  setBattleBoarM3Bonus: (bonus: Bonus) => {
+  setBattleBoarM3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, battleBoarM3: bonus } }))
   },
-  setEmeraldDragonM3Bonus: (bonus: Bonus) => {
+  setEmeraldDragonM3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, emeraldDragonM3: bonus } }))
   },
-  setStoneGargoleM3Bonus: (bonus: Bonus) => {
+  setStoneGargoleM3Bonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, stoneGargoleM3: bonus } }))
   },
 
-  setEpicMonsterHunterVIBonus: (bonus: Bonus) => {
+  setEpicMonsterHunterVIBonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, epicMonsterHunterVI: bonus } }))
   },
-  setChariotVIBonus: (bonus: Bonus) => {
+  setChariotVIBonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, chariotVI: bonus } }))
   },
-  setLegionaryVIBonus: (bonus: Bonus) => {
+  setLegionaryVIBonus: (bonus: BasicStats) => {
     set(state => ({ bonus: { ...state.bonus, legionaryVI: bonus } }))
   }
 }))

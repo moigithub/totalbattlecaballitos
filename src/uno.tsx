@@ -1,22 +1,22 @@
 import { useState, useEffect, Fragment } from 'react'
 
 import './App.css'
-import { Stack, useGuardsStore, useStackStore } from './guardStore'
+import { useGuardsStore } from './guardStore'
 import {
   SwordmanG1,
   SpearmanG1,
   ArcherG1,
-  CatapultG1,
-  RiderG1,
-  RiderG2,
-  RiderG3,
-  RiderG5,
-  RiderG4
+  CatapultG1
+  // RiderG1,
+  // RiderG2,
+  // RiderG3,
+  // RiderG5,
+  // RiderG4
 } from './soldiers'
 import classNames from 'classnames'
 import {
   doomsdayNecromancer,
-  doomsdaySupervisor,
+  doomsdayOverseer,
   jacksReturnScarecrow,
   ragnarokMagoDraug
 } from './monsters'
@@ -47,15 +47,6 @@ function Uno() {
   const setRider3 = useGuardsStore(state => state.setRider3)
   const setRider4 = useGuardsStore(state => state.setRider4)
   const setRider5 = useGuardsStore(state => state.setRider5)
-  ///----------------.
-  const army = useStackStore(state => state.army)
-  const setArmy = useStackStore(state => state.setArmy)
-  const addArmy = useStackStore(state => state.addArmy)
-  const removeArmy = useStackStore(state => state.removeArmy)
-  const bonus = useStackStore(state => state.bonus)
-  const toggleLockMin = useStackStore(state => state.toggleLockMin)
-  const addUnits = useStackStore(state => state.addUnits)
-  const removeUnits = useStackStore(state => state.removeUnits)
 
   //-------------------
 
@@ -85,20 +76,20 @@ function Uno() {
   }, [])
 
   useEffect(() => {
-    let health = ragnarokMagoDraug.hp
+    let health = ragnarokMagoDraug.BASEHP
 
     if (selectedEvent === '0') {
-      health = ragnarokMagoDraug.hp
+      health = ragnarokMagoDraug.BASEHP
     } else if (selectedEvent === '1') {
-      health = ragnarokMagoDraug.hp
+      health = ragnarokMagoDraug.BASEHP
     } else if (selectedEvent === '2') {
-      // doomsday -> Necromancer 2160 hp
-      health = doomsdayNecromancer.hp
+      // doomsday -> Necromancer 2160 health
+      health = doomsdayNecromancer.BASEHP
     } else if (selectedEvent === '3') {
-      health = doomsdaySupervisor.hp
+      health = doomsdayOverseer.BASEHP
     } else if (selectedEvent === '4') {
-      // jacks return -> scarecrow (espantapajaro) 33k hp //11k str
-      health = jacksReturnScarecrow.hp
+      // jacks return -> scarecrow (espantapajaro) 33k health //11k str
+      health = jacksReturnScarecrow.BASEHP
     }
 
     setMobHealth(health)
@@ -310,7 +301,7 @@ function Uno() {
      * ------------------------
      * inicio con el sacrificio, y luego de mayor a menor,,  g5,g4,g3,g2,g1
      * agregar 1 (o un grupo) sacrificio
-     * calcular cuanto hp tiene grupalmente
+     * calcular cuanto hp tiene grupalmente el sacrificio
      * calcular el num de g5 para matar 1 mob
      * si el leadership acumulado + el leadership de este grupo, sobrepasa al leadership disponible salir
      * si la vitalidad grupal del g5 no sobrepasa la vitalidad grupal del sacrificio

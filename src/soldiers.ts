@@ -1,4 +1,6 @@
-export const RiderG1 = {
+import { Unit } from './guardStore'
+
+export const RiderG1: Unit = {
   name: 'RiderG1',
   BASEHP: 300,
   BASESTR: 100,
@@ -11,9 +13,12 @@ export const RiderG1 = {
   vsMountedPercent: 0,
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
-  vsFortificationsPercent: 0
+  vsFortificationsPercent: 0,
+  troop: 'rider',
+  category: 'mounted',
+  level: 'G1'
 }
-export const RiderG2 = {
+export const RiderG2: Unit = {
   name: 'RiderG2',
   BASEHP: 540,
   BASESTR: 180,
@@ -26,9 +31,12 @@ export const RiderG2 = {
   vsMountedPercent: 0,
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
-  vsFortificationsPercent: 0
+  vsFortificationsPercent: 0,
+  troop: 'rider',
+  category: 'mounted',
+  level: 'G2'
 }
-export const RiderG3 = {
+export const RiderG3: Unit = {
   name: 'RiderG3',
   BASEHP: 960,
   BASESTR: 320,
@@ -41,9 +49,12 @@ export const RiderG3 = {
   vsMountedPercent: 0,
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
-  vsFortificationsPercent: 0
+  vsFortificationsPercent: 0,
+  troop: 'rider',
+  category: 'mounted',
+  level: 'G3'
 }
-export const RiderG4 = {
+export const RiderG4: Unit = {
   name: 'RiderG4',
   BASEHP: 1740,
   BASESTR: 580,
@@ -56,9 +67,12 @@ export const RiderG4 = {
   vsMountedPercent: 0,
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
-  vsFortificationsPercent: 0
+  vsFortificationsPercent: 0,
+  troop: 'rider',
+  category: 'mounted',
+  level: 'G4'
 }
-export const RiderG5 = {
+export const RiderG5: Unit = {
   name: 'RiderG5',
   BASEHP: 3150,
   BASESTR: 1050,
@@ -71,10 +85,13 @@ export const RiderG5 = {
   vsMountedPercent: 0,
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
-  vsFortificationsPercent: 0
+  vsFortificationsPercent: 0,
+  troop: 'rider',
+  category: 'mounted',
+  level: 'G5'
 }
 
-export const SwordmanG1 = {
+export const SwordmanG1: Unit = {
   name: 'SwordmanG1',
   BASEHP: 150,
   BASESTR: 50,
@@ -87,9 +104,12 @@ export const SwordmanG1 = {
   vsMountedPercent: 20,
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
-  vsFortificationsPercent: 0
+  vsFortificationsPercent: 0,
+  troop: 'swordsman',
+  category: 'melee',
+  level: 'S1'
 }
-export const SpearmanG1 = {
+export const SpearmanG1: Unit = {
   name: 'SpearmanG1',
   BASEHP: 150,
   BASESTR: 50,
@@ -102,9 +122,12 @@ export const SpearmanG1 = {
   vsMountedPercent: 39,
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
-  vsFortificationsPercent: 0
+  vsFortificationsPercent: 0,
+  troop: 'spearman',
+  category: 'melee',
+  level: 'G1'
 }
-export const ArcherG1 = {
+export const ArcherG1: Unit = {
   name: 'Archer G1',
   BASEHP: 150,
   BASESTR: 50,
@@ -117,9 +140,12 @@ export const ArcherG1 = {
   vsMountedPercent: 0,
   vsFlyingPercent: 67,
   vsMeleePercent: 52,
-  vsFortificationsPercent: 0
+  vsFortificationsPercent: 0,
+  troop: 'archer',
+  category: 'mounted',
+  level: 'G5'
 }
-export const CatapultG1 = {
+export const CatapultG1: Unit = {
   name: 'Catapult G1',
   BASEHP: 1500,
   BASESTR: 250,
@@ -133,17 +159,20 @@ export const CatapultG1 = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   //str * 20 ?
-  vsFortificationsPercent: 65
+  vsFortificationsPercent: 65,
+  troop: 'catapult',
+  category: 'siege',
+  level: 'E1'
 }
 
-export const army = [
-  RiderG1,
-  RiderG2,
-  RiderG3,
-  RiderG4,
-  RiderG5,
-  SwordmanG1,
-  SpearmanG1,
-  ArcherG1,
-  CatapultG1
-]
+// export const army = [
+//   RiderG1,
+//   RiderG2,
+//   RiderG3,
+//   RiderG4,
+//   RiderG5,
+//   SwordmanG1,
+//   SpearmanG1,
+//   ArcherG1,
+//   CatapultG1
+// ]
