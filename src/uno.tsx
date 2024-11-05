@@ -959,8 +959,6 @@ function Uno() {
 
   return (
     <Fragment>
-      <h1>Troops calculation - totalbattle</h1>
-      <h6>Riders vs ranged</h6>
       <div className='event'>
         <div className='group'>
           <label>Event </label>

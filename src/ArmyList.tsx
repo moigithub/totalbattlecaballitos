@@ -5,11 +5,13 @@ import {
   ArcherG3,
   ArcherG4,
   ArcherG5,
+  battleBoar,
   CatapultE1,
   CatapultE2,
   CatapultE3,
   CatapultE4,
   CatapultE5,
+  emeraldDragon,
   mercChariot,
   mercEpicMonsterHunter,
   RiderG1,
@@ -27,11 +29,13 @@ import {
   SpyS3,
   SpyS4,
   SpyS5,
+  stoneGargole,
   SwordmanS1,
   SwordmanS2,
   SwordmanS3,
   SwordmanS4,
-  SwordmanS5
+  SwordmanS5,
+  waterElemental
 } from './soldiers'
 
 export const ArmyList = () => {
@@ -104,18 +108,36 @@ export const ArmyList = () => {
       unitType = mercEpicMonsterHunter
     } else if (type === 'mercChariot') {
       unitType = mercChariot
+    } else if (type === 'waterElemental') {
+      unitType = waterElemental
+    } else if (type === 'battleBoar') {
+      unitType = battleBoar
+    } else if (type === 'emeraldDragon') {
+      unitType = emeraldDragon
+    } else if (type === 'stoneGargole') {
+      unitType = stoneGargole
     }
 
     if (!unitType) {
       return
     }
 
+    // const monster = getMobTarget(unitType.troop)
+    // console.log('monster target', monster)
+
+    // // TODO: move calc minsetup when add the soldier (left panel)
+    // const unitsNeededToKill1Mob = calculateUnitsMobKill(monster, unitType)
+
+    // console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
+
     const stack: Omit<Stack, 'id'> = {
       // health: RiderG1.BASEHP + (RiderG1.BASEHP * bonus.rider.G1.hp) / 100,
       // strength: RiderG1.BASESTR + (RiderG1.BASESTR * bonus.rider.G1.str) / 100,
       leadership: 0, //RiderG1.LEADERSHIP,
+      authority: 0,
+      dominance: 0,
       unit: unitType,
-      units: 0,
+      units: 0, //unitsNeededToKill1Mob
       minSetup: 0,
       lockMinSetup: true,
       limit: 0
@@ -357,7 +379,7 @@ export const ArmyList = () => {
         <div
           className='troop monsters'
           onClick={() => {
-            addTroops('Water Elemental')
+            addTroops('waterElemental')
           }}
         >
           Water Elemental M3
@@ -365,7 +387,7 @@ export const ArmyList = () => {
         <div
           className='troop monsters'
           onClick={() => {
-            addTroops('Battle Boar')
+            addTroops('battleBoar')
           }}
         >
           Battle Boar M3
@@ -373,7 +395,7 @@ export const ArmyList = () => {
         <div
           className='troop monsters'
           onClick={() => {
-            addTroops('Emerald Dragon')
+            addTroops('emeraldDragon')
           }}
         >
           Emerald Dragon M3
@@ -381,7 +403,7 @@ export const ArmyList = () => {
         <div
           className='troop monsters'
           onClick={() => {
-            addTroops('Stone Gargole')
+            addTroops('stoneGargole')
           }}
         >
           Stone Gargole M3

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { v4 as uuidv4 } from 'uuid'
-import { MobStack } from './monsters'
+import { MobStack, MonsterUnit, TIPO } from './monsters'
 // import { RiderG1, RiderG2, RiderG3, RiderG4, RiderG5 } from './soldiers'
 
 interface Stats {
@@ -23,6 +23,8 @@ interface GuardsStore {
   sacrificeBonusHP: number
   sacrificeBonusSTR: number
   leadership: number
+  authority: number
+  dominance: number
   mobHealth: number
   sacrifice: Stats
   rider1: Stats
@@ -45,6 +47,8 @@ interface GuardsStore {
   setSacrificeBonusHP: (value: number) => void
   setSacrificeBonusSTR: (value: number) => void
   setLeadership: (value: number) => void
+  setAuthority: (value: number) => void
+  setDominance: (value: number) => void
   setMobHealth: (value: number) => void
   setSacrifice: (stats: Partial<Stats>) => void
   setRider1: (stats: Partial<Stats>) => void
@@ -74,7 +78,9 @@ export interface Stack {
   //healthLeft o damageTaken
   // strength: number // (base str+bonus) *units// calculado basado contra que esta atacando// recalculado, no guardado
   leadership: number
-  unit: Unit | MercUnit
+  authority: number
+  dominance: number
+  unit: Unit | MercUnit | MonsterUnit
   units: number
   minSetup: number // used to calculate how many units are needed to kill one monster
   lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount
@@ -82,10 +88,13 @@ export interface Stack {
 }
 
 export interface Unit {
+  tipo: TIPO
   name: string
   BASEHP: number
   BASESTR: number
   LEADERSHIP: number
+  AUTHORITY: number
+  DOMINANCE: number
   INITIATIVE: number
   vsRangedPercent: number
   vsSiegePercent: number
@@ -95,16 +104,19 @@ export interface Unit {
   vsFlyingPercent: number
   vsMeleePercent: number
   vsFortificationsPercent: number
+  vsGiants: number
   troop: TroopType
   category: Category
-  level: Level
+  level: string
 }
 export interface MercUnit {
+  tipo: TIPO
   name: string
   BASEHP: number
   BASESTR: number
   LEADERSHIP: number
   AUTHORITY: number
+  DOMINANCE: number
   INITIATIVE: number
   vsRangedPercent: number
   vsSiegePercent: number
@@ -115,6 +127,7 @@ export interface MercUnit {
   vsMeleePercent: number
   vsFortificationsPercent: number
   vsEpicMonster: number
+  vsGiants: number
   troop: string
   category: string
   level: string
@@ -122,7 +135,8 @@ export interface MercUnit {
 export type GuardsmanLevel = 'G1' | 'G2' | 'G3' | 'G4' | 'G5'
 export type EngineerLevel = 'E1' | 'E2' | 'E3' | 'E4' | 'E5'
 export type SpecialistLevel = 'S1' | 'S2' | 'S3' | 'S4' | 'S5'
-export type Level = GuardsmanLevel | EngineerLevel | SpecialistLevel
+export type MonsterLevel = 'M1' | 'M2' | 'M3' | 'M4' | 'M5' | 'M6'
+export type Level = GuardsmanLevel | EngineerLevel | SpecialistLevel | MonsterLevel
 
 interface BasicStats {
   str: number
@@ -134,22 +148,28 @@ type Staaats<L extends Level> = {
 }
 
 export type GuardsmanStats = Staaats<GuardsmanLevel>
-export type RiderStats = Staaats<GuardsmanLevel>
+// export type RiderStats = Staaats<GuardsmanLevel>
 
 // export type GuardsmanStats = Record<GuardsmanLevel, BasicStats>
-export type SpearmanStats = Record<GuardsmanLevel, BasicStats>
+// export type SpearmanStats = Record<GuardsmanLevel, BasicStats>
 // export type RiderStats = Record<GuardsmanLevel, BasicStats>
-export type SpyStats = Record<SpecialistLevel, BasicStats>
-export type SwordsmanStats = Record<SpecialistLevel, BasicStats>
-export type CatapultStats = Record<EngineerLevel, BasicStats>
+export type SpecialistStats = Record<SpecialistLevel, BasicStats>
+// export type SpyStats = Record<SpecialistLevel, BasicStats>
+// export type SwordsmanStats = Record<SpecialistLevel, BasicStats>
+export type EngineerStats = Record<EngineerLevel, BasicStats>
+export type MonsterStats = Record<MonsterLevel, BasicStats>
 
 interface Bonus {
   archer: GuardsmanStats
-  spearman: SpearmanStats
-  rider: RiderStats
-  spy: SpyStats
-  swordsman: SwordsmanStats
-  catapult: CatapultStats
+  spearman: GuardsmanStats
+  rider: GuardsmanStats
+  spy: SpecialistStats
+  swordsman: SpecialistStats
+  catapult: EngineerStats
+  elemental: MonsterStats
+  dragon: MonsterStats
+  beast: MonsterStats
+  giant: MonsterStats
 }
 
 interface StackStore {
@@ -171,6 +191,8 @@ interface StackStore {
   resetStack: (id: string) => void
   resetAllStacks: () => void
   getArmyLeadership: () => number
+  getArmyAuthority: () => number
+  getArmyDominance: () => number
   // setStackPosition: (id:string, newPosition: number) => void
   recalculatePosition: () => void
   updateMinSetup: (id: string, minSetup: number) => void
@@ -262,9 +284,10 @@ interface StackStore {
   }
  */
 
-export const getHPWithBonus = (unit: Unit | MercUnit, bonus: Bonus) => {
+export const getHPWithBonus = (unit: Unit | MercUnit | MonsterUnit, bonus: Bonus) => {
   //const hp = bonus[unit.troop][unit.level].hp ?? 0
   let hp = 0
+
   if (unit.troop === 'archer') {
     hp = bonus[unit.troop][unit.level as GuardsmanLevel]?.hp ?? 0
   } else if (unit.troop == 'spearman') {
@@ -277,6 +300,14 @@ export const getHPWithBonus = (unit: Unit | MercUnit, bonus: Bonus) => {
     hp = bonus[unit.troop][unit.level as SpecialistLevel]?.hp ?? 0
   } else if (unit.troop == 'catapult') {
     hp = bonus[unit.troop][unit.level as EngineerLevel]?.hp ?? 0
+  } else if (unit.troop == 'elemental') {
+    hp = bonus[unit.troop][unit.level as MonsterLevel]?.hp ?? 0
+  } else if (unit.troop == 'beast') {
+    hp = bonus[unit.troop][unit.level as MonsterLevel]?.hp ?? 0
+  } else if (unit.troop == 'dragon') {
+    hp = bonus[unit.troop][unit.level as MonsterLevel]?.hp ?? 0
+  } else if (unit.troop == 'giant') {
+    hp = bonus[unit.troop][unit.level as MonsterLevel]?.hp ?? 0
   }
 
   const bonusHP = (unit.BASEHP * hp) / 100
@@ -337,29 +368,37 @@ export const useStackStore = create<StackStore>((set, get) => ({
     },
 
     // monsters
-    waterElemental: {
-      M3: {
-        str: 0,
-        hp: 0
-      }
+    elemental: {
+      M1: { str: 0, hp: 0 },
+      M2: { str: 0, hp: 0 },
+      M3: { str: 0, hp: 0 },
+      M4: { str: 0, hp: 0 },
+      M5: { str: 0, hp: 0 },
+      M6: { str: 0, hp: 0 }
     },
-    battleBoar: {
-      M3: {
-        str: 0,
-        hp: 0
-      }
+    beast: {
+      M1: { str: 0, hp: 0 },
+      M2: { str: 0, hp: 0 },
+      M3: { str: 0, hp: 0 },
+      M4: { str: 0, hp: 0 },
+      M5: { str: 0, hp: 0 },
+      M6: { str: 0, hp: 0 }
     },
-    emeraldDragon: {
-      M3: {
-        str: 0,
-        hp: 0
-      }
+    dragon: {
+      M1: { str: 0, hp: 0 },
+      M2: { str: 0, hp: 0 },
+      M3: { str: 0, hp: 0 },
+      M4: { str: 0, hp: 0 },
+      M5: { str: 0, hp: 0 },
+      M6: { str: 0, hp: 0 }
     },
-    stoneGargole: {
-      M3: {
-        str: 0,
-        hp: 0
-      }
+    giant: {
+      M1: { str: 0, hp: 0 },
+      M2: { str: 0, hp: 0 },
+      M3: { str: 0, hp: 0 },
+      M4: { str: 0, hp: 0 },
+      M5: { str: 0, hp: 0 },
+      M6: { str: 0, hp: 0 }
     },
     //---- mercenaries
     epicMonsterHunterVI: {
@@ -396,7 +435,9 @@ export const useStackStore = create<StackStore>((set, get) => ({
           return {
             ...stack,
             units: 0,
-            leadership: 0
+            leadership: 0,
+            authority: 0,
+            dominance: 0
           }
         }
         return stack
@@ -409,7 +450,9 @@ export const useStackStore = create<StackStore>((set, get) => ({
         return {
           ...stack,
           units: 0,
-          leadership: 0
+          leadership: 0,
+          authority: 0,
+          dominance: 0
         }
       })
     }))
@@ -443,6 +486,8 @@ export const useStackStore = create<StackStore>((set, get) => ({
       army: state.army.map((stack, index) => {
         if (stack.id === id) {
           const leadership = stack.unit.LEADERSHIP
+          const authority = stack.unit.AUTHORITY
+          const dominance = stack.unit.DOMINANCE
 
           // index === 0 ,its a sacrifice, increase 1 by 1, this MUST have the highest hp
           // all others stack should check index 0 health, and keep lower health
@@ -461,7 +506,9 @@ export const useStackStore = create<StackStore>((set, get) => ({
           return {
             ...stack,
             units: totalUnits,
-            leadership: totalUnits * leadership
+            leadership: totalUnits * leadership,
+            authority: totalUnits * authority,
+            dominance: totalUnits * dominance
           }
         } else return stack
       })
@@ -472,6 +519,8 @@ export const useStackStore = create<StackStore>((set, get) => ({
       army: state.army.map((stack, index) => {
         if (stack.id === id) {
           const leadership = stack.unit.LEADERSHIP
+          const authority = stack.unit.AUTHORITY
+          const dominance = stack.unit.DOMINANCE
 
           const unitToRemove = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
 
@@ -489,7 +538,9 @@ export const useStackStore = create<StackStore>((set, get) => ({
             return {
               ...stack,
               units: totalUnits,
-              leadership: totalUnits * leadership
+              leadership: totalUnits * leadership,
+              authority: totalUnits * authority,
+              dominance: totalUnits * dominance
             }
           } else return stack
         } else return stack
@@ -730,12 +781,23 @@ export const useStackStore = create<StackStore>((set, get) => ({
     return stack?.leadership ?? 0
   },
   getArmyLeadership: () => {
-    const leadership = get().army.reduce((l, stack) => {
-      return l + stack.leadership
+    const leadership = get().army.reduce((count, stack) => {
+      return count + stack.leadership
     }, 0)
     return leadership
   },
-
+  getArmyAuthority: () => {
+    const authority = get().army.reduce((count, stack) => {
+      return count + stack.authority
+    }, 0)
+    return authority
+  },
+  getArmyDominance: () => {
+    const dominance = get().army.reduce((count, stack) => {
+      return count + stack.dominance
+    }, 0)
+    return dominance
+  },
   getArmyHealth: () => {
     const bonus = get().bonus
     const health = get().army.reduce((hp, stack) => {
@@ -754,97 +816,107 @@ export const useStackStore = create<StackStore>((set, get) => ({
   },
 
   setArcherG1Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, archerG1: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, archer: { ...state.bonus.archer, G1: bonus } } }))
   },
   setArcherG2Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, archerG2: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, archer: { ...state.bonus.archer, G2: bonus } } }))
   },
   setArcherG3Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, archerG3: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, archer: { ...state.bonus.archer, G3: bonus } } }))
   },
   setArcherG4Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, archerG4: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, archer: { ...state.bonus.archer, G4: bonus } } }))
   },
   setArcherG5Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, archerG5: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, archer: { ...state.bonus.archer, G5: bonus } } }))
   },
   setSpearmanG1Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spearmanG1: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spearman: { ...state.bonus.spearman, G1: bonus } } }))
   },
   setSpearmanG2Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spearmanG2: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spearman: { ...state.bonus.spearman, G2: bonus } } }))
   },
   setSpearmanG3Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spearmanG3: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spearman: { ...state.bonus.spearman, G3: bonus } } }))
   },
   setSpearmanG4Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spearmanG4: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spearman: { ...state.bonus.spearman, G4: bonus } } }))
   },
   setSpearmanG5Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spearmanG5: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spearman: { ...state.bonus.spearman, G5: bonus } } }))
   },
   setRiderG1Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, riderG1: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, rider: { ...state.bonus.rider, G1: bonus } } }))
   },
   setRiderG2Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, riderG2: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, rider: { ...state.bonus.rider, G2: bonus } } }))
   },
   setRiderG3Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, riderG3: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, rider: { ...state.bonus.rider, G3: bonus } } }))
   },
   setRiderG4Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, riderG4: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, rider: { ...state.bonus.rider, G4: bonus } } }))
   },
   setRiderG5Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, riderG5: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, rider: { ...state.bonus.rider, G5: bonus } } }))
   },
 
   setCatapultE1Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, catapultE1: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, catapult: { ...state.bonus.catapult, E1: bonus } } }))
   },
   setCatapultE2Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, catapultE2: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, catapult: { ...state.bonus.catapult, E2: bonus } } }))
   },
   setCatapultE3Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, catapultE3: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, catapult: { ...state.bonus.catapult, E3: bonus } } }))
   },
   setCatapultE4Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, catapultE4: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, catapult: { ...state.bonus.catapult, E4: bonus } } }))
   },
   setCatapultE5Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, catapultE5: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, catapult: { ...state.bonus.catapult, E5: bonus } } }))
   },
 
   setSwordsmanS1Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, swordsmanS1: bonus } }))
+    set(state => ({
+      bonus: { ...state.bonus, swordsman: { ...state.bonus.swordsman, S1: bonus } }
+    }))
   },
   setSwordsmanS2Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, swordsmanS12: bonus } }))
+    set(state => ({
+      bonus: { ...state.bonus, swordsman: { ...state.bonus.swordsman, S2: bonus } }
+    }))
   },
   setSwordsmanS3Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, swordsmanS3: bonus } }))
+    set(state => ({
+      bonus: { ...state.bonus, swordsman: { ...state.bonus.swordsman, S3: bonus } }
+    }))
   },
   setSwordsmanS4Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, swordsmanS4: bonus } }))
+    set(state => ({
+      bonus: { ...state.bonus, swordsman: { ...state.bonus.swordsman, S4: bonus } }
+    }))
   },
   setSwordsmanS5Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, swordsmanS5: bonus } }))
+    set(state => ({
+      bonus: { ...state.bonus, swordsman: { ...state.bonus.swordsman, S5: bonus } }
+    }))
   },
 
   setSpyS1Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spyS1: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spy: { ...state.bonus.spy, S1: bonus } } }))
   },
   setSpyS2Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spyS2: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spy: { ...state.bonus.spy, S2: bonus } } }))
   },
   setSpyS3Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spyS3: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spy: { ...state.bonus.spy, S3: bonus } } }))
   },
   setSpyS4Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spyS4: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spy: { ...state.bonus.spy, S4: bonus } } }))
   },
   setSpyS5Bonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, spyS5: bonus } }))
+    set(state => ({ bonus: { ...state.bonus, spy: { ...state.bonus.spy, S5: bonus } } }))
   },
 
   setWaterElementalM3Bonus: (bonus: BasicStats) => {
@@ -877,6 +949,8 @@ export const useGuardsStore = create<GuardsStore>(set => ({
   sacrificeBonusHP: 0,
   sacrificeBonusSTR: 0,
   leadership: 1000,
+  authority: 1000,
+  dominance: 1000,
   mobHealth: 2160,
   sacrifice: {
     BASEHP: 300,
@@ -970,6 +1044,12 @@ export const useGuardsStore = create<GuardsStore>(set => ({
   },
   setLeadership: value => {
     set(() => ({ leadership: value }))
+  },
+  setAuthority: value => {
+    set(() => ({ authority: value }))
+  },
+  setDominance: value => {
+    set(() => ({ dominance: value }))
   },
   setMobHealth: value => {
     set(() => ({ mobHealth: value }))

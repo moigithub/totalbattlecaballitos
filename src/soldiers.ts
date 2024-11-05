@@ -1,10 +1,14 @@
 import { MercUnit, Unit } from './guardStore'
+import { MonsterUnit } from './monsters'
 
 export const RiderG1: Unit = {
+  tipo: 'army',
   name: 'RiderG1',
   BASEHP: 300,
   BASESTR: 100,
   LEADERSHIP: 2,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 65,
   vsSiegePercent: 54,
@@ -14,15 +18,19 @@ export const RiderG1: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
   level: 'G1'
 }
 export const RiderG2: Unit = {
+  tipo: 'army',
   name: 'RiderG2',
   BASEHP: 540,
   BASESTR: 180,
   LEADERSHIP: 2,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 98,
   vsSiegePercent: 81,
@@ -32,15 +40,19 @@ export const RiderG2: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
   level: 'G2'
 }
 export const RiderG3: Unit = {
+  tipo: 'army',
   name: 'RiderG3',
   BASEHP: 960,
   BASESTR: 320,
   LEADERSHIP: 2,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 146,
   vsSiegePercent: 122,
@@ -50,15 +62,19 @@ export const RiderG3: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
   level: 'G3'
 }
 export const RiderG4: Unit = {
+  tipo: 'army',
   name: 'RiderG4',
   BASEHP: 1740,
   BASESTR: 580,
   LEADERSHIP: 2,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 219,
   vsSiegePercent: 182,
@@ -68,15 +84,19 @@ export const RiderG4: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
   level: 'G4'
 }
 export const RiderG5: Unit = {
+  tipo: 'army',
   name: 'RiderG5',
   BASEHP: 3150,
   BASESTR: 1050,
   LEADERSHIP: 2,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 329,
   vsSiegePercent: 273,
@@ -86,6 +106,7 @@ export const RiderG5: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
   level: 'G5'
@@ -93,10 +114,13 @@ export const RiderG5: Unit = {
 
 //--------------------------------
 export const SwordmanS1: Unit = {
+  tipo: 'army',
   name: 'SwordmanS1',
   BASEHP: 150,
   BASESTR: 50,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -106,15 +130,19 @@ export const SwordmanS1: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
   level: 'S1'
 }
 export const SwordmanS2: Unit = {
+  tipo: 'army',
   name: 'SwordmanS2',
   BASEHP: 270,
   BASESTR: 90,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -124,15 +152,19 @@ export const SwordmanS2: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
   level: 'S2'
 }
 export const SwordmanS3: Unit = {
+  tipo: 'army',
   name: 'SwordmanS3',
   BASEHP: 480,
   BASESTR: 160,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -142,15 +174,19 @@ export const SwordmanS3: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
   level: 'S3'
 }
 export const SwordmanS4: Unit = {
+  tipo: 'army',
   name: 'SwordmanS4',
   BASEHP: 870,
   BASESTR: 290,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -160,15 +196,19 @@ export const SwordmanS4: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
   level: 'S4'
 }
 export const SwordmanS5: Unit = {
+  tipo: 'army',
   name: 'SwordmanS5',
   BASEHP: 1560,
   BASESTR: 520,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -178,16 +218,20 @@ export const SwordmanS5: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
   level: 'S5'
 }
 //----------------------------
 export const SpyS1: Unit = {
+  tipo: 'army',
   name: 'SpyS1',
   BASEHP: 75,
   BASESTR: 25,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -197,15 +241,19 @@ export const SpyS1: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spy',
   category: 'melee',
   level: 'S1'
 }
 export const SpyS2: Unit = {
+  tipo: 'army',
   name: 'SpyS2',
   BASEHP: 135,
   BASESTR: 45,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -215,15 +263,19 @@ export const SpyS2: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spy',
   category: 'melee',
   level: 'S2'
 }
 export const SpyS3: Unit = {
+  tipo: 'army',
   name: 'SpyS3',
   BASEHP: 240,
   BASESTR: 80,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -233,15 +285,19 @@ export const SpyS3: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spy',
   category: 'melee',
   level: 'S3'
 }
 export const SpyS4: Unit = {
+  tipo: 'army',
   name: 'SpyS4',
   BASEHP: 450,
   BASESTR: 150,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -251,15 +307,19 @@ export const SpyS4: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spy',
   category: 'melee',
   level: 'S4'
 }
 export const SpyS5: Unit = {
+  tipo: 'army',
   name: 'SpyS5',
   BASEHP: 780,
   BASESTR: 260,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -269,6 +329,7 @@ export const SpyS5: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spy',
   category: 'melee',
   level: 'S5'
@@ -276,10 +337,13 @@ export const SpyS5: Unit = {
 
 //----------------------------------
 export const SpearmanG1: Unit = {
+  tipo: 'army',
   name: 'SpearmanG1',
   BASEHP: 150,
   BASESTR: 50,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -289,15 +353,19 @@ export const SpearmanG1: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spearman',
   category: 'melee', // vs beast||mounted
   level: 'G1'
 }
 export const SpearmanG2: Unit = {
+  tipo: 'army',
   name: 'SpearmanG2',
   BASEHP: 270,
   BASESTR: 90,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -307,15 +375,19 @@ export const SpearmanG2: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spearman',
   category: 'melee',
   level: 'G2'
 }
 export const SpearmanG3: Unit = {
+  tipo: 'army',
   name: 'SpearmanG3',
   BASEHP: 480,
   BASESTR: 160,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -325,15 +397,19 @@ export const SpearmanG3: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spearman',
   category: 'melee',
   level: 'G3'
 }
 export const SpearmanG4: Unit = {
+  tipo: 'army',
   name: 'SpearmanG4',
   BASEHP: 870,
   BASESTR: 290,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -343,15 +419,19 @@ export const SpearmanG4: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spearman',
   category: 'melee',
   level: 'G4'
 }
 export const SpearmanG5: Unit = {
+  tipo: 'army',
   name: 'SpearmanG5',
   BASEHP: 1560,
   BASESTR: 520,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -361,6 +441,7 @@ export const SpearmanG5: Unit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'spearman',
   category: 'melee',
   level: 'G5'
@@ -368,10 +449,13 @@ export const SpearmanG5: Unit = {
 
 //----------------------------------
 export const ArcherG1: Unit = {
+  tipo: 'army',
   name: 'Archer G1',
   BASEHP: 150,
   BASESTR: 50,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -381,15 +465,19 @@ export const ArcherG1: Unit = {
   vsFlyingPercent: 67,
   vsMeleePercent: 52,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
   level: 'G1'
 }
 export const ArcherG2: Unit = {
+  tipo: 'army',
   name: 'Archer G2',
   BASEHP: 270,
   BASESTR: 90,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -399,15 +487,19 @@ export const ArcherG2: Unit = {
   vsFlyingPercent: 101,
   vsMeleePercent: 78,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
   level: 'G2'
 }
 export const ArcherG3: Unit = {
+  tipo: 'army',
   name: 'Archer G3',
   BASEHP: 480,
   BASESTR: 160,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -417,15 +509,19 @@ export const ArcherG3: Unit = {
   vsFlyingPercent: 151,
   vsMeleePercent: 117,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
   level: 'G3'
 }
 export const ArcherG4: Unit = {
+  tipo: 'army',
   name: 'Archer G4',
   BASEHP: 870,
   BASESTR: 290,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -435,15 +531,19 @@ export const ArcherG4: Unit = {
   vsFlyingPercent: 226,
   vsMeleePercent: 176,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
   level: 'G4'
 }
 export const ArcherG5: Unit = {
+  tipo: 'army',
   name: 'Archer G5',
   BASEHP: 1560,
   BASESTR: 520,
   LEADERSHIP: 1,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -453,6 +553,7 @@ export const ArcherG5: Unit = {
   vsFlyingPercent: 339,
   vsMeleePercent: 263,
   vsFortificationsPercent: 0,
+  vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
   level: 'G5'
@@ -460,10 +561,13 @@ export const ArcherG5: Unit = {
 
 //----------------------------------
 export const CatapultE1: Unit = {
+  tipo: 'army',
   name: 'Catapult E1',
   BASEHP: 1500,
   BASESTR: 250,
   LEADERSHIP: 10,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -474,15 +578,19 @@ export const CatapultE1: Unit = {
   vsMeleePercent: 0,
   //str * 20 ?
   vsFortificationsPercent: 65,
+  vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
   level: 'E1'
 }
 export const CatapultE2: Unit = {
+  tipo: 'army',
   name: 'Catapult E2',
   BASEHP: 2700,
   BASESTR: 450,
   LEADERSHIP: 10,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -493,15 +601,19 @@ export const CatapultE2: Unit = {
   vsMeleePercent: 0,
   //str * 20 ?
   vsFortificationsPercent: 98,
+  vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
   level: 'E2'
 }
 export const CatapultE3: Unit = {
+  tipo: 'army',
   name: 'Catapult E3',
   BASEHP: 4860,
   BASESTR: 810,
   LEADERSHIP: 10,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -512,15 +624,19 @@ export const CatapultE3: Unit = {
   vsMeleePercent: 0,
   //str * 20 ?
   vsFortificationsPercent: 146,
+  vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
   level: 'E3'
 }
 export const CatapultE4: Unit = {
+  tipo: 'army',
   name: 'Catapult E4',
   BASEHP: 8750,
   BASESTR: 1460,
   LEADERSHIP: 10,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -531,15 +647,19 @@ export const CatapultE4: Unit = {
   vsMeleePercent: 0,
   //str * 20 ?
   vsFortificationsPercent: 219,
+  vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
   level: 'E4'
 }
 export const CatapultE5: Unit = {
+  tipo: 'army',
   name: 'Catapult E5',
   BASEHP: 15800,
   BASESTR: 2630,
   LEADERSHIP: 10,
+  AUTHORITY: 0,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 0,
   vsSiegePercent: 0,
@@ -550,6 +670,7 @@ export const CatapultE5: Unit = {
   vsMeleePercent: 0,
   //str * 20 ?
   vsFortificationsPercent: 329,
+  vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
   level: 'E5'
@@ -557,11 +678,13 @@ export const CatapultE5: Unit = {
 
 //------------------------
 export const mercEpicMonsterHunter: MercUnit = {
+  tipo: 'merc',
   name: 'mercEpicMonsterHunter',
   BASEHP: 6090,
   BASESTR: 2030,
   LEADERSHIP: 0,
   AUTHORITY: 1,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 329,
   vsSiegePercent: 273,
@@ -572,16 +695,19 @@ export const mercEpicMonsterHunter: MercUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 609,
+  vsGiants: 0,
   troop: 'merc',
   category: 'merc',
   level: 'VI'
 }
 export const mercChariot: MercUnit = {
+  tipo: 'merc',
   name: 'mercChariot',
   BASEHP: 11400,
   BASESTR: 3800,
   LEADERSHIP: 0,
   AUTHORITY: 2,
+  DOMINANCE: 0,
   INITIATIVE: 10,
   vsRangedPercent: 493,
   vsSiegePercent: 410,
@@ -592,7 +718,98 @@ export const mercChariot: MercUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
+  vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
   level: 'VI'
+}
+
+//------------------------------------
+export const waterElemental: MonsterUnit = {
+  tipo: 'monster',
+  name: 'waterElemental',
+  BASEHP: 5700,
+  BASESTR: 1900,
+  LEADERSHIP: 0,
+  AUTHORITY: 0,
+  DOMINANCE: 3,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 144,
+  vsMeleePercent: 113,
+  vsFortificationsPercent: 0,
+  vsGiants: 0,
+  troop: 'elemental',
+  category: 'ranged',
+  level: 'M3'
+}
+export const battleBoar: MonsterUnit = {
+  tipo: 'monster',
+  name: 'battleBoar',
+  BASEHP: 11700,
+  BASESTR: 3900,
+  LEADERSHIP: 0,
+  AUTHORITY: 0,
+  DOMINANCE: 6,
+  INITIATIVE: 10,
+  vsRangedPercent: 113,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 144,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  vsGiants: 0,
+  troop: 'beast',
+  category: 'mounted',
+  level: 'M3'
+}
+export const emeraldDragon: MonsterUnit = {
+  tipo: 'monster',
+  name: 'emeraldDragon',
+  BASEHP: 13500,
+  BASESTR: 4500,
+  LEADERSHIP: 0,
+  AUTHORITY: 0,
+  DOMINANCE: 7,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 185,
+  vsGiants: 72,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  troop: 'dragon',
+  category: 'flying',
+  level: 'M3'
+}
+export const stoneGargole: MonsterUnit = {
+  tipo: 'monster',
+  name: 'stoneGargole',
+  BASEHP: 15600,
+  BASESTR: 5200,
+  LEADERSHIP: 0,
+  AUTHORITY: 0,
+  DOMINANCE: 8,
+  INITIATIVE: 10,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 72,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsGiants: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 185,
+  vsFortificationsPercent: 0,
+  troop: 'giant',
+  category: 'flying',
+  level: 'M3'
 }

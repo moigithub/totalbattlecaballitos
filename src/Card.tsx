@@ -35,7 +35,9 @@ export const Card = ({ stack }: { stack: Stack }) => {
       <p className='stack-name'>{stack.unit.name}</p>
       <p className='stack-health'>HP {stackHealth.toFixed(0)}</p>
       <p className='stack-strength'>STR {stackStrength.toFixed(2)}</p>
-      <p className='stack-leadership'>Lead {stack.leadership}</p>
+      {stack.unit.tipo === 'army' && <p className='stack-leadership'>Lead {stack.leadership}</p>}
+      {stack.unit.tipo === 'monster' && <p className='stack-leadership'>Domi {stack.dominance}</p>}
+      {stack.unit.tipo === 'merc' && <p className='stack-leadership'>Auth {stack.authority}</p>}
       <p className='stack-minSetup'>Min {stack.minSetup}</p>
       <p className='stack-limit'>Limit {stack.limit}</p>
       <div className='stack-action'>
@@ -77,10 +79,10 @@ export const Card = ({ stack }: { stack: Stack }) => {
           C
         </button>
       </div>
-      <span className='stack-id tiny'>(id.{stack.id})</span>
       <div className='stack-attack-info' style={{ color: 'gray', fontSize: 14 }}>
         i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit)}</span>
       </div>
+      {/* <span className='stack-id tiny'>(id.{stack.id})</span> */}
     </div>
   )
 }

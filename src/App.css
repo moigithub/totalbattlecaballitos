@@ -1,8 +1,3 @@
-#root {
-  /* margin: 0 auto; */
-  padding: 16px;
-}
-
 body {
   min-width: 320px;
   min-height: 100vh;
@@ -26,6 +21,11 @@ table th {
 .navbar {
   list-style: none;
   display: flex;
+  align-items: center;
+
+  .logo {
+    margin-right: 1rem;
+  }
 
   li {
     margin: 0;
@@ -49,14 +49,12 @@ table th {
   font-size: 8px;
 }
 .configbar {
-  display: flex;
   .card {
     margin-left: 1rem;
   }
 }
 
 .event {
-  margin: 1rem 0;
   display: flex;
 }
 .group {
@@ -69,8 +67,6 @@ table th {
   color: blanchedalmond;
 }
 .gobtn {
-  width: 100%;
-  margin: 1rem 0;
   padding: 1rem;
   background-color: darkblue;
   color: white;
@@ -95,13 +91,21 @@ table th {
   display: flex;
   max-height: 100vh;
   height: 100%;
+  overflow: hidden;
+}
+.config-container {
+  display: flex;
+
+  column-gap: 2rem;
 }
 .army-container {
-  width: 250px;
+  width: 20%;
+  overflow: scroll;
 }
-.config-container,
+.mob-container,
 .stack-container {
-  min-width: 600px;
+  overflow: scroll;
+  width: 40%;
 }
 
 .troop {
@@ -121,10 +125,10 @@ table th {
   grid-template-areas:
     'units name   name     name       health   action delete'
     'units limit  strength leadership minSetup config reset'
-    'units atk    atk      atk        atk      atk    atk'
-    'units id     id       id         id       id     id';
+    'units atk    atk      atk        atk      atk    atk';
+  /* 'units id     id       id         id       id     id'; */
 
-  width: 400px;
+  width: 450px;
   border: 1px solid grey;
   margin: 10px 0;
 }
@@ -263,4 +267,11 @@ table th {
   .hp {
     color: gray;
   }
+}
+
+.row {
+  display: flex;
+}
+.field {
+  display: flex;
 }

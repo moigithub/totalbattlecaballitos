@@ -7,6 +7,9 @@ function App() {
     <div className='app'>
       <ul className='navbar'>
         <li>
+          <h3 className='logo'>Troops calculation - totalbattle</h3>
+        </li>
+        <li>
           <NavLink to={`/v1`}>Version 1</NavLink>
         </li>
         <li>
@@ -18,6 +21,10 @@ function App() {
       </ul>
 
       <Outlet />
+
+      <footer style={{ padding: 30 }}>
+        work in progress, if something doesnt work.. ignore it
+      </footer>
     </div>
   )
 }
