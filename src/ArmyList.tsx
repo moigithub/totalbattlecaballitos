@@ -1,4 +1,3 @@
-import { Stack, useStackStore } from './guardStore'
 import {
   ArcherG1,
   ArcherG2,
@@ -37,6 +36,7 @@ import {
   SwordmanS5,
   waterElemental
 } from './soldiers'
+import { Stack, useStackStore } from './stackStore'
 
 export const ArmyList = () => {
   const addStack = useStackStore(state => state.addStack)
@@ -149,289 +149,330 @@ export const ArmyList = () => {
     <div className='army-container'>
       <h2>Army</h2>
       <div className='army-list'>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Spearman G1')
-          }}
-        >
-          Spearman G1
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Archer G1')
-          }}
-        >
-          Archer G1
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Rider G1')
-          }}
-        >
-          Rider G1
-        </div>
-        <hr />
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Spearman G2')
-          }}
-        >
-          Spearman G2
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Archer G2')
-          }}
-        >
-          Archer G2
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Rider G2')
-          }}
-        >
-          Rider G2
-        </div>
-        <hr />
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Spearman G3')
-          }}
-        >
-          Spearman G3
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Archer G3')
-          }}
-        >
-          Archer G3
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Rider G3')
-          }}
-        >
-          Rider G3
-        </div>
-        <hr />
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Spearman G4')
-          }}
-        >
-          Spearman G4
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Archer G4')
-          }}
-        >
-          Archer G4
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Rider G4')
-          }}
-        >
-          Rider G4
-        </div>
-        <hr />
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Spearman G5')
-          }}
-        >
-          Spearman G5
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Archer G5')
-          }}
-        >
-          Archer G5
-        </div>
-        <div
-          className='troop guardsmen'
-          onClick={() => {
-            addTroops('Rider G5')
-          }}
-        >
-          Rider G5
-        </div>
-        <hr />
-        <div
-          className='troop specialists'
-          onClick={() => {
-            addTroops('Swordsman S1')
-          }}
-        >
-          Swordsman S1
+        <div className='guardsmen'>
+          <p className='group-title'>Spearman</p>
+          <div className='btn-group'>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Spearman G1')
+              }}
+            >
+              G1
+            </button>
+
+            <button
+              className='troop  '
+              onClick={() => {
+                addTroops('Spearman G2')
+              }}
+            >
+              G2
+            </button>
+            <button
+              className='troop  '
+              onClick={() => {
+                addTroops('Spearman G3')
+              }}
+            >
+              G3
+            </button>
+
+            <button
+              className='troop  '
+              onClick={() => {
+                addTroops('Spearman G4')
+              }}
+            >
+              G4
+            </button>
+            <button
+              className='troop  '
+              onClick={() => {
+                addTroops('Spearman G5')
+              }}
+            >
+              G5
+            </button>
+          </div>
         </div>
 
-        <div
-          className='troop specialists'
-          onClick={() => {
-            addTroops('Swordsman S2')
-          }}
-        >
-          Swordsman S2
+        <div className='guardsmen'>
+          <p className='group-title'>Archer</p>
+          <div className='btn-group'>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Archer G1')
+              }}
+            >
+              G1
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Archer G2')
+              }}
+            >
+              G2
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Archer G3')
+              }}
+            >
+              G3
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Archer G4')
+              }}
+            >
+              G4
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Archer G5')
+              }}
+            >
+              G5
+            </button>
+          </div>
         </div>
 
-        <div
-          className='troop specialists'
-          onClick={() => {
-            addTroops('Swordsman S3')
-          }}
-        >
-          Swordsman S3
+        <div className='guardsmen'>
+          <p className='group-title'>Rider</p>
+          <div className='btn-group'>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Rider G1')
+              }}
+            >
+              G1
+            </button>
+
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Rider G2')
+              }}
+            >
+              G2
+            </button>
+
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Rider G3')
+              }}
+            >
+              G3
+            </button>
+
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Rider G4')
+              }}
+            >
+              G4
+            </button>
+
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Rider G5')
+              }}
+            >
+              G5
+            </button>
+          </div>
         </div>
 
-        <div
-          className='troop specialists'
-          onClick={() => {
-            addTroops('Swordsman S4')
-          }}
-        >
-          Swordsman S4
+        <div className='specialists'>
+          <p className='group-title'>Swordsman</p>
+          <div className='btn-group'>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Swordsman S1')
+              }}
+            >
+              S1
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Swordsman S2')
+              }}
+            >
+              S2
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Swordsman S3')
+              }}
+            >
+              S3
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Swordsman S4')
+              }}
+            >
+              S4
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Swordsman S5')
+              }}
+            >
+              S5
+            </button>
+          </div>
         </div>
 
-        <div
-          className='troop specialists'
-          onClick={() => {
-            addTroops('Swordsman S5')
-          }}
-        >
-          Swordsman S5
+        <div className='specialists'>
+          <p className='group-title'>Spy</p>
+          <div className='btn-group'>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Spy S1')
+              }}
+            >
+              S1
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Spy S2')
+              }}
+            >
+              S2
+            </button>
+          </div>
         </div>
-        <div
-          className='troop specialists'
-          onClick={() => {
-            addTroops('Spy S1')
-          }}
-        >
-          Spy S1
+
+        <div className='specialists'>
+          <p className='group-title'>Catapult</p>
+          <div className='btn-group'>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('Catapult E1')
+              }}
+            >
+              E1
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('Catapult E2')
+              }}
+            >
+              E2
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('Catapult E3')
+              }}
+            >
+              E3
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('Catapult E4')
+              }}
+            >
+              E4
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('Catapult E5')
+              }}
+            >
+              E5
+            </button>
+          </div>
         </div>
-        <div
-          className='troop specialists'
-          onClick={() => {
-            addTroops('Spy S2')
-          }}
-        >
-          Spy S2
+
+        <div className='monsters'>
+          <p className='group-title'>Monsters</p>
+          <div className='btn-group'>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('waterElemental')
+              }}
+            >
+              Water Elemental M3
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('battleBoar')
+              }}
+            >
+              Battle Boar M3
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('emeraldDragon')
+              }}
+            >
+              Emerald Dragon M3
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('stoneGargole')
+              }}
+            >
+              Stone Gargole M3
+            </button>
+          </div>
         </div>
-        <hr />
-        <div
-          className='troop engineer'
-          onClick={() => {
-            addTroops('Catapult E1')
-          }}
-        >
-          Catapult E1
-        </div>
-        <div
-          className='troop engineer'
-          onClick={() => {
-            addTroops('Catapult E2')
-          }}
-        >
-          Catapult E2
-        </div>
-        <div
-          className='troop engineer'
-          onClick={() => {
-            addTroops('Catapult E3')
-          }}
-        >
-          Catapult E3
-        </div>
-        <div
-          className='troop engineer'
-          onClick={() => {
-            addTroops('Catapult E4')
-          }}
-        >
-          Catapult E4
-        </div>
-        <div
-          className='troop engineer'
-          onClick={() => {
-            addTroops('Catapult E5')
-          }}
-        >
-          Catapult E5
-        </div>
-        <hr />
-        <div
-          className='troop monsters'
-          onClick={() => {
-            addTroops('waterElemental')
-          }}
-        >
-          Water Elemental M3
-        </div>
-        <div
-          className='troop monsters'
-          onClick={() => {
-            addTroops('battleBoar')
-          }}
-        >
-          Battle Boar M3
-        </div>
-        <div
-          className='troop monsters'
-          onClick={() => {
-            addTroops('emeraldDragon')
-          }}
-        >
-          Emerald Dragon M3
-        </div>
-        <div
-          className='troop monsters'
-          onClick={() => {
-            addTroops('stoneGargole')
-          }}
-        >
-          Stone Gargole M3
-        </div>
-        <hr />
-        <div
-          className='troop mercs'
-          onClick={() => {
-            addTroops('mercEpicMonsterHunter')
-          }}
-        >
-          Epic Monster Hunter VI
-        </div>
-        <div
-          className='troop mercs'
-          onClick={() => {
-            addTroops('mercChariot')
-          }}
-        >
-          Chariot VI
-        </div>
-        <div
-          className='troop mercs'
-          onClick={() => {
-            addTroops('Legionary VI')
-          }}
-        >
-          Legionary VI
+
+        <div className='mercs'>
+          <p className='group-title'>Mercs</p>
+          <div className='btn-group'>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('mercEpicMonsterHunter')
+              }}
+            >
+              Epic Monster Hunter VI
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('mercChariot')
+              }}
+            >
+              Chariot VI
+            </button>
+            <button
+              className='troop '
+              onClick={() => {
+                addTroops('Legionary VI')
+              }}
+            >
+              Legionary VI
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -1,15 +1,7 @@
 import { useState, useEffect, Fragment } from 'react'
 
 import './App.css'
-import {
-  getHPWithBonus,
-  GuardsmanLevel,
-  MercUnit,
-  TroopType,
-  Unit,
-  useGuardsStore,
-  useStackStore
-} from './guardStore'
+import { useGuardsStore } from './guardStore'
 
 // import classNames from 'classnames'
 import {
@@ -35,6 +27,7 @@ import {
 } from '@dnd-kit/core'
 import { arrayMove, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { Link } from 'react-router-dom'
+import { Category, getHPWithBonus, MercUnit, TroopType, Unit, useStackStore } from './stackStore'
 
 function Dos() {
   // const mobHealth = useGuardsStore(state => state.mobHealth)
@@ -69,41 +62,16 @@ function Dos() {
   const mobArmy = useStackStore(state => state.mobArmy)
   const setMobArmy = useStackStore(state => state.setMobArmy)
 
-  const setSpearmanG1Bonus = useStackStore(state => state.setSpearmanG1Bonus)
-  const setSpearmanG2Bonus = useStackStore(state => state.setSpearmanG2Bonus)
-  const setSpearmanG3Bonus = useStackStore(state => state.setSpearmanG3Bonus)
-  const setSpearmanG4Bonus = useStackStore(state => state.setSpearmanG4Bonus)
-  const setSpearmanG5Bonus = useStackStore(state => state.setSpearmanG5Bonus)
-
-  const setArcherG1Bonus = useStackStore(state => state.setArcherG1Bonus)
-  const setArcherG2Bonus = useStackStore(state => state.setArcherG2Bonus)
-  const setArcherG3Bonus = useStackStore(state => state.setArcherG3Bonus)
-  const setArcherG4Bonus = useStackStore(state => state.setArcherG4Bonus)
-  const setArcherG5Bonus = useStackStore(state => state.setArcherG5Bonus)
-
-  const setRiderG1Bonus = useStackStore(state => state.setRiderG1Bonus)
-  const setRiderG2Bonus = useStackStore(state => state.setRiderG2Bonus)
-  const setRiderG3Bonus = useStackStore(state => state.setRiderG3Bonus)
-  const setRiderG4Bonus = useStackStore(state => state.setRiderG4Bonus)
-  const setRiderG5Bonus = useStackStore(state => state.setRiderG5Bonus)
-
-  const setSwordsmanS1Bonus = useStackStore(state => state.setSwordsmanS1Bonus)
-  const setSwordsmanS2Bonus = useStackStore(state => state.setSwordsmanS2Bonus)
-  const setSwordsmanS3Bonus = useStackStore(state => state.setSwordsmanS3Bonus)
-  const setSwordsmanS4Bonus = useStackStore(state => state.setSwordsmanS4Bonus)
-  const setSwordsmanS5Bonus = useStackStore(state => state.setSwordsmanS5Bonus)
-
-  const setSpyS1Bonus = useStackStore(state => state.setSpyS1Bonus)
-  const setSpyS2Bonus = useStackStore(state => state.setSpyS2Bonus)
-  const setSpyS3Bonus = useStackStore(state => state.setSpyS3Bonus)
-  const setSpyS4Bonus = useStackStore(state => state.setSpyS4Bonus)
-  const setSpyS5Bonus = useStackStore(state => state.setSpyS5Bonus)
-
-  const setCatapultE1Bonus = useStackStore(state => state.setCatapultE1Bonus)
-  const setCatapultE2Bonus = useStackStore(state => state.setCatapultE2Bonus)
-  const setCatapultE3Bonus = useStackStore(state => state.setCatapultE3Bonus)
-  const setCatapultE4Bonus = useStackStore(state => state.setCatapultE4Bonus)
-  const setCatapultE5Bonus = useStackStore(state => state.setCatapultE5Bonus)
+  const setMeleeBonus = useStackStore(state => state.setMeleeBonus)
+  const setRangedBonus = useStackStore(state => state.setRangedBonus)
+  const setMountedBonus = useStackStore(state => state.setMountedBonus)
+  const setScoutBonus = useStackStore(state => state.setScoutBonus)
+  const setSiegeBonus = useStackStore(state => state.setSiegeBonus)
+  const setFlyingBonus = useStackStore(state => state.setFlyingBonus)
+  const setBeastBonus = useStackStore(state => state.setBeastBonus)
+  const setDragonBonus = useStackStore(state => state.setDragonBonus)
+  const setElementalBonus = useStackStore(state => state.setElementalBonus)
+  const setGiantBonus = useStackStore(state => state.setGiantBonus)
   //-------------------
 
   const [selectedEvent, setSelectedEvent] = useState('0')
@@ -157,22 +125,27 @@ function Dos() {
   }
 
   const changeLeadership = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value)
-    setLeadership(value)
-
-    console.log('changing leadership', value)
+    if (e.target.value.trim() !== '') {
+      const value = parseInt(e.target.value)
+      setLeadership(value)
+      console.log('changing leadership', value)
+    }
   }
   const changeAuthority = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value)
-    setAuthority(value)
+    if (e.target.value.trim() !== '') {
+      const value = parseInt(e.target.value)
+      setAuthority(value)
 
-    console.log('changing authority', value)
+      console.log('changing authority', value)
+    }
   }
   const changeDominance = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value)
-    setDominance(value)
+    if (e.target.value.trim() !== '') {
+      const value = parseInt(e.target.value)
+      setDominance(value)
 
-    console.log('changing dominance', value)
+      console.log('changing dominance', value)
+    }
   }
 
   const getMobTarget = (iam: TroopType | string) => {
@@ -255,14 +228,12 @@ function Dos() {
     let soldierStrength = unit.BASESTR
     // TODO: add more combinations
     // mounted vs ranged
+    const otherBonus = bonus[unit.category as Category]?.str ?? 0
 
     if (unit.category === 'mounted' && monster.category === 'ranged') {
       //  unit.troop=='rider'
-      const level = unit.level
 
       // incluir el bono de los heroes/capitanes/equipo/clan/buff/vip
-      // const otherBonus = bonus.rider.G1.str ?? 0
-      const otherBonus = bonus.rider[level as GuardsmanLevel]?.str ?? 0
 
       const strBonus = ((otherBonus + unit.vsRangedPercent) * soldierStrength) / 100
       soldierStrength = soldierStrength + strBonus
@@ -537,7 +508,6 @@ function Dos() {
           <p>TO-DO:</p>
           <ul>
             <li>fix min setup value</li>
-            <li>add bonus config inputs</li>
           </ul>
         </div>
       </div>
@@ -554,7 +524,7 @@ function Dos() {
             <p>dominance {getArmyDominance()}</p>
           </div>
           <div style={{ color: 'pink', fontSize: 13 }}>
-            drag (hold for 1 second) and drop the card/stacks to arrange it
+            click (hold for 1 second) drag and drop the card/stacks to arrange it
           </div>
           <div className='stack-list'>
             <DndContext onDragEnd={handleDrag} sensors={sensors}>
@@ -619,53 +589,31 @@ function Dos() {
               </h4>
               <div className='guardsmen'>
                 <div className='row'>
+                  <span>Melee</span>
                   <div className='field'>
-                    <label>Spearman G1 str</label>
+                    <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.spearman.G1.str}
+                      value={bonus.melee.str}
                       onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpearmanG1Bonus({ str, hp: bonus.spearman.G1.hp })
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setMeleeBonus({ str, hp: bonus.melee.hp })
+                        }
                       }}
                       required
                     />
                   </div>
                   <div className='field'>
-                    <label>hp </label>
+                    <label>health</label>
                     <input
                       type='number'
-                      value={bonus.spearman.G1.hp}
+                      value={bonus.melee.hp}
                       onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpearmanG1Bonus({ hp, str: bonus.spearman.G1.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Spearman G2 str</label>
-                    <input
-                      type='number'
-                      value={bonus.spearman.G2.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpearmanG2Bonus({ str, hp: bonus.spearman.G2.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.spearman.G2.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpearmanG2Bonus({ hp, str: bonus.spearman.G2.str })
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setMeleeBonus({ hp, str: bonus.melee.str })
+                        }
                       }}
                       required
                     />
@@ -673,53 +621,31 @@ function Dos() {
                 </div>
 
                 <div className='row'>
+                  <span>Ranged</span>
                   <div className='field'>
-                    <label>Spearman G3 str</label>
+                    <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.spearman.G3.str}
+                      value={bonus.ranged.str}
                       onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpearmanG3Bonus({ str, hp: bonus.spearman.G3.hp })
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setRangedBonus({ str, hp: bonus.ranged.hp })
+                        }
                       }}
                       required
                     />
                   </div>
                   <div className='field'>
-                    <label>hp </label>
+                    <label>health</label>
                     <input
                       type='number'
-                      value={bonus.spearman.G3.hp}
+                      value={bonus.ranged.hp}
                       onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpearmanG3Bonus({ hp, str: bonus.spearman.G3.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Spearman G4 str</label>
-                    <input
-                      type='number'
-                      value={bonus.spearman.G4.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpearmanG4Bonus({ str, hp: bonus.spearman.G4.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.spearman.G4.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpearmanG4Bonus({ hp, str: bonus.spearman.G4.str })
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setRangedBonus({ hp, str: bonus.ranged.str })
+                        }
                       }}
                       required
                     />
@@ -727,55 +653,31 @@ function Dos() {
                 </div>
 
                 <div className='row'>
+                  <span>Mounted</span>
                   <div className='field'>
-                    <label>Spearman G5 str</label>
+                    <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.spearman.G5.str}
+                      value={bonus.mounted.str}
                       onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpearmanG5Bonus({ str, hp: bonus.spearman.G5.hp })
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setMountedBonus({ str, hp: bonus.mounted.hp })
+                        }
                       }}
                       required
                     />
                   </div>
                   <div className='field'>
-                    <label>hp </label>
+                    <label>health</label>
                     <input
                       type='number'
-                      value={bonus.spearman.G5.hp}
+                      value={bonus.mounted.hp}
                       onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpearmanG5Bonus({ hp, str: bonus.spearman.G5.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className='guardsmen'>
-                <div className='row'>
-                  <div className='field'>
-                    <label>Archer G1 str</label>
-                    <input
-                      type='number'
-                      value={bonus.archer.G1.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setArcherG1Bonus({ str, hp: bonus.archer.G1.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.archer.G1.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setArcherG1Bonus({ hp, str: bonus.archer.G1.str })
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setMountedBonus({ hp, str: bonus.mounted.str })
+                        }
                       }}
                       required
                     />
@@ -783,244 +685,31 @@ function Dos() {
                 </div>
 
                 <div className='row'>
+                  <span>Flying</span>
                   <div className='field'>
-                    <label>Archer G2 str</label>
+                    <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.archer.G2.str}
+                      value={bonus.flying.str}
                       onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setArcherG2Bonus({ str, hp: bonus.archer.G2.hp })
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setFlyingBonus({ str, hp: bonus.flying.hp })
+                        }
                       }}
                       required
                     />
                   </div>
                   <div className='field'>
-                    <label>hp </label>
+                    <label>health</label>
                     <input
                       type='number'
-                      value={bonus.archer.G2.hp}
+                      value={bonus.flying.hp}
                       onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setArcherG2Bonus({ hp, str: bonus.archer.G2.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Archer G3 str</label>
-                    <input
-                      type='number'
-                      value={bonus.archer.G3.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setArcherG3Bonus({ str, hp: bonus.archer.G3.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.archer.G3.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setArcherG3Bonus({ hp, str: bonus.archer.G3.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Archer G4 str</label>
-                    <input
-                      type='number'
-                      value={bonus.archer.G4.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setArcherG4Bonus({ str, hp: bonus.archer.G4.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.archer.G4.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setArcherG4Bonus({ hp, str: bonus.archer.G4.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Archer G5 str</label>
-                    <input
-                      type='number'
-                      value={bonus.archer.G5.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setArcherG5Bonus({ str, hp: bonus.archer.G5.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.archer.G5.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setArcherG5Bonus({ hp, str: bonus.archer.G5.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className='guardsmen'>
-                <div className='row'>
-                  <div className='field'>
-                    <label>rider G1 str</label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G1.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setRiderG1Bonus({ str, hp: bonus.rider.G1.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G1.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setRiderG1Bonus({ hp, str: bonus.rider.G1.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>rider G2 str</label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G2.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setRiderG2Bonus({ str, hp: bonus.rider.G2.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G2.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setRiderG2Bonus({ hp, str: bonus.rider.G2.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>rider G3 str</label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G3.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setRiderG3Bonus({ str, hp: bonus.rider.G3.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G3.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setRiderG3Bonus({ hp, str: bonus.rider.G3.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>rider G4 str</label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G4.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setRiderG4Bonus({ str, hp: bonus.rider.G4.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G4.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setRiderG4Bonus({ hp, str: bonus.rider.G4.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>rider G5 str</label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G5.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setRiderG5Bonus({ str, hp: bonus.rider.G5.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.rider.G5.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setRiderG5Bonus({ hp, str: bonus.rider.G5.str })
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setFlyingBonus({ hp, str: bonus.flying.str })
+                        }
                       }}
                       required
                     />
@@ -1030,271 +719,31 @@ function Dos() {
 
               <div className='specialists'>
                 <div className='row'>
+                  <span>Scout</span>
                   <div className='field'>
-                    <label>swordsman S1 str</label>
+                    <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.swordsman.S1.str}
+                      value={bonus.scout.str}
                       onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSwordsmanS1Bonus({ str, hp: bonus.swordsman.S1.hp })
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setScoutBonus({ str, hp: bonus.scout.hp })
+                        }
                       }}
                       required
                     />
                   </div>
                   <div className='field'>
-                    <label>hp </label>
+                    <label>health</label>
                     <input
                       type='number'
-                      value={bonus.swordsman.S1.hp}
+                      value={bonus.scout.hp}
                       onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSwordsmanS1Bonus({ hp, str: bonus.swordsman.S1.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>swordsman S2 str</label>
-                    <input
-                      type='number'
-                      value={bonus.swordsman.S2.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSwordsmanS2Bonus({ str, hp: bonus.swordsman.S2.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.swordsman.S2.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSwordsmanS2Bonus({ hp, str: bonus.swordsman.S2.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>swordsman S3 str</label>
-                    <input
-                      type='number'
-                      value={bonus.swordsman.S3.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSwordsmanS3Bonus({ str, hp: bonus.swordsman.S3.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.swordsman.S3.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSwordsmanS3Bonus({ hp, str: bonus.swordsman.S3.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>swordsman S4 str</label>
-                    <input
-                      type='number'
-                      value={bonus.swordsman.S4.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSwordsmanS4Bonus({ str, hp: bonus.swordsman.S4.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.swordsman.S4.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSwordsmanS4Bonus({ hp, str: bonus.swordsman.S4.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>swordsman S5 str</label>
-                    <input
-                      type='number'
-                      value={bonus.swordsman.S5.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSwordsmanS5Bonus({ str, hp: bonus.swordsman.S5.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.swordsman.S5.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSwordsmanS5Bonus({ hp, str: bonus.swordsman.S5.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className='specialists'>
-                <div className='row'>
-                  <div className='field'>
-                    <label>spy S1 str</label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S1.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpyS1Bonus({ str, hp: bonus.spy.S1.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S1.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpyS1Bonus({ hp, str: bonus.spy.S1.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>spy S2 str</label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S2.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpyS2Bonus({ str, hp: bonus.spy.S2.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S2.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpyS2Bonus({ hp, str: bonus.spy.S2.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>spy S3 str</label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S3.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpyS3Bonus({ str, hp: bonus.spy.S3.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S3.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpyS3Bonus({ hp, str: bonus.spy.S3.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>spy S4 str</label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S4.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpyS4Bonus({ str, hp: bonus.spy.S4.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S4.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpyS4Bonus({ hp, str: bonus.spy.S4.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>spy S5 str</label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S5.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setSpyS5Bonus({ str, hp: bonus.spy.S5.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.spy.S5.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setSpyS5Bonus({ hp, str: bonus.spy.S5.str })
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setScoutBonus({ hp, str: bonus.scout.str })
+                        }
                       }}
                       required
                     />
@@ -1304,141 +753,167 @@ function Dos() {
 
               <div className='engineer'>
                 <div className='row'>
+                  <span>Siege</span>
                   <div className='field'>
-                    <label>Catapult E1 str</label>
+                    <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.catapult.E1.str}
+                      value={bonus.siege.str}
                       onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setCatapultE1Bonus({ str, hp: bonus.catapult.E1.hp })
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setSiegeBonus({ str, hp: bonus.siege.hp })
+                        }
                       }}
                       required
                     />
                   </div>
                   <div className='field'>
-                    <label>hp </label>
+                    <label>health</label>
                     <input
                       type='number'
-                      value={bonus.catapult.E1.hp}
+                      value={bonus.siege.hp}
                       onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setCatapultE1Bonus({ hp, str: bonus.catapult.E1.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Catapult E2 str</label>
-                    <input
-                      type='number'
-                      value={bonus.catapult.E2.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setCatapultE2Bonus({ str, hp: bonus.catapult.E2.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.catapult.E2.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setCatapultE2Bonus({ hp, str: bonus.catapult.E2.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Catapult E3 str</label>
-                    <input
-                      type='number'
-                      value={bonus.catapult.E3.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setCatapultE3Bonus({ str, hp: bonus.catapult.E3.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.catapult.E3.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setCatapultE3Bonus({ hp, str: bonus.catapult.E3.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Catapult E4 str</label>
-                    <input
-                      type='number'
-                      value={bonus.catapult.E4.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setCatapultE4Bonus({ str, hp: bonus.catapult.E4.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.catapult.E4.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setCatapultE4Bonus({ hp, str: bonus.catapult.E4.str })
-                      }}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='row'>
-                  <div className='field'>
-                    <label>Catapult E5 str</label>
-                    <input
-                      type='number'
-                      value={bonus.catapult.E5.str}
-                      onChange={e => {
-                        const str = parseInt(e.target.value)
-                        setCatapultE5Bonus({ str, hp: bonus.catapult.E5.hp })
-                      }}
-                      required
-                    />
-                  </div>
-                  <div className='field'>
-                    <label>hp </label>
-                    <input
-                      type='number'
-                      value={bonus.catapult.E5.hp}
-                      onChange={e => {
-                        const hp = parseInt(e.target.value)
-                        setCatapultE5Bonus({ hp, str: bonus.catapult.E5.str })
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setSiegeBonus({ hp, str: bonus.siege.str })
+                        }
                       }}
                       required
                     />
                   </div>
                 </div>
               </div>
-              <pre>{JSON.stringify(bonus, null, 2)}</pre>
+
+              <div className='monsters'>
+                <div className='row'>
+                  <span>Beast</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setBeastBonus({ str, hp: bonus.beast.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setBeastBonus({ hp, str: bonus.beast.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Dragon</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setDragonBonus({ str, hp: bonus.dragon.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setDragonBonus({ hp, str: bonus.dragon.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Elemental</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.elemental.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setElementalBonus({ str, hp: bonus.elemental.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.elemental.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setElementalBonus({ hp, str: bonus.elemental.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Giant</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseInt(e.target.value)
+                          setGiantBonus({ str, hp: bonus.giant.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseInt(e.target.value)
+                          setGiantBonus({ hp, str: bonus.giant.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -57,9 +57,7 @@ table th {
 .event {
   display: flex;
 }
-.group {
-  margin: 0 1rem;
-}
+
 .bright {
   font-size: 18px;
   font-weight: bold;
@@ -109,15 +107,8 @@ table th {
 }
 
 .troop {
-  padding: 0.1rem 0.5rem;
   font-size: 14px;
-  border: 1px solid grey;
-  margin: 8px;
-  cursor: pointer;
-  &:hover {
-    border: 1px solid green;
-    border-right: 10px solid green;
-  }
+  margin: 4px;
 }
 
 .stack-card {
@@ -235,21 +226,32 @@ table th {
 
 .monsters {
   background-color: mediumorchid;
+  margin: 4px 0;
 }
 .guardsmen {
   background-color: darkcyan;
+  margin: 4px 0;
 }
 .engineer {
   background-color: sienna;
+  margin: 4px 0;
 }
 .specialists {
   background-color: lightcoral;
-  color: black;
+  margin: 4px 0;
 }
 .mercs {
   background-color: brown;
 }
-
+.group {
+  margin: 0 1rem;
+}
+.btn-group {
+  display: flex;
+}
+.group-title {
+  margin: 0;
+}
 .mob-army-stack {
   padding: 1rem;
   border: 1px solid green;
@@ -270,8 +272,15 @@ table th {
 }
 
 .row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  column-gap: 1rem;
 }
 .field {
-  display: flex;
+  label {
+    margin-right: 1rem;
+  }
+  input {
+    max-width: 80px;
+  }
 }
