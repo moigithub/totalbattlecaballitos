@@ -1,7 +1,7 @@
-import { useStackStore, Stack } from './guardStore'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { draugMage, whoCanIAttack } from './monsters'
+import { Stack, useStackStore } from './stackStore'
 
 export const Card = ({ stack }: { stack: Stack }) => {
   // const army = useStackStore(state => state.army)

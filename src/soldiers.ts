@@ -1,5 +1,5 @@
-import { MercUnit, Unit } from './guardStore'
 import { MonsterUnit } from './monsters'
+import { MercUnit, Unit } from './stackStore'
 
 export const RiderG1: Unit = {
   tipo: 'army',

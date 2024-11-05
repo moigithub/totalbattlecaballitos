@@ -1,7 +1,7 @@
 //doomsday nigromante strength 720, health 2160
 //ancient/tinman arbalesteraAncestrengthal strength 720, health 2160, ranged
 
-import { Category, MercUnit, MonsterLevel, Unit } from './guardStore'
+import { Category, MercUnit, Unit } from './stackStore'
 
 export type MonsterType =
   | 'jormungandr'
@@ -13,7 +13,6 @@ export type MonsterType =
   | 'beast'
   | 'giant'
   | 'dragon'
-// |'ancient'
 
 export type TIPO = 'monster' | 'merc' | 'army'
 
@@ -37,7 +36,7 @@ export interface MonsterUnit {
   vsFortificationsPercent: number
   troop: MonsterType
   category: Category
-  level: MonsterLevel
+  level: string
 }
 
 export interface MobStack {
