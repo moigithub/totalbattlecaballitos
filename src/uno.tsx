@@ -15,7 +15,7 @@ import {
 } from './soldiers'
 import classNames from 'classnames'
 import { doomsdayNecromancer, draugMage, jacksReturnScarecrow, overseer } from './monsters'
-import { Unit } from './stackStore'
+import { Unit } from './types'
 
 function Uno() {
   const bonusHP = useGuardsStore(state => state.bonusHP)

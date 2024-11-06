@@ -1,7 +1,7 @@
 //doomsday nigromante strength 720, health 2160
 //ancient/tinman arbalesteraAncestrengthal strength 720, health 2160, ranged
 
-import { Category, MercUnit, Unit } from './stackStore'
+import { Category, MercUnit, Unit } from './types'
 
 export type MonsterType = 'jormungandr' | 'swarm' | 'ancient' | 'guardsman' | 'demon' | 'monster'
 export type MonsterGroup = 'epic'
@@ -25,6 +25,7 @@ export interface EnemyUnit {
   vsMeleePercent: number
   vsGiants: number
   vsFortificationsPercent: number
+  vsEpicMonster: number
   troop: MonsterType
   category: Category
   group: MonsterGroup //| 'epic'
@@ -56,6 +57,7 @@ export const draugMage: EnemyUnit = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'jormungandr',
   category: 'ranged',
@@ -80,6 +82,7 @@ const jormungandr: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'jormungandr',
   category: 'melee',
@@ -104,6 +107,7 @@ const valkyrie: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'jormungandr',
   category: 'mounted',
@@ -128,6 +132,7 @@ export const darkElf: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 80,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'jormungandr',
   category: 'flying',
@@ -185,6 +190,7 @@ export const overseer: EnemyUnit = {
   vsFlyingPercent: 70,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'demon', //ranged unit, demon, epic monster
   category: 'ranged',
@@ -209,6 +215,7 @@ const ifrit: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 70,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'demon',
   category: 'flying',
@@ -234,6 +241,7 @@ const fireswordRider: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'demon',
   category: 'mounted',
@@ -259,6 +267,7 @@ const fireHidra: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'demon',
   category: 'mounted',
@@ -307,7 +316,7 @@ export const doomsdayArmy = [overseerStack, ifritStack, fireswordRiderStack, fir
 //   vsMountedPercent: 75,
 //   vsFlyingPercent: 0,
 //   vsMeleePercent: 0,
-//   vsFortificationsPercent: 0,
+//   vsFortificationsPercent: 0,vsEpicMonster:0,
 //   troop: 'demon',
 //   category: 'melee',
 //   level: 'III'
@@ -330,6 +339,7 @@ export const doomsdayNecromancer: EnemyUnit = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'monster',
   category: 'ranged',
@@ -354,6 +364,7 @@ export const jacksReturnScarecrow: EnemyUnit = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'monster',
   category: 'ranged',
@@ -380,6 +391,7 @@ const mechanicalGriffin: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 80,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'ancient',
   category: 'flying',
@@ -404,6 +416,7 @@ const ancientArbalest: EnemyUnit = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'ancient',
   category: 'ranged',
@@ -428,6 +441,7 @@ const tigerRider: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'ancient',
   category: 'mounted',
@@ -452,6 +466,7 @@ const goldenGuardian: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'ancient',
   category: 'melee',
@@ -508,6 +523,7 @@ const maliciousMantis: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'swarm',
   category: 'melee',
@@ -532,6 +548,7 @@ const caterpillarCavalry: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'swarm',
   category: 'mounted',
@@ -556,6 +573,7 @@ const elusiveWasp: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 50,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'swarm',
   category: 'flying',
@@ -580,6 +598,7 @@ const mercilesArachne: EnemyUnit = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'swarm',
   category: 'ranged',
@@ -649,6 +668,7 @@ const shadowWarrior: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'guardsman',
   category: 'melee', // melee
@@ -673,6 +693,7 @@ const shadowRanged: EnemyUnit = {
   vsFlyingPercent: 50,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'guardsman',
   category: 'ranged', // melee
@@ -697,6 +718,7 @@ const shadowRider: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'guardsman',
   category: 'mounted', // melee
@@ -721,6 +743,7 @@ const shadowCorax: EnemyUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 50,
   vsFortificationsPercent: 0,
+  vsEpicMonster: 0,
   vsGiants: 0,
   troop: 'guardsman',
   category: 'flying',
@@ -757,6 +780,9 @@ export const whoCanIAttack = (unit: EnemyUnit | Unit | MercUnit) => {
   }
   if (unit.vsFortificationsPercent) {
     target.push('fortification')
+  }
+  if (unit.vsEpicMonster) {
+    target.push('epic')
   }
   if (unit.vsGiants) {
     target.push('giants')

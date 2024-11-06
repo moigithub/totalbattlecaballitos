@@ -27,7 +27,8 @@ import {
 } from '@dnd-kit/core'
 import { arrayMove, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { Link } from 'react-router-dom'
-import { BasicStats, getHPWithBonus, TroopType, Unit, useStackStore } from './stackStore'
+import { getHPWithBonus, getStats, useStackStore } from './stackStore'
+import { TroopType, Unit } from './types'
 
 function Dos() {
   // const mobHealth = useGuardsStore(state => state.mobHealth)
@@ -66,6 +67,7 @@ function Dos() {
   const setGuardsmanMeleeBonus = useStackStore(state => state.setGuardsmanMeleeBonus)
   const setGuardsmanMountedBonus = useStackStore(state => state.setGuardsmanMountedBonus)
   const setGuardsmanFlyingBonus = useStackStore(state => state.setGuardsmanFlyingBonus)
+  const setGuardsmanEpicBonus = useStackStore(state => state.setGuardsmanEpicBonus)
   const setSpecialistRangedBonus = useStackStore(state => state.setSpecialistRangedBonus)
   const setSpecialistMeleeBonus = useStackStore(state => state.setSpecialistMeleeBonus)
   const setSpecialistMountedBonus = useStackStore(state => state.setSpecialistMountedBonus)
@@ -91,7 +93,7 @@ function Dos() {
   //-------------------
 
   const [selectedEvent, setSelectedEvent] = useState('0')
-  const [addUnitMode, setAddUnitMode] = useState('sacrificeHealthLimit')
+  const [addUnitMode, setAddUnitMode] = useState('previousStackHealthLimit')
   const [windowMode, setWindowMode] = useState('showBonusConfig')
 
   // const sensors = useSensor(PointerSensor, {
@@ -102,12 +104,12 @@ function Dos() {
   // });
   const sensors = useSensors(
     useSensor(MouseSensor, {
-      activationConstraint: { delay: 250, tolerance: 5, distance: 8 }
+      activationConstraint: { delay: 20, tolerance: 3, distance: 8 }
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
-        tolerance: 5,
+        delay: 20,
+        tolerance: 3,
         distance: 8
       }
     }),
@@ -241,23 +243,7 @@ function Dos() {
     let soldierStrength = unit.BASESTR
     // TODO: add more combinations
     // mounted vs ranged
-    let stats: BasicStats = { str: 0, hp: 0 } //bonus[unit.group] [unit.category]
-
-    if (unit.group === 'guardsman') {
-      stats = bonus.guardsman[unit.category]
-    } else if (unit.group === 'specialist') {
-      stats = bonus.specialist[unit.category]
-    } else if (unit.group === 'engineer') {
-      stats = bonus.engineer[unit.category]
-    } else if (unit.group === 'elemental') {
-      stats = bonus.elemental[unit.category]
-    } else if (unit.group === 'dragon') {
-      stats = bonus.dragon[unit.category]
-    } else if (unit.group === 'beast') {
-      stats = bonus.beast[unit.category]
-    } else if (unit.group === 'giant') {
-      stats = bonus.giant[unit.category]
-    }
+    const stats = getStats(unit, bonus)
 
     const otherBonus = stats?.str ?? 0
 
@@ -308,17 +294,24 @@ function Dos() {
       // }
 
       // 2. agregar 1 unit al sacrificio
-      if (totalLeadership < leadership) {
+      let stack = army[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
+
+      if (stack.unit.tipo === 'army' && totalLeadership < leadership) {
+        addUnits(army[0].id)
+      } else if (stack.unit.tipo === 'merc' && totalAuthority < authority) {
+        addUnits(army[0].id)
+      } else if (stack.unit.tipo === 'monster' && totalDominance < dominance) {
         addUnits(army[0].id)
       } else {
         // break
       }
+
       // 3. calcular hp del sacrificio
       const sacrificeGroupHealth = getStackHealth(army[0].id)
       console.log('sacrifice healt', sacrificeGroupHealth)
 
       for (let i = 1; i < army.length; i++) {
-        const stack = army[i]
+        stack = army[i]
 
         // 4. calcular cuantos unit necesita pa matar 1 mob
         const monster = getMobTarget(stack.unit.troop)
@@ -373,6 +366,12 @@ function Dos() {
 
           // 7 check authority acumulado + authority nuevo sea menor que el disponible
           if (totalAuthority + newStackAuthority <= authority) {
+            console.log(
+              'check auth calc MENOR IGUAL ',
+              totalAuthority + newStackAuthority,
+              'authority',
+              authority
+            )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
             const stackHealth = getStackHealth(stack.id!)
             const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
@@ -431,9 +430,14 @@ function Dos() {
         }
       }
 
+      // check if there were any changes
       totalLeadership = getArmyLeadership()
       totalAuthority = getArmyAuthority()
       totalDominance = getArmyDominance()
+
+      console.log('using leadership', totalLeadership, 'of', leadership)
+      console.log('using authority', totalAuthority, 'of', authority)
+      console.log('using dominance', totalDominance, 'of', dominance)
 
       // if (totalLeadership > leadership) break
       if (
@@ -448,11 +452,21 @@ function Dos() {
       lastAuthorityCalculated = totalAuthority
       lastDominanceCalculated = totalDominance
 
+      if (
+        totalAuthority > authority ||
+        totalDominance > dominance ||
+        totalLeadership > leadership
+      ) {
+        // no deberia pasar
+        break
+      }
+
       if (maxLoop-- < 1) {
         console.log('loop protection', maxLoop)
         break
       }
     }
+
     /**********************************************
      * basado en vitalidad
      * =======================
@@ -532,7 +546,7 @@ function Dos() {
         </div>
 
         <button className='gobtn' onClick={calcHP}>
-          CALCULATE (hp)
+          CALCULATE
         </button>
 
         <div>
@@ -555,11 +569,12 @@ function Dos() {
             <p>dominance {getArmyDominance()}</p>
           </div>
           <div className='small' style={{ color: 'pink' }}>
-            click (hold for 1 second) drag and drop the card/stacks to arrange it
+            drag and drop the card/stacks to arrange it from the number in beige at left side of
+            each card
           </div>
           <div className='small'>stack with highest health goes first</div>
           <div className='stack-list'>
-            <DndContext onDragEnd={handleDrag} sensors={sensors}>
+            <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
               <SortableContext items={army}>
                 {army.map(stack => {
                   return <Card stack={stack} key={stack.id} />
@@ -746,6 +761,38 @@ function Dos() {
                         if (e.target.value.trim() !== '') {
                           const hp = parseFloat(e.target.value)
                           setGuardsmanFlyingBonus({ hp, str: bonus.guardsman.flying.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Epic</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.guardsman.epic.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setGuardsmanEpicBonus({ str, hp: bonus.guardsman.epic.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.guardsman.epic.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setGuardsmanEpicBonus({ hp, str: bonus.guardsman.epic.str })
                         }
                       }}
                       required

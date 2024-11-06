@@ -1,4 +1,4 @@
-import { EngineerUnit, GuardsmanUnit, MercUnit, MonsterUnit, SpecialistUnit } from './stackStore'
+import { EngineerUnit, GuardsmanUnit, MercUnit, MonsterUnit, SpecialistUnit } from './types'
 
 export const RiderG1: GuardsmanUnit = {
   tipo: 'army',
@@ -18,9 +18,11 @@ export const RiderG1: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'rider',
   category: 'mounted',
   // group: 'guardsman',
+  race: 'human',
   group: 'guardsman',
   level: 'G1'
 }
@@ -42,8 +44,10 @@ export const RiderG2: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'rider',
   category: 'mounted',
+  race: 'human',
   group: 'guardsman',
   level: 'G2'
 }
@@ -65,8 +69,10 @@ export const RiderG3: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'rider',
   category: 'mounted',
+  race: 'human',
   group: 'guardsman',
   level: 'G3'
 }
@@ -88,8 +94,10 @@ export const RiderG4: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'rider',
   category: 'mounted',
+  race: 'human',
   group: 'guardsman',
   level: 'G4'
 }
@@ -111,8 +119,10 @@ export const RiderG5: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'rider',
   category: 'mounted',
+  race: 'human',
   group: 'guardsman',
   level: 'G5'
 }
@@ -136,8 +146,10 @@ export const SwordmanS1: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'swordsman',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S1'
 }
@@ -159,8 +171,10 @@ export const SwordmanS2: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'swordsman',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S2'
 }
@@ -182,8 +196,10 @@ export const SwordmanS3: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'swordsman',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S3'
 }
@@ -205,8 +221,10 @@ export const SwordmanS4: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'swordsman',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S4'
 }
@@ -228,8 +246,10 @@ export const SwordmanS5: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'swordsman',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S5'
 }
@@ -252,8 +272,10 @@ export const SpyS1: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spy',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S1'
 }
@@ -275,8 +297,10 @@ export const SpyS2: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spy',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S2'
 }
@@ -298,8 +322,10 @@ export const SpyS3: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spy',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S3'
 }
@@ -321,8 +347,10 @@ export const SpyS4: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spy',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S4'
 }
@@ -344,8 +372,10 @@ export const SpyS5: SpecialistUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spy',
   category: 'melee',
+  race: 'human',
   group: 'specialist',
   level: 'S5'
 }
@@ -369,8 +399,10 @@ export const SpearmanG1: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spearman',
   category: 'melee', // vs beast||mounted
+  race: 'human',
   group: 'guardsman',
   level: 'G1'
 }
@@ -392,8 +424,10 @@ export const SpearmanG2: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spearman',
   category: 'melee',
+  race: 'human',
   group: 'guardsman',
   level: 'G2'
 }
@@ -415,8 +449,10 @@ export const SpearmanG3: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spearman',
   category: 'melee',
+  race: 'human',
   group: 'guardsman',
   level: 'G3'
 }
@@ -438,8 +474,10 @@ export const SpearmanG4: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spearman',
   category: 'melee',
+  race: 'human',
   group: 'guardsman',
   level: 'G4'
 }
@@ -461,8 +499,10 @@ export const SpearmanG5: GuardsmanUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'spearman',
   category: 'melee',
+  race: 'human',
   group: 'guardsman',
   level: 'G5'
 }
@@ -486,8 +526,10 @@ export const ArcherG1: GuardsmanUnit = {
   vsMeleePercent: 52,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'archer',
   category: 'ranged',
+  race: 'human',
   group: 'guardsman',
   level: 'G1'
 }
@@ -509,8 +551,10 @@ export const ArcherG2: GuardsmanUnit = {
   vsMeleePercent: 78,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'archer',
   category: 'ranged',
+  race: 'human',
   group: 'guardsman',
   level: 'G2'
 }
@@ -532,8 +576,10 @@ export const ArcherG3: GuardsmanUnit = {
   vsMeleePercent: 117,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'archer',
   category: 'ranged',
+  race: 'human',
   group: 'guardsman',
   level: 'G3'
 }
@@ -555,8 +601,10 @@ export const ArcherG4: GuardsmanUnit = {
   vsMeleePercent: 176,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'archer',
   category: 'ranged',
+  race: 'human',
   group: 'guardsman',
   level: 'G4'
 }
@@ -578,8 +626,10 @@ export const ArcherG5: GuardsmanUnit = {
   vsMeleePercent: 263,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'archer',
   category: 'ranged',
+  race: 'human',
   group: 'guardsman',
   level: 'G5'
 }
@@ -604,8 +654,10 @@ export const CatapultE1: EngineerUnit = {
   //str * 20 ?
   vsFortificationsPercent: 65,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'catapult',
   category: 'siege',
+  race: 'human',
   group: 'engineer',
   level: 'E1'
 }
@@ -628,8 +680,10 @@ export const CatapultE2: EngineerUnit = {
   //str * 20 ?
   vsFortificationsPercent: 98,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'catapult',
   category: 'siege',
+  race: 'human',
   group: 'engineer',
   level: 'E2'
 }
@@ -652,8 +706,10 @@ export const CatapultE3: EngineerUnit = {
   //str * 20 ?
   vsFortificationsPercent: 146,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'catapult',
   category: 'siege',
+  race: 'human',
   group: 'engineer',
   level: 'E3'
 }
@@ -676,8 +732,10 @@ export const CatapultE4: EngineerUnit = {
   //str * 20 ?
   vsFortificationsPercent: 219,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'catapult',
   category: 'siege',
+  race: 'human',
   group: 'engineer',
   level: 'E4'
 }
@@ -700,8 +758,10 @@ export const CatapultE5: EngineerUnit = {
   //str * 20 ?
   vsFortificationsPercent: 329,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'catapult',
   category: 'siege',
+  race: 'human',
   group: 'engineer',
   level: 'E5'
 }
@@ -727,8 +787,9 @@ export const mercEpicMonsterHunter: MercUnit = {
   vsEpicMonster: 609,
   vsGiants: 0,
   troop: 'merc',
-  category: 'epicHunter',
-  group: 'merc',
+  category: 'epic',
+  race: 'human',
+  group: 'guardsman',
   level: 'VI'
 }
 export const mercChariot: MercUnit = {
@@ -752,7 +813,8 @@ export const mercChariot: MercUnit = {
   vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
-  group: 'merc',
+  race: 'human',
+  group: 'guardsman',
   level: 'VI'
 }
 
@@ -775,9 +837,11 @@ export const waterElemental: MonsterUnit = {
   vsMeleePercent: 113,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'monster',
   category: 'ranged',
-  group: 'elemental',
+  race: 'elemental',
+  group: 'monster',
   level: 'M3'
 }
 export const battleBoar: MonsterUnit = {
@@ -798,8 +862,10 @@ export const battleBoar: MonsterUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   troop: 'monster',
-  group: 'beast',
+  race: 'beast',
+  group: 'monster',
   category: 'mounted',
   level: 'M3'
 }
@@ -818,11 +884,13 @@ export const emeraldDragon: MonsterUnit = {
   vsHumanPercent: 0,
   vsMountedPercent: 185,
   vsGiants: 72,
+  vsEpicMonster: 0,
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   troop: 'monster',
-  group: 'dragon',
+  race: 'dragon',
+  group: 'monster',
   category: 'flying',
   level: 'M3'
 }
@@ -841,11 +909,13 @@ export const stoneGargole: MonsterUnit = {
   vsHumanPercent: 0,
   vsMountedPercent: 0,
   vsGiants: 0,
+  vsEpicMonster: 0,
   vsFlyingPercent: 0,
   vsMeleePercent: 185,
   vsFortificationsPercent: 0,
   troop: 'monster',
-  group: 'giant',
+  race: 'giant',
+  group: 'monster',
   category: 'flying',
   level: 'M3'
 }
