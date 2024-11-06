@@ -1,7 +1,8 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { draugMage, whoCanIAttack } from './monsters'
-import { Stack, useStackStore } from './stackStore'
+import { useStackStore } from './stackStore'
+import { Stack } from './types'
 
 export const Card = ({ stack }: { stack: Stack }) => {
   // const army = useStackStore(state => state.army)
@@ -30,8 +31,11 @@ export const Card = ({ stack }: { stack: Stack }) => {
   const stackStrength = getStackStrength(stack.id!, draugMage.category)
 
   return (
-    <div className='stack-card' ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <p className='stack-units'>{stack.units}</p>
+    <div className='stack-card' ref={setNodeRef} style={style}>
+      <p className='stack-units' {...attributes} {...listeners}>
+        <div className='drag-handler'></div>
+        {stack.units}
+      </p>
       <p className='stack-name'>{stack.unit.name}</p>
       <p className='stack-health'>HP {stackHealth.toFixed(0)}</p>
       <p className='stack-strength'>STR {stackStrength.toFixed(2)}</p>
@@ -80,7 +84,12 @@ export const Card = ({ stack }: { stack: Stack }) => {
         </button>
       </div>
       <div className='stack-attack-info' style={{ color: 'gray', fontSize: 14 }}>
-        i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit)}</span>
+        i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit)}</span> basehp{' '}
+        {stack.unit.BASEHP}
+        {' * '}
+        {stack.units}
+        {' = '}
+        {stack.units * stack.unit.BASEHP}
       </div>
       {/* <span className='stack-id tiny'>(id.{stack.id})</span> */}
     </div>
