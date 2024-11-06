@@ -361,7 +361,7 @@ export const ArmyList = () => {
           </div>
         </div>
 
-        <div className='specialists'>
+        <div className='engineer'>
           <p className='group-title'>Catapult</p>
           <div className='btn-group'>
             <button

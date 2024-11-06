@@ -73,7 +73,9 @@ table th {
 }
 
 .small {
-  font-size: 10px;
+  font-size: 12px;
+}
+.margin-y {
   margin: 0 10px;
 }
 .btnGroupCount {
@@ -282,5 +284,29 @@ table th {
   }
   input {
     max-width: 80px;
+  }
+}
+.radio-group {
+  display: flex;
+}
+.radiobtn {
+  /* input {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+  } */
+
+  input[type='radio']:checked + label {
+    background: olive;
+  }
+
+  label {
+    padding: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  label:hover {
+    background: #ddd;
   }
 }

@@ -1,7 +1,6 @@
-import { MonsterUnit } from './monsters'
-import { MercUnit, Unit } from './stackStore'
+import { EngineerUnit, GuardsmanUnit, MercUnit, MonsterUnit, SpecialistUnit } from './stackStore'
 
-export const RiderG1: Unit = {
+export const RiderG1: GuardsmanUnit = {
   tipo: 'army',
   name: 'RiderG1',
   BASEHP: 300,
@@ -21,9 +20,11 @@ export const RiderG1: Unit = {
   vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
+  // group: 'guardsman',
+  group: 'guardsman',
   level: 'G1'
 }
-export const RiderG2: Unit = {
+export const RiderG2: GuardsmanUnit = {
   tipo: 'army',
   name: 'RiderG2',
   BASEHP: 540,
@@ -43,9 +44,10 @@ export const RiderG2: Unit = {
   vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
+  group: 'guardsman',
   level: 'G2'
 }
-export const RiderG3: Unit = {
+export const RiderG3: GuardsmanUnit = {
   tipo: 'army',
   name: 'RiderG3',
   BASEHP: 960,
@@ -65,9 +67,10 @@ export const RiderG3: Unit = {
   vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
+  group: 'guardsman',
   level: 'G3'
 }
-export const RiderG4: Unit = {
+export const RiderG4: GuardsmanUnit = {
   tipo: 'army',
   name: 'RiderG4',
   BASEHP: 1740,
@@ -87,9 +90,10 @@ export const RiderG4: Unit = {
   vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
+  group: 'guardsman',
   level: 'G4'
 }
-export const RiderG5: Unit = {
+export const RiderG5: GuardsmanUnit = {
   tipo: 'army',
   name: 'RiderG5',
   BASEHP: 3150,
@@ -109,11 +113,12 @@ export const RiderG5: Unit = {
   vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
+  group: 'guardsman',
   level: 'G5'
 }
 
 //--------------------------------
-export const SwordmanS1: Unit = {
+export const SwordmanS1: SpecialistUnit = {
   tipo: 'army',
   name: 'SwordmanS1',
   BASEHP: 150,
@@ -133,9 +138,10 @@ export const SwordmanS1: Unit = {
   vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
+  group: 'specialist',
   level: 'S1'
 }
-export const SwordmanS2: Unit = {
+export const SwordmanS2: SpecialistUnit = {
   tipo: 'army',
   name: 'SwordmanS2',
   BASEHP: 270,
@@ -155,9 +161,10 @@ export const SwordmanS2: Unit = {
   vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
+  group: 'specialist',
   level: 'S2'
 }
-export const SwordmanS3: Unit = {
+export const SwordmanS3: SpecialistUnit = {
   tipo: 'army',
   name: 'SwordmanS3',
   BASEHP: 480,
@@ -177,9 +184,10 @@ export const SwordmanS3: Unit = {
   vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
+  group: 'specialist',
   level: 'S3'
 }
-export const SwordmanS4: Unit = {
+export const SwordmanS4: SpecialistUnit = {
   tipo: 'army',
   name: 'SwordmanS4',
   BASEHP: 870,
@@ -199,9 +207,10 @@ export const SwordmanS4: Unit = {
   vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
+  group: 'specialist',
   level: 'S4'
 }
-export const SwordmanS5: Unit = {
+export const SwordmanS5: SpecialistUnit = {
   tipo: 'army',
   name: 'SwordmanS5',
   BASEHP: 1560,
@@ -221,10 +230,11 @@ export const SwordmanS5: Unit = {
   vsGiants: 0,
   troop: 'swordsman',
   category: 'melee',
+  group: 'specialist',
   level: 'S5'
 }
 //----------------------------
-export const SpyS1: Unit = {
+export const SpyS1: SpecialistUnit = {
   tipo: 'army',
   name: 'SpyS1',
   BASEHP: 75,
@@ -244,9 +254,10 @@ export const SpyS1: Unit = {
   vsGiants: 0,
   troop: 'spy',
   category: 'melee',
+  group: 'specialist',
   level: 'S1'
 }
-export const SpyS2: Unit = {
+export const SpyS2: SpecialistUnit = {
   tipo: 'army',
   name: 'SpyS2',
   BASEHP: 135,
@@ -266,9 +277,10 @@ export const SpyS2: Unit = {
   vsGiants: 0,
   troop: 'spy',
   category: 'melee',
+  group: 'specialist',
   level: 'S2'
 }
-export const SpyS3: Unit = {
+export const SpyS3: SpecialistUnit = {
   tipo: 'army',
   name: 'SpyS3',
   BASEHP: 240,
@@ -288,9 +300,10 @@ export const SpyS3: Unit = {
   vsGiants: 0,
   troop: 'spy',
   category: 'melee',
+  group: 'specialist',
   level: 'S3'
 }
-export const SpyS4: Unit = {
+export const SpyS4: SpecialistUnit = {
   tipo: 'army',
   name: 'SpyS4',
   BASEHP: 450,
@@ -310,9 +323,10 @@ export const SpyS4: Unit = {
   vsGiants: 0,
   troop: 'spy',
   category: 'melee',
+  group: 'specialist',
   level: 'S4'
 }
-export const SpyS5: Unit = {
+export const SpyS5: SpecialistUnit = {
   tipo: 'army',
   name: 'SpyS5',
   BASEHP: 780,
@@ -332,11 +346,12 @@ export const SpyS5: Unit = {
   vsGiants: 0,
   troop: 'spy',
   category: 'melee',
+  group: 'specialist',
   level: 'S5'
 }
 
 //----------------------------------
-export const SpearmanG1: Unit = {
+export const SpearmanG1: GuardsmanUnit = {
   tipo: 'army',
   name: 'SpearmanG1',
   BASEHP: 150,
@@ -356,9 +371,10 @@ export const SpearmanG1: Unit = {
   vsGiants: 0,
   troop: 'spearman',
   category: 'melee', // vs beast||mounted
+  group: 'guardsman',
   level: 'G1'
 }
-export const SpearmanG2: Unit = {
+export const SpearmanG2: GuardsmanUnit = {
   tipo: 'army',
   name: 'SpearmanG2',
   BASEHP: 270,
@@ -378,9 +394,10 @@ export const SpearmanG2: Unit = {
   vsGiants: 0,
   troop: 'spearman',
   category: 'melee',
+  group: 'guardsman',
   level: 'G2'
 }
-export const SpearmanG3: Unit = {
+export const SpearmanG3: GuardsmanUnit = {
   tipo: 'army',
   name: 'SpearmanG3',
   BASEHP: 480,
@@ -400,9 +417,10 @@ export const SpearmanG3: Unit = {
   vsGiants: 0,
   troop: 'spearman',
   category: 'melee',
+  group: 'guardsman',
   level: 'G3'
 }
-export const SpearmanG4: Unit = {
+export const SpearmanG4: GuardsmanUnit = {
   tipo: 'army',
   name: 'SpearmanG4',
   BASEHP: 870,
@@ -422,9 +440,10 @@ export const SpearmanG4: Unit = {
   vsGiants: 0,
   troop: 'spearman',
   category: 'melee',
+  group: 'guardsman',
   level: 'G4'
 }
-export const SpearmanG5: Unit = {
+export const SpearmanG5: GuardsmanUnit = {
   tipo: 'army',
   name: 'SpearmanG5',
   BASEHP: 1560,
@@ -444,11 +463,12 @@ export const SpearmanG5: Unit = {
   vsGiants: 0,
   troop: 'spearman',
   category: 'melee',
+  group: 'guardsman',
   level: 'G5'
 }
 
 //----------------------------------
-export const ArcherG1: Unit = {
+export const ArcherG1: GuardsmanUnit = {
   tipo: 'army',
   name: 'Archer G1',
   BASEHP: 150,
@@ -468,9 +488,10 @@ export const ArcherG1: Unit = {
   vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
+  group: 'guardsman',
   level: 'G1'
 }
-export const ArcherG2: Unit = {
+export const ArcherG2: GuardsmanUnit = {
   tipo: 'army',
   name: 'Archer G2',
   BASEHP: 270,
@@ -490,9 +511,10 @@ export const ArcherG2: Unit = {
   vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
+  group: 'guardsman',
   level: 'G2'
 }
-export const ArcherG3: Unit = {
+export const ArcherG3: GuardsmanUnit = {
   tipo: 'army',
   name: 'Archer G3',
   BASEHP: 480,
@@ -512,9 +534,10 @@ export const ArcherG3: Unit = {
   vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
+  group: 'guardsman',
   level: 'G3'
 }
-export const ArcherG4: Unit = {
+export const ArcherG4: GuardsmanUnit = {
   tipo: 'army',
   name: 'Archer G4',
   BASEHP: 870,
@@ -534,9 +557,10 @@ export const ArcherG4: Unit = {
   vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
+  group: 'guardsman',
   level: 'G4'
 }
-export const ArcherG5: Unit = {
+export const ArcherG5: GuardsmanUnit = {
   tipo: 'army',
   name: 'Archer G5',
   BASEHP: 1560,
@@ -556,11 +580,12 @@ export const ArcherG5: Unit = {
   vsGiants: 0,
   troop: 'archer',
   category: 'ranged',
+  group: 'guardsman',
   level: 'G5'
 }
 
 //----------------------------------
-export const CatapultE1: Unit = {
+export const CatapultE1: EngineerUnit = {
   tipo: 'army',
   name: 'Catapult E1',
   BASEHP: 1500,
@@ -581,9 +606,10 @@ export const CatapultE1: Unit = {
   vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
+  group: 'engineer',
   level: 'E1'
 }
-export const CatapultE2: Unit = {
+export const CatapultE2: EngineerUnit = {
   tipo: 'army',
   name: 'Catapult E2',
   BASEHP: 2700,
@@ -604,9 +630,10 @@ export const CatapultE2: Unit = {
   vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
+  group: 'engineer',
   level: 'E2'
 }
-export const CatapultE3: Unit = {
+export const CatapultE3: EngineerUnit = {
   tipo: 'army',
   name: 'Catapult E3',
   BASEHP: 4860,
@@ -627,9 +654,10 @@ export const CatapultE3: Unit = {
   vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
+  group: 'engineer',
   level: 'E3'
 }
-export const CatapultE4: Unit = {
+export const CatapultE4: EngineerUnit = {
   tipo: 'army',
   name: 'Catapult E4',
   BASEHP: 8750,
@@ -650,9 +678,10 @@ export const CatapultE4: Unit = {
   vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
+  group: 'engineer',
   level: 'E4'
 }
-export const CatapultE5: Unit = {
+export const CatapultE5: EngineerUnit = {
   tipo: 'army',
   name: 'Catapult E5',
   BASEHP: 15800,
@@ -673,6 +702,7 @@ export const CatapultE5: Unit = {
   vsGiants: 0,
   troop: 'catapult',
   category: 'siege',
+  group: 'engineer',
   level: 'E5'
 }
 
@@ -697,7 +727,8 @@ export const mercEpicMonsterHunter: MercUnit = {
   vsEpicMonster: 609,
   vsGiants: 0,
   troop: 'merc',
-  category: 'merc',
+  category: 'epicHunter',
+  group: 'merc',
   level: 'VI'
 }
 export const mercChariot: MercUnit = {
@@ -721,6 +752,7 @@ export const mercChariot: MercUnit = {
   vsGiants: 0,
   troop: 'rider',
   category: 'mounted',
+  group: 'merc',
   level: 'VI'
 }
 
@@ -743,8 +775,9 @@ export const waterElemental: MonsterUnit = {
   vsMeleePercent: 113,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-  troop: 'elemental',
+  troop: 'monster',
   category: 'ranged',
+  group: 'elemental',
   level: 'M3'
 }
 export const battleBoar: MonsterUnit = {
@@ -765,7 +798,8 @@ export const battleBoar: MonsterUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-  troop: 'beast',
+  troop: 'monster',
+  group: 'beast',
   category: 'mounted',
   level: 'M3'
 }
@@ -787,7 +821,8 @@ export const emeraldDragon: MonsterUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
-  troop: 'dragon',
+  troop: 'monster',
+  group: 'dragon',
   category: 'flying',
   level: 'M3'
 }
@@ -809,7 +844,8 @@ export const stoneGargole: MonsterUnit = {
   vsFlyingPercent: 0,
   vsMeleePercent: 185,
   vsFortificationsPercent: 0,
-  troop: 'giant',
+  troop: 'monster',
+  group: 'giant',
   category: 'flying',
   level: 'M3'
 }

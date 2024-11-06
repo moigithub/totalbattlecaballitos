@@ -3,20 +3,11 @@
 
 import { Category, MercUnit, Unit } from './stackStore'
 
-export type MonsterType =
-  | 'jormungandr'
-  | 'swarm'
-  | 'elemental'
-  | 'ancient'
-  | 'guardsman'
-  | 'demon'
-  | 'beast'
-  | 'giant'
-  | 'dragon'
-
+export type MonsterType = 'jormungandr' | 'swarm' | 'ancient' | 'guardsman' | 'demon' | 'monster'
+export type MonsterGroup = 'epic'
 export type TIPO = 'monster' | 'merc' | 'army'
 
-export interface MonsterUnit {
+export interface EnemyUnit {
   tipo: TIPO
   name: string
   BASEHP: number
@@ -36,17 +27,18 @@ export interface MonsterUnit {
   vsFortificationsPercent: number
   troop: MonsterType
   category: Category
+  group: MonsterGroup //| 'epic'
   level: string
 }
 
 export interface MobStack {
   id: string // whichever at first position will be used as sacrifice, increases 1 by 1, ignoring lockMinSetup
   leadership: number
-  unit: MonsterUnit
+  unit: EnemyUnit
   units: number
 }
 //-------------------------------------------------
-export const draugMage: MonsterUnit = {
+export const draugMage: EnemyUnit = {
   // 50 epic jormungandr squad/ragnarok
   tipo: 'monster',
   name: 'DraugMage',
@@ -67,9 +59,10 @@ export const draugMage: MonsterUnit = {
   vsGiants: 0,
   troop: 'jormungandr',
   category: 'ranged',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
-const jormungandr: MonsterUnit = {
+const jormungandr: EnemyUnit = {
   // 50 epic jormungandr squad/ragnarok
   tipo: 'monster',
   name: 'jormungandr',
@@ -90,9 +83,10 @@ const jormungandr: MonsterUnit = {
   vsGiants: 0,
   troop: 'jormungandr',
   category: 'melee',
-  level: 'M6'
+  group: 'epic',
+  level: 'VI'
 }
-const valkyrie: MonsterUnit = {
+const valkyrie: EnemyUnit = {
   // 50 epic jormungandr squad/ragnarok
   tipo: 'monster',
   name: 'valkyrie',
@@ -113,9 +107,10 @@ const valkyrie: MonsterUnit = {
   vsGiants: 0,
   troop: 'jormungandr',
   category: 'mounted',
-  level: 'M6'
+  group: 'epic',
+  level: 'VI'
 }
-export const darkElf: MonsterUnit = {
+export const darkElf: EnemyUnit = {
   // 50 epic jormungandr squad/ragnarok
   tipo: 'monster',
   name: 'darkElf',
@@ -136,7 +131,8 @@ export const darkElf: MonsterUnit = {
   vsGiants: 0,
   troop: 'jormungandr',
   category: 'flying',
-  level: 'M3'
+  group: 'epic',
+  level: 'III'
 }
 const draugMageStack: MobStack = {
   id: 'draugMageStack1',
@@ -171,7 +167,7 @@ export const ragnarokArmy = [
 
 //-------------------
 
-export const overseer: MonsterUnit = {
+export const overseer: EnemyUnit = {
   // 50 epic inferno squad
   tipo: 'monster',
   name: 'overseer',
@@ -190,11 +186,12 @@ export const overseer: MonsterUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-  troop: 'demon',
+  troop: 'demon', //ranged unit, demon, epic monster
   category: 'ranged',
-  level: 'M3'
+  group: 'epic',
+  level: 'III'
 }
-const ifrit: MonsterUnit = {
+const ifrit: EnemyUnit = {
   // 50 epic inferno squad
   tipo: 'monster',
   name: 'ifrit',
@@ -215,11 +212,11 @@ const ifrit: MonsterUnit = {
   vsGiants: 0,
   troop: 'demon',
   category: 'flying',
-  // subtype: 'demon',
-  level: 'M5'
+  group: 'epic',
+  level: 'V'
 }
 
-const fireswordRider: MonsterUnit = {
+const fireswordRider: EnemyUnit = {
   // 50 epic inferno squad
   tipo: 'monster',
   name: 'FireswordRider',
@@ -240,10 +237,11 @@ const fireswordRider: MonsterUnit = {
   vsGiants: 0,
   troop: 'demon',
   category: 'mounted',
-  level: 'M5'
+  group: 'epic',
+  level: 'V'
 }
 
-const fireHidra: MonsterUnit = {
+const fireHidra: EnemyUnit = {
   // 50 epic inferno squad
   tipo: 'monster',
   name: 'fireHidra',
@@ -264,7 +262,8 @@ const fireHidra: MonsterUnit = {
   vsGiants: 0,
   troop: 'demon',
   category: 'mounted',
-  level: 'M5'
+  group: 'epic',
+  level: 'V'
 }
 const overseerStack: MobStack = {
   id: 'overseerStack1',
@@ -311,10 +310,10 @@ export const doomsdayArmy = [overseerStack, ifritStack, fireswordRiderStack, fir
 //   vsFortificationsPercent: 0,
 //   troop: 'demon',
 //   category: 'melee',
-//   level: 'M3'
+//   level: 'III'
 // }
 
-export const doomsdayNecromancer: MonsterUnit = {
+export const doomsdayNecromancer: EnemyUnit = {
   tipo: 'monster',
   name: 'necromancer',
   BASEHP: 2160,
@@ -332,11 +331,12 @@ export const doomsdayNecromancer: MonsterUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-  troop: 'elemental',
+  troop: 'monster',
   category: 'ranged',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
-export const jacksReturnScarecrow: MonsterUnit = {
+export const jacksReturnScarecrow: EnemyUnit = {
   // 50 epic pumpkin squad
   tipo: 'monster',
   name: 'scarecrow',
@@ -355,13 +355,14 @@ export const jacksReturnScarecrow: MonsterUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-  troop: 'elemental',
+  troop: 'monster',
   category: 'ranged',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
 
 //------------------------------------
-const mechanicalGriffin: MonsterUnit = {
+const mechanicalGriffin: EnemyUnit = {
   // ancient/tinman
   tipo: 'monster',
   name: 'mechanicalGriffin',
@@ -382,9 +383,10 @@ const mechanicalGriffin: MonsterUnit = {
   vsGiants: 0,
   troop: 'ancient',
   category: 'flying',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
-const ancientArbalest: MonsterUnit = {
+const ancientArbalest: EnemyUnit = {
   // ancient/tinman
   tipo: 'monster',
   name: 'ancientArbalest',
@@ -405,9 +407,10 @@ const ancientArbalest: MonsterUnit = {
   vsGiants: 0,
   troop: 'ancient',
   category: 'ranged',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
-const tigerRider: MonsterUnit = {
+const tigerRider: EnemyUnit = {
   // ancient/tinman
   tipo: 'monster',
   name: 'tigerRider',
@@ -428,9 +431,10 @@ const tigerRider: MonsterUnit = {
   vsGiants: 0,
   troop: 'ancient',
   category: 'mounted',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
-const goldenGuardian: MonsterUnit = {
+const goldenGuardian: EnemyUnit = {
   // ancient/tinman
   tipo: 'monster',
   name: 'goldenGuardian',
@@ -451,7 +455,8 @@ const goldenGuardian: MonsterUnit = {
   vsGiants: 0,
   troop: 'ancient',
   category: 'melee',
-  level: 'M3'
+  group: 'epic',
+  level: 'III'
 }
 const mechanicalGriffinStack: MobStack = {
   id: 'mechanicalGriffinStack1',
@@ -485,7 +490,7 @@ export const ancientArmy = [
 ]
 //----------------------------------
 
-const maliciousMantis: MonsterUnit = {
+const maliciousMantis: EnemyUnit = {
   // 50 epic squad arachne swarm
   tipo: 'monster',
   name: 'MaliciousMantis',
@@ -506,9 +511,10 @@ const maliciousMantis: MonsterUnit = {
   vsGiants: 0,
   troop: 'swarm',
   category: 'melee',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
-const caterpillarCavalry: MonsterUnit = {
+const caterpillarCavalry: EnemyUnit = {
   // 50 epic squad arachne swarm
   tipo: 'monster',
   name: 'caterpillarCavalry',
@@ -529,9 +535,10 @@ const caterpillarCavalry: MonsterUnit = {
   vsGiants: 0,
   troop: 'swarm',
   category: 'mounted',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
-const elusiveWasp: MonsterUnit = {
+const elusiveWasp: EnemyUnit = {
   // 50 epic squad arachne swarm
   tipo: 'monster',
   name: 'elusiveWasp',
@@ -552,9 +559,10 @@ const elusiveWasp: MonsterUnit = {
   vsGiants: 0,
   troop: 'swarm',
   category: 'flying',
-  level: 'M2'
+  group: 'epic',
+  level: 'II'
 }
-const mercilesArachne: MonsterUnit = {
+const mercilesArachne: EnemyUnit = {
   // 50 epic squad arachne swarm
   tipo: 'monster',
   name: 'mercilesArachne',
@@ -575,7 +583,8 @@ const mercilesArachne: MonsterUnit = {
   vsGiants: 0,
   troop: 'swarm',
   category: 'ranged',
-  level: 'M3'
+  group: 'epic',
+  level: 'III'
 }
 const maliciousMantisStack: MobStack = {
   id: 'maliciousMantisStack1',
@@ -622,7 +631,7 @@ export const arachneArmy = [
 //   ]
 // }
 
-const shadowWarrior: MonsterUnit = {
+const shadowWarrior: EnemyUnit = {
   // OK
   tipo: 'monster',
   name: 'shadowWarrior',
@@ -641,12 +650,12 @@ const shadowWarrior: MonsterUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-
   troop: 'guardsman',
   category: 'melee', // melee
-  level: 'M3'
+  group: 'epic',
+  level: 'III'
 }
-const shadowRanged: MonsterUnit = {
+const shadowRanged: EnemyUnit = {
   // OK
   tipo: 'monster',
   name: 'shadowRanged',
@@ -665,12 +674,12 @@ const shadowRanged: MonsterUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-
   troop: 'guardsman',
   category: 'ranged', // melee
-  level: 'M3'
+  group: 'epic',
+  level: 'III'
 }
-const shadowRider: MonsterUnit = {
+const shadowRider: EnemyUnit = {
   // OK
   tipo: 'monster',
   name: 'shadowRider',
@@ -680,7 +689,6 @@ const shadowRider: MonsterUnit = {
   INITIATIVE: 10,
   DOMINANCE: 0,
   AUTHORITY: 0,
-
   vsRangedPercent: 50,
   vsSiegePercent: 0,
   vsBeastPercent: 0,
@@ -690,12 +698,12 @@ const shadowRider: MonsterUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-
   troop: 'guardsman',
   category: 'mounted', // melee
-  level: 'M3'
+  group: 'epic',
+  level: 'III'
 }
-const shadowCorax: MonsterUnit = {
+const shadowCorax: EnemyUnit = {
   // OK
   tipo: 'monster',
   name: 'shadowCorax',
@@ -714,16 +722,16 @@ const shadowCorax: MonsterUnit = {
   vsMeleePercent: 50,
   vsFortificationsPercent: 0,
   vsGiants: 0,
-
   troop: 'guardsman',
-  category: 'flying', // melee
-  level: 'M3'
+  category: 'flying',
+  group: 'epic',
+  level: 'III'
 }
 /*category
 | 'mounted'| 'ranged'| 'melee'| 'flying'| 'fortification'| 'siege'
 | 'elemental'| 'beast'| 'dragon'| 'giant'
 */
-export const whoCanIAttack = (unit: MonsterUnit | Unit | MercUnit) => {
+export const whoCanIAttack = (unit: EnemyUnit | Unit | MercUnit) => {
   const target = []
   if (unit.vsRangedPercent > 0) {
     target.push('ranged')

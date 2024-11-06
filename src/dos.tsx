@@ -9,7 +9,7 @@ import {
   arachneArmy,
   doomsdayArmy,
   draugMage,
-  MonsterUnit,
+  EnemyUnit,
   ragnarokArmy,
   shadowCastleArmy,
   whoCanIAttack
@@ -27,7 +27,7 @@ import {
 } from '@dnd-kit/core'
 import { arrayMove, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { Link } from 'react-router-dom'
-import { Category, getHPWithBonus, MercUnit, TroopType, Unit, useStackStore } from './stackStore'
+import { BasicStats, getHPWithBonus, TroopType, Unit, useStackStore } from './stackStore'
 
 function Dos() {
   // const mobHealth = useGuardsStore(state => state.mobHealth)
@@ -62,21 +62,37 @@ function Dos() {
   const mobArmy = useStackStore(state => state.mobArmy)
   const setMobArmy = useStackStore(state => state.setMobArmy)
 
-  const setMeleeBonus = useStackStore(state => state.setMeleeBonus)
-  const setRangedBonus = useStackStore(state => state.setRangedBonus)
-  const setMountedBonus = useStackStore(state => state.setMountedBonus)
-  const setScoutBonus = useStackStore(state => state.setScoutBonus)
-  const setSiegeBonus = useStackStore(state => state.setSiegeBonus)
-  const setFlyingBonus = useStackStore(state => state.setFlyingBonus)
-  const setBeastBonus = useStackStore(state => state.setBeastBonus)
-  const setDragonBonus = useStackStore(state => state.setDragonBonus)
-  const setElementalBonus = useStackStore(state => state.setElementalBonus)
-  const setGiantBonus = useStackStore(state => state.setGiantBonus)
+  const setGuardsmanRangedBonus = useStackStore(state => state.setGuardsmanRangedBonus)
+  const setGuardsmanMeleeBonus = useStackStore(state => state.setGuardsmanMeleeBonus)
+  const setGuardsmanMountedBonus = useStackStore(state => state.setGuardsmanMountedBonus)
+  const setGuardsmanFlyingBonus = useStackStore(state => state.setGuardsmanFlyingBonus)
+  const setSpecialistRangedBonus = useStackStore(state => state.setSpecialistRangedBonus)
+  const setSpecialistMeleeBonus = useStackStore(state => state.setSpecialistMeleeBonus)
+  const setSpecialistMountedBonus = useStackStore(state => state.setSpecialistMountedBonus)
+  const setSpecialistFlyingBonus = useStackStore(state => state.setSpecialistFlyingBonus)
+  const setSpecialistScoutBonus = useStackStore(state => state.setSpecialistScoutBonus)
+  const setEngineerSiegeBonus = useStackStore(state => state.setEngineerSiegeBonus)
+  const setElementalRangedBonus = useStackStore(state => state.setElementalRangedBonus)
+  const setElementalMeleeBonus = useStackStore(state => state.setElementalMeleeBonus)
+  const setElementalMountedBonus = useStackStore(state => state.setElementalMountedBonus)
+  const setElementalFlyingBonus = useStackStore(state => state.setElementalFlyingBonus)
+  const setBeastRangedBonus = useStackStore(state => state.setBeastRangedBonus)
+  const setBeastMeleeBonus = useStackStore(state => state.setBeastMeleeBonus)
+  const setBeastMountedBonus = useStackStore(state => state.setBeastMountedBonus)
+  const setBeastFlyingBonus = useStackStore(state => state.setBeastFlyingBonus)
+  const setDragonRangedBonus = useStackStore(state => state.setDragonRangedBonus)
+  const setDragonMeleeBonus = useStackStore(state => state.setDragonMeleeBonus)
+  const setDragonMountedBonus = useStackStore(state => state.setDragonMountedBonus)
+  const setDragonFlyingBonus = useStackStore(state => state.setDragonFlyingBonus)
+  const setGiantRangedBonus = useStackStore(state => state.setGiantRangedBonus)
+  const setGiantMeleeBonus = useStackStore(state => state.setGiantMeleeBonus)
+  const setGiantMountedBonus = useStackStore(state => state.setGiantMountedBonus)
+  const setGiantFlyingBonus = useStackStore(state => state.setGiantFlyingBonus)
   //-------------------
 
   const [selectedEvent, setSelectedEvent] = useState('0')
   const [addUnitMode, setAddUnitMode] = useState('sacrificeHealthLimit')
-  const [windowMode, setWindowMode] = useState('showTargetMonsterInfo')
+  const [windowMode, setWindowMode] = useState('showBonusConfig')
 
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
@@ -220,15 +236,30 @@ function Dos() {
   //   }
   // }
 
-  const calculateUnitsMobKill = (
-    monster: MonsterUnit,
-    unit: Unit | MercUnit | MonsterUnit
-  ): number => {
+  const calculateUnitsMobKill = (monster: EnemyUnit, unit: Unit): number => {
     const monsterHealth = monster.BASEHP
     let soldierStrength = unit.BASESTR
     // TODO: add more combinations
     // mounted vs ranged
-    const otherBonus = bonus[unit.category as Category]?.str ?? 0
+    let stats: BasicStats = { str: 0, hp: 0 } //bonus[unit.group] [unit.category]
+
+    if (unit.group === 'guardsman') {
+      stats = bonus.guardsman[unit.category]
+    } else if (unit.group === 'specialist') {
+      stats = bonus.specialist[unit.category]
+    } else if (unit.group === 'engineer') {
+      stats = bonus.engineer[unit.category]
+    } else if (unit.group === 'elemental') {
+      stats = bonus.elemental[unit.category]
+    } else if (unit.group === 'dragon') {
+      stats = bonus.dragon[unit.category]
+    } else if (unit.group === 'beast') {
+      stats = bonus.beast[unit.category]
+    } else if (unit.group === 'giant') {
+      stats = bonus.giant[unit.category]
+    }
+
+    const otherBonus = stats?.str ?? 0
 
     if (unit.category === 'mounted' && monster.category === 'ranged') {
       //  unit.troop=='rider'
@@ -523,9 +554,10 @@ function Dos() {
             <p>authority {getArmyAuthority()}</p>
             <p>dominance {getArmyDominance()}</p>
           </div>
-          <div style={{ color: 'pink', fontSize: 13 }}>
+          <div className='small' style={{ color: 'pink' }}>
             click (hold for 1 second) drag and drop the card/stacks to arrange it
           </div>
+          <div className='small'>stack with highest health goes first</div>
           <div className='stack-list'>
             <DndContext onDragEnd={handleDrag} sensors={sensors}>
               <SortableContext items={army}>
@@ -538,9 +570,8 @@ function Dos() {
         </div>
 
         <div className='mob-container'>
-          <div className='configbar'>
-            <div>
-              <label>Show Target monster info</label>
+          <div className='radio-group'>
+            <div className='radiobtn'>
               <input
                 type='radio'
                 value='showTargetMonsterInfo'
@@ -549,10 +580,11 @@ function Dos() {
                 onChange={() => {
                   setWindowMode('showTargetMonsterInfo')
                 }}
+                id='monsterinfo'
               />
+              <label htmlFor='monsterinfo'>Show Target monster info</label>
             </div>
-            <div>
-              <label>Show bonus config</label>
+            <div className='radiobtn'>
               <input
                 type='radio'
                 value='showBonusConfig'
@@ -561,7 +593,9 @@ function Dos() {
                 onChange={() => {
                   setWindowMode('showBonusConfig')
                 }}
+                id='bonusconfig'
               />
+              <label htmlFor='bonusconfig'>Show bonus config</label>
             </div>
           </div>
           {windowMode === 'showTargetMonsterInfo' && (
@@ -587,18 +621,21 @@ function Dos() {
               <h4>
                 Strength & Health Bonus config (check <Link to={'/info'}>Info</Link>)
               </h4>
+              <p className='small'>NO need to fill everything, but the stacks you using</p>
+
               <div className='guardsmen'>
+                <p>Guardsman</p>
                 <div className='row'>
                   <span>Melee</span>
                   <div className='field'>
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.melee.str}
+                      value={bonus.guardsman.melee.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setMeleeBonus({ str, hp: bonus.melee.hp })
+                          const str = parseFloat(e.target.value)
+                          setGuardsmanMeleeBonus({ str, hp: bonus.guardsman.melee.hp })
                         }
                       }}
                       required
@@ -608,11 +645,11 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.melee.hp}
+                      value={bonus.guardsman.melee.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setMeleeBonus({ hp, str: bonus.melee.str })
+                          const hp = parseFloat(e.target.value)
+                          setGuardsmanMeleeBonus({ hp, str: bonus.guardsman.melee.str })
                         }
                       }}
                       required
@@ -626,11 +663,11 @@ function Dos() {
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.ranged.str}
+                      value={bonus.guardsman.ranged.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setRangedBonus({ str, hp: bonus.ranged.hp })
+                          const str = parseFloat(e.target.value)
+                          setGuardsmanRangedBonus({ str, hp: bonus.guardsman.ranged.hp })
                         }
                       }}
                       required
@@ -640,11 +677,11 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.ranged.hp}
+                      value={bonus.guardsman.ranged.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setRangedBonus({ hp, str: bonus.ranged.str })
+                          const hp = parseFloat(e.target.value)
+                          setGuardsmanRangedBonus({ hp, str: bonus.guardsman.ranged.str })
                         }
                       }}
                       required
@@ -658,11 +695,11 @@ function Dos() {
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.mounted.str}
+                      value={bonus.guardsman.mounted.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setMountedBonus({ str, hp: bonus.mounted.hp })
+                          const str = parseFloat(e.target.value)
+                          setGuardsmanMountedBonus({ str, hp: bonus.guardsman.mounted.hp })
                         }
                       }}
                       required
@@ -672,11 +709,11 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.mounted.hp}
+                      value={bonus.guardsman.mounted.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setMountedBonus({ hp, str: bonus.mounted.str })
+                          const hp = parseFloat(e.target.value)
+                          setGuardsmanMountedBonus({ hp, str: bonus.guardsman.mounted.str })
                         }
                       }}
                       required
@@ -690,11 +727,11 @@ function Dos() {
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.flying.str}
+                      value={bonus.guardsman.flying.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setFlyingBonus({ str, hp: bonus.flying.hp })
+                          const str = parseFloat(e.target.value)
+                          setGuardsmanFlyingBonus({ str, hp: bonus.guardsman.flying.hp })
                         }
                       }}
                       required
@@ -704,11 +741,11 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.flying.hp}
+                      value={bonus.guardsman.flying.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setFlyingBonus({ hp, str: bonus.flying.str })
+                          const hp = parseFloat(e.target.value)
+                          setGuardsmanFlyingBonus({ hp, str: bonus.guardsman.flying.str })
                         }
                       }}
                       required
@@ -718,17 +755,18 @@ function Dos() {
               </div>
 
               <div className='specialists'>
+                <p>Specialist</p>
                 <div className='row'>
-                  <span>Scout</span>
+                  <span>Melee</span>
                   <div className='field'>
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.scout.str}
+                      value={bonus.specialist.melee.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setScoutBonus({ str, hp: bonus.scout.hp })
+                          const str = parseFloat(e.target.value)
+                          setSpecialistMeleeBonus({ str, hp: bonus.specialist.melee.hp })
                         }
                       }}
                       required
@@ -738,11 +776,139 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.scout.hp}
+                      value={bonus.specialist.melee.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setScoutBonus({ hp, str: bonus.scout.str })
+                          const hp = parseFloat(e.target.value)
+                          setSpecialistMeleeBonus({ hp, str: bonus.specialist.melee.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Ranged</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.specialist.ranged.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setSpecialistRangedBonus({ str, hp: bonus.specialist.ranged.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.specialist.ranged.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setSpecialistRangedBonus({ hp, str: bonus.specialist.ranged.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Mounted</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.specialist.mounted.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setSpecialistMountedBonus({ str, hp: bonus.specialist.mounted.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.specialist.mounted.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setSpecialistMountedBonus({ hp, str: bonus.specialist.mounted.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Flying</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.specialist.flying.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setSpecialistFlyingBonus({ str, hp: bonus.specialist.flying.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.specialist.flying.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setSpecialistFlyingBonus({ hp, str: bonus.specialist.flying.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Scout</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.specialist.scout.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setSpecialistScoutBonus({ str, hp: bonus.specialist.scout.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.specialist.scout.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setSpecialistScoutBonus({ hp, str: bonus.specialist.scout.str })
                         }
                       }}
                       required
@@ -752,17 +918,18 @@ function Dos() {
               </div>
 
               <div className='engineer'>
+                <p>Engineer</p>
                 <div className='row'>
                   <span>Siege</span>
                   <div className='field'>
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.siege.str}
+                      value={bonus.engineer.siege.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setSiegeBonus({ str, hp: bonus.siege.hp })
+                          const str = parseFloat(e.target.value)
+                          setEngineerSiegeBonus({ str, hp: bonus.engineer.siege.hp })
                         }
                       }}
                       required
@@ -772,11 +939,11 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.siege.hp}
+                      value={bonus.engineer.siege.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setSiegeBonus({ hp, str: bonus.siege.str })
+                          const hp = parseFloat(e.target.value)
+                          setEngineerSiegeBonus({ hp, str: bonus.engineer.siege.str })
                         }
                       }}
                       required
@@ -786,17 +953,18 @@ function Dos() {
               </div>
 
               <div className='monsters'>
+                <p>Monster - Elemental</p>
                 <div className='row'>
-                  <span>Beast</span>
+                  <span>Melee</span>
                   <div className='field'>
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.beast.str}
+                      value={bonus.elemental.melee.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setBeastBonus({ str, hp: bonus.beast.hp })
+                          const str = parseFloat(e.target.value)
+                          setElementalMeleeBonus({ str, hp: bonus.elemental.melee.hp })
                         }
                       }}
                       required
@@ -806,11 +974,11 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.beast.hp}
+                      value={bonus.elemental.melee.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setBeastBonus({ hp, str: bonus.beast.str })
+                          const hp = parseFloat(e.target.value)
+                          setElementalMeleeBonus({ hp, str: bonus.elemental.melee.str })
                         }
                       }}
                       required
@@ -819,16 +987,16 @@ function Dos() {
                 </div>
 
                 <div className='row'>
-                  <span>Dragon</span>
+                  <span>Ranged</span>
                   <div className='field'>
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.dragon.str}
+                      value={bonus.elemental.ranged.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setDragonBonus({ str, hp: bonus.dragon.hp })
+                          const str = parseFloat(e.target.value)
+                          setElementalRangedBonus({ str, hp: bonus.elemental.ranged.hp })
                         }
                       }}
                       required
@@ -838,11 +1006,11 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.dragon.hp}
+                      value={bonus.elemental.ranged.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setDragonBonus({ hp, str: bonus.dragon.str })
+                          const hp = parseFloat(e.target.value)
+                          setElementalRangedBonus({ hp, str: bonus.elemental.ranged.str })
                         }
                       }}
                       required
@@ -851,16 +1019,16 @@ function Dos() {
                 </div>
 
                 <div className='row'>
-                  <span>Elemental</span>
+                  <span>Mounted</span>
                   <div className='field'>
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.elemental.str}
+                      value={bonus.elemental.mounted.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setElementalBonus({ str, hp: bonus.elemental.hp })
+                          const str = parseFloat(e.target.value)
+                          setElementalMountedBonus({ str, hp: bonus.elemental.mounted.hp })
                         }
                       }}
                       required
@@ -870,11 +1038,11 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.elemental.hp}
+                      value={bonus.elemental.mounted.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setElementalBonus({ hp, str: bonus.elemental.str })
+                          const hp = parseFloat(e.target.value)
+                          setElementalMountedBonus({ hp, str: bonus.elemental.mounted.str })
                         }
                       }}
                       required
@@ -883,16 +1051,16 @@ function Dos() {
                 </div>
 
                 <div className='row'>
-                  <span>Giant</span>
+                  <span>Flying</span>
                   <div className='field'>
                     <label>strength</label>
                     <input
                       type='number'
-                      value={bonus.giant.str}
+                      value={bonus.elemental.flying.str}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const str = parseInt(e.target.value)
-                          setGiantBonus({ str, hp: bonus.giant.hp })
+                          const str = parseFloat(e.target.value)
+                          setElementalFlyingBonus({ str, hp: bonus.elemental.flying.hp })
                         }
                       }}
                       required
@@ -902,11 +1070,404 @@ function Dos() {
                     <label>health</label>
                     <input
                       type='number'
-                      value={bonus.giant.hp}
+                      value={bonus.elemental.flying.hp}
                       onChange={e => {
                         if (e.target.value.trim() !== '') {
-                          const hp = parseInt(e.target.value)
-                          setGiantBonus({ hp, str: bonus.giant.str })
+                          const hp = parseFloat(e.target.value)
+                          setElementalFlyingBonus({ hp, str: bonus.elemental.flying.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className='monsters'>
+                <p>Monster - Beast</p>
+                <div className='row'>
+                  <span>Melee</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.melee.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setBeastMeleeBonus({ str, hp: bonus.beast.melee.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.melee.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setBeastMeleeBonus({ hp, str: bonus.beast.melee.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Ranged</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.ranged.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setBeastRangedBonus({ str, hp: bonus.beast.ranged.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.ranged.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setBeastRangedBonus({ hp, str: bonus.beast.ranged.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Mounted</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.mounted.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setBeastMountedBonus({ str, hp: bonus.beast.mounted.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.mounted.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setBeastMountedBonus({ hp, str: bonus.beast.mounted.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Flying</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.flying.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setBeastFlyingBonus({ str, hp: bonus.beast.flying.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.beast.flying.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setBeastFlyingBonus({ hp, str: bonus.beast.flying.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className='monsters'>
+                <p>Monster - Dragon</p>
+                <div className='row'>
+                  <span>Melee</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.melee.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setDragonMeleeBonus({ str, hp: bonus.dragon.melee.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.melee.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setDragonMeleeBonus({ hp, str: bonus.dragon.melee.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Ranged</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.ranged.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setDragonRangedBonus({ str, hp: bonus.dragon.ranged.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.ranged.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setDragonRangedBonus({ hp, str: bonus.dragon.ranged.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Mounted</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.mounted.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setDragonMountedBonus({ str, hp: bonus.dragon.mounted.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.mounted.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setDragonMountedBonus({ hp, str: bonus.dragon.mounted.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Flying</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.flying.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setDragonFlyingBonus({ str, hp: bonus.dragon.flying.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.dragon.flying.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setDragonFlyingBonus({ hp, str: bonus.dragon.flying.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className='monsters'>
+                <p>Monster - Giant</p>
+                <div className='row'>
+                  <span>Melee</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.melee.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setGiantMeleeBonus({ str, hp: bonus.giant.melee.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.melee.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setGiantMeleeBonus({ hp, str: bonus.giant.melee.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Ranged</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.ranged.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setGiantRangedBonus({ str, hp: bonus.giant.ranged.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.ranged.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setGiantRangedBonus({ hp, str: bonus.giant.ranged.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Mounted</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.mounted.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setGiantMountedBonus({ str, hp: bonus.giant.mounted.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.mounted.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setGiantMountedBonus({ hp, str: bonus.giant.mounted.str })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className='row'>
+                  <span>Flying</span>
+                  <div className='field'>
+                    <label>strength</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.flying.str}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const str = parseFloat(e.target.value)
+                          setGiantFlyingBonus({ str, hp: bonus.giant.flying.hp })
+                        }
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className='field'>
+                    <label>health</label>
+                    <input
+                      type='number'
+                      value={bonus.giant.flying.hp}
+                      onChange={e => {
+                        if (e.target.value.trim() !== '') {
+                          const hp = parseFloat(e.target.value)
+                          setGiantFlyingBonus({ hp, str: bonus.giant.flying.str })
                         }
                       }}
                       required

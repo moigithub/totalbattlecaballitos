@@ -15,6 +15,7 @@ import {
 } from './soldiers'
 import classNames from 'classnames'
 import { doomsdayNecromancer, draugMage, jacksReturnScarecrow, overseer } from './monsters'
+import { Unit } from './stackStore'
 
 function Uno() {
   const bonusHP = useGuardsStore(state => state.bonusHP)
@@ -151,7 +152,7 @@ function Uno() {
     const selectedSacrifice = e.target.value
     setSelectedSacrifice(selectedSacrifice)
 
-    let Sacrifice = SwordmanS1 // { hp: 150, str: 50, leadership: 1, initiative: 10 }
+    let Sacrifice: Unit = SwordmanS1 // { hp: 150, str: 50, leadership: 1, initiative: 10 }
 
     if (selectedSacrifice === '0') {
       Sacrifice = SwordmanS1
@@ -973,7 +974,9 @@ function Uno() {
         <div className='group'>
           <span>Health per unit: </span>{' '}
           <input type='number' value={mobHealth} onChange={changeMobHealth} required />
-          <span className='small'>&lt;-- Change this value if you need a custom calculation</span>
+          <span className='small margin-y'>
+            &lt;-- Change this value if you need a custom calculation
+          </span>
         </div>
       </div>
       <div className='container'>
@@ -1111,7 +1114,7 @@ function Uno() {
               {showHealthData && <td>{rider1.hp.toFixed(0)}</td>}
               <td>{rider1.minCount}</td>
               <td className='bright'>
-                {rider1.maxCount} <span className='small'>(x{rider1.LEADERSHIP})</span>
+                {rider1.maxCount} <span className='small margin-y'>(x{rider1.LEADERSHIP})</span>
               </td>
               <td>
                 {useG1Rider && (
@@ -1151,7 +1154,7 @@ function Uno() {
               {showHealthData && <td>{rider2.hp.toFixed(0)}</td>}
               <td>{rider2.minCount}</td>
               <td className='bright'>
-                {rider2.maxCount} <span className='small'>(x{rider2.LEADERSHIP})</span>
+                {rider2.maxCount} <span className='small margin-y'>(x{rider2.LEADERSHIP})</span>
               </td>
               <td>
                 {' '}
@@ -1192,7 +1195,7 @@ function Uno() {
               {showHealthData && <td>{rider3.hp.toFixed(0)}</td>}
               <td>{rider3.minCount.toFixed(0)}</td>
               <td className='bright'>
-                {rider3.maxCount} <span className='small'>(x{rider3.LEADERSHIP})</span>
+                {rider3.maxCount} <span className='small margin-y'>(x{rider3.LEADERSHIP})</span>
               </td>
               <td>
                 {useG3Rider && (
@@ -1232,7 +1235,7 @@ function Uno() {
               {showHealthData && <td>{rider4.hp.toFixed(0)}</td>}
               <td>{rider4.minCount.toFixed(0)}</td>
               <td className='bright'>
-                {rider4.maxCount} <span className='small'>(x{rider4.LEADERSHIP})</span>
+                {rider4.maxCount} <span className='small margin-y'>(x{rider4.LEADERSHIP})</span>
               </td>
               <td>
                 {useG4Rider && (
@@ -1272,7 +1275,7 @@ function Uno() {
               {showHealthData && <td>{rider5.hp.toFixed(0)}</td>}
               <td>{rider5.minCount.toFixed(0)}</td>
               <td className='bright'>
-                {rider5.maxCount} <span className='small'>(x{rider5.LEADERSHIP})</span>
+                {rider5.maxCount} <span className='small margin-y'>(x{rider5.LEADERSHIP})</span>
               </td>
               <td>
                 {useG5Rider && (

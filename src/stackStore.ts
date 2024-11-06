@@ -1,27 +1,58 @@
 import { create, StateCreator } from 'zustand'
 import { v4 as uuidv4 } from 'uuid'
-import { MobStack, MonsterUnit, TIPO } from './monsters'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { MobStack, TIPO } from './monsters'
+import { persist } from 'zustand/middleware'
 
-interface BasicStats {
+export interface BasicStats {
   str: number
   hp: number
 }
 
-interface Bonus {
+interface UnitStats {
   ranged: BasicStats
   melee: BasicStats
   mounted: BasicStats
-  scout: BasicStats
-  siege: BasicStats
-  elemental: BasicStats
-  dragon: BasicStats
-  beast: BasicStats
-  giant: BasicStats
   flying: BasicStats
+  // [key: string]: BasicStats
 }
 
-export type TroopType = 'archer' | 'spearman' | 'rider' | 'spy' | 'swordsman' | 'catapult'
+interface Engineer {
+  siege: BasicStats
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface Guardsman extends UnitStats {}
+interface Specialist extends UnitStats {
+  scout: BasicStats
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface Mercs extends UnitStats {
+  epicHunter: BasicStats
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+interface Monster extends UnitStats {}
+
+interface Bonus {
+  guardsman: Guardsman
+  specialist: Specialist
+  engineer: Engineer
+  elemental: Monster
+  dragon: Monster
+  beast: Monster
+  giant: Monster
+  // [key: string]: Guardsman | Specialist | Engineer | Monster
+}
+
+export type TroopType =
+  | 'monster'
+  | 'archer'
+  | 'spearman'
+  | 'rider'
+  | 'spy'
+  | 'swordsman'
+  | 'catapult'
 
 export type Category =
   | 'mounted'
@@ -31,19 +62,24 @@ export type Category =
   | 'flying'
   // | 'fortification'
   | 'siege'
+
+export type Group =
+  | 'guardsman'
+  | 'specialist'
+  | 'engineer'
   | 'elemental'
   | 'beast'
   | 'dragon'
   | 'giant'
 
-export interface Unit {
+interface BasicUnit {
   tipo: TIPO
   name: string
   BASEHP: number
   BASESTR: number
-  LEADERSHIP: number
-  AUTHORITY: number
-  DOMINANCE: number
+  // LEADERSHIP: number
+  // AUTHORITY: number
+  // DOMINANCE: number
   INITIATIVE: number
   vsRangedPercent: number
   vsSiegePercent: number
@@ -54,33 +90,50 @@ export interface Unit {
   vsMeleePercent: number
   vsFortificationsPercent: number
   vsGiants: number
-  troop: TroopType
-  category: Category
+  troop: string //TroopType
+  // category: string //Category
+  // group: string // Group
   level: string
 }
-export interface MercUnit {
-  tipo: TIPO
-  name: string
-  BASEHP: number
-  BASESTR: number
+
+interface HumanUnit extends BasicUnit {
   LEADERSHIP: number
+  DOMINANCE: 0
+  AUTHORITY: 0
+}
+
+export interface GuardsmanUnit extends HumanUnit {
+  group: 'guardsman'
+  category: keyof Guardsman
+}
+export interface SpecialistUnit extends HumanUnit {
+  group: 'specialist'
+  category: keyof Specialist
+}
+
+export interface EngineerUnit extends HumanUnit {
+  group: 'engineer'
+  category: keyof Engineer
+}
+
+export interface MercUnit extends BasicUnit {
   AUTHORITY: number
-  DOMINANCE: number
-  INITIATIVE: number
-  vsRangedPercent: number
-  vsSiegePercent: number
-  vsBeastPercent: number
-  vsHumanPercent: number
-  vsMountedPercent: number
-  vsFlyingPercent: number
-  vsMeleePercent: number
-  vsFortificationsPercent: number
+  LEADERSHIP: 0
+  DOMINANCE: 0
   vsEpicMonster: number
-  vsGiants: number
-  troop: string
-  category: string
-  level: string
+  group: 'merc'
+  category: keyof Mercs
 }
+
+export interface MonsterUnit extends BasicUnit {
+  DOMINANCE: number
+  AUTHORITY: 0
+  LEADERSHIP: 0
+  group: 'elemental' | 'dragon' | 'beast' | 'giant'
+  category: keyof Monster
+}
+
+export type Unit = GuardsmanUnit | SpecialistUnit | EngineerUnit | MonsterUnit | MercUnit
 
 export interface Stack {
   id: string // whichever at first position will be used as sacrifice, increases 1 by 1, ignoring lockMinSetup
@@ -90,7 +143,7 @@ export interface Stack {
   leadership: number
   authority: number
   dominance: number
-  unit: Unit | MercUnit | MonsterUnit
+  unit: Unit
   units: number
   minSetup: number // used to calculate how many units are needed to kill one monster
   lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount
@@ -128,22 +181,57 @@ interface StackStore {
   getStackHealth: (id: string) => number
   getStackLeadership: (id: string) => number
   toggleLockMin: (id: string) => void
-
-  setMeleeBonus: (bonus: BasicStats) => void
-  setRangedBonus: (bonus: BasicStats) => void
-  setMountedBonus: (bonus: BasicStats) => void
-  setSiegeBonus: (bonus: BasicStats) => void
-  setScoutBonus: (bonus: BasicStats) => void
-  setFlyingBonus: (bonus: BasicStats) => void
-  setElementalBonus: (bonus: BasicStats) => void
-  setBeastBonus: (bonus: BasicStats) => void
-  setDragonBonus: (bonus: BasicStats) => void
-  setGiantBonus: (bonus: BasicStats) => void
+  setGuardsmanRangedBonus: (bonus: BasicStats) => void
+  setGuardsmanMeleeBonus: (bonus: BasicStats) => void
+  setGuardsmanMountedBonus: (bonus: BasicStats) => void
+  setGuardsmanFlyingBonus: (bonus: BasicStats) => void
+  setSpecialistRangedBonus: (bonus: BasicStats) => void
+  setSpecialistMeleeBonus: (bonus: BasicStats) => void
+  setSpecialistMountedBonus: (bonus: BasicStats) => void
+  setSpecialistFlyingBonus: (bonus: BasicStats) => void
+  setSpecialistScoutBonus: (bonus: BasicStats) => void
+  setEngineerSiegeBonus: (bonus: BasicStats) => void
+  setElementalRangedBonus: (bonus: BasicStats) => void
+  setElementalMeleeBonus: (bonus: BasicStats) => void
+  setElementalMountedBonus: (bonus: BasicStats) => void
+  setElementalFlyingBonus: (bonus: BasicStats) => void
+  setBeastRangedBonus: (bonus: BasicStats) => void
+  setBeastMeleeBonus: (bonus: BasicStats) => void
+  setBeastMountedBonus: (bonus: BasicStats) => void
+  setBeastFlyingBonus: (bonus: BasicStats) => void
+  setDragonRangedBonus: (bonus: BasicStats) => void
+  setDragonMeleeBonus: (bonus: BasicStats) => void
+  setDragonMountedBonus: (bonus: BasicStats) => void
+  setDragonFlyingBonus: (bonus: BasicStats) => void
+  setGiantRangedBonus: (bonus: BasicStats) => void
+  setGiantMeleeBonus: (bonus: BasicStats) => void
+  setGiantMountedBonus: (bonus: BasicStats) => void
+  setGiantFlyingBonus: (bonus: BasicStats) => void
 }
 
-export const getHPWithBonus = (unit: Unit | MercUnit | MonsterUnit, bonus: Bonus) => {
+export const getHPWithBonus = (unit: Unit, bonus: Bonus) => {
   //const hp = bonus[unit.troop]? 0
-  const bonusHP = bonus[unit.category as Category]?.hp ?? 0
+
+  // let stats: BasicStats = { str: 0, hp: 0 }
+  let stats: BasicStats = { str: 0, hp: 0 } //bonus[unit.group] [unit.category]
+
+  if (unit.group === 'guardsman') {
+    stats = bonus.guardsman[unit.category]
+  } else if (unit.group === 'specialist') {
+    stats = bonus.specialist[unit.category]
+  } else if (unit.group === 'engineer') {
+    stats = bonus.engineer[unit.category]
+  } else if (unit.group === 'elemental') {
+    stats = bonus.elemental[unit.category]
+  } else if (unit.group === 'dragon') {
+    stats = bonus.dragon[unit.category]
+  } else if (unit.group === 'beast') {
+    stats = bonus.beast[unit.category]
+  } else if (unit.group === 'giant') {
+    stats = bonus.giant[unit.category]
+  }
+  //  = group[unit.category as Category]
+  const bonusHP = stats?.hp ?? 0
   const bonusHPPercent = (unit.BASEHP * bonusHP) / 100
   const totalHPPerUnit = unit.BASEHP + bonusHPPercent
 
@@ -167,49 +255,126 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   mobArmy: [],
   army: [],
   bonus: {
-    // guardsmen
-    ranged: {
-      str: 0,
-      hp: 0
-    },
-    melee: {
-      str: 0,
-      hp: 0
-    },
-    mounted: {
-      str: 0,
-      hp: 0
+    guardsman: {
+      ranged: {
+        str: 0,
+        hp: 0
+      },
+      melee: {
+        str: 0,
+        hp: 0
+      },
+      mounted: {
+        str: 0,
+        hp: 0
+      },
+      flying: {
+        str: 0,
+        hp: 0
+      }
     },
     // Engineer corps
-    siege: {
-      str: 0,
-      hp: 0
+    engineer: {
+      siege: {
+        str: 0,
+        hp: 0
+      }
+    },
+    specialist: {
+      scout: {
+        str: 0,
+        hp: 0
+      },
+      ranged: {
+        str: 0,
+        hp: 0
+      },
+      melee: {
+        str: 0,
+        hp: 0
+      },
+      mounted: {
+        str: 0,
+        hp: 0
+      },
+      flying: {
+        str: 0,
+        hp: 0
+      }
     },
 
-    scout: {
-      str: 0,
-      hp: 0
-    },
-    flying: {
-      str: 0,
-      hp: 0
-    },
     // monsters
     elemental: {
-      str: 0,
-      hp: 0
+      ranged: {
+        str: 0,
+        hp: 0
+      },
+      melee: {
+        str: 0,
+        hp: 0
+      },
+      mounted: {
+        str: 0,
+        hp: 0
+      },
+      flying: {
+        str: 0,
+        hp: 0
+      }
     },
     beast: {
-      str: 0,
-      hp: 0
+      ranged: {
+        str: 0,
+        hp: 0
+      },
+      melee: {
+        str: 0,
+        hp: 0
+      },
+      mounted: {
+        str: 0,
+        hp: 0
+      },
+      flying: {
+        str: 0,
+        hp: 0
+      }
     },
     dragon: {
-      str: 0,
-      hp: 0
+      ranged: {
+        str: 0,
+        hp: 0
+      },
+      melee: {
+        str: 0,
+        hp: 0
+      },
+      mounted: {
+        str: 0,
+        hp: 0
+      },
+      flying: {
+        str: 0,
+        hp: 0
+      }
     },
     giant: {
-      str: 0,
-      hp: 0
+      ranged: {
+        str: 0,
+        hp: 0
+      },
+      melee: {
+        str: 0,
+        hp: 0
+      },
+      mounted: {
+        str: 0,
+        hp: 0
+      },
+      flying: {
+        str: 0,
+        hp: 0
+      }
     }
   },
   setMobArmy: (data: MobStack[]) => {
@@ -369,8 +534,27 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 
     if (stack) {
       const stackUnits = stack.units
+      const unit = stack.unit
 
-      const otherBonus = bonus[stack.unit.category as Category]?.str ?? 0
+      let stats: BasicStats = { str: 0, hp: 0 } //bonus[unit.group] [unit.category]
+
+      if (unit.group === 'guardsman') {
+        stats = bonus.guardsman[unit.category]
+      } else if (unit.group === 'specialist') {
+        stats = bonus.specialist[unit.category]
+      } else if (unit.group === 'engineer') {
+        stats = bonus.engineer[unit.category]
+      } else if (unit.group === 'elemental') {
+        stats = bonus.elemental[unit.category]
+      } else if (unit.group === 'dragon') {
+        stats = bonus.dragon[unit.category]
+      } else if (unit.group === 'beast') {
+        stats = bonus.beast[unit.category]
+      } else if (unit.group === 'giant') {
+        stats = bonus.giant[unit.category]
+      }
+
+      const otherBonus = stats?.str ?? 0
       let percent = 0
 
       if (stack.unit.category === 'mounted') {
@@ -465,35 +649,117 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     }))
   },
 
-  setRangedBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, ranged: bonus } }))
+  setGuardsmanRangedBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, guardsman: { ...state.bonus.guardsman, ranged: bonus } }
+    }))
   },
-  setMeleeBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, melee: bonus } }))
+  setGuardsmanMeleeBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, guardsman: { ...state.bonus.guardsman, melee: bonus } }
+    }))
   },
-  setMountedBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, mounted: bonus } }))
+  setGuardsmanMountedBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, guardsman: { ...state.bonus.guardsman, mounted: bonus } }
+    }))
   },
-  setSiegeBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, siege: bonus } }))
+  setGuardsmanFlyingBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, guardsman: { ...state.bonus.guardsman, flying: bonus } }
+    }))
   },
-  setScoutBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, scout: bonus } }))
+
+  setSpecialistRangedBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, specialist: { ...state.bonus.specialist, ranged: bonus } }
+    }))
   },
-  setFlyingBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, flying: bonus } }))
+  setSpecialistMeleeBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, specialist: { ...state.bonus.specialist, melee: bonus } }
+    }))
   },
-  setElementalBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, elemental: bonus } }))
+  setSpecialistMountedBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, specialist: { ...state.bonus.specialist, mounted: bonus } }
+    }))
   },
-  setBeastBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, beast: bonus } }))
+  setSpecialistFlyingBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, specialist: { ...state.bonus.specialist, flying: bonus } }
+    }))
   },
-  setDragonBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, dragon: bonus } }))
+  setSpecialistScoutBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, specialist: { ...state.bonus.specialist, scout: bonus } }
+    }))
   },
-  setGiantBonus: (bonus: BasicStats) => {
-    set(state => ({ bonus: { ...state.bonus, giant: bonus } }))
+
+  setEngineerSiegeBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, engineer: { ...state.bonus.engineer, siege: bonus } }
+    }))
+  },
+
+  setElementalRangedBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, elemental: { ...state.bonus.elemental, ranged: bonus } }
+    }))
+  },
+  setElementalMeleeBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, elemental: { ...state.bonus.elemental, melee: bonus } }
+    }))
+  },
+  setElementalMountedBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, elemental: { ...state.bonus.elemental, mounted: bonus } }
+    }))
+  },
+  setElementalFlyingBonus: (bonus: BasicStats) => {
+    set(state => ({
+      bonus: { ...state.bonus, elemental: { ...state.bonus.elemental, flying: bonus } }
+    }))
+  },
+
+  setBeastRangedBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, beast: { ...state.bonus.beast, ranged: bonus } } }))
+  },
+  setBeastMeleeBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, beast: { ...state.bonus.beast, melee: bonus } } }))
+  },
+  setBeastMountedBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, beast: { ...state.bonus.beast, mounted: bonus } } }))
+  },
+  setBeastFlyingBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, beast: { ...state.bonus.beast, flying: bonus } } }))
+  },
+
+  setDragonRangedBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, dragon: { ...state.bonus.dragon, ranged: bonus } } }))
+  },
+  setDragonMeleeBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, dragon: { ...state.bonus.dragon, melee: bonus } } }))
+  },
+  setDragonMountedBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, dragon: { ...state.bonus.dragon, mounted: bonus } } }))
+  },
+  setDragonFlyingBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, dragon: { ...state.bonus.dragon, flying: bonus } } }))
+  },
+
+  setGiantRangedBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, giant: { ...state.bonus.giant, ranged: bonus } } }))
+  },
+  setGiantMeleeBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, giant: { ...state.bonus.giant, melee: bonus } } }))
+  },
+  setGiantMountedBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, giant: { ...state.bonus.giant, mounted: bonus } } }))
+  },
+  setGiantFlyingBonus: (bonus: BasicStats) => {
+    set(state => ({ bonus: { ...state.bonus, giant: { ...state.bonus.giant, flying: bonus } } }))
   }
 })
 
