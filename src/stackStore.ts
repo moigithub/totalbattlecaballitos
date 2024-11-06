@@ -763,4 +763,6 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   }
 })
 
-export const useStackStore = create<StackStore>()(persist(stackSlice, { name: 'stackstore' }))
+export const useStackStore = create<StackStore>()(
+  persist(stackSlice, { name: 'stackstore', version: 1 })
+)
