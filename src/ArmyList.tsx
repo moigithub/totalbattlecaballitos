@@ -36,10 +36,12 @@ import {
   SwordmanS5,
   waterElemental
 } from './soldiers'
-import { Stack, useStackStore } from './stackStore'
+import { useStackStore } from './stackStore'
+import { Stack } from './types'
 
 export const ArmyList = () => {
   const addStack = useStackStore(state => state.addStack)
+  const setArmy = useStackStore(state => state.setArmy)
   // const bonus = useStackStore(state => state.bonus)
 
   const addTroops = (type: string) => {
@@ -147,7 +149,17 @@ export const ArmyList = () => {
 
   return (
     <div className='army-container'>
-      <h2>Army</h2>
+      <div className='army-header'>
+        <h2>Army</h2>
+        <button
+          className='btn-clear-army'
+          onClick={() => {
+            setArmy([])
+          }}
+        >
+          Clear All
+        </button>
+      </div>
       <div className='army-list'>
         <div className='guardsmen'>
           <p className='group-title'>Spearman</p>
