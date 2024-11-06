@@ -18,14 +18,18 @@ import { ArmyList } from './ArmyList'
 import { Card } from './Card'
 import {
   DndContext,
-  DragEndEvent,
-  KeyboardSensor,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors
+  DragEndEvent
+  // KeyboardSensor,
+  // MouseSensor,
+  // TouchSensor,
+  // useSensor,
+  // useSensors
 } from '@dnd-kit/core'
-import { arrayMove, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
+import {
+  arrayMove,
+  SortableContext
+  // sortableKeyboardCoordinates
+} from '@dnd-kit/sortable'
 import { Link } from 'react-router-dom'
 import { getHPWithBonus, getStats, useStackStore } from './stackStore'
 import { TroopType, Unit } from './types'
@@ -102,23 +106,23 @@ function Dos() {
   //     tolerance: 5,
   //   },
   // });
-  const sensors = useSensors(
-    useSensor(MouseSensor, {
-      activationConstraint: { delay: 20, tolerance: 3, distance: 8 }
-    }),
-    useSensor(TouchSensor, {
-      activationConstraint: {
-        delay: 20,
-        tolerance: 3,
-        distance: 8
-      }
-    }),
-    useSensor(KeyboardSensor, {
-      // Disable smooth scrolling in Cypress automated tests
-      scrollBehavior: 'Cypress' in window ? 'auto' : undefined,
-      coordinateGetter: sortableKeyboardCoordinates
-    })
-  )
+  // const sensors = useSensors(
+  //   useSensor(MouseSensor, {
+  //     activationConstraint: { delay: 20, tolerance: 3, distance: 8 }
+  //   }),
+  //   useSensor(TouchSensor, {
+  //     activationConstraint: {
+  //       delay: 20,
+  //       tolerance: 3,
+  //       distance: 8
+  //     }
+  //   }),
+  //   useSensor(KeyboardSensor, {
+  //     // Disable smooth scrolling in Cypress automated tests
+  //     scrollBehavior: 'Cypress' in window ? 'auto' : undefined,
+  //     coordinateGetter: sortableKeyboardCoordinates
+  //   })
+  // )
 
   useEffect(() => {
     let army = doomsdayArmy
