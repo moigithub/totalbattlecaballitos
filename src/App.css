@@ -124,10 +124,10 @@ table th {
 .stack-card {
   display: grid;
   grid-template-areas:
-    'units name   name     name       health   action delete'
-    'units limit  strength leadership minSetup config reset'
-    'units atk    atk      atk        atk      atk    atk';
-  /* 'units id     id       id         id       id     id'; */
+    'units name      name       action       delete'
+    'units atk       atk        leadership   reset'
+    'units health    strength   config       minSetup';
+  /* 'units id       id      id         id          id          id'; */
 
   width: 450px;
   border: 1px solid grey;

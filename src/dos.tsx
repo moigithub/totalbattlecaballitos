@@ -608,7 +608,7 @@ function Dos() {
             />
           </div>
           <div>
-            <label>Previous stack health limit</label>
+            <label>Previous stack health limit/Decrement</label>
             <input
               type='radio'
               value='previousStackHealthLimit'
@@ -624,13 +624,6 @@ function Dos() {
         <button className='gobtn' onClick={calcHP}>
           CALCULATE
         </button>
-
-        <div>
-          <p>TO-DO:</p>
-          <ul>
-            <li>fix min setup value</li>
-          </ul>
-        </div>
       </div>
 
       {/* ---------------------- */}
@@ -652,8 +645,8 @@ function Dos() {
           <div className='stack-list'>
             <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
               <SortableContext items={army}>
-                {army.map(stack => {
-                  return <Card stack={stack} key={stack.id} />
+                {army.map((stack, index) => {
+                  return <Card stack={stack} key={stack.id} isFirst={index === 0} />
                 })}
               </SortableContext>
             </DndContext>
@@ -718,7 +711,8 @@ function Dos() {
                 on the Battle Report (BR)
               </p>
               <p className='small'>
-                probably the easier one to use would be the BR one, else the stack order might vary
+                probably the easier one to use would be the BR one, otherwise the stack order might
+                vary
               </p>
               <div className='guardsmen'>
                 <p>Guardsman</p>

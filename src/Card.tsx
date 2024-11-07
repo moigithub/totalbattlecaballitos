@@ -4,7 +4,7 @@ import { draugMage, whoCanIAttack } from './monsters'
 import { useStackStore } from './stackStore'
 import { Stack } from './types'
 
-export const Card = ({ stack }: { stack: Stack }) => {
+export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => {
   // const army = useStackStore(state => state.army)
   // const setArmy = useStackStore(state => state.setArmy)
   // const addArmy = useStackStore(state => state.addArmy)
@@ -18,6 +18,7 @@ export const Card = ({ stack }: { stack: Stack }) => {
   const toggleLockMin = useStackStore(state => state.toggleLockMin)
   const addUnits = useStackStore(state => state.addUnits)
   const removeUnits = useStackStore(state => state.removeUnits)
+  const reduceSacrificeUnits = useStackStore(state => state.reduceSacrificeUnits)
   const getStackHealth = useStackStore(state => state.getStackHealth)
   const getStackStrength = useStackStore(state => state.getStackStrength)
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stack.id })
@@ -43,7 +44,7 @@ export const Card = ({ stack }: { stack: Stack }) => {
       {stack.unit.tipo === 'monster' && <p className='stack-leadership'>Domi {stack.dominance}</p>}
       {stack.unit.tipo === 'merc' && <p className='stack-leadership'>Auth {stack.authority}</p>}
       <p className='stack-minSetup'>Min {stack.minSetup}</p>
-      <p className='stack-limit'>Limit {stack.limit}</p>
+      {/* <p className='stack-limit'>Limit {stack.limit}</p> */}
       <div className='stack-action'>
         <button
           className='action-btn'
@@ -62,17 +63,32 @@ export const Card = ({ stack }: { stack: Stack }) => {
           -
         </button>
       </div>
-      <div className='stack-config'>
-        <label>lock Min</label>
+      {!isFirst && (
+        <div className='stack-config'>
+          <label>lock Min</label>
 
-        <input
-          type='checkbox'
-          checked={stack.lockMinSetup}
-          onChange={() => {
-            toggleLockMin(stack.id!)
-          }}
-        />
-      </div>
+          <input
+            type='checkbox'
+            checked={stack.lockMinSetup}
+            onChange={() => {
+              toggleLockMin(stack.id!)
+            }}
+          />
+        </div>
+      )}
+      {isFirst && (
+        <div className='stack-config'>
+          <button
+            className='action-btn'
+            onClick={() => {
+              reduceSacrificeUnits()
+            }}
+          >
+            reduce sacrifices
+          </button>
+        </div>
+      )}
+
       <div className='stack-delete'>
         <button className='remove-btn' onClick={() => removeStack(stack.id!)}>
           X
@@ -84,12 +100,13 @@ export const Card = ({ stack }: { stack: Stack }) => {
         </button>
       </div>
       <div className='stack-attack-info' style={{ color: 'gray', fontSize: 14 }}>
-        i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit)}</span> basehp{' '}
-        {stack.unit.BASEHP}
+        i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit)}</span>
+        {/*basehp{' '}
+         {stack.unit.BASEHP}
         {' * '}
         {stack.units}
         {' = '}
-        {stack.units * stack.unit.BASEHP}
+        {stack.units * stack.unit.BASEHP} */}
       </div>
       {/* <span className='stack-id tiny'>(id.{stack.id})</span> */}
     </div>

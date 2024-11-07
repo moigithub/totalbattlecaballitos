@@ -30,6 +30,7 @@ interface StackStore {
   updateMinSetup: (id: string, minSetup: number) => void
   addUnits: (id: string) => void
   removeUnits: (id: string) => void
+  reduceSacrificeUnits: () => void
   fixStackUnits: (id: string, maxHealth: number) => void
   getStackStrength: (id: string, against: string) => number
   getStackHealth: (id: string) => number
@@ -361,6 +362,35 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
+  reduceSacrificeUnits: () => {
+    if (get().army.length < 2) return
+
+    const firstStack = get().army[0]
+
+    const secondStack = get().army[1]
+    const secondStackUnits = secondStack.units
+    const totalHPPerUnit = getHPWithBonus(secondStack.unit, get().bonus)
+    const secondStackHealth = totalHPPerUnit * secondStackUnits
+
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === firstStack.id) {
+          // reduce the units amount, so the total stack health is a bit higher than the second stack
+          // so send less sacrifices, but enough to be first position
+          let stackUnits = stack.units
+
+          const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
+          let stackHealth = totalHPPerUnit * stackUnits
+          while (stackHealth >= secondStackHealth && stackUnits > 0) {
+            stackUnits = stackUnits - 1
+            stackHealth = totalHPPerUnit * stackUnits
+          }
+          return { ...stack, units: stackUnits + 1 }
+        } else return stack
+      })
+    }))
+  },
+
   fixStackUnits: (id: string, maxHealth: number) => {
     set(state => ({
       army: state.army.map(stack => {
