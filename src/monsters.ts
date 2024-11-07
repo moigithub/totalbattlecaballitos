@@ -6,6 +6,7 @@ import { Category, MercUnit, Unit } from './types'
 export type MonsterType = 'jormungandr' | 'swarm' | 'ancient' | 'guardsman' | 'demon' | 'monster'
 export type MonsterGroup = 'epic'
 export type TIPO = 'monster' | 'merc' | 'army'
+export type MonsterRace = 'beast' | 'giant' | 'elemental' | 'dragon'
 
 export interface EnemyUnit {
   tipo: TIPO
@@ -23,12 +24,13 @@ export interface EnemyUnit {
   vsMountedPercent: number
   vsFlyingPercent: number
   vsMeleePercent: number
-  vsGiants: number
   vsFortificationsPercent: number
+  vsGiantPercent: number
   vsEpicMonster: number
   troop: MonsterType
-  category: Category
+  race: MonsterRace
   group: MonsterGroup //| 'epic'
+  category: Category
   level: string
 }
 
@@ -58,9 +60,10 @@ export const draugMage: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'jormungandr',
   category: 'ranged',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -83,9 +86,10 @@ const jormungandr: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'jormungandr',
   category: 'melee',
+  race: 'beast',
   group: 'epic',
   level: 'VI'
 }
@@ -108,9 +112,10 @@ const valkyrie: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'jormungandr',
   category: 'mounted',
+  race: 'beast',
   group: 'epic',
   level: 'VI'
 }
@@ -133,9 +138,10 @@ export const darkElf: EnemyUnit = {
   vsMeleePercent: 80,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'jormungandr',
   category: 'flying',
+  race: 'beast',
   group: 'epic',
   level: 'III'
 }
@@ -191,9 +197,10 @@ export const overseer: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'demon', //ranged unit, demon, epic monster
   category: 'ranged',
+  race: 'beast',
   group: 'epic',
   level: 'III'
 }
@@ -216,9 +223,10 @@ const ifrit: EnemyUnit = {
   vsMeleePercent: 70,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'demon',
   category: 'flying',
+  race: 'beast',
   group: 'epic',
   level: 'V'
 }
@@ -242,9 +250,10 @@ const fireswordRider: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'demon',
   category: 'mounted',
+  race: 'beast',
   group: 'epic',
   level: 'V'
 }
@@ -268,9 +277,10 @@ const fireHidra: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'demon',
   category: 'mounted',
+  race: 'beast',
   group: 'epic',
   level: 'V'
 }
@@ -340,9 +350,10 @@ export const doomsdayNecromancer: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'monster',
   category: 'ranged',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -365,9 +376,10 @@ export const jacksReturnScarecrow: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'monster',
   category: 'ranged',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -392,9 +404,10 @@ const mechanicalGriffin: EnemyUnit = {
   vsMeleePercent: 80,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'ancient',
   category: 'flying',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -417,9 +430,10 @@ const ancientArbalest: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'ancient',
   category: 'ranged',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -442,9 +456,10 @@ const tigerRider: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'ancient',
   category: 'mounted',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -467,9 +482,10 @@ const goldenGuardian: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'ancient',
   category: 'melee',
+  race: 'beast',
   group: 'epic',
   level: 'III'
 }
@@ -524,9 +540,10 @@ const maliciousMantis: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'swarm',
   category: 'melee',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -549,9 +566,10 @@ const caterpillarCavalry: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'swarm',
   category: 'mounted',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -574,9 +592,10 @@ const elusiveWasp: EnemyUnit = {
   vsMeleePercent: 50,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'swarm',
   category: 'flying',
+  race: 'beast',
   group: 'epic',
   level: 'II'
 }
@@ -599,9 +618,10 @@ const mercilesArachne: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'swarm',
   category: 'ranged',
+  race: 'beast',
   group: 'epic',
   level: 'III'
 }
@@ -669,9 +689,10 @@ const shadowWarrior: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'guardsman',
   category: 'melee', // melee
+  race: 'beast',
   group: 'epic',
   level: 'III'
 }
@@ -694,9 +715,10 @@ const shadowRanged: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'guardsman',
   category: 'ranged', // melee
+  race: 'beast',
   group: 'epic',
   level: 'III'
 }
@@ -719,9 +741,10 @@ const shadowRider: EnemyUnit = {
   vsMeleePercent: 0,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'guardsman',
   category: 'mounted', // melee
+  race: 'beast',
   group: 'epic',
   level: 'III'
 }
@@ -744,9 +767,10 @@ const shadowCorax: EnemyUnit = {
   vsMeleePercent: 50,
   vsFortificationsPercent: 0,
   vsEpicMonster: 0,
-  vsGiants: 0,
+  vsGiantPercent: 0,
   troop: 'guardsman',
   category: 'flying',
+  race: 'beast',
   group: 'epic',
   level: 'III'
 }
@@ -784,7 +808,7 @@ export const whoCanIAttack = (unit: EnemyUnit | Unit | MercUnit) => {
   if (unit.vsEpicMonster) {
     target.push('epic')
   }
-  if (unit.vsGiants) {
+  if (unit.vsGiantPercent) {
     target.push('giants')
   }
   return target.join(', ')

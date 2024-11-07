@@ -81,7 +81,7 @@ interface BasicUnit {
   vsFlyingPercent: number
   vsMeleePercent: number
   vsFortificationsPercent: number
-  vsGiants: number
+  vsGiantPercent: number
   vsEpicMonster: number
   troop: string //TroopType
   // category: string //Category

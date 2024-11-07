@@ -8,8 +8,8 @@ import {
   ancientArmy,
   arachneArmy,
   doomsdayArmy,
-  draugMage,
   EnemyUnit,
+  MobStack,
   ragnarokArmy,
   shadowCastleArmy,
   whoCanIAttack
@@ -32,7 +32,7 @@ import {
 } from '@dnd-kit/sortable'
 import { Link } from 'react-router-dom'
 import { getHPWithBonus, getStats, useStackStore } from './stackStore'
-import { TroopType, Unit } from './types'
+import { Unit } from './types'
 
 function Dos() {
   // const mobHealth = useGuardsStore(state => state.mobHealth)
@@ -170,95 +170,167 @@ function Dos() {
     }
   }
 
-  const getMobTarget = (iam: TroopType | string) => {
+  const getMobTarget = (unit: Unit) => {
     //getMobTarget, usa getMonsterStack, y escoje un monster
     /**
-     * mounted vs ranged
-     * mounted vs siege
-     *
-     * ranged vs flying
-     * ranged vs melee
-     *
-     * melee vs elementals
-     * melee vs ranged
-     * melee vs dragons
-     * melee vs beasts
-     * melee vs humans
-     * melee vs mounted
-     *
-     * flying vs elementals
-     * flying vs mounted
-     * flying vs giants
-     *
      * beast vs mounted
      * beast vs ranged
      *
      * siege vs fortifications
      */
-    if (iam === 'rider') {
-      /** */
-      return draugMage
+    let mob: MobStack | undefined = undefined
+    if (unit.category === 'mounted') {
+      /**
+       * mounted vs ranged
+       * mounted vs siege
+       */
+      // return draugMage
+      mob = mobArmy.find(mob => mob.unit.category === 'ranged')
+      if (!mob) {
+        mob = mobArmy.find(mob => mob.unit.category === 'siege')
+      }
+    } else if (unit.category === 'ranged') {
+      /*
+       * ranged vs melee
+       * ranged vs flying
+       */
+      mob = mobArmy.find(mob => mob.unit.category === 'flying')
+      if (!mob) {
+        mob = mobArmy.find(mob => mob.unit.category === 'melee')
+      }
+    } else if (unit.category === 'melee') {
+      /*
+       * melee vs beasts
+       * melee vs humans
+       * melee vs mounted  **
+       */
+      mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+      if (!mob) {
+        mob = mobArmy.find(mob => mob.unit.race === 'beast')
+      }
+    } else if (unit.category === 'flying') {
+      /*
+       * flying vs elementals
+       * flying vs mounted
+       * flying vs giants
+       */
+      mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+      if (!mob) {
+        mob = mobArmy.find(mob => mob.unit.race === 'giant')
+      }
+    } else if (unit.category === 'siege') {
+      // const mob = mobArmy.find(mob => mob.unit.category === 'mounted')
     }
-    //  else if (iam === 'archer') {
-    //   // vs melee, loquequeda
-    //   return {
-    //     health: 2160,
-    //     strength: 720,
-    //     leadership: 8,
-    //     initiative: 10,
-    //     bonoFlyPercent: 50,
-    //     unitType: 'melee'
-    //   }
-    // } else if (iam === 'spearman') {
-    //   /** */
-    //   return {
-    //     health: 2160,
-    //     strength: 720,
-    //     leadership: 8,
-    //     initiative: 10,
-    //     bonoFlyPercent: 50,
-    //     unitType: 'mounted'
-    //   }
-    // } else if (iam === 'flying') {
-    //   // vs mounted, melee
-    //   return {
-    //     health: 2160,
-    //     strength: 720,
-    //     leadership: 8,
-    //     initiative: 10,
-    //     bonoFlyPercent: 50,
-    //     unitType: 'mounted'
-    //   }
-    // }
 
-    return draugMage //doomsdayFireswordRider // retornar el que tiene mas hp ?
+    // la raza tiene mayor prioridad, y reemplaza la categoria
+    // ejm. mounstruo battleboard es mounted/beast
+    // pero en el reporte ataca a un mounted
+    // si fuese mounted la prioridad, atacaria un ranged/siege
+    if (unit.race === 'elemental') {
+      mob = mobArmy.find(mob => mob.unit.category === 'flying')
+      if (!mob) {
+        mob = mobArmy.find(mob => mob.unit.category === 'melee')
+      }
+    } else if (unit.race === 'giant') {
+      mob = mobArmy.find(mob => mob.unit.category === 'melee')
+      if (!mob) {
+        mob = mobArmy.find(mob => mob.unit.race === 'beast')
+      }
+    } else if (unit.race === 'dragon') {
+      mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+      if (!mob) {
+        mob = mobArmy.find(mob => mob.unit.race === 'giant')
+      }
+    } else if (unit.race === 'beast') {
+      mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+      if (!mob) {
+        mob = mobArmy.find(mob => mob.unit.category === 'ranged')
+      }
+    }
+
+    if (!mob) mob = mobArmy[0]
+    return mob
+    // return draugMage //doomsdayFireswordRider // retornar el que tiene mas hp ?
   }
-
-  // const getMonsterStack = () => {
-  //   if (selectedEvent === '0') {
-  //     //doomsday
-  //     // return ragnarokStacks
-  //     return [doomsdayOverseer, doomsdayIfrit, doomsdayFireswordRider, doomsdayHellBlacksmith]
-  //   }
-  // }
 
   const calculateUnitsMobKill = (monster: EnemyUnit, unit: Unit): number => {
     const monsterHealth = monster.BASEHP
     let soldierStrength = unit.BASESTR
-    // TODO: add more combinations
+
     // mounted vs ranged
     const stats = getStats(unit, bonus)
 
     const otherBonus = stats?.str ?? 0
 
-    if (unit.category === 'mounted' && monster.category === 'ranged') {
-      //  unit.troop=='rider'
-
-      // incluir el bono de los heroes/capitanes/equipo/clan/buff/vip
-
-      const strBonus = ((otherBonus + unit.vsRangedPercent) * soldierStrength) / 100
-      soldierStrength = soldierStrength + strBonus
+    if (unit.category === 'mounted') {
+      if (monster.category === 'ranged') {
+        const strBonus = ((otherBonus + unit.vsRangedPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      } else if (monster.category === 'siege') {
+        const strBonus = ((otherBonus + unit.vsSiegePercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      }
+    } else if (unit.category === 'ranged') {
+      if (monster.category === 'flying') {
+        const strBonus = ((otherBonus + unit.vsFlyingPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      } else if (monster.category === 'melee') {
+        const strBonus = ((otherBonus + unit.vsMeleePercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      }
+    } else if (unit.category === 'melee') {
+      if (monster.category === 'mounted') {
+        const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      } else if (monster.race === 'beast') {
+        const strBonus = ((otherBonus + unit.vsBeastPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      }
+    } else if (unit.category === 'flying') {
+      if (monster.category === 'mounted') {
+        const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      } else if (monster.race === 'giant') {
+        const strBonus = ((otherBonus + unit.vsGiantPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      }
     }
+
+    if (unit.race === 'elemental') {
+      if (monster.category === 'flying') {
+        const strBonus = ((otherBonus + unit.vsFlyingPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      } else if (monster.category === 'melee') {
+        const strBonus = ((otherBonus + unit.vsGiantPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      }
+    } else if (unit.race === 'giant') {
+      if (monster.category === 'melee') {
+        const strBonus = ((otherBonus + unit.vsMeleePercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      } else if (monster.race === 'beast') {
+        const strBonus = ((otherBonus + unit.vsBeastPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      }
+    } else if (unit.race === 'dragon') {
+      if (monster.category === 'mounted') {
+        const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      } else if (monster.race === 'giant') {
+        const strBonus = ((otherBonus + unit.vsGiantPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      }
+    } else if (unit.race === 'beast') {
+      if (monster.category === 'mounted') {
+        const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      } else if (monster.category === 'ranged') {
+        const strBonus = ((otherBonus + unit.vsRangedPercent) * unit.BASESTR) / 100
+        soldierStrength = unit.BASESTR + strBonus
+      }
+    }
+
+    console.log('MINSETUP', { monsterHealth, soldierStrength, unit, monster })
     // retorna el num de soldados minimo que se necesita para matar un monstruo
     return Math.ceil(monsterHealth / soldierStrength)
   }
@@ -318,11 +390,11 @@ function Dos() {
         stack = army[i]
 
         // 4. calcular cuantos unit necesita pa matar 1 mob
-        const monster = getMobTarget(stack.unit.troop)
-        console.log('monster target', monster)
+        const monsterStack = getMobTarget(stack.unit)
+        console.log('monster target', monsterStack)
 
         // TODO: move calc minsetup when add the soldier (left panel)
-        const unitsNeededToKill1Mob = calculateUnitsMobKill(monster, stack.unit)
+        const unitsNeededToKill1Mob = calculateUnitsMobKill(monsterStack.unit, stack.unit)
         updateMinSetup(stack.id!, unitsNeededToKill1Mob)
         console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
 
