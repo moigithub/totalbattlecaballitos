@@ -713,7 +713,13 @@ function Dos() {
                 Strength & Health Bonus config (check <Link to={'/info'}>Info</Link>)
               </h4>
               <p className='small'>NO need to fill everything, but the stacks you using</p>
-
+              <p className='small'>
+                i saw 3 bonus values, when parking on city, when marching to a battle, and finally
+                on the Battle Report (BR)
+              </p>
+              <p className='small'>
+                probably the easier one to use would be the BR one, else the stack order might vary
+              </p>
               <div className='guardsmen'>
                 <p>Guardsman</p>
                 <div className='row'>
