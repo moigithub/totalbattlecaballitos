@@ -1,3 +1,4 @@
+import { mercChariot, mercEpicMonsterHunter } from './mercs'
 import {
   ArcherG1,
   ArcherG2,
@@ -5,19 +6,37 @@ import {
   ArcherG4,
   ArcherG5,
   battleBoar,
+  blackDragon,
+  burningCentaurus,
   CatapultE1,
   CatapultE2,
   CatapultE3,
   CatapultE4,
   CatapultE5,
+  crystalDragon,
+  desertConquer,
+  destroyerColossus,
+  devastatorI,
+  devastatorII,
+  embaucatorI,
+  embaucatorII,
   emeraldDragon,
-  mercChariot,
-  mercEpicMonsterHunter,
+  Ettin,
+  fearManticora,
+  fireFenixI,
+  fireFenixII,
+  forestDestructor,
+  gorgonMedusa,
+  iceFenix,
+  magicDragon,
+  multiArmGuardian,
+  oldTerror,
   RiderG1,
   RiderG2,
   RiderG3,
   RiderG4,
   RiderG5,
+  rubiGolem,
   SpearmanG1,
   SpearmanG2,
   SpearmanG3,
@@ -34,7 +53,9 @@ import {
   SwordmanS3,
   SwordmanS4,
   SwordmanS5,
-  waterElemental
+  trollRider,
+  waterElemental,
+  windLord
 } from './soldiers'
 import { useStackStore } from './stackStore'
 import { Stack } from './types'
@@ -118,6 +139,50 @@ export const ArmyList = () => {
       unitType = emeraldDragon
     } else if (type === 'stoneGargole') {
       unitType = stoneGargole
+    } else if (type === 'iceFenix') {
+      unitType = iceFenix
+    } else if (type === 'burningCentaurus') {
+      unitType = burningCentaurus
+    } else if (type === 'rubiGolem') {
+      unitType = rubiGolem
+    } else if (type === 'windLord') {
+      unitType = windLord
+    } else if (type === 'fireFenixI') {
+      unitType = fireFenixI
+    } else if (type === 'fireFenixII') {
+      unitType = fireFenixII
+    } else if (type === 'gorgonMedusa') {
+      unitType = gorgonMedusa
+    } else if (type === 'fearManticora') {
+      unitType = fearManticora
+    } else if (type === 'forestDestructor') {
+      unitType = forestDestructor
+    } else if (type === 'oldTerror') {
+      unitType = oldTerror
+    } else if (type === 'embaucatorI') {
+      unitType = embaucatorI
+    } else if (type === 'embaucatorII') {
+      unitType = embaucatorII
+    } else if (type === 'magicDragon') {
+      unitType = magicDragon
+    } else if (type === 'desertConquer') {
+      unitType = desertConquer
+    } else if (type === 'crystalDragon') {
+      unitType = crystalDragon
+    } else if (type === 'blackDragon') {
+      unitType = blackDragon
+    } else if (type === 'devastatorII') {
+      unitType = devastatorII
+    } else if (type === 'Ettin') {
+      unitType = Ettin
+    } else if (type === 'trollRider') {
+      unitType = trollRider
+    } else if (type === 'destroyerColossus') {
+      unitType = destroyerColossus
+    } else if (type === 'devastatorI') {
+      unitType = devastatorI
+    } else if (type === 'multiArmGuardian') {
+      unitType = multiArmGuardian
     }
 
     if (!unitType) {
@@ -428,7 +493,7 @@ export const ArmyList = () => {
                 addTroops('waterElemental')
               }}
             >
-              Water Elemental M3
+              Water Elemental III
             </button>
             <button
               className='troop '
@@ -436,7 +501,7 @@ export const ArmyList = () => {
                 addTroops('battleBoar')
               }}
             >
-              Battle Boar M3
+              Battle Boar III
             </button>
             <button
               className='troop '
@@ -444,7 +509,7 @@ export const ArmyList = () => {
                 addTroops('emeraldDragon')
               }}
             >
-              Emerald Dragon M3
+              Emerald Dragon III
             </button>
             <button
               className='troop'
@@ -452,7 +517,195 @@ export const ArmyList = () => {
                 addTroops('stoneGargole')
               }}
             >
-              Stone Gargole M3
+              Stone Gargole III
+            </button>
+          </div>
+          <div className='btn-group'>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('iceFenix')
+              }}
+            >
+              ice Fenix IV
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('gorgonMedusa')
+              }}
+            >
+              gorgon Medusa IV
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('magicDragon')
+              }}
+            >
+              magic Dragon IV
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('multiArmGuardian')
+              }}
+            >
+              multi-Arm Guardian IV
+            </button>
+          </div>
+          <div className='btn-group'>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('burningCentaurus')
+              }}
+            >
+              burning Centaurus V
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('fearManticora')
+              }}
+            >
+              fear Manticora V
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('desertConquer')
+              }}
+            >
+              desert Conquer V
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('Ettin')
+              }}
+            >
+              Ettin V
+            </button>
+          </div>
+          <div className='btn-group'>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('forestDestructor')
+              }}
+            >
+              forest Destructor VI
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('crystalDragon')
+              }}
+            >
+              crystal Dragon VI
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('trollRider')
+              }}
+            >
+              troll Rider VI
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('rubiGolem')
+              }}
+            >
+              rubi Golem VI
+            </button>
+          </div>
+          <div className='btn-group'>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('windLord')
+              }}
+            >
+              wind Lord VII
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('oldTerror')
+              }}
+            >
+              old Terror VII
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('blackDragon')
+              }}
+            >
+              black Dragon VII
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('destroyerColossus')
+              }}
+            >
+              destroyer Colossus VII
+            </button>
+          </div>
+          <div className='btn-group'>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('fireFenixI')
+              }}
+            >
+              fire Fenix I
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('embaucatorI')
+              }}
+            >
+              embaucator I
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('devastatorI')
+              }}
+            >
+              devastator I
+            </button>
+          </div>
+          <div className='btn-group'>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('fireFenixII')
+              }}
+            >
+              fireFenix II
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('embaucatorII')
+              }}
+            >
+              embaucator II
+            </button>
+            <button
+              className='troop'
+              onClick={() => {
+                addTroops('devastatorII')
+              }}
+            >
+              devastator II
             </button>
           </div>
         </div>

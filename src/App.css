@@ -280,6 +280,12 @@ table th {
 .monsters {
   background-color: mediumorchid;
   margin: 4px 0;
+  padding: 2px;
+  .btn-group {
+    /* margin: 2px 0; */
+
+    border: 2px solid black;
+  }
 }
 .guardsmen {
   background-color: darkcyan;
