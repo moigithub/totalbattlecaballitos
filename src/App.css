@@ -126,7 +126,8 @@ table th {
   grid-template-areas:
     'units name      name       action       delete'
     'units atk       atk        leadership   reset'
-    'units health    strength   config       minSetup';
+    'units health    strength   config       minSetup'
+    'units basic     basic      .            .';
   /* 'units id       id      id         id          id          id'; */
 
   width: 450px;
@@ -275,6 +276,9 @@ table th {
 
 .stack-attack-info {
   grid-area: atk;
+}
+.stack-basic-info {
+  grid-area: basic;
 }
 
 .monsters {

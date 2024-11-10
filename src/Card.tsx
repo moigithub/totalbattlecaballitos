@@ -101,12 +101,9 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
       </div>
       <div className='stack-attack-info' style={{ color: 'gray', fontSize: 14 }}>
         i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit)}</span>
-        {/*basehp{' '}
-         {stack.unit.BASEHP}
-        {' * '}
-        {stack.units}
-        {' = '}
-        {stack.units * stack.unit.BASEHP} */}
+      </div>
+      <div className='stack-basic-info'>
+        base Hp {stack.unit.BASEHP} Str {stack.unit.BASESTR}
       </div>
       {/* <span className='stack-id tiny'>(id.{stack.id})</span> */}
     </div>
