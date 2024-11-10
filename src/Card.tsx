@@ -29,7 +29,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
   }
 
   const stackHealth = getStackHealth(stack.id!)
-  const stackStrength = getStackStrength(stack.id!, draugMage.category)
+  const stackStrength = getStackStrength(stack.id!)
 
   return (
     <div className='stack-card' ref={setNodeRef} style={style}>
