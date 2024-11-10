@@ -18,6 +18,8 @@ interface StackStore {
   // }
   setMobArmy: (data: MobStack[]) => void
   setArmy: (data: Stack[]) => void
+  getArmyStrength: () => number
+  getArmyHealth: () => number
   addStack: (data: Omit<Stack, 'id'>) => void
   removeStack: (id: string) => void
   resetStack: (id: string) => void
@@ -31,8 +33,8 @@ interface StackStore {
   addUnits: (id: string) => void
   removeUnits: (id: string) => void
   reduceSacrificeUnits: () => void
-  fixStackUnits: (id: string, maxHealth: number) => void
-  getStackStrength: (id: string, against: string) => number
+  // fixStackUnits: (id: string, maxHealth: number) => void
+  getStackStrength: (id: string) => number
   getStackHealth: (id: string) => number
   getStackLeadership: (id: string) => number
   toggleLockMin: (id: string) => void
@@ -95,6 +97,15 @@ export const getHPWithBonus = (unit: Unit, bonus: Bonus) => {
   const bonusHP = stats?.hp ?? 0
   const bonusHPPercent = (unit.BASEHP * bonusHP) / 100
   const totalHPPerUnit = unit.BASEHP + bonusHPPercent
+
+  return totalHPPerUnit
+}
+
+export const getSTRWithBonus = (unit: Unit, bonus: Bonus) => {
+  const stats = getStats(unit, bonus)
+  const bonusSTR = stats?.str ?? 0
+  const bonusSTRPercent = (unit.BASESTR * bonusSTR) / 100
+  const totalHPPerUnit = unit.BASESTR + bonusSTRPercent
 
   return totalHPPerUnit
 }
@@ -363,6 +374,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     }))
   },
   reduceSacrificeUnits: () => {
+    // TODO: fix this
     if (get().army.length < 2) return
 
     const firstStack = get().army[0]
@@ -391,25 +403,42 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     }))
   },
 
-  fixStackUnits: (id: string, maxHealth: number) => {
-    set(state => ({
-      army: state.army.map(stack => {
-        if (stack.id === id) {
-          // reduce the units amount, so the total stack health is lower than maxHealth
-          let stackUnits = stack.units
+  // fixStackUnits: (id: string, maxHealth: number) => {
+  //   set(state => ({
+  //     army: state.army.map(stack => {
+  //       if (stack.id === id) {
+  //         // reduce the units amount, so the total stack health is lower than maxHealth
+  //         let stackUnits = stack.units
 
-          const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
-          let stackHealth = totalHPPerUnit * stackUnits
-          while (stackHealth >= maxHealth && stackUnits > 0) {
-            stackUnits = stackUnits - 1
-            stackHealth = totalHPPerUnit * stackUnits
-          }
-          return { ...stack, units: stackUnits }
-        } else return stack
-      })
-    }))
-  },
-  getStackStrength: (id: string, against: string) => {
+  //         const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
+  //         let stackHealth = totalHPPerUnit * stackUnits
+  //         while (stackHealth >= maxHealth && stackUnits > 0) {
+  //           stackUnits = stackUnits - 1
+  //           stackHealth = totalHPPerUnit * stackUnits
+  //         }
+  //         return { ...stack, units: stackUnits }
+  //       } else return stack
+  //     })
+  //   }))
+  // },
+  calcWhichMobIDoMostDmg: (id: string, against: string) => {
+    // TODO: fix this
+    /* calc the strength vs all the posibles monsters it can attack
+    ie: melee can attack beast and mounted
+
+    which can have the highest damage possible
+    ie.
+    dmgVsBeast = stackStr + vsBeastPercentBonus *units
+    dmgVsMounted = stackStr + vsMountedPercentBonus *units
+    if (dmgVsBeast > dmgVsMounted) mobToAttack = beast
+    else mobToAttack = mounted
+
+    BUT... if the target mob health is lower then your damage it should switch to the mob
+    where you can do most dmg
+
+    if beastStackTotalHealth < dmgVsBeast and dmgVsMounted>= mountedStackTotalHealth
+      mobToattack = mounted
+    */
     const stack = get().army.find(army => army.id === id)
     const bonus = get().bonus
 
@@ -464,6 +493,17 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     // TODO : add more units
     return 0
   },
+  getStackStrength: (id: string) => {
+    // return the stack strength with bonus,
+    // but without extra bonus,ie. vsMeleePercent
+
+    const stack = get().army.find(army => army.id === id)
+    if (!stack) return 0
+
+    const bonus = get().bonus
+    const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+    return totalSTRPerUnit * stack.units
+  },
   getStackHealth: (id: string) => {
     // const stack = get().army.find(army => army.position === position)
     // return stack?.health ?? 0
@@ -501,6 +541,13 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     const bonus = get().bonus
     const health = get().army.reduce((hp, stack) => {
       return hp + getHPWithBonus(stack.unit, bonus) * stack.units
+    }, 0)
+    return health
+  },
+  getArmyStrength: () => {
+    const bonus = get().bonus
+    const health = get().army.reduce((hp, stack) => {
+      return hp + getSTRWithBonus(stack.unit, bonus) * stack.units
     }, 0)
     return health
   },

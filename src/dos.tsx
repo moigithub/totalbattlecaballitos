@@ -31,7 +31,7 @@ import {
   // sortableKeyboardCoordinates
 } from '@dnd-kit/sortable'
 import { Link } from 'react-router-dom'
-import { getHPWithBonus, getStats, useStackStore } from './stackStore'
+import { getStats, getSTRWithBonus, useStackStore } from './stackStore'
 import { Unit } from './types'
 
 function Dos() {
@@ -42,7 +42,7 @@ function Dos() {
   // const resetStack = useStackStore(state => state.resetStack)
   // const toggleLockMin = useStackStore(state => state.toggleLockMin)
   // const removeUnits = useStackStore(state => state.removeUnits)
-  // const getStackStrength = useStackStore(state => state.getStackStrength)
+  const getStackStrength = useStackStore(state => state.getStackStrength)
   // const getStackLeadership = useStackStore(state => state.getStackLeadership)
   const leadership = useGuardsStore(state => state.leadership)
   const setLeadership = useGuardsStore(state => state.setLeadership)
@@ -58,7 +58,7 @@ function Dos() {
   const resetAllStacks = useStackStore(state => state.resetAllStacks)
   const bonus = useStackStore(state => state.bonus)
   const addUnits = useStackStore(state => state.addUnits)
-  const getStackHealth = useStackStore(state => state.getStackHealth)
+  // const getStackHealth = useStackStore(state => state.getStackHealth)
   const getArmyLeadership = useStackStore(state => state.getArmyLeadership)
   const getArmyAuthority = useStackStore(state => state.getArmyAuthority)
   const getArmyDominance = useStackStore(state => state.getArmyDominance)
@@ -97,7 +97,7 @@ function Dos() {
   //-------------------
 
   const [selectedEvent, setSelectedEvent] = useState('0')
-  const [addUnitMode, setAddUnitMode] = useState('previousStackHealthLimit')
+  const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
   const [windowMode, setWindowMode] = useState('showBonusConfig')
 
   // const sensors = useSensor(PointerSensor, {
@@ -335,7 +335,27 @@ function Dos() {
     return Math.ceil(monsterHealth / soldierStrength)
   }
 
-  const calcHP = () => {
+  const calcSTR = () => {
+    //https://www.youtube.com/watch?app=desktop&v=8rdVjHNRXn0
+    // according to youtube video, the squad with highest strength attack first
+    // its not based on health, as other people said
+    /**
+     * highest initiative determine the attack order, who attack first you or the monster
+     * the order is determined only once at start
+     *
+     * question.. how u determine the initiative ??
+     *
+     * if both you vs enemy have the same initiative, the order is random
+     *
+     * then.. on some side.. the stack with highest strength attack first
+     * the target is based on health
+     * if your total damage is higher than the enemy health,
+     * your stack attack another stack
+     * ie:
+     * melee can attack beast and mounted
+     * if beast have lower hp than your squad total damage, then it will attack the mounted squad
+     */
+
     if (army.length === 0) {
       // algo debe estar marcado
       alert('pick riders')
@@ -383,8 +403,8 @@ function Dos() {
       }
 
       // 3. calcular hp del sacrificio
-      const sacrificeGroupHealth = getStackHealth(army[0].id)
-      console.log('sacrifice healt', sacrificeGroupHealth)
+      const sacrificeGroupStrength = getStackStrength(army[0].id)
+      console.log('sacrifice healt', sacrificeGroupStrength)
 
       for (let i = 1; i < army.length; i++) {
         stack = army[i]
@@ -410,21 +430,21 @@ function Dos() {
           // 7 check leadership acumulado + leadership nuevo sea menor que el disponible
           if (totalLeadership + newStackLeadership <= leadership) {
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackHealth = getStackHealth(stack.id!)
-            const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
-            const newStackHealth = totalHPPerUnit * unitsCount
+            const stackStrength = getStackStrength(stack.id!)
+            const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+            const newStackStrength = totalSTRPerUnit * unitsCount
 
-            if (addUnitMode === 'sacrificeHealthLimit') {
-              if (stackHealth + newStackHealth < sacrificeGroupHealth) {
+            if (addUnitMode === 'sacrificeStatsLimit') {
+              if (stackStrength + newStackStrength < sacrificeGroupStrength) {
                 // 9. agregar al stack
                 console.log('leadership: agregando units en ', stack.id)
                 addUnits(stack.id!)
               }
             }
-            if (addUnitMode === 'previousStackHealthLimit') {
-              const previousGroupHealth = getStackHealth(army[i - 1].id)
+            if (addUnitMode === 'previousStackStatsLimit') {
+              const previousGroupStrength = getStackStrength(army[i - 1].id)
 
-              if (stackHealth + newStackHealth < previousGroupHealth) {
+              if (stackStrength + newStackStrength < previousGroupStrength) {
                 // 9. agregar al stack
                 console.log('leadership: agregando units en ', stack.id)
                 addUnits(stack.id!)
@@ -449,21 +469,21 @@ function Dos() {
               authority
             )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackHealth = getStackHealth(stack.id!)
-            const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
-            const newStackHealth = totalHPPerUnit * unitsCount
+            const stackStrength = getStackStrength(stack.id!)
+            const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+            const newStackStrength = totalSTRPerUnit * unitsCount
 
-            if (addUnitMode === 'sacrificeHealthLimit') {
-              if (stackHealth + newStackHealth < sacrificeGroupHealth) {
+            if (addUnitMode === 'sacrificeStatsLimit') {
+              if (stackStrength + newStackStrength < sacrificeGroupStrength) {
                 // 9. agregar al stack
                 console.log('authority: agregando units en ', stack.id)
                 addUnits(stack.id!)
               }
             }
-            if (addUnitMode === 'previousStackHealthLimit') {
-              const previousGroupHealth = getStackHealth(army[i - 1].id)
+            if (addUnitMode === 'previousStackStatsLimit') {
+              const previousGroupStrength = getStackStrength(army[i - 1].id)
 
-              if (stackHealth + newStackHealth < previousGroupHealth) {
+              if (stackStrength + newStackStrength < previousGroupStrength) {
                 // 9. agregar al stack
                 console.log('authority: agregando units en ', stack.id)
                 addUnits(stack.id!)
@@ -482,21 +502,21 @@ function Dos() {
           // 7 check DOMINANCE acumulado + DOMINANCE nuevo sea menor que el disponible
           if (totalDominance + newStackDominance <= dominance) {
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackHealth = getStackHealth(stack.id!)
-            const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
-            const newStackHealth = totalHPPerUnit * unitsCount
+            const stackStrength = getStackStrength(stack.id!)
+            const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+            const newStackStrength = totalSTRPerUnit * unitsCount
 
-            if (addUnitMode === 'sacrificeHealthLimit') {
-              if (stackHealth + newStackHealth < sacrificeGroupHealth) {
+            if (addUnitMode === 'sacrificeStatsLimit') {
+              if (stackStrength + newStackStrength < sacrificeGroupStrength) {
                 // 9. agregar al stack
                 console.log('dominance: agregando units en ', stack.id)
                 addUnits(stack.id!)
               }
             }
-            if (addUnitMode === 'previousStackHealthLimit') {
-              const previousGroupHealth = getStackHealth(army[i - 1].id)
+            if (addUnitMode === 'previousStackStatsLimit') {
+              const previousGroupStrength = getStackStrength(army[i - 1].id)
 
-              if (stackHealth + newStackHealth < previousGroupHealth) {
+              if (stackStrength + newStackStrength < previousGroupStrength) {
                 // 9. agregar al stack
                 console.log('dominance: agregando units en ', stack.id)
                 addUnits(stack.id!)
@@ -596,32 +616,32 @@ function Dos() {
         </div>
         <div className='configbar'>
           <div>
-            <label>Sacrifice health limit</label>
+            <label>Sacrifice strength limit</label>
             <input
               type='radio'
-              value='sacrificeHealthLimit'
-              name='healthLimit'
-              checked={addUnitMode === 'sacrificeHealthLimit'}
+              value='sacrificeStatsLimit'
+              name='strengthLimit'
+              checked={addUnitMode === 'sacrificeStatsLimit'}
               onChange={() => {
-                setAddUnitMode('sacrificeHealthLimit')
+                setAddUnitMode('sacrificeStatsLimit')
               }}
             />
           </div>
           <div>
-            <label>Previous stack health limit/Decrement</label>
+            <label>Previous stack strength limit/Decrement</label>
             <input
               type='radio'
-              value='previousStackHealthLimit'
-              name='healthLimit'
-              checked={addUnitMode === 'previousStackHealthLimit'}
+              value='previousStackStatsLimit'
+              name='strengthLimit'
+              checked={addUnitMode === 'previousStackStatsLimit'}
               onChange={() => {
-                setAddUnitMode('previousStackHealthLimit')
+                setAddUnitMode('previousStackStatsLimit')
               }}
             />
           </div>
         </div>
 
-        <button className='gobtn' onClick={calcHP}>
+        <button className='gobtn' onClick={calcSTR}>
           CALCULATE
         </button>
       </div>
@@ -641,7 +661,13 @@ function Dos() {
             drag and drop the card/stacks to arrange it from the number in beige at left side of
             each card
           </div>
-          <div className='small'>stack with highest health goes first</div>
+          <div className='small'>
+            stack with highest{' '}
+            <a href='https://www.youtube.com/watch?app=desktop&v=8rdVjHNRXn0' target='_blank'>
+              STRENGTH
+            </a>{' '}
+            goes first
+          </div>
           <div className='stack-list'>
             <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
               <SortableContext items={army}>

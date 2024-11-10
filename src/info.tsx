@@ -4,11 +4,16 @@ export const Info = () => {
       <div>
         <ul style={{ color: 'pink' }}>
           <li>The cheapest group should go above, they might hit, or get killed at first round</li>
-          <li>Higher health attack first</li>
           <li>
-            Send sacrifices first (the stack with highest hp) ie: 500k health for the whole stack
+            Stack with Highest Strength attack first{' '}
+            <a href='https://www.youtube.com/watch?app=desktop&v=8rdVjHNRXn0' target='_blank'>
+              check youtube here
+            </a>
           </li>
-          <li>after sacrifices, set all rest of eachs stack with lower health, ie: 490k</li>
+          <li>
+            Send sacrifices first (the stack with highest str) ie: 500k strength for the whole stack
+          </li>
+          <li>after sacrifices, set all rest of eachs stack with lower strength, ie: 490k</li>
           <li>There are 4 big groups, guards(3),specialist(2),engineer(1),monster(4)</li>
           <li>Each group have subgroups</li>
           <li>Each subgroups have its own bonus value, im handling only riders guards bonus</li>

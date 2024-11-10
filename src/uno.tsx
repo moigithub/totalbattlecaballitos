@@ -1381,10 +1381,10 @@ function Uno() {
         </div>
       </div>
 
-      <button className='gobtn' onClick={calcHP}>
-        CALCULATE (hp)
+      <button onClick={calcHP}>CALCULATE (hp)</button>
+      <button className='gobtn' onClick={calcSTR}>
+        CALCULATE (str)
       </button>
-      <button onClick={calcSTR}>CALCULATE (str)</button>
 
       {/* ---------------------- */}
     </Fragment>
