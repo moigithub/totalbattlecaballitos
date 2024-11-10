@@ -374,15 +374,14 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     }))
   },
   reduceSacrificeUnits: () => {
-    // TODO: fix this
     if (get().army.length < 2) return
 
     const firstStack = get().army[0]
 
     const secondStack = get().army[1]
     const secondStackUnits = secondStack.units
-    const totalHPPerUnit = getHPWithBonus(secondStack.unit, get().bonus)
-    const secondStackHealth = totalHPPerUnit * secondStackUnits
+    const totalSTRPerUnit = getSTRWithBonus(secondStack.unit, get().bonus)
+    const secondStackStrength = totalSTRPerUnit * secondStackUnits
 
     set(state => ({
       army: state.army.map(stack => {
@@ -391,11 +390,11 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
           // so send less sacrifices, but enough to be first position
           let stackUnits = stack.units
 
-          const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
-          let stackHealth = totalHPPerUnit * stackUnits
-          while (stackHealth >= secondStackHealth && stackUnits > 0) {
+          const totalSTRPerUnit = getSTRWithBonus(stack.unit, state.bonus)
+          let stackStrength = totalSTRPerUnit * stackUnits
+          while (stackStrength >= secondStackStrength && stackUnits > 0) {
             stackUnits = stackUnits - 1
-            stackHealth = totalHPPerUnit * stackUnits
+            stackStrength = totalSTRPerUnit * stackUnits
           }
           return { ...stack, units: stackUnits + 1 }
         } else return stack
