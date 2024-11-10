@@ -36,7 +36,7 @@ export const mercEpicMonsterHunter: MercUnit = unitBuilder<MercUnit>({
   INITIATIVE: 10,
   vsRangedPercent: 329,
   vsSiegePercent: 273,
-  vsEpicMonster: 609,
+  vsEpicPercent: 609,
   troop: 'merc',
   category: 'epic',
   race: 'human',

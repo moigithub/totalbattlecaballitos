@@ -11,8 +11,7 @@ import {
   EnemyUnit,
   MobStack,
   ragnarokArmy,
-  shadowCastleArmy,
-  whoCanIAttack
+  shadowCastleArmy
 } from './monsters'
 import { ArmyList } from './ArmyList'
 import { Card } from './Card'
@@ -33,6 +32,7 @@ import {
 import { Link } from 'react-router-dom'
 import { getStats, getSTRWithBonus, useStackStore } from './stackStore'
 import { Unit } from './types'
+import { whoCanIAttack } from './utils'
 
 function Dos() {
   // const mobHealth = useGuardsStore(state => state.mobHealth)

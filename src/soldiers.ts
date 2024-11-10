@@ -18,7 +18,7 @@ interface UnitProps {
   vsMeleePercent: number
   vsFortificationsPercent: number
   vsGiantPercent: number
-  vsEpicMonster: number
+  vsEpicPercent: number
   vsElementalPercent: number
   vsDragonPercent: number
   troop: string
@@ -54,7 +54,7 @@ export const unitBuilder = <T>(props: Partial<UnitProps>): T => {
     vsGiantPercent: 0,
     vsElementalPercent: 0,
     vsDragonPercent: 0,
-    vsEpicMonster: 0,
+    vsEpicPercent: 0,
     troop: '',
     category: '',
     race: '',

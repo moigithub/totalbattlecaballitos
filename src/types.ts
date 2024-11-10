@@ -85,6 +85,7 @@ interface BasicUnit {
   vsEpicMonster: number
   vsElementalPercent: number
   vsDragonPercent: number
+  vsEpicPercent: number
   troop: string //TroopType
   // category: string //Category
   // group: string // Group

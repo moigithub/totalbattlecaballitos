@@ -1,8 +1,9 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { whoCanIAttack } from './monsters'
+
 import { useStackStore } from './stackStore'
 import { Stack } from './types'
+import { whoCanIAttack } from './utils'
 
 export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => {
   // const army = useStackStore(state => state.army)
@@ -100,7 +101,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         </button>
       </div>
       <div className='stack-attack-info' style={{ color: 'gray', fontSize: 14 }}>
-        i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit)}</span>
+        i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit).join(',')}</span>
       </div>
       <div className='stack-basic-info'>
         base Hp {stack.unit.BASEHP} Str {stack.unit.BASESTR}
