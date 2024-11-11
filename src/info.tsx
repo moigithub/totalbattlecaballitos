@@ -56,6 +56,7 @@ export const Info = () => {
         <p>and finally... do whatever you want</p>
       </div>
       <img src='./bonus.jpg' alt='bonus' />
+      <img src='./tbcalc.gif' alt='tutorial' />
     </div>
   )
 }
