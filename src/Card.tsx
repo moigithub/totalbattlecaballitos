@@ -80,12 +80,13 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
       {isFirst && (
         <div className='stack-config'>
           <button
-            className='action-btn'
+            className='reduce-btn'
             onClick={() => {
               reduceSacrificeUnits()
             }}
           >
-            reduce sacrifices
+            <span className='mobile'>R</span>
+            <span className='widescreen'>Reduce sacrifices</span>
           </button>
         </div>
       )}

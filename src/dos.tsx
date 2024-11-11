@@ -640,10 +640,6 @@ function Dos() {
             />
           </div>
         </div>
-
-        <button className='gobtn' onClick={calcSTR}>
-          CALCULATE
-        </button>
       </div>
 
       {/* ---------------------- */}
@@ -658,6 +654,9 @@ function Dos() {
             <p>authority {getArmyAuthority()}</p>
             <p>dominance {getArmyDominance()}</p>
           </div>
+          <button className='gobtn' onClick={calcSTR}>
+            CALCULATE
+          </button>
           <div className='small' style={{ color: 'pink' }}>
             drag and drop the card/stacks to arrange it from the number in beige at left side of
             each card

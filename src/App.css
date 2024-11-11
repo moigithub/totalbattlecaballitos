@@ -31,7 +31,7 @@ table th {
 
   .logo {
     margin-right: 1rem;
-    max-width: 180px;
+    max-width: 140px;
   }
 
   li {
@@ -78,6 +78,7 @@ table th {
   background-color: darkblue;
   color: white;
   font-weight: bold;
+  width: 100%;
   cursor: pointer;
 }
 
@@ -98,6 +99,7 @@ table th {
 
 .main-container {
   display: flex;
+  width: 100%;
   flex-wrap: wrap;
 }
 
@@ -120,6 +122,7 @@ table th {
 }
 .mob-container {
   width: 100%;
+  padding-top: 1rem;
 }
 
 .stack-container {
@@ -140,20 +143,18 @@ table th {
 .stack-card {
   display: grid;
   grid-template-areas:
-    'units name      name       action       delete'
-    'units atk       atk        leadership   reset'
-    'units health    strength   config       minSetup'
-    'units basic     basic      .            .';
-  /* 'units id       id      id         id          id          id'; */
+    'units name      name          delete'
+    'units atk       atk           reset'
+    'units action    minSetup       config';
 
-  width: 450px;
+  width: 100%;
   border: 1px solid grey;
   margin: 10px 0;
 }
 .stack-units {
   grid-area: units;
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -221,6 +222,7 @@ table th {
   margin: 0;
   /* background-color: rosybrown; */
   color: brown;
+  display: none;
 }
 .stack-strength {
   grid-area: strength;
@@ -228,6 +230,7 @@ table th {
   /* background-color: aquamarine; */
   color: aquamarine;
   font-size: 0.8rem;
+  display: none;
 }
 .stack-leadership {
   grid-area: leadership;
@@ -235,6 +238,7 @@ table th {
   /* background-color: cadetblue; */
   color: cadetblue;
   font-size: 0.8rem;
+  display: none;
 }
 .stack-minSetup {
   grid-area: minSetup;
@@ -263,6 +267,21 @@ table th {
   grid-area: config;
   margin: 0;
   font-size: 0.8rem;
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+
+  .reduce-btn {
+    background-color: purple;
+    color: white;
+  }
+
+  .mobile {
+    display: block;
+  }
+  .widescreen {
+    display: none;
+  }
 }
 .stack-delete {
   grid-area: delete;
@@ -296,6 +315,7 @@ table th {
 }
 .stack-basic-info {
   grid-area: basic;
+  display: none;
 }
 
 .monsters {
@@ -391,6 +411,7 @@ table th {
   /* tablets or wide scren*/
   .navbar .logo {
     font-size: 16px;
+    max-width: none;
   }
   .main-container {
     max-height: 100vh;
@@ -410,5 +431,55 @@ table th {
   .stack-container {
     overflow: scroll;
     width: 40%;
+  }
+
+  .stack-card {
+    display: grid;
+    grid-template-areas:
+      'units name      name       action       delete'
+      'units atk       atk        leadership   reset'
+      'units health    strength   config       minSetup'
+      'units basic     basic      .            .';
+    /* 'units id       id      id         id          id          id'; */
+
+    width: 450px;
+    border: 1px solid grey;
+    margin: 10px 0;
+  }
+  .stack-units {
+    grid-area: units;
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: bisque;
+    color: black;
+    margin-right: 10px;
+    cursor: pointer;
+    user-select: none;
+    padding-left: 20px;
+    position: relative;
+    touch-action: none;
+  }
+  .stack-health,
+  .stack-strength,
+  .stack-leadership,
+  .stack-basic-info {
+    display: block;
+  }
+
+  .stack-config {
+    grid-area: config;
+    margin: 0;
+    font-size: 0.8rem;
+
+    .mobile {
+      display: none;
+    }
+    .widescreen {
+      display: block;
+    }
   }
 }
