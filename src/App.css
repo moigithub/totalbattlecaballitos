@@ -18,13 +18,20 @@ table th {
   padding: 0 10px;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .navbar {
   list-style: none;
   display: flex;
   align-items: center;
+  padding: 0;
+  font-size: 12px;
 
   .logo {
     margin-right: 1rem;
+    max-width: 180px;
   }
 
   li {
@@ -44,11 +51,13 @@ table th {
 
 .info {
   display: flex;
+  flex-wrap: wrap;
 }
 .tiny {
   font-size: 8px;
 }
 .configbar {
+  margin: 1rem 0;
   .card {
     margin-left: 1rem;
   }
@@ -89,18 +98,17 @@ table th {
 
 .main-container {
   display: flex;
-  max-height: 100vh;
-  height: 100%;
-  overflow: hidden;
+  flex-wrap: wrap;
 }
+
 .config-container {
   display: flex;
+  flex-wrap: wrap;
 
   column-gap: 2rem;
 }
 .army-container {
-  width: 20%;
-  overflow: scroll;
+  width: 100%;
 }
 .army-header {
   display: flex;
@@ -110,10 +118,18 @@ table th {
     background-color: purple;
   }
 }
-.mob-container,
+.mob-container {
+  width: 100%;
+}
+
 .stack-container {
-  overflow: scroll;
-  width: 40%;
+  width: 100%;
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 20px;
+  }
 }
 
 .troop {
@@ -149,6 +165,7 @@ table th {
   user-select: none;
   padding-left: 20px;
   position: relative;
+  touch-action: none;
 }
 
 .drag-handler {
@@ -306,9 +323,7 @@ table th {
 .mercs {
   background-color: brown;
 }
-.group {
-  margin: 0 1rem;
-}
+
 .btn-group {
   display: flex;
 }
@@ -369,5 +384,31 @@ table th {
   }
   label:hover {
     background: #ddd;
+  }
+}
+
+@media (min-width: 480px) {
+  /* tablets or wide scren*/
+  .navbar .logo {
+    font-size: 16px;
+  }
+  .main-container {
+    max-height: 100vh;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .group {
+    /* margin: 0 1rem; */
+  }
+
+  .army-container {
+    width: 20%;
+    overflow: scroll;
+  }
+  .mob-container,
+  .stack-container {
+    overflow: scroll;
+    width: 40%;
   }
 }

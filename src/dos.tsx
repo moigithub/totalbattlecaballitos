@@ -587,7 +587,7 @@ function Dos() {
   return (
     <Fragment>
       <div className='config-container'>
-        <div className='event'>
+        <div className='configbar'>
           <div className='group'>
             <label>Event </label>
             <select value={selectedEvent} onChange={changeMobEvent}>
@@ -652,8 +652,9 @@ function Dos() {
         <ArmyList />
 
         <div className='stack-container'>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px' }}>
-            <h2>Stacks</h2> <p>leadership {getArmyLeadership()}</p>
+          <h2>Stacks</h2>
+          <div className='header'>
+            <p>leadership {getArmyLeadership()}</p>
             <p>authority {getArmyAuthority()}</p>
             <p>dominance {getArmyDominance()}</p>
           </div>
@@ -692,7 +693,7 @@ function Dos() {
                 }}
                 id='monsterinfo'
               />
-              <label htmlFor='monsterinfo'>Show Target monster info</label>
+              <label htmlFor='monsterinfo'>Monster info</label>
             </div>
             <div className='radiobtn'>
               <input
@@ -705,7 +706,7 @@ function Dos() {
                 }}
                 id='bonusconfig'
               />
-              <label htmlFor='bonusconfig'>Show bonus config</label>
+              <label htmlFor='bonusconfig'>Bonus config</label>
             </div>
           </div>
           {windowMode === 'showTargetMonsterInfo' && (
