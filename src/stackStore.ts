@@ -31,8 +31,8 @@ interface StackStore {
   // setStackPosition: (id:string, newPosition: number) => void
   recalculatePosition: () => void
   updateMinSetup: (id: string, minSetup: number) => void
-  addUnits: (id: string) => void
-  removeUnits: (id: string) => void
+  addUnits: (id: string, amount: number) => void
+  removeUnits: (id: string, amount: number) => void
   reduceSacrificeUnits: () => void
   // fixStackUnits: (id: string, maxHealth: number) => void
   calcWhichMobIDoMostDmg: (id: string) => MobStack
@@ -309,9 +309,9 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
   },
 
-  addUnits: (id: string) => {
+  addUnits: (id: string, amount: number) => {
     set(state => ({
-      army: state.army.map((stack, index) => {
+      army: state.army.map(stack => {
         if (stack.id === id) {
           const leadership = stack.unit.LEADERSHIP
           const authority = stack.unit.AUTHORITY
@@ -319,9 +319,9 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 
           // index === 0 ,its a sacrifice, increase 1 by 1, this MUST have the highest hp
           // all others stack should check index 0 health, and keep lower health
-          const unitToAdd = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
+          // const unitToAdd = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
 
-          const totalUnits = stack.units + unitToAdd
+          const totalUnits = stack.units + amount
 
           console.log(
             'adding units',
@@ -342,18 +342,18 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
-  removeUnits: (id: string) => {
+  removeUnits: (id: string, amount: number) => {
     set(state => ({
-      army: state.army.map((stack, index) => {
+      army: state.army.map(stack => {
         if (stack.id === id) {
           const leadership = stack.unit.LEADERSHIP
           const authority = stack.unit.AUTHORITY
           const dominance = stack.unit.DOMINANCE
 
-          const unitToRemove = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
+          // const unitToRemove = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
 
-          if (stack.units - unitToRemove >= 0) {
-            const totalUnits = stack.units - unitToRemove
+          if (stack.units - amount >= 0) {
+            const totalUnits = stack.units - amount
 
             console.log(
               'removing units',

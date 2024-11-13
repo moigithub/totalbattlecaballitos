@@ -393,16 +393,16 @@ function Dos() {
       let stack = army[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
 
       if (stack.unit.tipo === 'army' && totalLeadership < leadership) {
-        addUnits(army[0].id)
+        addUnits(army[0].id, 1)
       } else if (stack.unit.tipo === 'merc' && totalAuthority < authority) {
-        addUnits(army[0].id)
+        addUnits(army[0].id, 1)
       } else if (stack.unit.tipo === 'monster' && totalDominance < dominance) {
-        addUnits(army[0].id)
+        addUnits(army[0].id, 1)
       } else {
         // break
       }
 
-      // 3. calcular hp del sacrificio
+      // 3. calcular str del sacrificio
       const sacrificeGroupStrength = getStackStrength(army[0].id)
       console.log('sacrifice healt', sacrificeGroupStrength)
 
@@ -438,7 +438,7 @@ function Dos() {
               if (stackStrength + newStackStrength < sacrificeGroupStrength) {
                 // 9. agregar al stack
                 console.log('leadership: agregando units en ', stack.id)
-                addUnits(stack.id!)
+                addUnits(stack.id!, unitsCount)
               }
             }
             if (addUnitMode === 'previousStackStatsLimit') {
@@ -447,7 +447,7 @@ function Dos() {
               if (stackStrength + newStackStrength < previousGroupStrength) {
                 // 9. agregar al stack
                 console.log('leadership: agregando units en ', stack.id)
-                addUnits(stack.id!)
+                addUnits(stack.id!, unitsCount)
               }
             }
           }
@@ -477,7 +477,7 @@ function Dos() {
               if (stackStrength + newStackStrength < sacrificeGroupStrength) {
                 // 9. agregar al stack
                 console.log('authority: agregando units en ', stack.id)
-                addUnits(stack.id!)
+                addUnits(stack.id!, unitsCount)
               }
             }
             if (addUnitMode === 'previousStackStatsLimit') {
@@ -486,7 +486,7 @@ function Dos() {
               if (stackStrength + newStackStrength < previousGroupStrength) {
                 // 9. agregar al stack
                 console.log('authority: agregando units en ', stack.id)
-                addUnits(stack.id!)
+                addUnits(stack.id!, unitsCount)
               }
             }
           }
@@ -510,7 +510,7 @@ function Dos() {
               if (stackStrength + newStackStrength < sacrificeGroupStrength) {
                 // 9. agregar al stack
                 console.log('dominance: agregando units en ', stack.id)
-                addUnits(stack.id!)
+                addUnits(stack.id!, unitsCount)
               }
             }
             if (addUnitMode === 'previousStackStatsLimit') {
@@ -519,7 +519,7 @@ function Dos() {
               if (stackStrength + newStackStrength < previousGroupStrength) {
                 // 9. agregar al stack
                 console.log('dominance: agregando units en ', stack.id)
-                addUnits(stack.id!)
+                addUnits(stack.id!, unitsCount)
               }
             }
           }
