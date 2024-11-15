@@ -1,10 +1,21 @@
-import { mercChariot, mercEpicMonsterHunter } from './mercs'
+import {
+  arbalesterVI,
+  chariotVI,
+  knightVI,
+  legionaryVI,
+  mercEpicMonsterHunter,
+  rhinoRiderVI,
+  sheduVI,
+  sphynxVI,
+  trailseekerVI
+} from './mercs'
 import {
   ArcherG1,
   ArcherG2,
   ArcherG3,
   ArcherG4,
   ArcherG5,
+  ARMY,
   battleBoar,
   blackDragon,
   burningCentaurus,
@@ -64,6 +75,7 @@ import './armyList.css'
 export const ArmyList = () => {
   const addStack = useStackStore(state => state.addStack)
   // const bonus = useStackStore(state => state.bonus)
+  const army = useStackStore(state => state.army)
 
   const addTroops = (type: string) => {
     let unitType = null
@@ -127,11 +139,31 @@ export const ArmyList = () => {
       unitType = CatapultE4
     } else if (type === 'Catapult E5') {
       unitType = CatapultE5
-    } else if (type === 'mercEpicMonsterHunter') {
+    }
+
+    // MERCENARIES ------------------------------
+    else if (type === 'mercEpicMonsterHunter') {
       unitType = mercEpicMonsterHunter
-    } else if (type === 'mercChariot') {
-      unitType = mercChariot
-    } else if (type === 'waterElemental') {
+    } else if (type === 'chariotVI') {
+      unitType = chariotVI
+    } else if (type === 'legionaryVI') {
+      unitType = legionaryVI
+    } else if (type === 'arbalesterVI') {
+      unitType = arbalesterVI
+    } else if (type === 'sphynxVI') {
+      unitType = sphynxVI
+    } else if (type === 'knightVI') {
+      unitType = knightVI
+    } else if (type === 'trailseekerVI') {
+      unitType = trailseekerVI
+    } else if (type === 'rhinoRiderVI') {
+      unitType = rhinoRiderVI
+    } else if (type === 'sheduVI') {
+      unitType = sheduVI
+    }
+
+    // MONSTERS ------------------------------
+    else if (type === 'waterElemental') {
       unitType = waterElemental
     } else if (type === 'battleBoar') {
       unitType = battleBoar
@@ -212,6 +244,8 @@ export const ArmyList = () => {
     addStack(stack)
   }
 
+  const selectedStacks = army.map(stack => stack.unit.name)
+
   return (
     <div className='army-container'>
       <h2 className='header-title'>Army</h2>
@@ -219,514 +253,699 @@ export const ArmyList = () => {
         <div className='guardsmen'>
           <p className='group-title'>Spearman</p>
           <div className='btn-group'>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Spearman G1')
-              }}
-            >
-              G1
-            </button>
+            {!selectedStacks.includes(ARMY.SpearmanG1) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Spearman G1')
+                }}
+              >
+                G1
+              </button>
+            )}
 
-            <button
-              className='troop  '
-              onClick={() => {
-                addTroops('Spearman G2')
-              }}
-            >
-              G2
-            </button>
-            <button
-              className='troop  '
-              onClick={() => {
-                addTroops('Spearman G3')
-              }}
-            >
-              G3
-            </button>
+            {!selectedStacks.includes(ARMY.SpearmanG2) && (
+              <button
+                className='troop  '
+                onClick={() => {
+                  addTroops('Spearman G2')
+                }}
+              >
+                G2
+              </button>
+            )}
 
-            <button
-              className='troop  '
-              onClick={() => {
-                addTroops('Spearman G4')
-              }}
-            >
-              G4
-            </button>
-            <button
-              className='troop  '
-              onClick={() => {
-                addTroops('Spearman G5')
-              }}
-            >
-              G5
-            </button>
+            {!selectedStacks.includes(ARMY.SpearmanG3) && (
+              <button
+                className='troop  '
+                onClick={() => {
+                  addTroops('Spearman G3')
+                }}
+              >
+                G3
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.SpearmanG4) && (
+              <button
+                className='troop  '
+                onClick={() => {
+                  addTroops('Spearman G4')
+                }}
+              >
+                G4
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.SpearmanG5) && (
+              <button
+                className='troop  '
+                onClick={() => {
+                  addTroops('Spearman G5')
+                }}
+              >
+                G5
+              </button>
+            )}
           </div>
         </div>
 
         <div className='guardsmen'>
           <p className='group-title'>Archer</p>
           <div className='btn-group'>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Archer G1')
-              }}
-            >
-              G1
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Archer G2')
-              }}
-            >
-              G2
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Archer G3')
-              }}
-            >
-              G3
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Archer G4')
-              }}
-            >
-              G4
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Archer G5')
-              }}
-            >
-              G5
-            </button>
+            {!selectedStacks.includes(ARMY.ArcherG1) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Archer G1')
+                }}
+              >
+                G1
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.ArcherG2) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Archer G2')
+                }}
+              >
+                G2
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.ArcherG3) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Archer G3')
+                }}
+              >
+                G3
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.ArcherG4) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Archer G4')
+                }}
+              >
+                G4
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.ArcherG5) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Archer G5')
+                }}
+              >
+                G5
+              </button>
+            )}
           </div>
         </div>
 
         <div className='guardsmen'>
           <p className='group-title'>Rider</p>
           <div className='btn-group'>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Rider G1')
-              }}
-            >
-              G1
-            </button>
+            {!selectedStacks.includes(ARMY.RiderG1) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Rider G1')
+                }}
+              >
+                G1
+              </button>
+            )}
 
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Rider G2')
-              }}
-            >
-              G2
-            </button>
+            {!selectedStacks.includes(ARMY.RiderG2) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Rider G2')
+                }}
+              >
+                G2
+              </button>
+            )}
 
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Rider G3')
-              }}
-            >
-              G3
-            </button>
+            {!selectedStacks.includes(ARMY.RiderG3) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Rider G3')
+                }}
+              >
+                G3
+              </button>
+            )}
 
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Rider G4')
-              }}
-            >
-              G4
-            </button>
+            {!selectedStacks.includes(ARMY.RiderG4) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Rider G4')
+                }}
+              >
+                G4
+              </button>
+            )}
 
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Rider G5')
-              }}
-            >
-              G5
-            </button>
+            {!selectedStacks.includes(ARMY.RiderG5) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Rider G5')
+                }}
+              >
+                G5
+              </button>
+            )}
           </div>
         </div>
 
         <div className='specialists'>
           <p className='group-title'>Swordsman</p>
           <div className='btn-group'>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Swordsman S1')
-              }}
-            >
-              S1
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Swordsman S2')
-              }}
-            >
-              S2
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Swordsman S3')
-              }}
-            >
-              S3
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Swordsman S4')
-              }}
-            >
-              S4
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Swordsman S5')
-              }}
-            >
-              S5
-            </button>
+            {!selectedStacks.includes(ARMY.SwordmanS1) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Swordsman S1')
+                }}
+              >
+                S1
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.SwordmanS2) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Swordsman S2')
+                }}
+              >
+                S2
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.SwordmanS3) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Swordsman S3')
+                }}
+              >
+                S3
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.SwordmanS4) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Swordsman S4')
+                }}
+              >
+                S4
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.SwordmanS5) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Swordsman S5')
+                }}
+              >
+                S5
+              </button>
+            )}
           </div>
         </div>
 
         <div className='specialists'>
           <p className='group-title'>Spy</p>
           <div className='btn-group'>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Spy S1')
-              }}
-            >
-              S1
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Spy S2')
-              }}
-            >
-              S2
-            </button>
+            {!selectedStacks.includes(ARMY.SpyS1) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Spy S1')
+                }}
+              >
+                S1
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.SpyS2) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('Spy S2')
+                }}
+              >
+                S2
+              </button>
+            )}
           </div>
         </div>
 
         <div className='engineer'>
           <p className='group-title'>Catapult</p>
           <div className='btn-group'>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('Catapult E1')
-              }}
-            >
-              E1
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('Catapult E2')
-              }}
-            >
-              E2
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('Catapult E3')
-              }}
-            >
-              E3
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('Catapult E4')
-              }}
-            >
-              E4
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('Catapult E5')
-              }}
-            >
-              E5
-            </button>
+            {!selectedStacks.includes(ARMY.CatapultE1) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('Catapult E1')
+                }}
+              >
+                E1
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.CatapultE2) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('Catapult E2')
+                }}
+              >
+                E2
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.CatapultE3) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('Catapult E3')
+                }}
+              >
+                E3
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.CatapultE4) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('Catapult E4')
+                }}
+              >
+                E4
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.CatapultE5) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('Catapult E5')
+                }}
+              >
+                E5
+              </button>
+            )}
           </div>
         </div>
 
         <div className='monsters'>
           <p className='group-title'>Monsters</p>
           <div className='btn-group'>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('waterElemental')
-              }}
-            >
-              Water Elemental III
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('battleBoar')
-              }}
-            >
-              Battle Boar III
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('emeraldDragon')
-              }}
-            >
-              Emerald Dragon III
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('stoneGargole')
-              }}
-            >
-              Stone Gargole III
-            </button>
+            {!selectedStacks.includes(ARMY.waterElemental) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('waterElemental')
+                }}
+              >
+                Water Elemental III
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.battleBoar) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('battleBoar')
+                }}
+              >
+                Battle Boar III
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.emeraldDragon) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('emeraldDragon')
+                }}
+              >
+                Emerald Dragon III
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.stoneGargole) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('stoneGargole')
+                }}
+              >
+                Stone Gargole III
+              </button>
+            )}
           </div>
           <div className='btn-group'>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('iceFenix')
-              }}
-            >
-              ice Fenix IV
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('gorgonMedusa')
-              }}
-            >
-              gorgon Medusa IV
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('magicDragon')
-              }}
-            >
-              magic Dragon IV
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('multiArmGuardian')
-              }}
-            >
-              multi-Arm Guardian IV
-            </button>
+            {!selectedStacks.includes(ARMY.iceFenix) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('iceFenix')
+                }}
+              >
+                ice Fenix IV
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.gorgonMedusa) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('gorgonMedusa')
+                }}
+              >
+                gorgon Medusa IV
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.magicDragon) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('magicDragon')
+                }}
+              >
+                magic Dragon IV
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.multiArmGuardian) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('multiArmGuardian')
+                }}
+              >
+                multi-Arm Guardian IV
+              </button>
+            )}
           </div>
           <div className='btn-group'>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('burningCentaurus')
-              }}
-            >
-              burning Centaurus V
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('fearManticora')
-              }}
-            >
-              fear Manticora V
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('desertConquer')
-              }}
-            >
-              desert Conquer V
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('Ettin')
-              }}
-            >
-              Ettin V
-            </button>
+            {!selectedStacks.includes(ARMY.burningCentaurus) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('burningCentaurus')
+                }}
+              >
+                burning Centaurus V
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.fearManticora) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('fearManticora')
+                }}
+              >
+                fear Manticora V
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.desertConquer) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('desertConquer')
+                }}
+              >
+                desert Conquer V
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.Ettin) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('Ettin')
+                }}
+              >
+                Ettin V
+              </button>
+            )}
           </div>
           <div className='btn-group'>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('forestDestructor')
-              }}
-            >
-              forest Destructor VI
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('crystalDragon')
-              }}
-            >
-              crystal Dragon VI
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('trollRider')
-              }}
-            >
-              troll Rider VI
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('rubiGolem')
-              }}
-            >
-              rubi Golem VI
-            </button>
+            {!selectedStacks.includes(ARMY.forestDestructor) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('forestDestructor')
+                }}
+              >
+                forest Destructor VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.crystalDragon) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('crystalDragon')
+                }}
+              >
+                crystal Dragon VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.trollRider) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('trollRider')
+                }}
+              >
+                troll Rider VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.rubiGolem) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('rubiGolem')
+                }}
+              >
+                rubi Golem VI
+              </button>
+            )}
           </div>
           <div className='btn-group'>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('windLord')
-              }}
-            >
-              wind Lord VII
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('oldTerror')
-              }}
-            >
-              old Terror VII
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('blackDragon')
-              }}
-            >
-              black Dragon VII
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('destroyerColossus')
-              }}
-            >
-              destroyer Colossus VII
-            </button>
+            {!selectedStacks.includes(ARMY.windLord) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('windLord')
+                }}
+              >
+                wind Lord VII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.oldTerror) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('oldTerror')
+                }}
+              >
+                old Terror VII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.blackDragon) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('blackDragon')
+                }}
+              >
+                black Dragon VII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.destroyerColossus) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('destroyerColossus')
+                }}
+              >
+                destroyer Colossus VII
+              </button>
+            )}
           </div>
           <div className='btn-group'>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('fireFenixI')
-              }}
-            >
-              fire Fenix I
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('embaucatorI')
-              }}
-            >
-              embaucator I
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('devastatorI')
-              }}
-            >
-              devastator I
-            </button>
+            {!selectedStacks.includes(ARMY.fireFenixI) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('fireFenixI')
+                }}
+              >
+                fire Fenix I
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.embaucatorI) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('embaucatorI')
+                }}
+              >
+                embaucator I
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.devastatorI) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('devastatorI')
+                }}
+              >
+                devastator I
+              </button>
+            )}
           </div>
+
           <div className='btn-group'>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('fireFenixII')
-              }}
-            >
-              fireFenix II
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('embaucatorII')
-              }}
-            >
-              embaucator II
-            </button>
-            <button
-              className='troop'
-              onClick={() => {
-                addTroops('devastatorII')
-              }}
-            >
-              devastator II
-            </button>
+            {!selectedStacks.includes(ARMY.fireFenixII) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('fireFenixII')
+                }}
+              >
+                fireFenix II
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.embaucatorII) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('embaucatorII')
+                }}
+              >
+                embaucator II
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.devastatorII) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('devastatorII')
+                }}
+              >
+                devastator II
+              </button>
+            )}
           </div>
         </div>
 
         <div className='mercs'>
           <p className='group-title'>Mercs</p>
           <div className='btn-group'>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('mercEpicMonsterHunter')
-              }}
-            >
-              Epic Monster Hunter VI
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('mercChariot')
-              }}
-            >
-              Chariot VI
-            </button>
-            <button
-              className='troop '
-              onClick={() => {
-                addTroops('Legionary VI')
-              }}
-            >
-              Legionary VI
-            </button>
+            {!selectedStacks.includes(ARMY.mercEpicMonsterHunter) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('mercEpicMonsterHunter')
+                }}
+              >
+                Epic Monster Hunter VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.chariotVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('chariotVI')
+                }}
+              >
+                Chariot VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.legionaryVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('legionaryVI')
+                }}
+              >
+                Legionary VI
+              </button>
+            )}
+          </div>
+
+          <div className='btn-group'>
+            {!selectedStacks.includes(ARMY.arbalesterVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('arbalesterVI')
+                }}
+              >
+                arbalester VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.sphynxVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('sphynxVI')
+                }}
+              >
+                sphynx VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.knightVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('knightVI')
+                }}
+              >
+                knight VI
+              </button>
+            )}
+          </div>
+
+          <div className='btn-group'>
+            {!selectedStacks.includes(ARMY.trailseekerVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('trailseekerVI')
+                }}
+              >
+                trailseeker VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.rhinoRiderVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('rhinoRiderVI')
+                }}
+              >
+                rhinoRider VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.sheduVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('sheduVI')
+                }}
+              >
+                shedu VI
+              </button>
+            )}
           </div>
         </div>
       </div>

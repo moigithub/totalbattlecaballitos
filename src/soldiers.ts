@@ -33,6 +33,77 @@ interface UnitProps {
 // const genericArrowFunction = <T>(arg: T): T => {
 //   return arg
 // }
+export const ARMY = {
+  RiderG1: 'RiderG1',
+  RiderG2: 'RiderG2',
+  RiderG3: 'RiderG3',
+  RiderG4: 'RiderG4',
+  RiderG5: 'RiderG5',
+  SwordmanS1: 'SwordmanS1',
+  SwordmanS2: 'SwordmanS2',
+  SwordmanS3: 'SwordmanS3',
+  SwordmanS4: 'SwordmanS4',
+  SwordmanS5: 'SwordmanS5',
+  SpyS1: 'SpyS1',
+  SpyS2: 'SpyS2',
+  SpyS3: 'SpyS3',
+  SpyS4: 'SpyS4',
+  SpyS5: 'SpyS5',
+  SpearmanG1: 'SpearmanG1',
+  SpearmanG2: 'SpearmanG2',
+  SpearmanG3: 'SpearmanG3',
+  SpearmanG4: 'SpearmanG4',
+  SpearmanG5: 'SpearmanG5',
+  ArcherG1: 'ArcherG1',
+  ArcherG2: 'ArcherG2',
+  ArcherG3: 'ArcherG3',
+  ArcherG4: 'ArcherG4',
+  ArcherG5: 'ArcherG5',
+  CatapultE1: 'CatapultE1',
+  CatapultE2: 'CatapultE2',
+  CatapultE3: 'CatapultE3',
+  CatapultE4: 'CatapultE4',
+  CatapultE5: 'CatapultE5',
+
+  waterElemental: 'waterElemental',
+  iceFenix: 'iceFenix',
+  burningCentaurus: 'burningCentaurus',
+  rubiGolem: 'rubiGolem',
+  windLord: 'windLord',
+  fireFenixI: 'fireFenixI',
+  fireFenixII: 'fireFenixII',
+  battleBoar: 'battleBoar',
+  gorgonMedusa: 'gorgonMedusa',
+  fearManticora: 'fearManticora',
+  forestDestructor: 'forestDestructor',
+  oldTerror: 'oldTerror',
+  embaucatorI: 'embaucatorI',
+  embaucatorII: 'embaucatorII',
+  emeraldDragon: 'emeraldDragon',
+  magicDragon: 'magicDragon',
+  desertConquer: 'desertConquer',
+  crystalDragon: 'crystalDragon',
+  blackDragon: 'blackDragon',
+  devastatorI: 'devastatorI',
+  devastatorII: 'devastatorII',
+  stoneGargole: 'stoneGargole',
+  multiArmGuardian: 'multiArmGuardian',
+  Ettin: 'Ettin',
+  trollRider: 'trollRider',
+  destroyerColossus: 'destroyerColossus',
+  krakenI: 'krakenI',
+  krakenII: 'krakenII',
+
+  mercEpicMonsterHunter: 'mercEpicMonsterHunter',
+  chariotVI: 'chariotVI',
+  legionaryVI: 'legionaryVI',
+  arbalesterVI: 'arbalesterVI',
+  sphynxVI: 'sphynxVI',
+  knightVI: 'knightVI',
+  trailseekerVI: 'trailseekerVI',
+  rhinoRiderVI: 'rhinoRiderVI',
+  sheduVI: 'sheduVI'
+}
 export const unitBuilder = <T>(props: Partial<UnitProps>): T => {
   return {
     tipo: '',
@@ -88,11 +159,11 @@ const riderBuilder = (
     level
   })
 }
-export const RiderG1 = riderBuilder('RiderG1', 300, 100, 65, 54, 'G1')
-export const RiderG2 = riderBuilder('RiderG2', 540, 180, 98, 81, 'G2')
-export const RiderG3 = riderBuilder('RiderG3', 960, 320, 146, 122, 'G3')
-export const RiderG4 = riderBuilder('RiderG4', 1740, 580, 219, 182, 'G4')
-export const RiderG5 = riderBuilder('RiderG5', 3150, 1050, 329, 273, 'G5')
+export const RiderG1 = riderBuilder(ARMY.RiderG1, 300, 100, 65, 54, 'G1')
+export const RiderG2 = riderBuilder(ARMY.RiderG2, 540, 180, 98, 81, 'G2')
+export const RiderG3 = riderBuilder(ARMY.RiderG3, 960, 320, 146, 122, 'G3')
+export const RiderG4 = riderBuilder(ARMY.RiderG4, 1740, 580, 219, 182, 'G4')
+export const RiderG5 = riderBuilder(ARMY.RiderG5, 3150, 1050, 329, 273, 'G5')
 
 //--------------------------------
 const swordmanBuilder = (
@@ -121,11 +192,11 @@ const swordmanBuilder = (
     level
   })
 }
-export const SwordmanS1 = swordmanBuilder('SwordmanS1', 150, 50, 40, 105, 20, 'S1')
-export const SwordmanS2 = swordmanBuilder('SwordmanS2', 270, 90, 60, 105, 29, 'S2')
-export const SwordmanS3 = swordmanBuilder('SwordmanS3', 480, 160, 90, 105, 44, 'S3')
-export const SwordmanS4 = swordmanBuilder('SwordmanS4', 870, 290, 135, 105, 66, 'S4')
-export const SwordmanS5 = swordmanBuilder('SwordmanS5', 1560, 520, 203, 105, 99, 'S5')
+export const SwordmanS1 = swordmanBuilder(ARMY.SwordmanS1, 150, 50, 40, 105, 20, 'S1')
+export const SwordmanS2 = swordmanBuilder(ARMY.SwordmanS2, 270, 90, 60, 105, 29, 'S2')
+export const SwordmanS3 = swordmanBuilder(ARMY.SwordmanS3, 480, 160, 90, 105, 44, 'S3')
+export const SwordmanS4 = swordmanBuilder(ARMY.SwordmanS4, 870, 290, 135, 105, 66, 'S4')
+export const SwordmanS5 = swordmanBuilder(ARMY.SwordmanS5, 1560, 520, 203, 105, 99, 'S5')
 
 //----------------------------
 
@@ -145,11 +216,11 @@ const spyBuilder = (name: string, BASEHP: number, BASESTR: number, level: string
   })
 }
 
-export const SpyS1 = spyBuilder('SpyS1', 75, 25, 'S1')
-export const SpyS2 = spyBuilder('SpyS2', 135, 45, 'S2')
-export const SpyS3 = spyBuilder('SpyS3', 240, 80, 'S3')
-export const SpyS4 = spyBuilder('SpyS4', 450, 150, 'S4')
-export const SpyS5 = spyBuilder('SpyS5', 780, 260, 'S5')
+export const SpyS1 = spyBuilder(ARMY.SpyS1, 75, 25, 'S1')
+export const SpyS2 = spyBuilder(ARMY.SpyS2, 135, 45, 'S2')
+export const SpyS3 = spyBuilder(ARMY.SpyS3, 240, 80, 'S3')
+export const SpyS4 = spyBuilder(ARMY.SpyS4, 450, 150, 'S4')
+export const SpyS5 = spyBuilder(ARMY.SpyS5, 780, 260, 'S5')
 
 //----------------------------------
 const spearmanBuilder = (
@@ -177,11 +248,11 @@ const spearmanBuilder = (
   })
 }
 
-export const SpearmanG1 = spearmanBuilder('SpearmanG1', 150, 50, 80, 39, 'G1')
-export const SpearmanG2 = spearmanBuilder('SpearmanG2', 270, 90, 120, 59, 'G2')
-export const SpearmanG3 = spearmanBuilder('SpearmanG3', 480, 160, 180, 88, 'G3')
-export const SpearmanG4 = spearmanBuilder('SpearmanG4', 870, 290, 270, 132, 'G4')
-export const SpearmanG5 = spearmanBuilder('SpearmanG5', 1560, 520, 405, 197, 'G5')
+export const SpearmanG1 = spearmanBuilder(ARMY.SpearmanG1, 150, 50, 80, 39, 'G1')
+export const SpearmanG2 = spearmanBuilder(ARMY.SpearmanG2, 270, 90, 120, 59, 'G2')
+export const SpearmanG3 = spearmanBuilder(ARMY.SpearmanG3, 480, 160, 180, 88, 'G3')
+export const SpearmanG4 = spearmanBuilder(ARMY.SpearmanG4, 870, 290, 270, 132, 'G4')
+export const SpearmanG5 = spearmanBuilder(ARMY.SpearmanG5, 1560, 520, 405, 197, 'G5')
 
 //----------------------------------
 const archerBuilder = (
@@ -208,11 +279,11 @@ const archerBuilder = (
     level
   })
 }
-export const ArcherG1 = archerBuilder('Archer G1', 150, 50, 67, 52, 'G1')
-export const ArcherG2 = archerBuilder('Archer G2', 270, 90, 101, 78, 'G2')
-export const ArcherG3 = archerBuilder('Archer G3', 480, 160, 151, 117, 'G3')
-export const ArcherG4 = archerBuilder('Archer G4', 870, 290, 226, 176, 'G4')
-export const ArcherG5 = archerBuilder('Archer G5', 1560, 520, 339, 263, 'G5')
+export const ArcherG1 = archerBuilder(ARMY.ArcherG1, 150, 50, 67, 52, 'G1')
+export const ArcherG2 = archerBuilder(ARMY.ArcherG2, 270, 90, 101, 78, 'G2')
+export const ArcherG3 = archerBuilder(ARMY.ArcherG3, 480, 160, 151, 117, 'G3')
+export const ArcherG4 = archerBuilder(ARMY.ArcherG4, 870, 290, 226, 176, 'G4')
+export const ArcherG5 = archerBuilder(ARMY.ArcherG5, 1560, 520, 339, 263, 'G5')
 
 //----------------------------------
 const catapultBuilder = (
@@ -239,18 +310,18 @@ const catapultBuilder = (
   })
 }
 
-export const CatapultE1 = catapultBuilder('Catapult E1', 1500, 250, 65, 'E1')
-export const CatapultE2 = catapultBuilder('Catapult E2', 2700, 450, 98, 'E2')
-export const CatapultE3 = catapultBuilder('Catapult E3', 4860, 810, 146, 'E3')
-export const CatapultE4 = catapultBuilder('Catapult E4', 8750, 1460, 219, 'E4')
-export const CatapultE5 = catapultBuilder('Catapult E5', 15800, 2630, 329, 'E5')
+export const CatapultE1 = catapultBuilder(ARMY.CatapultE1, 1500, 250, 65, 'E1')
+export const CatapultE2 = catapultBuilder(ARMY.CatapultE2, 2700, 450, 98, 'E2')
+export const CatapultE3 = catapultBuilder(ARMY.CatapultE3, 4860, 810, 146, 'E3')
+export const CatapultE4 = catapultBuilder(ARMY.CatapultE4, 8750, 1460, 219, 'E4')
+export const CatapultE5 = catapultBuilder(ARMY.CatapultE5, 15800, 2630, 329, 'E5')
 
 //------------------------
 
 //------------------------------------
 export const waterElemental = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'waterElemental',
+  name: ARMY.waterElemental, //'waterElemental',
   BASEHP: 5700,
   BASESTR: 1900,
   DOMINANCE: 3,
@@ -265,7 +336,7 @@ export const waterElemental = unitBuilder<MonsterUnit>({
 })
 export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'iceFenix',
+  name: ARMY.iceFenix, //'iceFenix',
   BASESTR: 17000,
   BASEHP: 51000,
   DOMINANCE: 15,
@@ -280,7 +351,7 @@ export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 export const burningCentaurus: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'burningCentaurus',
+  name: ARMY.burningCentaurus, //'burningCentaurus',
   BASESTR: 44000,
   BASEHP: 132000,
   DOMINANCE: 21,
@@ -297,7 +368,7 @@ export const rubiGolem: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'rubiGolem',
+  name: ARMY.rubiGolem, //'rubiGolem',
   BASESTR: 130000,
   BASEHP: 390000,
   DOMINANCE: 35,
@@ -312,7 +383,7 @@ export const windLord: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'windLord',
+  name: ARMY.windLord, //'windLord',
   BASESTR: 310000,
   BASEHP: 930000,
   DOMINANCE: 45,
@@ -327,7 +398,7 @@ export const fireFenixI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'fireFenixI',
+  name: ARMY.fireFenixI, //'fireFenixI',
   BASESTR: 660000,
   BASEHP: 1980000,
   DOMINANCE: 54,
@@ -342,7 +413,7 @@ export const fireFenixII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'fireFenixII',
+  name: ARMY.fireFenixII, //'fireFenixII',
   BASESTR: 1190000,
   BASEHP: 3570000,
   DOMINANCE: 54,
@@ -359,7 +430,7 @@ export const battleBoar: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'battleBoar',
+  name: ARMY.battleBoar, //'battleBoar',
   BASESTR: 3900,
   BASEHP: 11700,
   DOMINANCE: 6,
@@ -374,7 +445,7 @@ export const gorgonMedusa: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'gorgonMedusa',
+  name: ARMY.gorgonMedusa, //'gorgonMedusa',
   BASESTR: 12000,
   BASEHP: 36000,
   DOMINANCE: 10,
@@ -389,7 +460,7 @@ export const fearManticora: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'fearManticora',
+  name: ARMY.fearManticora, //'fearManticora',
   BASESTR: 46000,
   BASEHP: 138000,
   DOMINANCE: 22,
@@ -404,7 +475,7 @@ export const forestDestructor: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'forestDestructor',
+  name: ARMY.forestDestructor, //'forestDestructor',
   BASESTR: 130000,
   BASEHP: 390000,
   DOMINANCE: 34,
@@ -419,7 +490,7 @@ export const oldTerror: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'oldTerror',
+  name: ARMY.oldTerror, //'oldTerror',
   BASESTR: 280000,
   BASEHP: 840000,
   DOMINANCE: 41,
@@ -434,7 +505,7 @@ export const embaucatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'embaucatorI',
+  name: ARMY.embaucatorI, //'embaucatorI',
   BASESTR: 640000,
   BASEHP: 1920000,
   DOMINANCE: 52,
@@ -449,7 +520,7 @@ export const embaucatorII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'embaucatorII',
+  name: ARMY.embaucatorII, //'embaucatorII',
   BASESTR: 1150000,
   BASEHP: 3450000,
   DOMINANCE: 52,
@@ -463,7 +534,7 @@ export const embaucatorII: MonsterUnit = unitBuilder<MonsterUnit>({
 //-----------------------------
 export const emeraldDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'emeraldDragon',
+  name: ARMY.emeraldDragon, //'emeraldDragon',
   BASESTR: 4500,
   BASEHP: 13500,
   DOMINANCE: 7,
@@ -478,7 +549,7 @@ export const emeraldDragon: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 export const magicDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'magicDragon',
+  name: ARMY.magicDragon, //'magicDragon',
   BASESTR: 15000,
   BASEHP: 45000,
   DOMINANCE: 13,
@@ -493,7 +564,7 @@ export const magicDragon: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 export const desertConquer: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'desertConquer',
+  name: ARMY.desertConquer, //'desertConquer',
   BASESTR: 42000,
   BASEHP: 126000,
   DOMINANCE: 20,
@@ -509,7 +580,7 @@ export const desertConquer: MonsterUnit = unitBuilder<MonsterUnit>({
 
 export const crystalDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'crystalDragon',
+  name: ARMY.crystalDragon, //'crystalDragon',
   BASESTR: 120000,
   BASEHP: 360000,
   DOMINANCE: 33,
@@ -524,7 +595,7 @@ export const crystalDragon: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 export const blackDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'blackDragon',
+  name: ARMY.blackDragon, //'blackDragon',
   BASESTR: 300000,
   BASEHP: 900000,
   DOMINANCE: 44,
@@ -539,7 +610,7 @@ export const blackDragon: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 export const devastatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'devastatorI',
+  name: ARMY.devastatorI, //'devastatorI',
   BASESTR: 650000,
   BASEHP: 1950000,
   DOMINANCE: 53,
@@ -554,7 +625,7 @@ export const devastatorI: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 export const devastatorII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: 'devastatorII',
+  name: ARMY.devastatorII, //'devastatorII',
   BASESTR: 1170000,
   BASEHP: 3510000,
   DOMINANCE: 53,
@@ -572,7 +643,7 @@ export const stoneGargole: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'stoneGargole',
+  name: ARMY.stoneGargole, //'stoneGargole',
   BASESTR: 5200,
   BASEHP: 15600,
   DOMINANCE: 8,
@@ -587,7 +658,7 @@ export const multiArmGuardian: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'multiArmGuardian',
+  name: ARMY.multiArmGuardian, //'multiArmGuardian',
   BASESTR: 13000,
   BASEHP: 39000,
   DOMINANCE: 11,
@@ -602,7 +673,7 @@ export const Ettin: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'Ettin',
+  name: ARMY.Ettin, //'Ettin',
   BASESTR: 48000,
   BASEHP: 144000,
   DOMINANCE: 23,
@@ -617,7 +688,7 @@ export const trollRider: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'trollRider',
+  name: ARMY.trollRider, //'trollRider',
   BASESTR: 110000,
   BASEHP: 330000,
   DOMINANCE: 30,
@@ -632,7 +703,7 @@ export const destroyerColossus: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'destroyerColossus',
+  name: ARMY.destroyerColossus, //'destroyerColossus',
   BASESTR: 290000,
   BASEHP: 870000,
   DOMINANCE: 43,
@@ -647,7 +718,7 @@ export const krakenI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'krakenI',
+  name: ARMY.krakenI, //'krakenI',
   BASESTR: 670000,
   BASEHP: 2010000,
   DOMINANCE: 55,
@@ -662,7 +733,7 @@ export const krakenII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   group: 'monster',
-  name: 'krakenII',
+  name: ARMY.krakenII, //'krakenII',
   BASESTR: 1210000,
   BASEHP: 3630000,
   DOMINANCE: 55,
