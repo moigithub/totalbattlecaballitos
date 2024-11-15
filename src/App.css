@@ -8,6 +8,11 @@ body {
   overflow: hidden;
 }
 
+#root {
+  position: relative;
+  z-index: 99999;
+}
+
 table {
   margin: 1rem 0;
 }
