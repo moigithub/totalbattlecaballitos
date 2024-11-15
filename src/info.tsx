@@ -1,6 +1,20 @@
 export const Info = () => {
   return (
     <div className='info'>
+      <h2>Tutorial - check the image below</h2>
+      <ol>
+        <li>load all bonus/vip/etc</li>
+        <li>use the last battle report if you have</li>
+        <li>or create a Battle Report to get the bonuses values for the troops you going to use</li>
+        <p>on the example i am sending 1 of each</p>
+        <li>copy the strength and health bonus on the respective fields</li>
+        <li>pick the troops you want to use</li>
+        <li>drag and drop the cards to arrange/order them as you like</li>
+        <li>click on calculate</li>
+      </ol>
+      <p>if the bonuses are not correct, the stack order will vary</p>
+      <img src='./tbcalc.gif' alt='tutorial' />
+
       <div>
         <ul style={{ color: 'pink' }}>
           <li>The cheapest group should go above, they might hit, or get killed at first round</li>
@@ -14,9 +28,6 @@ export const Info = () => {
             Send sacrifices first (the stack with highest str) ie: 500k strength for the whole stack
           </li>
           <li>after sacrifices, set all rest of eachs stack with lower strength, ie: 490k</li>
-          <li>There are 4 big groups, guards(3),specialist(2),engineer(1),monster(4)</li>
-          <li>Each group have subgroups</li>
-          <li>Each subgroups have its own bonus value, im handling only riders guards bonus</li>
           <li>
             Put more points on strength, or max strength first, leave health after you maxed
             strength,
@@ -56,7 +67,6 @@ export const Info = () => {
         <p>and finally... do whatever you want</p>
       </div>
       <img src='./bonus.jpg' alt='bonus' />
-      <img src='./tbcalc.gif' alt='tutorial' />
     </div>
   )
 }

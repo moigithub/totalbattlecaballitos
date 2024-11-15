@@ -50,7 +50,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         <button
           className='action-btn'
           onClick={() => {
-            addUnits(stack.id!)
+            addUnits(stack.id!, 1)
           }}
         >
           +
@@ -58,7 +58,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         <button
           className='action-btn'
           onClick={() => {
-            removeUnits(stack.id!)
+            removeUnits(stack.id!, 1)
           }}
         >
           -
@@ -101,8 +101,8 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
           C
         </button>
       </div>
-      <div className='stack-attack-info' style={{ color: 'gray', fontSize: 14 }}>
-        i attack <span style={{ color: 'green' }}>{whoCanIAttack(stack.unit).join(',')}</span>
+      <div className='stack-attack-info'>
+        vs <span>{whoCanIAttack(stack.unit).join(',')}</span>
       </div>
       <div className='stack-basic-info'>
         base Hp {stack.unit.BASEHP} Str {stack.unit.BASESTR}

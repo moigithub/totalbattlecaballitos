@@ -979,7 +979,7 @@ function Uno() {
           </span>
         </div>
       </div>
-      <div className='container'>
+      <div className='uno-main'>
         <div className='configbar'>
           <div className='card'>
             <label>Leadership </label>

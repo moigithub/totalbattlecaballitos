@@ -1,0 +1,50 @@
+.army-header {
+  display: flex;
+  justify-content: space-between;
+
+  .btn-clear-army {
+    background-color: purple;
+  }
+}
+
+.guardsmen {
+  background-color: darkcyan;
+  margin: 4px 0;
+}
+
+.specialists {
+  background-color: lightcoral;
+  margin: 4px 0;
+}
+
+.engineer {
+  background-color: sienna;
+  margin: 4px 0;
+}
+
+.monsters {
+  background-color: mediumorchid;
+  margin: 4px 0;
+  padding: 2px;
+  .btn-group {
+    /* margin: 2px 0; */
+
+    border: 2px solid black;
+  }
+}
+.mercs {
+  background-color: brown;
+}
+.troop {
+  font-size: 14px;
+  margin: 4px;
+}
+
+/*----------*/
+.group-title {
+  margin: 0;
+}
+
+.btn-group {
+  display: flex;
+}

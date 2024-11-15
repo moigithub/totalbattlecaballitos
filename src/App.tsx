@@ -21,8 +21,8 @@ function App() {
 
       <Outlet />
 
-      <footer style={{ padding: 30 }}>
-        work in progress, if something doesnt work.. ignore it
+      <footer style={{ padding: 10, height: 20 }}>
+        pa' los eventos, ... usa caballitos si recien empiezas
       </footer>
     </div>
   )
