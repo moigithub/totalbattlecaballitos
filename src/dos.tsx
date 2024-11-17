@@ -199,22 +199,22 @@ function Dos() {
     // ejm. mounstruo battleboard es mounted/beast
     // pero en el reporte ataca a un mounted
     // si fuese mounted la prioridad, atacaria un ranged/siege
-    if (unit.race === 'elemental') {
+    if (unit.group === 'elemental') {
       mob = mobArmy.find(mob => mob.unit.category === 'flying')
       if (!mob) {
         mob = mobArmy.find(mob => mob.unit.category === 'melee')
       }
-    } else if (unit.race === 'giant') {
+    } else if (unit.group === 'giant') {
       mob = mobArmy.find(mob => mob.unit.category === 'melee')
       if (!mob) {
         mob = mobArmy.find(mob => mob.unit.race === 'beast')
       }
-    } else if (unit.race === 'dragon') {
+    } else if (unit.group === 'dragon') {
       mob = mobArmy.find(mob => mob.unit.category === 'mounted')
       if (!mob) {
         mob = mobArmy.find(mob => mob.unit.race === 'giant')
       }
-    } else if (unit.race === 'beast') {
+    } else if (unit.group === 'beast') {
       mob = mobArmy.find(mob => mob.unit.category === 'mounted')
       if (!mob) {
         mob = mobArmy.find(mob => mob.unit.category === 'ranged')
@@ -269,7 +269,7 @@ function Dos() {
       }
     }
 
-    if (unit.race === 'elemental') {
+    if (unit.group === 'elemental') {
       if (monster.category === 'flying') {
         const strBonus = ((otherBonus + unit.vsFlyingPercent) * unit.BASESTR) / 100
         soldierStrength = unit.BASESTR + strBonus
@@ -277,7 +277,7 @@ function Dos() {
         const strBonus = ((otherBonus + unit.vsGiantPercent) * unit.BASESTR) / 100
         soldierStrength = unit.BASESTR + strBonus
       }
-    } else if (unit.race === 'giant') {
+    } else if (unit.group === 'giant') {
       if (monster.category === 'melee') {
         const strBonus = ((otherBonus + unit.vsMeleePercent) * unit.BASESTR) / 100
         soldierStrength = unit.BASESTR + strBonus
@@ -285,7 +285,7 @@ function Dos() {
         const strBonus = ((otherBonus + unit.vsBeastPercent) * unit.BASESTR) / 100
         soldierStrength = unit.BASESTR + strBonus
       }
-    } else if (unit.race === 'dragon') {
+    } else if (unit.group === 'dragon') {
       if (monster.category === 'mounted') {
         const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
         soldierStrength = unit.BASESTR + strBonus
@@ -293,7 +293,7 @@ function Dos() {
         const strBonus = ((otherBonus + unit.vsGiantPercent) * unit.BASESTR) / 100
         soldierStrength = unit.BASESTR + strBonus
       }
-    } else if (unit.race === 'beast') {
+    } else if (unit.group === 'beast') {
       if (monster.category === 'mounted') {
         const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
         soldierStrength = unit.BASESTR + strBonus

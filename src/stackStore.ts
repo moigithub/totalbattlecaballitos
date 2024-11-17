@@ -81,13 +81,13 @@ export const getStats = (unit: Unit, bonus: Bonus) => {
     stats = bonus.specialist[unit.category]
   } else if (unit.group === 'engineer' && unit.race === 'human') {
     stats = bonus.engineer[unit.category]
-  } else if (unit.group === 'monster' && unit.race === 'elemental') {
+  } else if (unit.race === 'monster' && unit.group === 'elemental') {
     stats = bonus.elemental[unit.category]
-  } else if (unit.group === 'monster' && unit.race === 'dragon') {
+  } else if (unit.race === 'monster' && unit.group === 'dragon') {
     stats = bonus.dragon[unit.category]
-  } else if (unit.group === 'monster' && unit.race === 'beast') {
+  } else if (unit.race === 'monster' && unit.group === 'beast') {
     stats = bonus.beast[unit.category]
-  } else if (unit.group === 'monster' && unit.race === 'giant') {
+  } else if (unit.race === 'monster' && unit.group === 'giant') {
     stats = bonus.giant[unit.category]
   }
 
