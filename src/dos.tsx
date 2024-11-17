@@ -392,11 +392,14 @@ function Dos() {
       // 2. agregar 1 unit al sacrificio
       let stack = army[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
 
-      if (stack.unit.tipo === 'army' && totalLeadership < leadership) {
+      if (stack.unit.tipo === 'army' && totalLeadership + stack.unit.LEADERSHIP <= leadership) {
         addUnits(army[0].id, 1)
-      } else if (stack.unit.tipo === 'merc' && totalAuthority < authority) {
+      } else if (stack.unit.tipo === 'merc' && totalAuthority + stack.unit.AUTHORITY <= authority) {
         addUnits(army[0].id, 1)
-      } else if (stack.unit.tipo === 'monster' && totalDominance < dominance) {
+      } else if (
+        stack.unit.tipo === 'monster' &&
+        totalDominance + stack.unit.DOMINANCE <= dominance
+      ) {
         addUnits(army[0].id, 1)
       } else {
         // break
