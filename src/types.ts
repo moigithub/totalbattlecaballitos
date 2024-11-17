@@ -134,9 +134,9 @@ export interface MonsterUnit extends BasicUnit {
   DOMINANCE: number
   AUTHORITY: 0
   LEADERSHIP: 0
-  race: 'elemental' | 'dragon' | 'beast' | 'giant'
+  group: 'elemental' | 'dragon' | 'beast' | 'giant'
+  race: 'monster'
   tipo: 'monster'
-  group: 'monster'
   category: keyof Monster
 }
 

@@ -238,9 +238,11 @@ table th {
     font-size: 0.8rem;
     font-weight: 500;
     width: 100%;
-    max-width: 160px;
+    max-width: 95%;
     text-overflow: ellipsis;
     overflow: hidden;
+    display: flex;
+    align-items: baseline;
   }
 
   .stack-health {
@@ -462,7 +464,7 @@ table th {
   }
 
   .stack-card {
-    display: grid;
+    /* display: grid; */
     grid-template-areas:
       'units name      name       action       delete'
       'units atk       atk        leadership   reset'

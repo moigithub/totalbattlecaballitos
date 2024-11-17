@@ -38,7 +38,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         <div className='drag-handler'></div>
         {stack.units}
       </p>
-      <p className='stack-name'>{stack.unit.name}</p>
+      <p className='stack-name'>{stack.unit.name} </p>
       <p className='stack-health'>HP {stackHealth.toFixed(0)}</p>
       <p className='stack-strength'>STR {stackStrength.toFixed(2)}</p>
       {stack.unit.tipo === 'army' && <p className='stack-leadership'>Lead {stack.leadership}</p>}
@@ -102,7 +102,8 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         </button>
       </div>
       <div className='stack-attack-info'>
-        vs <span>{whoCanIAttack(stack.unit).join(',')}</span>
+        {stack.unit.group}:{stack.unit.category} <span style={{ color: 'red' }}>vs</span>{' '}
+        <span>{whoCanIAttack(stack.unit).join(',')}</span>
       </div>
       <div className='stack-basic-info'>
         base Hp {stack.unit.BASEHP} Str {stack.unit.BASESTR}

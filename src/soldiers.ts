@@ -209,7 +209,7 @@ const spyBuilder = (name: string, BASEHP: number, BASESTR: number, level: string
     LEADERSHIP: 1,
     INITIATIVE: 10,
     troop: 'spy',
-    category: 'melee',
+    category: 'scout',
     race: 'human',
     group: 'specialist',
     level
@@ -330,8 +330,8 @@ export const waterElemental = unitBuilder<MonsterUnit>({
   vsFlyingPercent: 144,
   troop: 'monster',
   category: 'ranged',
-  race: 'elemental',
-  group: 'monster',
+  group: 'elemental',
+  race: 'monster',
   level: 'III'
 })
 export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
@@ -344,8 +344,8 @@ export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
   vsFlyingPercent: 223,
   vsDragonPercent: 162,
   troop: 'monster',
-  race: 'elemental',
-  group: 'monster',
+  group: 'elemental',
+  race: 'monster',
   category: 'flying',
   level: 'IV'
 })
@@ -359,15 +359,15 @@ export const burningCentaurus: MonsterUnit = unitBuilder<MonsterUnit>({
   vsBeastPercent: 162,
   vsRangedPercent: 415,
   troop: 'monster',
-  race: 'elemental',
-  group: 'monster',
+  group: 'elemental',
+  race: 'monster',
   category: 'mounted',
   level: 'V'
 })
 export const rubiGolem: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.rubiGolem, //'rubiGolem',
   BASESTR: 130000,
   BASEHP: 390000,
@@ -375,14 +375,14 @@ export const rubiGolem: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMeleePercent: 486,
   vsMountedPercent: 380,
-  race: 'elemental',
+  group: 'elemental',
   category: 'melee',
   level: 'VI'
 })
 export const windLord: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.windLord, //'windLord',
   BASESTR: 310000,
   BASEHP: 930000,
@@ -390,14 +390,14 @@ export const windLord: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsDragonPercent: 911,
   vsMountedPercent: 387,
-  race: 'elemental',
+  group: 'elemental',
   category: 'melee',
   level: 'VII'
 })
 export const fireFenixI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.fireFenixI, //'fireFenixI',
   BASESTR: 660000,
   BASEHP: 1980000,
@@ -405,14 +405,14 @@ export const fireFenixI: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMeleePercent: 701,
   vsDragonPercent: 1247,
-  race: 'elemental',
+  group: 'elemental',
   category: 'flying',
   level: 'I'
 })
 export const fireFenixII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.fireFenixII, //'fireFenixII',
   BASESTR: 1190000,
   BASEHP: 3570000,
@@ -420,7 +420,7 @@ export const fireFenixII: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMeleePercent: 1051,
   vsDragonPercent: 1871,
-  race: 'elemental',
+  group: 'elemental',
   category: 'flying',
   level: 'II'
 })
@@ -429,7 +429,7 @@ export const fireFenixII: MonsterUnit = unitBuilder<MonsterUnit>({
 export const battleBoar: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.battleBoar, //'battleBoar',
   BASESTR: 3900,
   BASEHP: 11700,
@@ -437,14 +437,14 @@ export const battleBoar: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMountedPercent: 144,
   vsRangedPercent: 113,
-  race: 'beast',
+  group: 'beast',
   category: 'mounted',
   level: 'III'
 })
 export const gorgonMedusa: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.gorgonMedusa, //'gorgonMedusa',
   BASESTR: 12000,
   BASEHP: 36000,
@@ -452,14 +452,14 @@ export const gorgonMedusa: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMeleePercent: 277,
   vsFlyingPercent: 108,
-  race: 'beast',
+  group: 'beast',
   category: 'ranged',
   level: 'IV'
 })
 export const fearManticora: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.fearManticora, //'fearManticora',
   BASESTR: 46000,
   BASEHP: 138000,
@@ -467,14 +467,14 @@ export const fearManticora: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsFlyingPercent: 253,
   vsGiantPercent: 324,
-  race: 'beast',
+  group: 'beast',
   category: 'flying',
   level: 'V'
 })
 export const forestDestructor: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.forestDestructor, //'forestDestructor',
   BASESTR: 130000,
   BASEHP: 390000,
@@ -482,14 +482,14 @@ export const forestDestructor: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsDragonPercent: 243,
   vsMountedPercent: 623,
-  race: 'beast',
+  group: 'beast',
   category: 'melee',
   level: 'VI'
 })
 export const oldTerror: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.oldTerror, //'oldTerror',
   BASESTR: 280000,
   BASEHP: 840000,
@@ -497,14 +497,14 @@ export const oldTerror: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsRangedPercent: 752,
   vsFortificationsPercent: 547,
-  race: 'beast',
+  group: 'beast',
   category: 'mounted',
   level: 'VII'
 })
 export const embaucatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.embaucatorI, //'embaucatorI',
   BASESTR: 640000,
   BASEHP: 1920000,
@@ -512,14 +512,14 @@ export const embaucatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsFlyingPercent: 940,
   vsElementalPercent: 1008,
-  race: 'beast',
+  group: 'beast',
   category: 'ranged',
   level: 'I'
 })
 export const embaucatorII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.embaucatorII, //'embaucatorII',
   BASESTR: 1150000,
   BASEHP: 3450000,
@@ -527,7 +527,7 @@ export const embaucatorII: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsFlyingPercent: 1410,
   vsElementalPercent: 1512,
-  race: 'beast',
+  group: 'beast',
   category: 'ranged',
   level: 'II'
 })
@@ -542,8 +542,8 @@ export const emeraldDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   vsGiantPercent: 72,
   vsMountedPercent: 185,
   troop: 'monster',
-  race: 'dragon',
-  group: 'monster',
+  group: 'dragon',
+  race: 'monster',
   category: 'flying',
   level: 'III'
 })
@@ -557,8 +557,8 @@ export const magicDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   vsRangedPercent: 216,
   vsMeleePercent: 169,
   troop: 'monster',
-  race: 'dragon',
-  group: 'monster',
+  group: 'dragon',
+  race: 'monster',
   category: 'ranged',
   level: 'IV'
 })
@@ -572,8 +572,8 @@ export const desertConquer: MonsterUnit = unitBuilder<MonsterUnit>({
   vsElementalPercent: 324,
   vsRangedPercent: 253,
   troop: 'monster',
-  race: 'dragon',
-  group: 'monster',
+  group: 'dragon',
+  race: 'monster',
   category: 'mounted',
   level: 'V'
 })
@@ -588,8 +588,8 @@ export const crystalDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   vsElementalPercent: 608,
   vsMountedPercent: 258,
   troop: 'monster',
-  race: 'dragon',
-  group: 'monster',
+  group: 'dragon',
+  race: 'monster',
   category: 'melee',
   level: 'VI'
 })
@@ -603,8 +603,8 @@ export const blackDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   vsBeastPercent: 729,
   vsMeleePercent: 570,
   troop: 'monster',
-  race: 'dragon',
-  group: 'monster',
+  group: 'dragon',
+  race: 'monster',
   category: 'flying',
   level: 'VII'
 })
@@ -618,8 +618,8 @@ export const devastatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   vsRangedPercent: 1281,
   vsGiantPercent: 667,
   troop: 'monster',
-  race: 'dragon',
-  group: 'monster',
+  group: 'dragon',
+  race: 'monster',
   category: 'mounted',
   level: 'I'
 })
@@ -633,8 +633,8 @@ export const devastatorII: MonsterUnit = unitBuilder<MonsterUnit>({
   vsRangedPercent: 1922,
   vsGiantPercent: 1000,
   troop: 'monster',
-  race: 'dragon',
-  group: 'monster',
+  group: 'dragon',
+  race: 'monster',
   category: 'mounted',
   level: 'II'
 })
@@ -642,7 +642,7 @@ export const devastatorII: MonsterUnit = unitBuilder<MonsterUnit>({
 export const stoneGargole: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.stoneGargole, //'stoneGargole',
   BASESTR: 5200,
   BASEHP: 15600,
@@ -650,14 +650,14 @@ export const stoneGargole: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsBeastPercent: 72,
   vsMeleePercent: 185,
-  race: 'giant',
+  group: 'giant',
   category: 'flying',
   level: 'III'
 })
 export const multiArmGuardian: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.multiArmGuardian, //'multiArmGuardian',
   BASESTR: 13000,
   BASEHP: 39000,
@@ -665,14 +665,14 @@ export const multiArmGuardian: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMountedPercent: 115,
   vsElementalPercent: 270,
-  race: 'giant',
+  group: 'giant',
   category: 'melee',
   level: 'IV'
 })
 export const Ettin: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.Ettin, //'Ettin',
   BASESTR: 48000,
   BASEHP: 144000,
@@ -680,14 +680,14 @@ export const Ettin: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsFortificationsPercent: 243,
   vsMountedPercent: 334,
-  race: 'giant',
+  group: 'giant',
   category: 'melee',
   level: 'V'
 })
 export const trollRider: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.trollRider, //'trollRider',
   BASESTR: 110000,
   BASEHP: 330000,
@@ -695,14 +695,14 @@ export const trollRider: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsFortificationsPercent: 486,
   vsRangedPercent: 380,
-  race: 'giant',
+  group: 'giant',
   category: 'mounted',
   level: 'VI'
 })
 export const destroyerColossus: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.destroyerColossus, //'destroyerColossus',
   BASESTR: 290000,
   BASEHP: 870000,
@@ -710,14 +710,14 @@ export const destroyerColossus: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMeleePercent: 752,
   vsFlyingPercent: 547,
-  race: 'giant',
+  group: 'giant',
   category: 'ranged',
   level: 'VII'
 })
 export const krakenI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.krakenI, //'krakenI',
   BASESTR: 670000,
   BASEHP: 2010000,
@@ -725,14 +725,14 @@ export const krakenI: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMountedPercent: 991,
   vsBeastPercent: 957,
-  race: 'giant',
+  group: 'giant',
   category: 'melee',
   level: 'I'
 })
 export const krakenII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
-  group: 'monster',
+  race: 'monster',
   name: ARMY.krakenII, //'krakenII',
   BASESTR: 1210000,
   BASEHP: 3630000,
@@ -740,7 +740,7 @@ export const krakenII: MonsterUnit = unitBuilder<MonsterUnit>({
   INITIATIVE: 10,
   vsMountedPercent: 1486,
   vsBeastPercent: 1435,
-  race: 'giant',
+  group: 'giant',
   category: 'melee',
   level: 'II'
 })
