@@ -34,21 +34,13 @@ interface UnitProps {
 //   return arg
 // }
 export const ARMY = {
+  // guardsmen
   RiderG1: 'RiderG1',
   RiderG2: 'RiderG2',
   RiderG3: 'RiderG3',
   RiderG4: 'RiderG4',
   RiderG5: 'RiderG5',
-  SwordmanS1: 'SwordmanS1',
-  SwordmanS2: 'SwordmanS2',
-  SwordmanS3: 'SwordmanS3',
-  SwordmanS4: 'SwordmanS4',
-  SwordmanS5: 'SwordmanS5',
-  SpyS1: 'SpyS1',
-  SpyS2: 'SpyS2',
-  SpyS3: 'SpyS3',
-  SpyS4: 'SpyS4',
-  SpyS5: 'SpyS5',
+
   SpearmanG1: 'SpearmanG1',
   SpearmanG2: 'SpearmanG2',
   SpearmanG3: 'SpearmanG3',
@@ -59,41 +51,120 @@ export const ARMY = {
   ArcherG3: 'ArcherG3',
   ArcherG4: 'ArcherG4',
   ArcherG5: 'ArcherG5',
+
+  battleGriffinV: 'battleGriffinV',
+  battleGriffinVI: 'battleGriffinVI',
+  battleGriffinVII: 'battleGriffinVII',
+  heavyArbalesterVI: 'heavyArbalesterVI',
+  heavyArbalesterVII: 'heavyArbalesterVII',
+
+  heavyHalberdierVI: 'heavyHalberdierVI',
+  heavyHalberdierVII: 'heavyHalberdierVII',
+
+  mountedKnightVI: 'mountedKnightVI',
+  mountedKnightVII: 'mountedKnightVII',
+
+  purifierI: 'purifierI',
+  purifierII: 'purifierII',
+
+  punisherI: 'punisherI',
+  punisherII: 'punisherII',
+
+  smiterI: 'smiterI',
+  smiterII: 'smiterII',
+
+  coraxI: 'coraxI',
+  coraxII: 'coraxII',
+
+  // specialist
+
+  SwordmanS1: 'SwordmanS1',
+  SwordmanS2: 'SwordmanS2',
+  SwordmanS3: 'SwordmanS3',
+  SwordmanS4: 'SwordmanS4',
+  SwordmanS5: 'SwordmanS5',
+  SpyS1: 'SpyS1',
+  SpyS2: 'SpyS2',
+  SpyS3: 'SpyS3',
+  SpyS4: 'SpyS4',
+  SpyS5: 'SpyS5',
+  deadshotsV: 'deadshotsV',
+  deadshotsVI: 'deadshotsVI',
+  deadshotsVII: 'deadshotsVII',
+
+  lionRiderV: 'lionRiderV',
+  lionRiderVI: 'lionRiderVI',
+  lionRiderVII: 'lionRiderVII',
+
+  vulturesV: 'vulturesV',
+  vulturesVI: 'vulturesVI',
+  vulturesVII: 'vulturesVII',
+
+  heavyKnightVI: 'heavyKnightVI',
+  heavyKnightVII: 'heavyKnightVII',
+
+  swiftJaegerVI: 'swiftJaegerVI',
+  swiftJaegerVII: 'swiftJaegerVII',
+
+  legitimistI: 'legitimistI',
+  legitimistII: 'legitimistII',
+
+  duelistI: 'duelistI',
+  duelistII: 'duelistII',
+
+  whitemaneI: 'whitemaneI',
+  whitemaneII: 'whitemaneII',
+
+  royalLionI: 'royalLionI',
+  royalLionII: 'royalLionII',
+
+  panopticI: 'panopticI',
+  panopticII: 'panopticII',
+
   CatapultE1: 'CatapultE1',
   CatapultE2: 'CatapultE2',
   CatapultE3: 'CatapultE3',
   CatapultE4: 'CatapultE4',
   CatapultE5: 'CatapultE5',
 
-  waterElemental: 'waterElemental',
-  iceFenix: 'iceFenix',
-  burningCentaurus: 'burningCentaurus',
-  rubiGolem: 'rubiGolem',
-  windLord: 'windLord',
-  fireFenixI: 'fireFenixI',
-  fireFenixII: 'fireFenixII',
-  battleBoar: 'battleBoar',
-  gorgonMedusa: 'gorgonMedusa',
-  fearManticora: 'fearManticora',
-  forestDestructor: 'forestDestructor',
-  oldTerror: 'oldTerror',
-  embaucatorI: 'embaucatorI',
-  embaucatorII: 'embaucatorII',
-  emeraldDragon: 'emeraldDragon',
-  magicDragon: 'magicDragon',
-  desertConquer: 'desertConquer',
-  crystalDragon: 'crystalDragon',
-  blackDragon: 'blackDragon',
+  //monsters
+  // dragons
+  emeraldDragon: 'emeraldDragonIII',
+  magicDragon: 'magicDragonIV',
+  desertConquer: 'desertVanquisherV',
+  crystalDragon: 'crystalDragonVI',
+  blackDragon: 'blackDragonVII',
   devastatorI: 'devastatorI',
   devastatorII: 'devastatorII',
-  stoneGargole: 'stoneGargole',
-  multiArmGuardian: 'multiArmGuardian',
-  Ettin: 'Ettin',
-  trollRider: 'trollRider',
-  destroyerColossus: 'destroyerColossus',
+
+  //elementals
+  waterElemental: 'waterElementalIII',
+  icePhoenix: 'icePhoenixIV',
+  flamingCentaur: 'flamingCentaurV',
+  rubiGolem: 'rubiGolemVI',
+  windLord: 'windLordVII',
+  firePhoenixI: 'firePhoenixI',
+  firePhoenixII: 'firePhoenixII',
+
+  //giants
+  stoneGargole: 'stoneGargoyleIII',
+  manyArmedGuardian: 'many-Armed GuardianIV',
+  Ettin: 'EttinV',
+  trollRider: 'trollRiderVI',
+  destructiveColossus: 'destructiveColossusVII',
   krakenI: 'krakenI',
   krakenII: 'krakenII',
 
+  //beasts
+  battleBoar: 'battleBoarIII',
+  gorgonMedusa: 'gorgonMedusaIV',
+  fearsomeManticora: 'fearsomeManticoreV',
+  jungleDestructor: 'jungleDestroyerVI',
+  ancientTerror: 'ancientTerrorVII',
+  tricksterI: 'tricksterI',
+  tricksterII: 'tricksterII',
+
+  //mercenaries
   mercEpicMonsterHunter: 'mercEpicMonsterHunter',
   chariotVI: 'chariotVI',
   legionaryVI: 'legionaryVI',
@@ -223,6 +294,355 @@ export const SpyS4 = spyBuilder(ARMY.SpyS4, 450, 150, 'S4')
 export const SpyS5 = spyBuilder(ARMY.SpyS5, 780, 260, 'S5')
 
 //----------------------------------
+export const deadshotV = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.deadshotsV,
+  BASEHP: 1560,
+  BASESTR: 520,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsMeleePercent: 132,
+  vsFlyingPercent: 170,
+  troop: 'este cre q no sirve',
+  category: 'ranged',
+  race: 'human',
+  group: 'specialist',
+  level: 'V'
+})
+export const deadshotVI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.deadshotsVI,
+  BASEHP: 2820,
+  BASESTR: 940,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsMeleePercent: 197,
+  vsFlyingPercent: 254,
+  troop: 'este cre q no sirve',
+  category: 'ranged',
+  race: 'human',
+  group: 'specialist',
+  level: 'VI'
+})
+export const deadshotVII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.deadshotsVII,
+  BASEHP: 5100,
+  BASESTR: 1700,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsMeleePercent: 296,
+  vsFlyingPercent: 382,
+  troop: 'este cre q no sirve',
+  category: 'ranged',
+  race: 'human',
+  group: 'specialist',
+  level: 'VII'
+})
+export const lionRiderV = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.lionRiderV,
+  BASEHP: 3150,
+  BASESTR: 1050,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsRangedPercent: 165,
+  vsSiegePercent: 137,
+  troop: 'rider este cre q no sirve',
+  category: 'mounted',
+  race: 'human',
+  group: 'specialist',
+  level: 'V'
+})
+export const lionRiderVI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.lionRiderVI,
+  BASEHP: 5700,
+  BASESTR: 1900,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsRangedPercent: 247,
+  vsSiegePercent: 205,
+  troop: 'rider este cre q no sirve',
+  category: 'mounted',
+  race: 'human',
+  group: 'specialist',
+  level: 'VI'
+})
+export const lionRiderVII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.lionRiderVII,
+  BASEHP: 10200,
+  BASESTR: 3400,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsRangedPercent: 370,
+  vsSiegePercent: 308,
+  troop: 'rider este cre q no sirve',
+  category: 'mounted',
+  race: 'human',
+  group: 'specialist',
+  level: 'VII'
+})
+export const vulturesV = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.vulturesV,
+  BASEHP: 1560,
+  BASESTR: 520,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsMountedPercent: 197,
+  vsFortificationsPercent: 104,
+  troop: 'flying este cre q no sirve',
+  category: 'flying',
+  race: 'human',
+  group: 'specialist',
+  level: 'V'
+})
+export const vulturesVI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.vulturesVI,
+  BASEHP: 2820,
+  BASESTR: 940,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsMountedPercent: 296,
+  vsFortificationsPercent: 156,
+  troop: 'flying este cre q no sirve',
+  category: 'flying',
+  race: 'human',
+  group: 'specialist',
+  level: 'VI'
+})
+export const vulturesVII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.vulturesVII,
+  BASEHP: 5100,
+  BASESTR: 1700,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsMountedPercent: 444,
+  vsFortificationsPercent: 234,
+  troop: 'flying este cre q no sirve',
+  category: 'flying',
+  race: 'human',
+  group: 'specialist',
+  level: 'VII'
+})
+export const heavyKnightVI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.heavyKnightVI,
+  BASEHP: 2820,
+  BASESTR: 940,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsMountedPercent: 148,
+  vsBeastPercent: 304,
+  troop: 'swordsman este cre q no sirve',
+  category: 'melee',
+  race: 'human',
+  group: 'specialist',
+  level: 'VI'
+})
+export const heavyKnightVII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.heavyKnightVII,
+  BASEHP: 5100,
+  BASESTR: 1700,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsMountedPercent: 222,
+  vsBeastPercent: 456,
+  troop: 'swordsman este cre q no sirve',
+  category: 'melee',
+  race: 'human',
+  group: 'specialist',
+  level: 'VII'
+})
+export const swiftJaegerVI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.swiftJaegerVI,
+  BASEHP: 1410,
+  BASESTR: 470,
+  LEADERSHIP: 5,
+  INITIATIVE: 10,
+  troop: 'spy este cre q no sirve',
+  category: 'scout',
+  race: 'human',
+  group: 'specialist',
+  level: 'VI'
+})
+export const swiftJaegerVII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.swiftJaegerVII,
+  BASEHP: 2550,
+  BASESTR: 850,
+  LEADERSHIP: 5,
+  INITIATIVE: 10,
+  troop: 'spy este cre q no sirve',
+  category: 'scout',
+  race: 'human',
+  group: 'specialist',
+  level: 'VII'
+})
+export const legitimistI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.legitimistI,
+  BASEHP: 9180,
+  BASESTR: 3060,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMeleePercent: 444,
+  vsFlyingPercent: 572,
+  troop: 'este cre q no sirve',
+  category: 'ranged',
+  race: 'human',
+  group: 'specialist',
+  level: 'I'
+})
+export const legitimistII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.legitimistII,
+  BASEHP: 16530,
+  BASESTR: 5510,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMeleePercent: 667,
+  vsFlyingPercent: 859,
+  troop: 'este cre q no sirve',
+  category: 'ranged',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+export const duelistI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.duelistI,
+  BASEHP: 9180,
+  BASESTR: 3060,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMountedPercent: 333,
+  vsBeastPercent: 680,
+  troop: 'swordsman este cre q no sirve',
+  category: 'melee',
+  race: 'human',
+  group: 'specialist',
+  level: 'I'
+})
+export const duelistII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.duelistII,
+  BASEHP: 16530,
+  BASESTR: 5510,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMountedPercent: 500,
+  vsBeastPercent: 1025,
+  troop: 'swordsman este cre q no sirve',
+  category: 'melee',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+export const whitemaneI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.whitemaneI,
+  BASEHP: 18360,
+  BASESTR: 6120,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 555,
+  vsSiegePercent: 461,
+  troop: 'rider este cre q no sirve',
+  category: 'mounted',
+  race: 'human',
+  group: 'specialist',
+  level: 'I'
+})
+export const whitemaneII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.whitemaneII,
+  BASEHP: 33060,
+  BASESTR: 11020,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 833,
+  vsSiegePercent: 692,
+  troop: 'rider este cre q no sirve',
+  category: 'mounted',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+export const royalLionI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.royalLionI,
+  BASEHP: 183600,
+  BASESTR: 61200,
+  LEADERSHIP: 20,
+  INITIATIVE: 10,
+  vsMountedPercent: 667,
+  vsFortificationsPercent: 350,
+  troop: 'flying este cre q no sirve',
+  category: 'flying',
+  race: 'human',
+  group: 'specialist',
+  level: 'I'
+})
+export const royalLionII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.royalLionII,
+  BASEHP: 330600,
+  BASESTR: 110200,
+  LEADERSHIP: 20,
+  INITIATIVE: 10,
+  vsMountedPercent: 1000,
+  vsFortificationsPercent: 525,
+  troop: 'flying este cre q no sirve',
+  category: 'flying',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+export const panopticI = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.panopticI,
+  BASEHP: 4590,
+  BASESTR: 1530,
+  LEADERSHIP: 5,
+  INITIATIVE: 10,
+  troop: 'spy este cre q no sirve',
+  category: 'scout',
+  race: 'human',
+  group: 'specialist',
+  level: 'I'
+})
+export const panopticII = unitBuilder<SpecialistUnit>({
+  tipo: 'army',
+  name: ARMY.panopticII,
+  BASEHP: 8280,
+  BASESTR: 2760,
+  LEADERSHIP: 5,
+  INITIATIVE: 10,
+  troop: 'spy este cre q no sirve',
+  category: 'scout',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+//----------------------------------
 const spearmanBuilder = (
   name: string,
   BASEHP: number,
@@ -285,6 +705,265 @@ export const ArcherG3 = archerBuilder(ARMY.ArcherG3, 480, 160, 151, 117, 'G3')
 export const ArcherG4 = archerBuilder(ARMY.ArcherG4, 870, 290, 226, 176, 'G4')
 export const ArcherG5 = archerBuilder(ARMY.ArcherG5, 1560, 520, 339, 263, 'G5')
 
+export const battleGriffinV = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.battleGriffinV,
+  BASEHP: 30000,
+  BASESTR: 10000,
+  LEADERSHIP: 10,
+  DOMINANCE: 0,
+  INITIATIVE: 10,
+  vsMountedPercent: 395,
+  vsFortificationsPercent: 208,
+  troop: 'monster',
+  category: 'flying',
+  group: 'beast',
+  race: 'monster',
+  level: 'V'
+})
+export const battleGriffinVI = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.battleGriffinVI,
+  BASEHP: 57000,
+  BASESTR: 19000,
+  LEADERSHIP: 10,
+  DOMINANCE: 0,
+  INITIATIVE: 10,
+  vsMountedPercent: 592,
+  vsFortificationsPercent: 311,
+  troop: 'monster',
+  category: 'flying',
+  group: 'beast',
+  race: 'monster',
+  level: 'VI'
+})
+export const battleGriffinVII = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.battleGriffinVII,
+  BASEHP: 102000,
+  BASESTR: 34000,
+  LEADERSHIP: 10,
+  DOMINANCE: 0,
+  INITIATIVE: 10,
+  vsMountedPercent: 888,
+  vsFortificationsPercent: 467,
+  troop: 'monster',
+  category: 'flying',
+  group: 'beast',
+  race: 'monster',
+  level: 'VII'
+})
+
+export const heavyArbalesterVI = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.heavyArbalesterVI,
+  BASEHP: 2820,
+  BASESTR: 940,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMeleePercent: 395,
+  vsFlyingPercent: 509,
+  troop: 'archer',
+  category: 'ranged',
+  group: 'human',
+  race: 'guardsman',
+  level: 'VI'
+})
+export const heavyArbalesterVII = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.heavyArbalesterVII,
+  BASEHP: 5100,
+  BASESTR: 1700,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMeleePercent: 592,
+  vsFlyingPercent: 763,
+  troop: 'archer',
+  category: 'ranged',
+  group: 'human',
+  race: 'guardsman',
+  level: 'VII'
+})
+export const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.heavyHalberdierVI,
+  BASESTR: 940,
+  BASEHP: 2820,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMountedPercent: 296,
+  vsBeastPercent: 608,
+  troop: 'spearman',
+  category: 'melee',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VI'
+})
+export const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.heavyHalberdierVII,
+  BASESTR: 1700,
+  BASEHP: 5100,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMountedPercent: 444,
+  vsBeastPercent: 911,
+  troop: 'spearman',
+  category: 'melee',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VII'
+})
+export const mountedKnightVI = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.mountedKnightVI,
+  BASESTR: 1900,
+  BASEHP: 5700,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 494,
+  vsSiegePercent: 410,
+  troop: 'rider',
+  category: 'mounted',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VI'
+})
+export const mountedKnightVII = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.mountedKnightVII,
+  BASESTR: 3400,
+  BASEHP: 10200,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 740,
+  vsSiegePercent: 615,
+  troop: 'rider',
+  category: 'mounted',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VII'
+})
+export const purifierI = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.purifierI,
+  BASEHP: 3060,
+  BASESTR: 9180,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMeleePercent: 888,
+  vsFlyingPercent: 1145,
+  troop: 'archer',
+  category: 'ranged',
+  group: 'human',
+  race: 'guardsman',
+  level: 'I'
+})
+export const purifierII = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.purifierII,
+  BASEHP: 5510,
+  BASESTR: 16530,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMeleePercent: 1333,
+  vsFlyingPercent: 1717,
+  troop: 'archer',
+  category: 'ranged',
+  group: 'human',
+  race: 'guardsman',
+  level: 'II'
+})
+export const punisherI = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.punisherI,
+  BASESTR: 3060,
+  BASEHP: 9180,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMountedPercent: 667,
+  vsBeastPercent: 1367,
+  troop: 'spearman',
+  category: 'melee',
+  race: 'human',
+  group: 'guardsman',
+  level: 'I'
+})
+export const punisherII = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.punisherII,
+  BASESTR: 5510,
+  BASEHP: 16530,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  vsMountedPercent: 1000,
+  vsBeastPercent: 2050,
+  troop: 'spearman',
+  category: 'melee',
+  race: 'human',
+  group: 'guardsman',
+  level: 'II'
+})
+export const smiterI = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.smiterI,
+  BASESTR: 6120,
+  BASEHP: 18360,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 1111,
+  vsSiegePercent: 923,
+  troop: 'rider',
+  category: 'mounted',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VI'
+})
+export const smiterII = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.smiterII,
+  BASESTR: 11020,
+  BASEHP: 33060,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 1667,
+  vsSiegePercent: 1384,
+  troop: 'rider',
+  category: 'mounted',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VI'
+})
+export const coraxI = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.coraxI,
+  BASEHP: 61200,
+  BASESTR: 183600,
+  LEADERSHIP: 20,
+  INITIATIVE: 10,
+  vsMountedPercent: 1333,
+  vsFortificationsPercent: 701,
+  troop: 'flying',
+  category: 'flying',
+  group: 'human',
+  race: 'guardsman',
+  level: 'I'
+})
+export const coraxII = unitBuilder<GuardsmanUnit>({
+  tipo: 'army',
+  name: ARMY.coraxII,
+  BASEHP: 110200,
+  BASESTR: 330600,
+  LEADERSHIP: 20,
+  INITIATIVE: 10,
+  vsMountedPercent: 1999,
+  vsFortificationsPercent: 1051,
+  troop: 'flying',
+  category: 'flying',
+  group: 'human',
+  race: 'guardsman',
+  level: 'II'
+})
 //----------------------------------
 const catapultBuilder = (
   name: string,
@@ -336,7 +1015,7 @@ export const waterElemental = unitBuilder<MonsterUnit>({
 })
 export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: ARMY.iceFenix, //'iceFenix',
+  name: ARMY.icePhoenix, //'iceFenix',
   BASESTR: 17000,
   BASEHP: 51000,
   DOMINANCE: 15,
@@ -351,7 +1030,7 @@ export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 export const burningCentaurus: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
-  name: ARMY.burningCentaurus, //'burningCentaurus',
+  name: ARMY.flamingCentaur, //'burningCentaurus',
   BASESTR: 44000,
   BASEHP: 132000,
   DOMINANCE: 21,
@@ -398,7 +1077,7 @@ export const fireFenixI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.fireFenixI, //'fireFenixI',
+  name: ARMY.firePhoenixI, //'fireFenixI',
   BASESTR: 660000,
   BASEHP: 1980000,
   DOMINANCE: 54,
@@ -413,7 +1092,7 @@ export const fireFenixII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.fireFenixII, //'fireFenixII',
+  name: ARMY.firePhoenixII, //'fireFenixII',
   BASESTR: 1190000,
   BASEHP: 3570000,
   DOMINANCE: 54,
@@ -460,7 +1139,7 @@ export const fearManticora: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.fearManticora, //'fearManticora',
+  name: ARMY.fearsomeManticora, //'fearManticora',
   BASESTR: 46000,
   BASEHP: 138000,
   DOMINANCE: 22,
@@ -475,7 +1154,7 @@ export const forestDestructor: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.forestDestructor, //'forestDestructor',
+  name: ARMY.jungleDestructor, //'forestDestructor',
   BASESTR: 130000,
   BASEHP: 390000,
   DOMINANCE: 34,
@@ -490,7 +1169,7 @@ export const oldTerror: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.oldTerror, //'oldTerror',
+  name: ARMY.ancientTerror, //'oldTerror',
   BASESTR: 280000,
   BASEHP: 840000,
   DOMINANCE: 41,
@@ -505,7 +1184,7 @@ export const embaucatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.embaucatorI, //'embaucatorI',
+  name: ARMY.tricksterI, //'embaucatorI',
   BASESTR: 640000,
   BASEHP: 1920000,
   DOMINANCE: 52,
@@ -520,7 +1199,7 @@ export const embaucatorII: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.embaucatorII, //'embaucatorII',
+  name: ARMY.tricksterII, //'embaucatorII',
   BASESTR: 1150000,
   BASEHP: 3450000,
   DOMINANCE: 52,
@@ -658,7 +1337,7 @@ export const multiArmGuardian: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.multiArmGuardian, //'multiArmGuardian',
+  name: ARMY.manyArmedGuardian, //'multiArmGuardian',
   BASESTR: 13000,
   BASEHP: 39000,
   DOMINANCE: 11,
@@ -703,7 +1382,7 @@ export const destroyerColossus: MonsterUnit = unitBuilder<MonsterUnit>({
   tipo: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.destroyerColossus, //'destroyerColossus',
+  name: ARMY.destructiveColossus, //'destroyerColossus',
   BASESTR: 290000,
   BASEHP: 870000,
   DOMINANCE: 43,
