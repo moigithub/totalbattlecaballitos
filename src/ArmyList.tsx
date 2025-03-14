@@ -2,14 +2,19 @@ import {
   abominationVI,
   arbalesterVI,
   archidemonVI,
+  boneGolemVI,
   chariotVI,
   cursedDragonVII,
   deathChariotVI,
+  fireLordVII,
+  goldenDragonVII,
+  jungleKingVII,
   knightVI,
   legionaryVI,
   lifeDragonVII,
   lightningLordVII,
   mercEpicMonsterHunter,
+  overlordVII,
   rhinoRiderVI,
   sandwormVII,
   seaLordVII,
@@ -293,6 +298,8 @@ export const ArmyList = () => {
       unitType = trailseekerVI
     } else if (type === 'rhinoRiderVI') {
       unitType = rhinoRiderVI
+    } else if (type === 'boneGolemVI') {
+      unitType = boneGolemVI
     } else if (type === 'sheduVI') {
       unitType = sheduVI
     } else if (type === 'abominationVI') {
@@ -309,6 +316,14 @@ export const ArmyList = () => {
       unitType = sandwormVII
     } else if (type === 'lifeDragonVII') {
       unitType = lifeDragonVII
+    } else if (type === 'goldenDragonVII') {
+      unitType = goldenDragonVII
+    } else if (type === 'overlordVII') {
+      unitType = overlordVII
+    } else if (type === 'fireLordVII') {
+      unitType = fireLordVII
+    } else if (type === 'jungleKingVII') {
+      unitType = jungleKingVII
     }
 
     // MONSTERS ------------------------------
