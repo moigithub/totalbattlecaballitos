@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import Uno from './uno.tsx'
 import Dos from './dos.tsx'
 import { Info } from './info.tsx'
+import { MercList } from './mercList.tsx'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: 'info',
         element: <Info />
+      },
+      {
+        path: 'mercenaries',
+        element: <MercList />
       }
     ]
   }

@@ -1,10 +1,18 @@
 import {
+  abominationVI,
   arbalesterVI,
+  archidemonVI,
   chariotVI,
+  cursedDragonVII,
+  deathChariotVI,
   knightVI,
   legionaryVI,
+  lifeDragonVII,
+  lightningLordVII,
   mercEpicMonsterHunter,
   rhinoRiderVI,
+  sandwormVII,
+  seaLordVII,
   sheduVI,
   sphynxVI,
   trailseekerVI
@@ -271,6 +279,8 @@ export const ArmyList = () => {
       unitType = mercEpicMonsterHunter
     } else if (type === 'chariotVI') {
       unitType = chariotVI
+    } else if (type === 'deathChariotVI') {
+      unitType = deathChariotVI
     } else if (type === 'legionaryVI') {
       unitType = legionaryVI
     } else if (type === 'arbalesterVI') {
@@ -285,6 +295,20 @@ export const ArmyList = () => {
       unitType = rhinoRiderVI
     } else if (type === 'sheduVI') {
       unitType = sheduVI
+    } else if (type === 'abominationVI') {
+      unitType = abominationVI
+    } else if (type === 'archidemonVI') {
+      unitType = archidemonVI
+    } else if (type === 'lightningLordVII') {
+      unitType = lightningLordVII
+    } else if (type === 'cursedDragonVII') {
+      unitType = cursedDragonVII
+    } else if (type === 'seaLordVII') {
+      unitType = seaLordVII
+    } else if (type === 'sandwormVII') {
+      unitType = sandwormVII
+    } else if (type === 'lifeDragonVII') {
+      unitType = lifeDragonVII
     }
 
     // MONSTERS ------------------------------
@@ -1522,6 +1546,16 @@ export const ArmyList = () => {
                 Legionary VI
               </button>
             )}
+            {!selectedStacks.includes(ARMY.deathChariotVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('deathChariotVI')
+                }}
+              >
+                deathChariotVI
+              </button>
+            )}
           </div>
 
           <div className='btn-group'>
@@ -1578,6 +1612,17 @@ export const ArmyList = () => {
                 rhinoRider VI
               </button>
             )}
+
+            {!selectedStacks.includes(ARMY.boneGolemVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('boneGolemVI')
+                }}
+              >
+                boneGolemVI
+              </button>
+            )}
             {!selectedStacks.includes(ARMY.sheduVI) && (
               <button
                 className='troop '
@@ -1586,6 +1631,125 @@ export const ArmyList = () => {
                 }}
               >
                 shedu VI
+              </button>
+            )}
+          </div>
+
+          <div className='btn-group'>
+            {!selectedStacks.includes(ARMY.abominationVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('abominationVI')
+                }}
+              >
+                abomination VI
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.archidemonVI) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('archidemonVI')
+                }}
+              >
+                archidemon VI
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.lightningLordVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('lightningLordVII')
+                }}
+              >
+                lightningLordVII
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.cursedDragonVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('cursedDragonVII')
+                }}
+              >
+                cursedDragonVII
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.seaLordVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('seaLordVII')
+                }}
+              >
+                seaLordVII
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.sandwormVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('sandwormVII')
+                }}
+              >
+                sandwormVII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.lifeDragonVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('lifeDragonVII')
+                }}
+              >
+                lifeDragonVII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.goldenDragonVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('goldenDragonVII')
+                }}
+              >
+                goldenDragonVII
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.overlordVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('overlordVII')
+                }}
+              >
+                overlordVII
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.fireLordVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('fireLordVII')
+                }}
+              >
+                fireLordVII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.jungleKingVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('jungleKingVII')
+                }}
+              >
+                jungleKingVII
               </button>
             )}
           </div>

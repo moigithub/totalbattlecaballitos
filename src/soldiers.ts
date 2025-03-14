@@ -167,13 +167,26 @@ export const ARMY = {
   //mercenaries
   mercEpicMonsterHunter: 'mercEpicMonsterHunter',
   chariotVI: 'chariotVI',
+  deathChariotVI: 'deathChariotVI',
   legionaryVI: 'legionaryVI',
   arbalesterVI: 'arbalesterVI',
   sphynxVI: 'sphynxVI',
   knightVI: 'knightVI',
   trailseekerVI: 'trailseekerVI',
   rhinoRiderVI: 'rhinoRiderVI',
-  sheduVI: 'sheduVI'
+  sheduVI: 'sheduVI',
+  boneGolemVI: 'boneGolemVI',
+  abominationVI: 'abominationVI',
+  archidemonVI: 'archidemonVI',
+  lightningLordVII: 'lightningLordVII',
+  cursedDragonVII: 'cursedDragonVII',
+  seaLordVII: 'seaLordVII',
+  sandwormVII: 'sandwormVII',
+  lifeDragonVII: 'lifeDragonVII',
+  goldenDragonVII: 'goldenDragonVII',
+  overlordVII: 'overlordVII',
+  fireLordVII: 'fireLordVII',
+  jungleKingVII: 'jungleKingVII'
 }
 export const unitBuilder = <T>(props: Partial<UnitProps>): T => {
   return {

@@ -142,6 +142,21 @@ export const rhinoRiderVI: MercUnit = unitBuilder<MercUnit>({
   group: 'specialist',
   level: 'VI'
 })
+
+export const deathChariotVI: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.deathChariotVI,
+  BASEHP: 171000,
+  BASESTR: 57000,
+  AUTHORITY: 30,
+  INITIATIVE: 10,
+  vsRangedPercent: 60,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'undead',
+  group: '',
+  level: 'VI'
+})
 export const sheduVI: MercUnit = unitBuilder<MercUnit>({
   tipo: 'merc',
   name: ARMY.sheduVI,
@@ -159,6 +174,193 @@ export const sheduVI: MercUnit = unitBuilder<MercUnit>({
   level: 'VI'
 })
 
+export const abominationVI: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.abominationVI,
+  BASEHP: 390000,
+  BASESTR: 130000,
+  AUTHORITY: 68,
+  INITIATIVE: 10,
+  vsElementalPercent: 50,
+  vsRangedPercent: 60,
+  troop: 'merc',
+  category: 'melee',
+  race: 'beast',
+  group: '',
+  level: 'VI'
+})
+export const boneGolemVI: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.boneGolemVI,
+  BASEHP: 210000,
+  BASESTR: 70000,
+  AUTHORITY: 74,
+  INITIATIVE: 10,
+  vsDragonPercent: 40,
+  troop: 'merc',
+  category: 'melee',
+  race: 'undead',
+  group: '',
+  level: 'VI'
+})
+
+export const archidemonVI: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.archidemonVI,
+  BASEHP: 540000,
+  BASESTR: 180000,
+  AUTHORITY: 95,
+  INITIATIVE: 10,
+  vsBeastPercent: 40,
+  vsMountedPercent: 60,
+  troop: 'merc',
+  category: 'melee',
+  race: 'giant',
+  group: 'demon',
+  level: 'VI'
+})
+
+export const lightningLordVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.lightningLordVII,
+  BASEHP: 460000,
+  BASESTR: 153000,
+  AUTHORITY: 45,
+  INITIATIVE: 10,
+  vsBeastPercent: 729,
+  vsMeleePercent: 570,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'giant',
+  group: '',
+  level: 'VII'
+})
+
+export const cursedDragonVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.cursedDragonVII,
+  BASEHP: 960000,
+  BASESTR: 320000,
+  AUTHORITY: 93,
+  INITIATIVE: 10,
+  vsGiantPercent: 50,
+  vsMountedPercent: 50,
+  troop: 'merc',
+  category: 'flying',
+  race: 'dragon',
+  group: 'cursed',
+  level: 'VII'
+})
+
+export const seaLordVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.seaLordVII,
+  BASEHP: 420000,
+  BASESTR: 140000,
+  AUTHORITY: 40,
+  INITIATIVE: 10,
+  vsDragonPercent: 547,
+  vsRangedPercent: 752,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'elemental',
+  group: '',
+  level: 'VII'
+})
+
+export const sandwormVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.sandwormVII,
+  BASEHP: 1290000,
+  BASESTR: 430000,
+  AUTHORITY: 128,
+  INITIATIVE: 10,
+  vsDragonPercent: 50,
+  vsMountedPercent: 75,
+  troop: 'merc',
+  category: 'melee',
+  race: 'elemental',
+  group: 'barbarian',
+  level: 'VII'
+})
+
+export const lifeDragonVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.lifeDragonVII,
+  BASEHP: 720000,
+  BASESTR: 240000,
+  AUTHORITY: 70,
+  INITIATIVE: 10,
+  vsGiantPercent: 50,
+  vsMountedPercent: 60,
+  troop: 'merc',
+  category: 'flying',
+  race: 'dragon',
+  group: 'elf',
+  level: 'VII'
+})
+
+export const goldenDragonVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.goldenDragonVII,
+  BASEHP: 510000,
+  BASESTR: 170000,
+  AUTHORITY: 50,
+  INITIATIVE: 10,
+  vsGiantPercent: 365,
+  vsMountedPercent: 934,
+  troop: 'merc',
+  category: 'flying',
+  race: 'dragon',
+  group: '',
+  level: 'VII'
+})
+export const overlordVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.overlordVII,
+  BASEHP: 600000,
+  BASESTR: 200000,
+  AUTHORITY: 60,
+  INITIATIVE: 10,
+  vsBeastPercent: 50,
+  vsMeleePercent: 60,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'giant',
+  group: 'undead',
+  level: 'VII'
+})
+
+export const fireLordVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.fireLordVII,
+  BASEHP: 1680000,
+  BASESTR: 560000,
+  AUTHORITY: 164,
+  INITIATIVE: 10,
+  vsDragonPercent: 45,
+  vsMeleePercent: 80,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'elemental',
+  group: 'demon',
+  level: 'VII'
+})
+export const jungleKingVII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.jungleKingVII,
+  BASEHP: 330000,
+  BASESTR: 110000,
+  AUTHORITY: 33,
+  INITIATIVE: 10,
+  vsElementalPercent: 911,
+  vsMountedPercent: 387,
+  troop: 'merc',
+  category: 'melee',
+  race: 'beast',
+  group: '',
+  level: 'VII'
+})
 /*
 trebuchetVI
 deathchariot

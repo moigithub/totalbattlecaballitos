@@ -17,6 +17,9 @@ function App() {
         <li>
           <NavLink to={`/info`}>Info</NavLink>
         </li>
+        <li>
+          <NavLink to={`/mercenaries`}>Mercenaries</NavLink>
+        </li>
       </ul>
 
       <Outlet />
