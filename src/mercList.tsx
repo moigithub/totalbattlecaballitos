@@ -20,7 +20,15 @@ import {
   jungleKingVII,
   fireLordVII,
   goldenDragonVII,
-  boneGolemVI
+  boneGolemVI,
+  wyvernII,
+  arielII,
+  warregalII,
+  demonicSalamanderII,
+  epicMonsterHunterII,
+  jagoII,
+  eternalCannoneerII,
+  slavicWarriorII
 } from './mercs'
 export const MercList = () => {
   const mercList = [
@@ -45,7 +53,16 @@ export const MercList = () => {
     goldenDragonVII,
     overlordVII,
     jungleKingVII,
-    fireLordVII
+    fireLordVII,
+
+    wyvernII,
+    arielII,
+    warregalII,
+    demonicSalamanderII,
+    epicMonsterHunterII,
+    jagoII,
+    eternalCannoneerII,
+    slavicWarriorII
   ]
 
   mercList.sort((a, b) => a.BASEHP - b.BASEHP)
@@ -56,18 +73,20 @@ export const MercList = () => {
 
       <table>
         <thead>
+          <th></th>
           <th>Name</th>
           <th>Health</th>
           <th>Strength</th>
           <th>Authority</th>
         </thead>
         <tbody>
-          {mercList.map(merc => {
+          {mercList.map((merc, i) => {
             return (
               <tr>
                 {/* <td>
                   <input type='checkbox' name='xx' id='' />
                 </td> */}
+                <td>{i + 1}</td>
                 <td>{merc.name}</td>
                 <td>{merc.BASEHP}</td>
                 <td>{merc.BASESTR}</td>
@@ -83,62 +102,61 @@ export const MercList = () => {
 
 /**
  *
- [AOW] Grimbold: ***MERCS***
-.
-Level 5
-.
-Epic Monster Hunter 635
-Swift Marksman         635
-Fireworm Rider             10
-Cyclops                           15
-Ifrit                                  15
-Scorpion Rider               15
-Giant Zombie                20
-Bull Rider                       20
-Unicorn Rider               25
-Bear                                30
-Gargoyle                        35
-.
-Level 6
-.
-Epic Monster Hunter  330
-//**Sphynx                            35
-//**Chariot                          175
-//**Asbalester                    350
-//**Legionary                     350
-//**Shedu                             35
-//**Rhino Rider                 175
-//****Trailseeker                  350
-//**Knight VI                     350
-//**Abomination                  5
-//**Bone Golem                  10
-//**Death Chariot              10
+T5 Swift Marksman
+T5 Epic Monster Hunter
+T5 Scorpion
 
-[AOW] Grimbold: ***MERCS***
-.
-Level 7
-Epic Monster Hunter 175
-Chariot VII                   175
-Arbalester VII             350
-Legionary VII              350
-Sphynx VII                      4
-//**Sandworm                      1
-//**Cursed Dragon              2
-//**Life Dragon                    2
-//**Overlord                         3
-//**Golden Dragon              3
-//**Lightning Lord               4
-//**Sea Lord                          4
-//**Jungle King                     6
-//**FIRELORD
-.
-Level IX/II
-Sup. EMH            175
-Quicksand            30
-Galloper               30
-Slavic Warrior     60
-Highlander          60
-Pounder               60
-Scarface               60
+los stats son correctos pero el authority esta mal
+    T5 Unicorn Rider **
+    T5 Bull Rider**
+    T5 Gargoyle  ****
+    T5 Bear  ***
+    T5 Giant Zombie **
+    T5 Scorpion Rider  ***
+    T5 Ifrit ***
+    T5 Cyclops ***
+    T5 Fireworm Rider **
 
- */
+
+    T6 Arbalester **
+    Trailseeker **
+    T6 Legionary ***
+    Knight **
+    T6 Chariot **
+    Rhino Rider **
+    T6 Sphinx **
+    Shedu **
+    T6 Death Chariots **
+    T6 Bone Golem **
+T6 Epic Monster Hunter
+T6 Pathfinder / Pionnier
+T6 Trebuchet
+T6 Ent
+T6 Cursed Dendroids
+    T6 Abomination **
+    T6 Archdemons **
+T7 Palintone
+T7 Epic Monster Hunter
+    T7 Jungle King**
+    T7 Sea Lord**
+    T7 Lighting Lord**
+    T7 Golden Dragon**
+    T7 Overlord**
+    T7 Life Dragon**
+    T7 Cursed Dragon**
+    T7 Sandworm**
+    T7 Fire Lord**
+TII Highlander / Pounder
+/ Scarface
+TII Quicksand / Galloper
+TII Grace
+TII Wardens
+    TII Slavic Warrior **
+    TII Eternal Cannoneers **
+    TII Warregal **
+    TII Epic Monster Hunter **
+    TII Ariel **
+    Jago **
+    TII Demonic Salamanders**
+    TII Wyverns **
+*/

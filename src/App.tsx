@@ -8,11 +8,11 @@ function App() {
       <ul className='navbar'>
         <h3 className='logo'>Troops calculation - totalbattle</h3>
         <div className='grow'></div>
-        <li>
+        {/* <li>
           <NavLink to={`/v1`}>Version 1</NavLink>
-        </li>
+        </li> */}
         <li>
-          <NavLink to={`/v2`}>Version 2</NavLink>
+          <NavLink to={`/calc`}>Calc</NavLink>
         </li>
         <li>
           <NavLink to={`/info`}>Info</NavLink>

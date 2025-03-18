@@ -4,7 +4,7 @@
 import { Category } from './types'
 
 export type MonsterType = 'jormungandr' | 'swarm' | 'ancient' | 'guardsman' | 'demon' | 'monster'
-export type MonsterGroup = 'epic'
+export type MonsterGroup = 'epic' | 'citadel'
 export type TIPO = 'monster' | 'merc' | 'army'
 export type MonsterRace = 'beast' | 'giant' | 'elemental' | 'dragon'
 
@@ -855,4 +855,228 @@ export const shadowCastleArmy = [
   shadowRangedStack,
   shadowRiderStack,
   shadowCoraxStack
+]
+
+//------------ citadel lvl 10
+const walls: EnemyUnit = {
+  // OK
+  tipo: 'monster',
+  name: 'walls',
+  BASEHP: 30000,
+  BASESTR: 10000,
+  LEADERSHIP: 0,
+  INITIATIVE: 11,
+  DOMINANCE: 0,
+  AUTHORITY: 0,
+  vsRangedPercent: 100,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 100,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 100,
+  vsFortificationsPercent: 0,
+  vsEpicPercent: 0,
+  vsGiantPercent: 0,
+  vsElementalPercent: 0,
+  vsDragonPercent: 0,
+  troop: 'monster',
+  category: 'melee', // melee
+  race: 'beast',
+  group: 'citadel',
+  level: 'V'
+}
+
+const bear: EnemyUnit = {
+  // OK
+  tipo: 'monster',
+  name: 'bear',
+  BASEHP: 66000,
+  BASESTR: 22000,
+  LEADERSHIP: 41,
+  INITIATIVE: 10,
+  DOMINANCE: 0,
+  AUTHORITY: 0,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 70,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  vsEpicPercent: 0,
+  vsGiantPercent: 0,
+  vsElementalPercent: 50,
+  vsDragonPercent: 0,
+  troop: 'monster',
+  category: 'melee', // melee
+  race: 'beast',
+  group: 'citadel',
+  level: 'V'
+}
+
+const pegaso: EnemyUnit = {
+  // OK
+  tipo: 'monster',
+  name: 'pegaso',
+  BASEHP: 24600,
+  BASESTR: 8200,
+  LEADERSHIP: 28,
+  INITIATIVE: 10,
+  DOMINANCE: 0,
+  AUTHORITY: 0,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 60,
+  vsFortificationsPercent: 0,
+  vsEpicPercent: 0,
+  vsGiantPercent: 0,
+  vsElementalPercent: 0,
+  vsDragonPercent: 50,
+  troop: 'monster',
+  category: 'flying', // melee
+  race: 'beast',
+  group: 'citadel',
+  level: 'IV'
+}
+
+const druid: EnemyUnit = {
+  // OK
+  tipo: 'monster',
+  name: 'druid',
+  BASEHP: 2700,
+  BASESTR: 900,
+  LEADERSHIP: 10,
+  INITIATIVE: 10,
+  DOMINANCE: 0,
+  AUTHORITY: 0,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 25,
+  vsFortificationsPercent: 0,
+  vsEpicPercent: 0,
+  vsGiantPercent: 0,
+  vsElementalPercent: 0,
+  vsDragonPercent: 0,
+  troop: 'monster',
+  category: 'ranged', // melee
+  race: 'beast',
+  group: 'citadel',
+  level: 'II'
+}
+
+const archer: EnemyUnit = {
+  // OK
+  tipo: 'monster',
+  name: 'archer',
+  BASEHP: 300,
+  BASESTR: 100,
+  LEADERSHIP: 2,
+  INITIATIVE: 10,
+  DOMINANCE: 0,
+  AUTHORITY: 0,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 0,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 35,
+  vsFortificationsPercent: 0,
+  vsEpicPercent: 0,
+  vsGiantPercent: 0,
+  vsElementalPercent: 0,
+  vsDragonPercent: 0,
+  troop: 'monster',
+  category: 'ranged', // melee
+  race: 'beast',
+  group: 'citadel',
+  level: 'I'
+}
+
+const dwarf: EnemyUnit = {
+  // OK
+  tipo: 'monster',
+  name: 'dwarf',
+  BASEHP: 84,
+  BASESTR: 28,
+  LEADERSHIP: 1,
+  INITIATIVE: 10,
+  DOMINANCE: 0,
+  AUTHORITY: 0,
+  vsRangedPercent: 0,
+  vsSiegePercent: 0,
+  vsBeastPercent: 0,
+  vsHumanPercent: 0,
+  vsMountedPercent: 10,
+  vsFlyingPercent: 0,
+  vsMeleePercent: 0,
+  vsFortificationsPercent: 0,
+  vsEpicPercent: 0,
+  vsGiantPercent: 0,
+  vsElementalPercent: 0,
+  vsDragonPercent: 0,
+  troop: 'monster',
+  category: 'melee', // melee
+  race: 'beast',
+  group: 'citadel',
+  level: 'I'
+}
+const wallsStack: MobStack = {
+  id: 'wallsStack1',
+  unit: walls,
+  units: 90,
+  leadership: 90 * walls.LEADERSHIP
+}
+const bearStack: MobStack = {
+  id: 'bearStack1',
+  unit: bear,
+  units: 9,
+  leadership: 9 * bear.LEADERSHIP
+}
+
+const pegasoStack: MobStack = {
+  id: 'pegasoStack1',
+  unit: pegaso,
+  units: 19,
+  leadership: 19 * pegaso.LEADERSHIP
+}
+
+const druidStack: MobStack = {
+  id: 'druidStack1',
+  unit: druid,
+  units: 100,
+  leadership: 100 * druid.LEADERSHIP
+}
+
+const archerStack: MobStack = {
+  id: 'archerStack1',
+  unit: archer,
+  units: 1200,
+  leadership: 1200 * archer.LEADERSHIP
+}
+
+const dwarfStack: MobStack = {
+  id: 'dwarfStack1',
+  unit: dwarf,
+  units: 2200,
+  leadership: 2200 * dwarf.LEADERSHIP
+}
+
+export const citadel10Army = [
+  wallsStack,
+  bearStack,
+  pegasoStack,
+  druidStack,
+  archerStack,
+  dwarfStack
 ]

@@ -1,0 +1,50 @@
+@startuml
+Start
+
+:input:max_leadership;
+:input:max_authority;
+:input:max_dominance;
+:input:use_first_item?:
+:input:first_item_max;
+:input: army_list;
+
+
+if (length(army_list)=0)
+  stop
+endif
+
+:first_stack = army[0];
+
+while (true)
+
+  if(get_army_leadership()+(first_stack.leadership*1)<=max_leadership)
+    :add 1 unit to first_stack;
+  endif
+
+
+  :loop_index=1;
+  while (loop_index < length(army_list))
+    :current_stack=army_list[loop_index];
+    :prev_stack=army_list[loop_index-1];
+
+    :units_to_add = 1;
+    :has_leadership_available =get_army_leadership()+(current_stack.leadership*units_to_add)<=max_leadership;
+    :is_weaker_than_prev_stack =(current_stack.units+1)*current_stack.strength < prev_stack.strength;
+
+    while (has_leadership_available AND is_weaker_than_prev_stack)
+      :add 1 unit to current_stack
+
+      :has_leadership_available =get_army_leadership()+(current_stack.leadership*units_to_add)<=max_leadership;
+      :is_weaker_than_prev_stack =(current_stack.units+1)*current_stack.strength < prev_stack.strength;
+    endwhile
+
+    :loop_index=+1;
+  endwhile (finished iterating the army_list)
+
+  if(use_first_item? AND first_stack.units >=first_item_max)
+    stop
+  endif
+
+endwhile
+stop
+@enduml

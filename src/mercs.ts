@@ -26,6 +26,149 @@ const mercRiderBuilder = (
   })
 }
 
+//---------------------------
+export const scorpionRiderV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.scorpionRiderV,
+  BASEHP: 111000,
+  BASESTR: 37000,
+  AUTHORITY: 71,
+  INITIATIVE: 10,
+  vsRangedPercent: 40,
+  vsSiegePercent: 0,
+  vsEpicPercent: 0,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'barbarian',
+  group: '',
+  level: 'V'
+})
+
+export const cyclopsV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.cyclopsV,
+  BASEHP: 135000,
+  BASESTR: 45000,
+  AUTHORITY: 85,
+  INITIATIVE: 10,
+  vsFortificationsPercent: 100,
+  vsBeastPercent: 40,
+  vsMeleePercent: 45,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'barbarian',
+  group: 'giant',
+  level: 'V'
+})
+
+export const gargoyleV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.gargoyleV,
+  BASEHP: 57000,
+  BASESTR: 19000,
+  AUTHORITY: 37,
+  INITIATIVE: 10,
+  vsMountedPercent: 70,
+  vsElementalPercent: 45,
+  troop: 'merc',
+  category: 'flying',
+  race: 'beast',
+  group: 'undead',
+  level: 'V'
+})
+
+export const bearV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.bearV,
+  BASEHP: 66000,
+  BASESTR: 22000,
+  AUTHORITY: 41,
+  INITIATIVE: 10,
+  vsMountedPercent: 70,
+  vsElementalPercent: 50,
+  troop: 'merc',
+  category: 'melee',
+  race: 'beast',
+  group: 'elf',
+  level: 'V'
+})
+
+export const ifritV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.ifritV,
+  BASEHP: 132000,
+  BASESTR: 44000,
+  AUTHORITY: 83,
+  INITIATIVE: 10,
+  vsMeleePercent: 70,
+  vsDragonPercent: 40,
+  troop: 'merc',
+  category: 'flying',
+  race: 'demon',
+  group: 'elemental',
+  level: 'V'
+})
+
+export const giantZombieV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.giantZombieV,
+  BASEHP: 99000,
+  BASESTR: 33000,
+  AUTHORITY: 63,
+  INITIATIVE: 10,
+  vsMountedPercent: 70,
+  vsBeastPercent: 45,
+  troop: 'merc',
+  category: 'melee',
+  race: 'giant',
+  group: 'cursed',
+  level: 'V'
+})
+
+export const firewormRiderV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.firewormRiderV,
+  BASEHP: 150000,
+  BASESTR: 50000,
+  AUTHORITY: 96,
+  INITIATIVE: 10,
+  vsRangedPercent: 55,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'demon',
+  group: '',
+  level: 'V'
+})
+
+export const unicornRiderV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.unicornRiderV,
+  BASEHP: 81000,
+  BASESTR: 27000,
+  AUTHORITY: 96,
+  INITIATIVE: 10,
+  vsRangedPercent: 65,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'elf',
+  group: '',
+  level: 'V'
+})
+
+export const bullRiderV: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.bullRiderV,
+  BASEHP: 87000,
+  BASESTR: 29000,
+  AUTHORITY: 56,
+  INITIATIVE: 10,
+  vsRangedPercent: 55,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'cursed',
+  group: '',
+  level: 'V'
+})
 //------------------------------------
 export const mercEpicMonsterHunter: MercUnit = unitBuilder<MercUnit>({
   tipo: 'merc',
@@ -194,7 +337,7 @@ export const boneGolemVI: MercUnit = unitBuilder<MercUnit>({
   name: ARMY.boneGolemVI,
   BASEHP: 210000,
   BASESTR: 70000,
-  AUTHORITY: 74,
+  AUTHORITY: 37,
   INITIATIVE: 10,
   vsDragonPercent: 40,
   troop: 'merc',
@@ -360,6 +503,127 @@ export const jungleKingVII: MercUnit = unitBuilder<MercUnit>({
   race: 'beast',
   group: '',
   level: 'VII'
+})
+
+export const wyvernII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.wyvernII,
+  BASEHP: 2070000,
+  BASESTR: 690000,
+  AUTHORITY: 63,
+  INITIATIVE: 10,
+  vsMeleePercent: 75,
+  troop: 'merc',
+  category: 'flying',
+  race: 'cursed',
+  group: '',
+  level: 'II'
+})
+
+export const arielII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.arielII,
+  BASEHP: 330000,
+  BASESTR: 55000,
+  AUTHORITY: 10,
+  INITIATIVE: 10,
+  vsFortificationsPercent: 1667,
+  troop: 'merc',
+  category: 'asedio',
+  race: 'human',
+  group: '',
+  level: 'II'
+})
+
+export const jagoII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.jagoII,
+  BASEHP: 660000,
+  BASESTR: 220000,
+  AUTHORITY: 20,
+  INITIATIVE: 10,
+  vsMountedPercent: 1000,
+  vsFortificationsPercent: 525,
+  troop: 'merc',
+  category: 'flying',
+  race: 'beast',
+  group: '',
+  level: 'II'
+})
+
+export const eternalCannoneerII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.eternalCannoneerII,
+  BASEHP: 1320000,
+  BASESTR: 440000,
+  AUTHORITY: 40,
+  INITIATIVE: 10,
+  vsFlyingPercent: 65,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'undead',
+  group: '',
+  level: 'II'
+})
+export const warregalII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.warregalII,
+  BASEHP: 660000,
+  BASESTR: 220000,
+  AUTHORITY: 20,
+  INITIATIVE: 10,
+  vsMountedPercent: 1999,
+  vsFortificationsPercent: 1051,
+  troop: 'merc',
+  category: 'flying',
+  race: 'beast',
+  group: '',
+  level: 'II'
+})
+
+export const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.epicMonsterHunterII,
+  BASEHP: 75000,
+  BASESTR: 25000,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsEpicPercent: 1000,
+  troop: 'merc',
+  category: 'epic',
+  race: 'human',
+  group: 'guardsman',
+  level: 'II'
+})
+
+export const demonicSalamanderII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.demonicSalamanderII,
+  BASEHP: 1230000,
+  BASESTR: 410000,
+  AUTHORITY: 38,
+  INITIATIVE: 10,
+  vsMountedPercent: 65,
+  troop: 'merc',
+  category: 'melee',
+  race: 'demon',
+  group: '',
+  level: 'II'
+})
+export const slavicWarriorII: MercUnit = unitBuilder<MercUnit>({
+  tipo: 'merc',
+  name: ARMY.slavicWarriorII,
+  BASEHP: 33000,
+  BASESTR: 11000,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsBeastPercent: 2050,
+  vsMountedPercent: 1000,
+  troop: 'merc',
+  category: 'melee',
+  race: 'human',
+  group: '',
+  level: 'II'
 })
 /*
 trebuchetVI
