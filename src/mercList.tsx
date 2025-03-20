@@ -9,7 +9,7 @@ import {
   legionaryVI,
   lifeDragonVII,
   lightningLordVII,
-  mercEpicMonsterHunter,
+  epicMonsterHunterVI,
   rhinoRiderVI,
   sandwormVII,
   seaLordVII,
@@ -28,11 +28,18 @@ import {
   epicMonsterHunterII,
   jagoII,
   eternalCannoneerII,
-  slavicWarriorII
+  slavicWarriorII,
+  epicMonsterHunterVII,
+  wardenII,
+  highlanderII,
+  galloperII,
+  quicksandII,
+  scarfaceII,
+  pounderII
 } from './mercs'
 export const MercList = () => {
   const mercList = [
-    mercEpicMonsterHunter,
+    epicMonsterHunterVI,
     chariotVI,
     deathChariotVI,
     legionaryVI,
@@ -54,6 +61,7 @@ export const MercList = () => {
     overlordVII,
     jungleKingVII,
     fireLordVII,
+    epicMonsterHunterVII,
 
     wyvernII,
     arielII,
@@ -62,7 +70,13 @@ export const MercList = () => {
     epicMonsterHunterII,
     jagoII,
     eternalCannoneerII,
-    slavicWarriorII
+    slavicWarriorII,
+    wardenII,
+    highlanderII,
+    galloperII,
+    quicksandII,
+    scarfaceII,
+    pounderII
   ]
 
   mercList.sort((a, b) => a.BASEHP - b.BASEHP)
@@ -75,6 +89,7 @@ export const MercList = () => {
         <thead>
           <th></th>
           <th>Name</th>
+          <th>Category</th>
           <th>Health</th>
           <th>Strength</th>
           <th>Authority</th>
@@ -88,6 +103,7 @@ export const MercList = () => {
                 </td> */}
                 <td>{i + 1}</td>
                 <td>{merc.name}</td>
+                <td>{merc.category}</td>
                 <td>{merc.BASEHP}</td>
                 <td>{merc.BASESTR}</td>
                 <td>{merc.AUTHORITY}</td>
@@ -146,11 +162,13 @@ T7 Epic Monster Hunter
     T7 Cursed Dragon**
     T7 Sandworm**
     T7 Fire Lord**
-TII Highlander / Pounder
-/ Scarface
-TII Quicksand / Galloper
+    TII Highlander  **
+    / Scarface **
+    / Pounder **
 TII Grace
-TII Wardens
+    TII Quicksand / ***
+    Galloper ***
+    TII Wardens ***
     TII Slavic Warrior **
     TII Eternal Cannoneers **
     TII Warregal **

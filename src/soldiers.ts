@@ -126,7 +126,8 @@ export const ARMY = {
   CatapultE3: 'CatapultE3',
   CatapultE4: 'CatapultE4',
   CatapultE5: 'CatapultE5',
-
+  CatapultE6: 'CatapultE6',
+  CatapultE7: 'CatapultE7',
   //monsters
   // dragons
   emeraldDragon: 'emeraldDragonIII',
@@ -174,7 +175,7 @@ export const ARMY = {
   firewormRiderV: 'firewormRiderV',
   bullRiderV: 'bullRiderV',
   unicornRiderV: 'unicornRiderV',
-  mercEpicMonsterHunter: 'mercEpicMonsterHunter',
+  epicMonsterHunterVI: 'epicMonsterHunterVI',
   chariotVI: 'chariotVI',
   deathChariotVI: 'deathChariotVI',
   legionaryVI: 'legionaryVI',
@@ -200,10 +201,17 @@ export const ARMY = {
   arielII: 'arielII',
   jagoII: 'jagoII',
   warregalII: 'warregalII',
+  epicMonsterHunterVII: 'epicMonsterHunterVII',
   epicMonsterHunterII: 'epicMonsterHunterII',
   demonicSalamanderII: 'demonicSalamanderII',
   eternalCannoneerII: 'eternalCannoneerII',
-  slavicWarriorII: 'slavicWarriorII'
+  slavicWarriorII: 'slavicWarriorII',
+  wardenII: 'wardenII',
+  highlanderII: 'highlanderII',
+  galloperII: 'galloperII',
+  scarfaceII: 'scarfaceII',
+  quicksandII: 'quicksandII',
+  pounderII: 'pounderII'
 }
 
 export const unitBuilder = <T>(props: Partial<UnitProps>): T => {
@@ -1025,6 +1033,8 @@ export const CatapultE2 = catapultBuilder(ARMY.CatapultE2, 2700, 450, 98, 'E2')
 export const CatapultE3 = catapultBuilder(ARMY.CatapultE3, 4860, 810, 146, 'E3')
 export const CatapultE4 = catapultBuilder(ARMY.CatapultE4, 8750, 1460, 219, 'E4')
 export const CatapultE5 = catapultBuilder(ARMY.CatapultE5, 15800, 2630, 329, 'E5')
+export const CatapultE6 = catapultBuilder(ARMY.CatapultE6, 28400, 4730, 494, 'E6')
+export const CatapultE7 = catapultBuilder(ARMY.CatapultE7, 51000, 8500, 740, 'E7')
 
 //------------------------
 

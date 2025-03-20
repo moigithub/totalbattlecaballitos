@@ -9,24 +9,31 @@ import {
   deathChariotVI,
   demonicSalamanderII,
   epicMonsterHunterII,
+  epicMonsterHunterVII,
   eternalCannoneerII,
   fireLordVII,
+  galloperII,
   goldenDragonVII,
+  highlanderII,
   jagoII,
   jungleKingVII,
   knightVI,
   legionaryVI,
   lifeDragonVII,
   lightningLordVII,
-  mercEpicMonsterHunter,
+  epicMonsterHunterVI,
   overlordVII,
+  pounderII,
+  quicksandII,
   rhinoRiderVI,
   sandwormVII,
+  scarfaceII,
   seaLordVII,
   sheduVI,
   slavicWarriorII,
   sphynxVI,
   trailseekerVI,
+  wardenII,
   warregalII,
   wyvernII
 } from './mercs'
@@ -48,6 +55,8 @@ import {
   CatapultE3,
   CatapultE4,
   CatapultE5,
+  CatapultE6,
+  CatapultE7,
   coraxI,
   coraxII,
   crystalDragon,
@@ -285,11 +294,15 @@ export const ArmyList = () => {
       unitType = CatapultE4
     } else if (type === 'Catapult E5') {
       unitType = CatapultE5
+    } else if (type === 'Catapult E6') {
+      unitType = CatapultE6
+    } else if (type === 'Catapult E7') {
+      unitType = CatapultE7
     }
 
     // MERCENARIES ------------------------------
     else if (type === 'mercEpicMonsterHunter') {
-      unitType = mercEpicMonsterHunter
+      unitType = epicMonsterHunterVI
     } else if (type === 'chariotVI') {
       unitType = chariotVI
     } else if (type === 'deathChariotVI') {
@@ -332,6 +345,8 @@ export const ArmyList = () => {
       unitType = fireLordVII
     } else if (type === 'jungleKingVII') {
       unitType = jungleKingVII
+    } else if (type === 'epicMonsterHunterVII') {
+      unitType = epicMonsterHunterVII
     } else if (type === 'wyvernII') {
       unitType = wyvernII
     } else if (type === 'arielII') {
@@ -348,6 +363,18 @@ export const ArmyList = () => {
       unitType = eternalCannoneerII
     } else if (type === 'slavicWarriorII') {
       unitType = slavicWarriorII
+    } else if (type === 'wardenII') {
+      unitType = wardenII
+    } else if (type === 'highlanderII') {
+      unitType = highlanderII
+    } else if (type === 'galloperII') {
+      unitType = galloperII
+    } else if (type === 'quicksandII') {
+      unitType = quicksandII
+    } else if (type === 'scarfaceII') {
+      unitType = scarfaceII
+    } else if (type === 'pounderII') {
+      unitType = pounderII
     }
 
     // MONSTERS ------------------------------
@@ -1270,6 +1297,26 @@ export const ArmyList = () => {
                 E5
               </button>
             )}
+            {!selectedStacks.includes(ARMY.CatapultE6) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('Catapult E6')
+                }}
+              >
+                E6
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.CatapultE7) && (
+              <button
+                className='troop'
+                onClick={() => {
+                  addTroops('Catapult E7')
+                }}
+              >
+                E7
+              </button>
+            )}
           </div>
         </div>
 
@@ -1555,7 +1602,7 @@ export const ArmyList = () => {
         <div className='mercs'>
           <p className='group-title'>Mercs</p>
           <div className='btn-group'>
-            {!selectedStacks.includes(ARMY.mercEpicMonsterHunter) && (
+            {!selectedStacks.includes(ARMY.epicMonsterHunterVI) && (
               <button
                 className='troop '
                 onClick={() => {
@@ -1791,6 +1838,16 @@ export const ArmyList = () => {
                 jungleKingVII
               </button>
             )}
+            {!selectedStacks.includes(ARMY.epicMonsterHunterVII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('epicMonsterHunterVII')
+                }}
+              >
+                epicMonsterHunterVII
+              </button>
+            )}
 
             {!selectedStacks.includes(ARMY.wyvernII) && (
               <button
@@ -1872,6 +1929,68 @@ export const ArmyList = () => {
                 }}
               >
                 slavicWarriorII
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.wardenII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('wardenII')
+                }}
+              >
+                wardenII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.highlanderII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('highlanderII')
+                }}
+              >
+                highlanderII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.galloperII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('galloperII')
+                }}
+              >
+                galloperII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.quicksandII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('quicksandII')
+                }}
+              >
+                quicksandII
+              </button>
+            )}
+
+            {!selectedStacks.includes(ARMY.scarfaceII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('scarfaceII')
+                }}
+              >
+                scarfaceII
+              </button>
+            )}
+            {!selectedStacks.includes(ARMY.pounderII) && (
+              <button
+                className='troop '
+                onClick={() => {
+                  addTroops('pounderII')
+                }}
+              >
+                pounderII
               </button>
             )}
           </div>
