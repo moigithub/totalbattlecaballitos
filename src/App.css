@@ -487,3 +487,44 @@ table th {
     height: 48px;
   }
 }
+
+.mountbadges {
+  padding: 0 10px;
+  background-color: pink;
+  color: black;
+}
+.elementalbadges {
+  padding: 0 10px;
+  background-color: darkseagreen;
+  color: black;
+}
+.rangedbadges {
+  padding: 0 10px;
+  background-color: orange;
+  color: black;
+}
+.meleebadges {
+  padding: 0 10px;
+  background-color: hotpink;
+  color: black;
+}
+.dragonbadges {
+  padding: 0 10px;
+  background-color: dodgerblue;
+  color: black;
+}
+.siegebadges {
+  padding: 0 10px;
+  background-color: grey;
+  color: black;
+}
+.giantbadges {
+  padding: 0 10px;
+  background-color: mediumpurple;
+  color: black;
+}
+.beastbadges {
+  padding: 0 10px;
+  background-color: brown;
+  color: black;
+}
