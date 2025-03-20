@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import Dos from './dos.tsx'
 import { Info } from './info.tsx'
 import { MercList } from './mercList.tsx'
+import { Citadels } from './citadels.tsx'
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: 'mercenaries',
         element: <MercList />
+      },
+      {
+        path: 'citadels',
+        element: <Citadels />
       }
     ]
   }

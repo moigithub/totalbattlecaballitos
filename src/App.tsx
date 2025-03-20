@@ -20,6 +20,9 @@ function App() {
         <li>
           <NavLink to={`/mercenaries`}>Mercenaries</NavLink>
         </li>
+        <li>
+          <NavLink to={`/citadels`}>Citadels</NavLink>
+        </li>
       </ul>
 
       <Outlet />
