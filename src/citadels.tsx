@@ -455,10 +455,8 @@ export const Citadels = () => {
             {/* str */}
             <td>66000</td>
             {/* hp */}
-            <td>{9 * 22000}</td>
-            {/* total strength  */}
-            <td>{9 * 66000}</td>
-            {/* total health  */}
+            <td>{9 * 66000}</td> {/* total health  */}
+            <td>{9 * 22000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +70%</span> {9 * 22000 * 1.7}
             </td>
@@ -471,8 +469,8 @@ export const Citadels = () => {
             <td>19</td> {/* amount */}
             <td>8200</td> {/* str */}
             <td>24600</td> {/* hp */}
-            <td>{19 * 8200}</td> {/* total strength  */}
             <td>{19 * 24600}</td> {/* total health  */}
+            <td>{19 * 8200}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +65%</span> : {19 * 8200 * 1.65}
             </td>
@@ -483,8 +481,8 @@ export const Citadels = () => {
             <td>1200</td> {/* amount */}
             <td>100</td> {/* str */}
             <td>300</td> {/* hp */}
-            <td>{1200 * 100}</td> {/* total strength  */}
             <td>{1200 * 300}</td> {/* total health  */}
+            <td>{1200 * 100}</td> {/* total strength  */}
             <td>
               <span className='meleebadges'>vs Melee +35%</span> : {1200 * 100 * 1.35}
             </td>
@@ -499,10 +497,8 @@ export const Citadels = () => {
             {/* str */}
             <td>2700</td>
             {/* hp */}
-            <td>{100 * 900}</td>
-            {/* total strength  */}
-            <td>{100 * 2700}</td>
-            {/* total health  */}
+            <td>{100 * 2700}</td> {/* total health  */}
+            <td>{100 * 900}</td> {/* total strength  */}
             <td>
               <span className='meleebadges'>vs Melee +25%</span> : {100 * 900 * 1.25}
             </td>
@@ -514,8 +510,8 @@ export const Citadels = () => {
             <td>2200</td> {/* amount */}
             <td>28</td> {/* str */}
             <td>84</td> {/* hp */}
-            <td>{2200 * 28}</td> {/* total strength  */}
             <td>{2200 * 84}</td> {/* total health  */}
+            <td>{2200 * 28}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +10%</span> : {2200 * 28 * 1.1}
             </td>
@@ -547,10 +543,8 @@ export const Citadels = () => {
             {/* str */}
             <td>219000</td>
             {/* hp */}
-            <td>{21 * 73000}</td>
-            {/* total strength  */}
-            <td>{21 * 219000}</td>
-            {/* total health  */}
+            <td>{21 * 219000}</td> {/* total health  */}
+            <td>{21 * 73000}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +55%</span> : {21 * 73000 * 1.55}
             </td>
@@ -566,10 +560,8 @@ export const Citadels = () => {
             {/* str */}
             <td>81000</td>
             {/* hp */}
-            <td>{47 * 27000}</td>
-            {/* total strength  */}
-            <td>{47 * 81000}</td>
-            {/* total health  */}
+            <td>{47 * 81000}</td> {/* total health  */}
+            <td>{47 * 27000}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +65%</span> : {47 * 27000 * 1.65}
             </td>
@@ -583,10 +575,8 @@ export const Citadels = () => {
             {/* str */}
             <td>2700</td>
             {/* hp */}
-            <td>{1100 * 900}</td>
-            {/* total strength  */}
-            <td>{1100 * 2700}</td>
-            {/* total health  */}
+            <td>{1100 * 2700}</td> {/* total health  */}
+            <td>{1100 * 900}</td> {/* total strength  */}
             <td>
               <span className='meleebadges'>vs Melee +25%</span> : {1100 * 900 * 1.25}
             </td>
@@ -600,10 +590,8 @@ export const Citadels = () => {
             {/* str */}
             <td>7800</td>
             {/* hp */}
-            <td>{290 * 2600}</td>
-            {/* total strength  */}
-            <td>{290 * 7800}</td>
-            {/* total health  */}
+            <td>{290 * 7800}</td> {/* total health  */}
+            <td>{290 * 2600}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +50%</span> : {290 * 2600 * 1.5}
             </td>
@@ -616,8 +604,8 @@ export const Citadels = () => {
             <td>5000</td> {/* amount */}
             <td>100</td> {/* str */}
             <td>300</td> {/* hp */}
-            <td>{5000 * 100}</td> {/* total strength  */}
             <td>{5000 * 300}</td> {/* total health  */}
+            <td>{5000 * 100}</td> {/* total strength  */}
             <td>
               <span className='meleebadges'>vs Melee +35%</span> : {5000 * 100 * 1.35}
             </td>
@@ -649,10 +637,8 @@ export const Citadels = () => {
             {/* str */}
             <td>720000</td>
             {/* hp */}
-            <td>{41 * 240000}</td>
-            {/* total strength  */}
-            <td>{41 * 720000}</td>
-            {/* total health  */}
+            <td>{41 * 720000}</td> {/* total health  */}
+            <td>{41 * 240000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +60%</span> {41 * 240000 * 1.6}
             </td>
@@ -668,10 +654,8 @@ export const Citadels = () => {
             {/* str */}
             <td>219000</td>
             {/* hp */}
-            <td>{110 * 73000}</td>
-            {/* total strength  */}
-            <td>{110 * 219000}</td>
-            {/* total health  */}
+            <td>{110 * 219000}</td> {/* total health  */}
+            <td>{110 * 73000}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +55%</span> : {110 * 73000 * 1.55}
             </td>
@@ -687,10 +671,8 @@ export const Citadels = () => {
             {/* str */}
             <td>7800</td>
             {/* hp */}
-            <td>{2500 * 2600}</td>
-            {/* total strength  */}
-            <td>{2500 * 7800}</td>
-            {/* total health  */}
+            <td>{2500 * 7800}</td> {/* total health  */}
+            <td>{2500 * 2600}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +50%</span> : {2500 * 2600 * 1.5}
             </td>
@@ -706,10 +688,8 @@ export const Citadels = () => {
             {/* str */}
             <td>66000</td>
             {/* hp */}
-            <td>{230 * 22000}</td>
-            {/* total strength  */}
-            <td>{230 * 66000}</td>
-            {/* total health  */}
+            <td>{230 * 66000}</td> {/* total health  */}
+            <td>{230 * 22000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +70%</span> {230 * 22000 * 1.7}
             </td>
@@ -725,10 +705,8 @@ export const Citadels = () => {
             {/* str */}
             <td>2700</td>
             {/* hp */}
-            <td>{3600 * 900}</td>
-            {/* total strength  */}
-            <td>{3600 * 2700}</td>
-            {/* total health  */}
+            <td>{3600 * 2700}</td> {/* total health  */}
+            <td>{3600 * 900}</td> {/* total strength  */}
             <td>
               <span className='meleebadges'>vs Melee +25%</span> : {3600 * 900 * 1.25}
             </td>
@@ -759,10 +737,8 @@ export const Citadels = () => {
             {/* str */}
             <td>720000</td>
             {/* hp */}
-            <td>{480 * 240000}</td>
-            {/* total strength  */}
-            <td>{480 * 720000}</td>
-            {/* total health  */}
+            <td>{480 * 720000}</td> {/* total health  */}
+            <td>{480 * 240000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +60%</span> {480 * 240000 * 1.6}
             </td>
@@ -778,10 +754,8 @@ export const Citadels = () => {
             {/* str */}
             <td>219000</td>
             {/* hp */}
-            <td>{880 * 73000}</td>
-            {/* total strength  */}
-            <td>{880 * 219000}</td>
-            {/* total health  */}
+            <td>{880 * 219000}</td> {/* total health  */}
+            <td>{880 * 73000}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +55%</span> : {880 * 73000 * 1.55}
             </td>
@@ -797,10 +771,8 @@ export const Citadels = () => {
             {/* str */}
             <td>66000</td>
             {/* hp */}
-            <td>{2400 * 22000}</td>
-            {/* total strength  */}
-            <td>{2400 * 66000}</td>
-            {/* total health  */}
+            <td>{2400 * 66000}</td> {/* total health  */}
+            <td>{2400 * 22000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +70%</span> {2400 * 22000 * 1.7}
             </td>
@@ -814,8 +786,8 @@ export const Citadels = () => {
             <td>4300</td> {/* amount */}
             <td>8200</td> {/* str */}
             <td>24600</td> {/* hp */}
-            <td>{4300 * 8200}</td> {/* total strength  */}
             <td>{4300 * 24600}</td> {/* total health  */}
+            <td>{4300 * 8200}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +65%</span> : {4300 * 8200 * 1.65}
             </td>
@@ -829,10 +801,8 @@ export const Citadels = () => {
             {/* str */}
             <td>7800</td>
             {/* hp */}
-            <td>{10000 * 2600}</td>
-            {/* total strength  */}
-            <td>{10000 * 7800}</td>
-            {/* total health  */}
+            <td>{10000 * 7800}</td> {/* total health  */}
+            <td>{10000 * 2600}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +50%</span> : {10000 * 2600 * 1.5}
             </td>
@@ -866,10 +836,8 @@ export const Citadels = () => {
             {/* str */}
             <td>720000</td>
             {/* hp */}
-            <td>{2300 * 240000}</td>
-            {/* total strength  */}
-            <td>{2300 * 720000}</td>
-            {/* total health  */}
+            <td>{2300 * 720000}</td> {/* total health  */}
+            <td>{2300 * 240000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +60%</span> {2300 * 240000 * 1.6}
             </td>
@@ -885,10 +853,8 @@ export const Citadels = () => {
             {/* str */}
             <td>219000</td>
             {/* hp */}
-            <td>{4300 * 73000}</td>
-            {/* total strength  */}
-            <td>{4300 * 219000}</td>
-            {/* total health  */}
+            <td>{4300 * 219000}</td> {/* total health  */}
+            <td>{4300 * 73000}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +55%</span> : {4300 * 73000 * 1.55}
             </td>
@@ -904,10 +870,8 @@ export const Citadels = () => {
             {/* str */}
             <td>66000</td>
             {/* hp */}
-            <td>{12000 * 22000}</td>
-            {/* total strength  */}
-            <td>{12000 * 66000}</td>
-            {/* total health  */}
+            <td>{12000 * 66000}</td> {/* total health  */}
+            <td>{12000 * 22000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +70%</span> {12000 * 22000 * 1.7}
             </td>
@@ -921,8 +885,8 @@ export const Citadels = () => {
             <td>21000</td> {/* amount */}
             <td>8200</td> {/* str */}
             <td>24600</td> {/* hp */}
-            <td>{21000 * 8200}</td> {/* total strength  */}
             <td>{21000 * 24600}</td> {/* total health  */}
+            <td>{21000 * 8200}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +65%</span> : {21000 * 8200 * 1.65}
             </td>
@@ -936,10 +900,8 @@ export const Citadels = () => {
             {/* str */}
             <td>7800</td>
             {/* hp */}
-            <td>{49000 * 2600}</td>
-            {/* total strength  */}
-            <td>{49000 * 7800}</td>
-            {/* total health  */}
+            <td>{49000 * 7800}</td> {/* total health  */}
+            <td>{49000 * 2600}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +50%</span> : {49000 * 2600 * 1.5}
             </td>
@@ -974,10 +936,8 @@ export const Citadels = () => {
             {/* str */}
             <td>960000</td>
             {/* hp */}
-            <td>{10 * 320000}</td>
-            {/* total strength  */}
-            <td>{10 * 960000}</td>
-            {/* total health  */}
+            <td>{10 * 960000}</td> {/* total health  */}
+            <td>{10 * 320000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +50%</span> {10 * 320000 * 1.5}
             </td>
@@ -994,10 +954,8 @@ export const Citadels = () => {
             {/* str */}
             <td>99000</td>
             {/* hp */}
-            <td>{80 * 33000}</td>
-            {/* total strength  */}
-            <td>{80 * 99000}</td>
-            {/* total health  */}
+            <td>{80 * 99000}</td> {/* total health  */}
+            <td>{80 * 33000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +70%</span> {80 * 33000 * 1.7}
             </td>
@@ -1013,10 +971,8 @@ export const Citadels = () => {
             {/* str */}
             <td>9600</td>
             {/* hp */}
-            <td>{650 * 3200}</td>
-            {/* total strength  */}
-            <td>{650 * 9600}</td>
-            {/* total health  */}
+            <td>{650 * 9600}</td> {/* total health  */}
+            <td>{650 * 3200}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +50%</span> : {650 * 3200 * 1.5}
             </td>
@@ -1027,8 +983,8 @@ export const Citadels = () => {
             <td>54</td> {/* amount */}
             <td>29000</td> {/* str */}
             <td>87000</td> {/* hp */}
-            <td>{54 * 29000}</td> {/* total strength  */}
             <td>{54 * 87000}</td> {/* total health  */}
+            <td>{54 * 29000}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +65%</span> : {54 * 29000 * 1.65}
             </td>
@@ -1039,8 +995,8 @@ export const Citadels = () => {
             <td>2900</td> {/* amount */}
             <td>360</td> {/* str */}
             <td>1080</td> {/* hp */}
-            <td>{2900 * 360}</td> {/* total strength  */}
             <td>{2900 * 1080}</td> {/* total health  */}
+            <td>{2900 * 360}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mounted +65%</span> : {2900 * 360 * 1.65}
             </td>
@@ -1072,10 +1028,8 @@ export const Citadels = () => {
             {/* str */}
             <td>960000</td>
             {/* hp */}
-            <td>{120 * 320000}</td>
-            {/* total strength  */}
-            <td>{120 * 960000}</td>
-            {/* total health  */}
+            <td>{120 * 960000}</td> {/* total health  */}
+            <td>{120 * 320000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +50%</span> {120 * 320000 * 1.5}
             </td>
@@ -1091,10 +1045,8 @@ export const Citadels = () => {
             {/* str */}
             <td>330000</td>
             {/* hp */}
-            <td>{205 * 110000}</td>
-            {/* total strength  */}
-            <td>{205 * 330000}</td>
-            {/* total health  */}
+            <td>{205 * 330000}</td> {/* total health  */}
+            <td>{205 * 110000}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +55%</span> : {205 * 110000 * 1.55}
             </td>
@@ -1110,10 +1062,8 @@ export const Citadels = () => {
             {/* str */}
             <td>99000</td>
             {/* hp */}
-            <td>{540 * 33000}</td>
-            {/* total strength  */}
-            <td>{540 * 99000}</td>
-            {/* total health  */}
+            <td>{540 * 99000}</td> {/* total health  */}
+            <td>{540 * 33000}</td> {/* total strength  */}
             <td>
               <span className='mountbadges'>vs Mount +70%</span> {540 * 33000 * 1.7}
             </td>
@@ -1127,8 +1077,8 @@ export const Citadels = () => {
             <td>400</td> {/* amount */}
             <td>29000</td> {/* str */}
             <td>87000</td> {/* hp */}
-            <td>{400 * 29000}</td> {/* total strength  */}
             <td>{400 * 87000}</td> {/* total health  */}
+            <td>{400 * 29000}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +65%</span> : {400 * 29000 * 1.65}
             </td>
@@ -1142,10 +1092,8 @@ export const Citadels = () => {
             {/* str */}
             <td>9600</td>
             {/* hp */}
-            <td>{2750 * 3200}</td>
-            {/* total strength  */}
-            <td>{2750 * 9600}</td>
-            {/* total health  */}
+            <td>{2750 * 9600}</td> {/* total health  */}
+            <td>{2750 * 3200}</td> {/* total strength  */}
             <td>
               <span className='rangedbadges'>vs Ranged +50%</span> : {2750 * 3200 * 1.5}
             </td>
