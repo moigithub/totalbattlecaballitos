@@ -144,6 +144,16 @@ table th {
   z-index: 1;
 }
 
+.stack-card-small {
+  display: grid;
+  grid-template-areas:
+    'units name        name    action     delete'
+    'units atk         atk     .         reset';
+
+  width: 100%;
+  border: 1px solid grey;
+  margin: 10px 0;
+}
 .stack-card {
   display: grid;
   grid-template-areas:
@@ -154,187 +164,177 @@ table th {
   width: 100%;
   border: 1px solid grey;
   margin: 10px 0;
+}
+.stack-units {
+  grid-area: units;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
+  color: black;
+  margin-right: 10px;
+  cursor: pointer;
+  user-select: none;
+  padding-left: 20px;
+  position: relative;
+  touch-action: none;
+}
 
-  .stack-units {
-    grid-area: units;
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: bisque;
-    color: black;
-    margin-right: 10px;
-    cursor: pointer;
-    user-select: none;
-    padding-left: 20px;
-    position: relative;
-    touch-action: none;
+.drag-handler {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  background-color: #e5e5f7;
+  opacity: 0.8;
+  background-image: linear-gradient(
+      30deg,
+      #bc6f0f 12%,
+      transparent 12.5%,
+      transparent 87%,
+      #bc6f0f 87.5%,
+      #bc6f0f
+    ),
+    linear-gradient(150deg, #bc6f0f 12%, transparent 12.5%, transparent 87%, #bc6f0f 87.5%, #bc6f0f),
+    linear-gradient(30deg, #bc6f0f 12%, transparent 12.5%, transparent 87%, #bc6f0f 87.5%, #bc6f0f),
+    linear-gradient(150deg, #bc6f0f 12%, transparent 12.5%, transparent 87%, #bc6f0f 87.5%, #bc6f0f),
+    linear-gradient(
+      60deg,
+      #bc6f0f77 25%,
+      transparent 25.5%,
+      transparent 75%,
+      #bc6f0f77 75%,
+      #bc6f0f77
+    ),
+    linear-gradient(
+      60deg,
+      #bc6f0f77 25%,
+      transparent 25.5%,
+      transparent 75%,
+      #bc6f0f77 75%,
+      #bc6f0f77
+    );
+  background-size: 8px 14px;
+  background-position: 0 0, 0 0, 4px 7px, 4px 7px, 0 0, 4px 7px;
+}
+.stack-name {
+  grid-area: name;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  width: 100%;
+  max-width: 95%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: flex;
+  align-items: baseline;
+}
+
+.stack-health {
+  grid-area: health;
+  margin: 0;
+  color: brown;
+  font-size: 0.8rem;
+  display: none;
+}
+.stack-strength {
+  grid-area: strength;
+  margin: 0;
+  color: aquamarine;
+  font-size: 0.8rem;
+  display: none;
+}
+
+.stack-health-small {
+  margin: 0 0 0 10px;
+  color: brown;
+  font-size: 0.8rem;
+}
+.stack-strength-small {
+  margin: 0;
+  color: aquamarine;
+  font-size: 0.8rem;
+}
+.stack-leadership {
+  grid-area: leadership;
+  margin: 0;
+  color: cadetblue;
+  font-size: 0.8rem;
+  display: none;
+}
+.stack-minSetup {
+  grid-area: minSetup;
+  margin: 0;
+  color: darkgoldenrod;
+  font-size: 0.8rem;
+}
+.stack-action {
+  grid-area: action;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.stack-config {
+  grid-area: config;
+  margin: 0;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
+
+  .reduce-btn {
+    background-color: purple;
+    color: white;
   }
 
-  .drag-handler {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 20px;
-    height: 100%;
-    background-color: #e5e5f7;
-    opacity: 0.8;
-    background-image: linear-gradient(
-        30deg,
-        #bc6f0f 12%,
-        transparent 12.5%,
-        transparent 87%,
-        #bc6f0f 87.5%,
-        #bc6f0f
-      ),
-      linear-gradient(
-        150deg,
-        #bc6f0f 12%,
-        transparent 12.5%,
-        transparent 87%,
-        #bc6f0f 87.5%,
-        #bc6f0f
-      ),
-      linear-gradient(
-        30deg,
-        #bc6f0f 12%,
-        transparent 12.5%,
-        transparent 87%,
-        #bc6f0f 87.5%,
-        #bc6f0f
-      ),
-      linear-gradient(
-        150deg,
-        #bc6f0f 12%,
-        transparent 12.5%,
-        transparent 87%,
-        #bc6f0f 87.5%,
-        #bc6f0f
-      ),
-      linear-gradient(
-        60deg,
-        #bc6f0f77 25%,
-        transparent 25.5%,
-        transparent 75%,
-        #bc6f0f77 75%,
-        #bc6f0f77
-      ),
-      linear-gradient(
-        60deg,
-        #bc6f0f77 25%,
-        transparent 25.5%,
-        transparent 75%,
-        #bc6f0f77 75%,
-        #bc6f0f77
-      );
-    background-size: 8px 14px;
-    background-position: 0 0, 0 0, 4px 7px, 4px 7px, 0 0, 4px 7px;
+  .mobile {
+    display: block;
   }
-  .stack-name {
-    grid-area: name;
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 500;
-    width: 100%;
-    max-width: 95%;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: flex;
-    align-items: baseline;
-  }
-
-  .stack-health {
-    grid-area: health;
-    margin: 0;
-    color: brown;
+  .widescreen {
     display: none;
   }
-  .stack-strength {
-    grid-area: strength;
-    margin: 0;
-    color: aquamarine;
-    font-size: 0.8rem;
-    display: none;
-  }
-  .stack-leadership {
-    grid-area: leadership;
-    margin: 0;
-    color: cadetblue;
-    font-size: 0.8rem;
-    display: none;
-  }
-  .stack-minSetup {
-    grid-area: minSetup;
-    margin: 0;
-    color: darkgoldenrod;
-    font-size: 0.8rem;
-  }
-  .stack-action {
-    grid-area: action;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin: 0;
-  }
-  .stack-config {
-    grid-area: config;
-    margin: 0;
-    font-size: 0.8rem;
-    display: flex;
-    justify-content: right;
-    align-items: flex-start;
+}
 
-    .reduce-btn {
-      background-color: purple;
-      color: white;
-    }
+.stack-delete {
+  grid-area: delete;
+  display: flex;
+  justify-content: right;
+  align-items: flex-start;
 
-    .mobile {
-      display: block;
-    }
-    .widescreen {
-      display: none;
-    }
+  .remove-btn {
+    background-color: red;
+    color: white;
   }
+}
+.stack-reset {
+  grid-area: reset;
+  display: flex;
+  justify-content: right;
+  align-items: flex-end;
 
-  .stack-delete {
-    grid-area: delete;
-    display: flex;
-    justify-content: right;
-    align-items: flex-start;
-
-    .remove-btn {
-      background-color: red;
-      color: white;
-    }
+  .reset-btn {
+    background-color: cornflowerblue;
+    color: white;
   }
-  .stack-reset {
-    grid-area: reset;
-    display: flex;
-    justify-content: right;
-    align-items: flex-end;
+}
+.stack-attack-info {
+  grid-area: atk;
 
-    .reset-btn {
-      background-color: cornflowerblue;
-      color: white;
-    }
-  }
-  .stack-attack-info {
-    grid-area: atk;
+  font-size: 0.7rem;
 
-    font-size: 0.7rem;
-
-    span {
-      color: green;
-    }
+  span {
+    color: green;
   }
-  .stack-basic-info {
-    grid-area: basic;
-    display: none;
-  }
+}
+.stack-basic-info {
+  grid-area: basic;
+  display: none;
 }
 
 /* ----------------- */
@@ -470,17 +470,17 @@ table th {
       'units atk       atk        leadership   reset'
       'units health    strength   config       minSetup'
       'units basic     basic      .            .';
+  }
 
-    .stack-name {
-      font-size: 1.2rem;
-    }
+  .stack-name {
+    font-size: 1.2rem;
+  }
 
-    .stack-health,
-    .stack-strength,
-    .stack-leadership,
-    .stack-basic-info {
-      display: block;
-    }
+  .stack-health,
+  .stack-strength,
+  .stack-leadership,
+  .stack-basic-info {
+    display: block;
   }
 
   .gobtn {

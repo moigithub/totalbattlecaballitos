@@ -34,6 +34,7 @@ import { getStats, getSTRWithBonus, useStackStore } from './stackStore'
 import { Unit } from './types'
 import { whoCanIAttack } from './utils'
 import { Bonus } from './bonus'
+import { SmallCard } from './SmallCard'
 
 function Dos() {
   // const mobHealth = useGuardsStore(state => state.mobHealth)
@@ -76,6 +77,7 @@ function Dos() {
   const [limitFirstUnit, setLimitFirstUnit] = useState(1)
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
   const [windowMode, setWindowMode] = useState('showArmyConfig')
+  const [cardType, setCardType] = useState('card') // card , smallcard
 
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
@@ -683,6 +685,33 @@ function Dos() {
             <label htmlFor='bonusconfig'>Bonus config</label>
           </div>
         </div>
+
+        <div className='configbar'>
+          <div>
+            <label>Card</label>
+            <input
+              type='radio'
+              value='card'
+              name='cardType'
+              checked={cardType === 'card'}
+              onChange={() => {
+                setCardType('card')
+              }}
+            />
+          </div>
+          <div>
+            <label>Small Card</label>
+            <input
+              type='radio'
+              value='card'
+              name='cardType'
+              checked={cardType === 'smallcard'}
+              onChange={() => {
+                setCardType('smallcard')
+              }}
+            />
+          </div>
+        </div>
       </div>
 
       {windowMode === 'showArmyConfig' && (
@@ -726,7 +755,11 @@ function Dos() {
               <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
                 <SortableContext items={army}>
                   {army.map((stack, index) => {
-                    return <Card stack={stack} key={stack.id} isFirst={index === 0} />
+                    if (cardType === 'smallcard') {
+                      return <SmallCard stack={stack} key={stack.id} isFirst={index === 0} />
+                    } else {
+                      return <Card stack={stack} key={stack.id} isFirst={index === 0} />
+                    }
                   })}
                 </SortableContext>
               </DndContext>
