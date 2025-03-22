@@ -756,8 +756,8 @@ export const battleGriffinV = unitBuilder<GuardsmanUnit>({
   vsFortificationsPercent: 208,
   troop: 'monster',
   category: 'flying',
-  group: 'beast',
-  race: 'monster',
+  group: 'guardsman',
+  race: 'human',
   level: 'V'
 })
 export const battleGriffinVI = unitBuilder<GuardsmanUnit>({
@@ -772,8 +772,8 @@ export const battleGriffinVI = unitBuilder<GuardsmanUnit>({
   vsFortificationsPercent: 311,
   troop: 'monster',
   category: 'flying',
-  group: 'beast',
-  race: 'monster',
+  group: 'guardsman',
+  race: 'human',
   level: 'VI'
 })
 export const battleGriffinVII = unitBuilder<GuardsmanUnit>({
@@ -788,8 +788,8 @@ export const battleGriffinVII = unitBuilder<GuardsmanUnit>({
   vsFortificationsPercent: 467,
   troop: 'monster',
   category: 'flying',
-  group: 'beast',
-  race: 'monster',
+  group: 'guardsman',
+  race: 'human',
   level: 'VII'
 })
 
