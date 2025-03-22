@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import {
   CatapultE1,
   CatapultE2,
@@ -435,6 +436,12 @@ export const Citadels = () => {
       {totalDmg < citadel.walls.hp && <p>not enough catas to kill the walls</p>}
 
       <h3>Citadel elf 10</h3>
+      <h2>
+        NO <span className='mountbadges'>mounted</span>,{' '}
+        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span> or
+        <span className='elementalbadges'>elemental</span>
+      </h2>
+
       <table>
         <thead>
           <th>Stack</th>
@@ -523,6 +530,12 @@ export const Citadels = () => {
       <hr />
 
       <h3>Citadel elf 15</h3>
+      <h2>
+        NO
+        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span> or
+        <span className='dragonbadges'>dragon</span>
+      </h2>
+
       <table>
         <thead>
           <th>Stack</th>
@@ -617,6 +630,13 @@ export const Citadels = () => {
       <hr />
 
       <h3>Citadel elf 20</h3>
+      <h2>
+        NO <span className='mountbadges'>mounted</span>,{' '}
+        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
+        <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
+        <span className='elementalbadges'>elemental</span>
+      </h2>
+
       <table>
         <thead>
           <th>Stack</th>
@@ -640,7 +660,7 @@ export const Citadels = () => {
             <td>{41 * 720000}</td> {/* total health  */}
             <td>{41 * 240000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +60%</span> {41 * 240000 * 1.6}
+              <span className='mountbadges'>vs Mounted +60%</span> {41 * 240000 * 1.6}
             </td>
             <td>
               <span className='giantbadges'>vs Giant +50%</span> {41 * 240000 * 1.5}
@@ -691,7 +711,7 @@ export const Citadels = () => {
             <td>{230 * 66000}</td> {/* total health  */}
             <td>{230 * 22000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +70%</span> {230 * 22000 * 1.7}
+              <span className='mountbadges'>vs Mounted +70%</span> {230 * 22000 * 1.7}
             </td>
             <td>
               <span className='elementalbadges'>vs Elemental +50%</span> : {230 * 22000 * 1.5}
@@ -717,6 +737,13 @@ export const Citadels = () => {
       <hr />
 
       <h3>Citadel elf 25</h3>
+      <h2>
+        NO <span className='mountbadges'>mounted</span>,{' '}
+        <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>,{' '}
+        <span className='dragonbadges'>dragon</span> or
+        <span className='elementalbadges'>elemental</span>
+      </h2>
+
       <table>
         <thead>
           <th>Stack</th>
@@ -740,7 +767,7 @@ export const Citadels = () => {
             <td>{480 * 720000}</td> {/* total health  */}
             <td>{480 * 240000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +60%</span> {480 * 240000 * 1.6}
+              <span className='mountbadges'>vs Mounted +60%</span> {480 * 240000 * 1.6}
             </td>
             <td>
               <span className='giantbadges'>vs Giant +50%</span> {480 * 240000 * 1.5}
@@ -774,7 +801,7 @@ export const Citadels = () => {
             <td>{2400 * 66000}</td> {/* total health  */}
             <td>{2400 * 22000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +70%</span> {2400 * 22000 * 1.7}
+              <span className='mountbadges'>vs Mounted +70%</span> {2400 * 22000 * 1.7}
             </td>
             <td>
               <span className='elementalbadges'>vs Elemental +50%</span> : {2400 * 22000 * 1.5}
@@ -816,6 +843,13 @@ export const Citadels = () => {
       <hr />
 
       <h3>Citadel elf 30</h3>
+      <h2>
+        NO <span className='mountbadges'>mounted</span>,{' '}
+        <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>,{' '}
+        <span className='dragonbadges'>dragon</span> or
+        <span className='elementalbadges'>elemental</span>
+      </h2>
+
       <table>
         <thead>
           <th>Stack</th>
@@ -839,7 +873,7 @@ export const Citadels = () => {
             <td>{2300 * 720000}</td> {/* total health  */}
             <td>{2300 * 240000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +60%</span> {2300 * 240000 * 1.6}
+              <span className='mountbadges'>vs Mounted +60%</span> {2300 * 240000 * 1.6}
             </td>
             <td>
               <span className='giantbadges'>vs Giant +50%</span> {2300 * 240000 * 1.5}
@@ -873,7 +907,7 @@ export const Citadels = () => {
             <td>{12000 * 66000}</td> {/* total health  */}
             <td>{12000 * 22000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +70%</span> {12000 * 22000 * 1.7}
+              <span className='mountbadges'>vs Mounted +70%</span> {12000 * 22000 * 1.7}
             </td>
             <td>
               <span className='elementalbadges'>vs Elemental +50%</span> : {12000 * 22000 * 1.5}
@@ -916,6 +950,12 @@ export const Citadels = () => {
       <br />
 
       <h3>Citadel cursed 20</h3>
+      <h2>
+        NO <span className='mountbadges'>mounted</span>,{' '}
+        <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span> or
+        <span className='beastbadges'>beast</span>
+      </h2>
+
       <table>
         <thead>
           <th>Stack</th>
@@ -939,7 +979,7 @@ export const Citadels = () => {
             <td>{10 * 960000}</td> {/* total health  */}
             <td>{10 * 320000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +50%</span> {10 * 320000 * 1.5}
+              <span className='mountbadges'>vs Mounted +50%</span> {10 * 320000 * 1.5}
             </td>
             <td>
               <span className='giantbadges'>vs Giant +50%</span> {10 * 320000 * 1.5}
@@ -957,7 +997,7 @@ export const Citadels = () => {
             <td>{80 * 99000}</td> {/* total health  */}
             <td>{80 * 33000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +70%</span> {80 * 33000 * 1.7}
+              <span className='mountbadges'>vs Mounted +70%</span> {80 * 33000 * 1.7}
             </td>
             <td>
               <span className='beastbadges'>vs Beast +45%</span> : {80 * 33000 * 1.45}
@@ -1008,6 +1048,13 @@ export const Citadels = () => {
       <hr />
 
       <h3>Citadel cursed 25</h3>
+      <h2>
+        NO <span className='mountbadges'>mounted</span>,{' '}
+        <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>,{' '}
+        <span className='dragonbadges'>dragon</span> or
+        <span className='beastbadges'>beast</span>
+      </h2>
+
       <table>
         <thead>
           <th>Stack</th>
@@ -1031,7 +1078,7 @@ export const Citadels = () => {
             <td>{120 * 960000}</td> {/* total health  */}
             <td>{120 * 320000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +50%</span> {120 * 320000 * 1.5}
+              <span className='mountbadges'>vs Mounted +50%</span> {120 * 320000 * 1.5}
             </td>
             <td>
               <span className='giantbadges'>vs Giant +50%</span> {120 * 320000 * 1.5}
@@ -1065,7 +1112,7 @@ export const Citadels = () => {
             <td>{540 * 99000}</td> {/* total health  */}
             <td>{540 * 33000}</td> {/* total strength  */}
             <td>
-              <span className='mountbadges'>vs Mount +70%</span> {540 * 33000 * 1.7}
+              <span className='mountbadges'>vs Mounted +70%</span> {540 * 33000 * 1.7}
             </td>
             <td>
               <span className='beastbadges'>vs Beast +45%</span> : {540 * 33000 * 1.45}
