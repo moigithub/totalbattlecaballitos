@@ -5,7 +5,7 @@ import { useStackStore } from './stackStore'
 import { Stack } from './types'
 import { whoCanIAttack } from './utils'
 
-export const SmallCard = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => {
+export const SmallCard = ({ stack }: { stack: Stack; isFirst: boolean }) => {
   // const army = useStackStore(state => state.army)
   // const setArmy = useStackStore(state => state.setArmy)
   // const addArmy = useStackStore(state => state.addArmy)
@@ -16,10 +16,10 @@ export const SmallCard = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }
   // const updateMinSetup = useStackStore(state => state.updateMinSetup)
   const removeStack = useStackStore(state => state.removeStack)
   const resetStack = useStackStore(state => state.resetStack)
-  const toggleLockMin = useStackStore(state => state.toggleLockMin)
+  // const toggleLockMin = useStackStore(state => state.toggleLockMin)
   const addUnits = useStackStore(state => state.addUnits)
   const removeUnits = useStackStore(state => state.removeUnits)
-  const reduceSacrificeUnits = useStackStore(state => state.reduceSacrificeUnits)
+  // const reduceSacrificeUnits = useStackStore(state => state.reduceSacrificeUnits)
   const getStackHealth = useStackStore(state => state.getStackHealth)
   const getStackStrength = useStackStore(state => state.getStackStrength)
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stack.id })
