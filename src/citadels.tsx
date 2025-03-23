@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 import {
   CatapultE1,
@@ -10,30 +10,432 @@ import {
   CatapultE7
 } from './soldiers'
 
-const citadele10 = {
-  walls: { hp: 90 * 30_000 }
+interface ObjProps {
+  name: string
+  baseStr: number
+  baseHp: number
+  vsRangedPercent: number
+  vsSiegePercent: number
+  vsBeastPercent: number
+  vsHumanPercent: number
+  vsMountedPercent: number
+  vsFlyingPercent: number
+  vsMeleePercent: number
+  vsFortificationsPercent: number
+  vsGiantPercent: number
+  vsEpicPercent: number
+  vsElementalPercent: number
+  vsDragonPercent: number
+}
+
+interface Stack {
+  troop: ObjProps
+  amount: number
+}
+interface Citadel {
+  walls: {
+    hp: number
+  }
+  stacks: Stack[]
+}
+
+const objBuilder = (props: Partial<ObjProps>): ObjProps => {
+  return {
+    name: 'name',
+    baseStr: 0,
+    baseHp: 0,
+    vsRangedPercent: 0,
+    vsSiegePercent: 0,
+    vsBeastPercent: 0,
+    vsHumanPercent: 0,
+    vsMountedPercent: 0,
+    vsFlyingPercent: 0,
+    vsMeleePercent: 0,
+    vsFortificationsPercent: 0,
+    vsGiantPercent: 0,
+    vsEpicPercent: 0,
+    vsElementalPercent: 0,
+    vsDragonPercent: 0,
+    ...props
+  }
+}
+
+const objectDB: Record<string, ObjProps> = {}
+
+objectDB.bearV = objBuilder({
+  name: 'Bear V',
+  baseStr: 22000,
+  baseHp: 66000,
+  vsMountedPercent: 70,
+  vsElementalPercent: 50
+})
+
+objectDB.pegasoRiderIV = objBuilder({
+  name: 'Pegaso Rider IV',
+  baseStr: 8200,
+  baseHp: 24600,
+  vsMeleePercent: 65,
+  vsDragonPercent: 50
+})
+objectDB.unicornRiderV = objBuilder({
+  name: 'Unicorn Rider V',
+  baseStr: 27000,
+  baseHp: 81000,
+  vsRangedPercent: 65
+})
+objectDB.elfArcherI = objBuilder({
+  name: 'Elf archer I',
+  baseStr: 100,
+  baseHp: 300,
+  vsMeleePercent: 35
+})
+
+objectDB.druidII = objBuilder({
+  name: 'Druid II',
+  baseStr: 900,
+  baseHp: 2700,
+  vsMeleePercent: 25
+})
+
+objectDB.centaurIII = objBuilder({
+  name: 'Centaur III',
+  baseStr: 2600,
+  baseHp: 7800,
+  vsRangedPercent: 50,
+  vsSiegePercent: 20
+})
+
+objectDB.dwarf = objBuilder({
+  name: 'Dwarf',
+  baseStr: 28,
+  baseHp: 84,
+  vsMountedPercent: 10
+})
+
+objectDB.entVI = objBuilder({
+  name: 'Ent VI',
+  baseStr: 73000,
+  baseHp: 219000,
+  vsRangedPercent: 55,
+  vsDragonPercent: 45
+})
+objectDB.lifeDragonVII = objBuilder({
+  name: 'Life dragon VII',
+  baseStr: 240000,
+  baseHp: 720000,
+  vsMountedPercent: 60,
+  vsGiantPercent: 50
+})
+objectDB.cursedDragonVII = objBuilder({
+  name: 'Cursed dragon VII',
+  baseStr: 320000,
+  baseHp: 960000,
+  vsMountedPercent: 50,
+  vsGiantPercent: 50
+})
+objectDB.giantZombieV = objBuilder({
+  name: 'Giant zombie V',
+  baseStr: 33000,
+  baseHp: 99000,
+  vsMountedPercent: 70,
+  vsBeastPercent: 45
+})
+objectDB.deathRiderIII = objBuilder({
+  name: 'Death rider III',
+  baseStr: 3200,
+  baseHp: 9600,
+  vsRangedPercent: 50
+})
+objectDB.bullRiderV = objBuilder({
+  name: 'Bull rider V',
+  baseStr: 29000,
+  baseHp: 87000,
+  vsRangedPercent: 65
+})
+objectDB.wolfManII = objBuilder({
+  name: 'Wolf Man II',
+  baseStr: 360,
+  baseHp: 1080,
+  vsMountedPercent: 65
+})
+objectDB.cursedDendroidVI = objBuilder({
+  name: 'Cursed dendroid VI',
+  baseStr: 110000,
+  baseHp: 330000,
+  vsRangedPercent: 55,
+  vsDragonPercent: 45
+})
+
+const citadele10: Citadel = {
+  walls: { hp: 90 * 30_000 },
+  stacks: [
+    {
+      troop: objectDB.bearV,
+      amount: 9
+    },
+    {
+      troop: objectDB.pegasoRiderIV,
+      amount: 19
+    },
+    {
+      troop: objectDB.elfArcherI,
+      amount: 1200
+    },
+    {
+      troop: objectDB.druidII,
+      amount: 100
+    },
+    {
+      troop: objectDB.dwarf,
+      amount: 2200
+    }
+  ]
 }
 
 const citadele15 = {
-  walls: { hp: 700 * 30_000 }
+  walls: { hp: 700 * 30_000 },
+  stacks: [
+    {
+      troop: objectDB.entVI,
+      amount: 21
+    },
+    {
+      troop: objectDB.unicornRiderV,
+      amount: 47
+    },
+    {
+      troop: objectDB.druidII,
+      amount: 1100
+    },
+    {
+      troop: objectDB.centaurIII,
+      amount: 290
+    },
+    {
+      troop: objectDB.elfArcherI,
+      amount: 5000
+    }
+  ]
 }
 
 const citadele20 = {
-  walls: { hp: 3650 * 30_000 }
+  walls: { hp: 3650 * 30_000 },
+  stacks: [
+    {
+      troop: objectDB.lifeDragonVII,
+      amount: 41
+    },
+    {
+      troop: objectDB.entVI,
+      amount: 110
+    },
+    {
+      troop: objectDB.centaurIII,
+      amount: 2500
+    },
+    {
+      troop: objectDB.bearV,
+      amount: 230
+    },
+    {
+      troop: objectDB.druidII,
+      amount: 3600
+    }
+  ]
 }
 const citadele25 = {
-  walls: { hp: 31900 * 30_000 }
+  walls: { hp: 31900 * 30_000 },
+  stacks: [
+    {
+      troop: objectDB.lifeDragonVII,
+      amount: 480
+    },
+    {
+      troop: objectDB.entVI,
+      amount: 880
+    },
+    {
+      troop: objectDB.bearV,
+      amount: 2400
+    },
+    {
+      troop: objectDB.pegasoRiderIV,
+      amount: 4300
+    },
+    {
+      troop: objectDB.centaurIII,
+      amount: 10000
+    }
+  ]
 }
 
 const citadele30 = {
-  walls: { hp: 135000 * 30_000 }
+  walls: { hp: 135000 * 30_000 },
+  stacks: [
+    {
+      troop: objectDB.lifeDragonVII,
+      amount: 2300
+    },
+    {
+      troop: objectDB.entVI,
+      amount: 4300
+    },
+    {
+      troop: objectDB.bearV,
+      amount: 12000
+    },
+    {
+      troop: objectDB.pegasoRiderIV,
+      amount: 21000
+    },
+    {
+      troop: objectDB.centaurIII,
+      amount: 49000
+    }
+  ]
 }
 
 const citadelc20 = {
-  walls: { hp: 9200 * 30_000 }
+  walls: { hp: 9200 * 30_000 },
+  stacks: [
+    {
+      troop: objectDB.cursedDragonVII,
+      amount: 10
+    },
+    {
+      troop: objectDB.giantZombieV,
+      amount: 80
+    },
+    {
+      troop: objectDB.deathRiderIII,
+      amount: 650
+    },
+    {
+      troop: objectDB.bullRiderV,
+      amount: 54
+    },
+    {
+      troop: objectDB.wolfManII,
+      amount: 2900
+    }
+  ]
 }
 const citadelc25 = {
-  walls: { hp: 77500 * 30_000 }
+  walls: { hp: 77500 * 30_000 },
+  stacks: [
+    {
+      troop: objectDB.cursedDragonVII,
+      amount: 120
+    },
+    {
+      troop: objectDB.cursedDendroidVI,
+      amount: 205
+    },
+    {
+      troop: objectDB.giantZombieV,
+      amount: 540
+    },
+    {
+      troop: objectDB.bullRiderV,
+      amount: 400
+    },
+    {
+      troop: objectDB.deathRiderIII,
+      amount: 2750
+    }
+  ]
+}
+
+const getBadgeValue = (stack: Stack): ReactNode => {
+  const tags: ReactNode[] = []
+  if (stack.troop.vsMeleePercent > 0) {
+    tags.push(
+      <div>
+        <span className='meleebadges'>vs Melee +{stack.troop.vsMeleePercent}%</span>{' '}
+        <span>{stack.amount * stack.troop.baseStr * (1 + stack.troop.vsMeleePercent / 100)}</span>
+      </div>
+    )
+  }
+  if (stack.troop.vsRangedPercent > 0) {
+    tags.push(
+      <div>
+        <span className='rangedbadges'>vs Ranged +{stack.troop.vsRangedPercent}%</span>{' '}
+        <span>{stack.amount * stack.troop.baseStr * (1 + stack.troop.vsRangedPercent / 100)}</span>
+      </div>
+    )
+  }
+  if (stack.troop.vsMountedPercent > 0) {
+    tags.push(
+      <div>
+        <span className='mountbadges'>vs Mount +{stack.troop.vsMountedPercent}%</span>{' '}
+        <span>{stack.amount * stack.troop.baseStr * (1 + stack.troop.vsMountedPercent / 100)}</span>
+      </div>
+    )
+  }
+  if (stack.troop.vsFlyingPercent > 0) {
+    tags.push(
+      <div>
+        <span className='flyingbadges'>vs Mount +{stack.troop.vsFlyingPercent}%</span>{' '}
+        <span>{stack.amount * stack.troop.baseStr * (1 + stack.troop.vsFlyingPercent / 100)}</span>
+      </div>
+    )
+  }
+
+  if (stack.troop.vsDragonPercent > 0) {
+    tags.push(
+      <div>
+        <span className='dragonbadges'>vs Dragon +{stack.troop.vsDragonPercent}%</span>{' '}
+        <span>{stack.amount * stack.troop.baseStr * (1 + stack.troop.vsDragonPercent / 100)}</span>
+      </div>
+    )
+  }
+  if (stack.troop.vsBeastPercent > 0) {
+    tags.push(
+      <div>
+        <span className='beastbadges'>vs Beast +{stack.troop.vsBeastPercent}%</span>{' '}
+        <span>{stack.amount * stack.troop.baseStr * (1 + stack.troop.vsBeastPercent / 100)}</span>
+      </div>
+    )
+  }
+  if (stack.troop.vsGiantPercent > 0) {
+    tags.push(
+      <div>
+        <span className='giantbadges'>vs Giant +{stack.troop.vsGiantPercent}%</span>{' '}
+        <span>{stack.amount * stack.troop.baseStr * (1 + stack.troop.vsGiantPercent / 100)}</span>
+      </div>
+    )
+  }
+  if (stack.troop.vsElementalPercent > 0) {
+    tags.push(
+      <div>
+        <span className='elementalbadges'>vs Elemental +{stack.troop.vsElementalPercent}%</span>{' '}
+        <span>
+          {stack.amount * stack.troop.baseStr * (1 + stack.troop.vsElementalPercent / 100)}
+        </span>
+      </div>
+    )
+  }
+  if (stack.troop.vsFortificationsPercent > 0) {
+    tags.push(
+      <div>
+        <span className='fortificationbadges'>
+          vs Fortifications +{stack.troop.vsFortificationsPercent}%
+        </span>{' '}
+        <span>
+          {stack.amount * stack.troop.baseStr * (1 + stack.troop.vsFortificationsPercent / 100)}
+        </span>
+      </div>
+    )
+  }
+  if (stack.troop.vsSiegePercent > 0) {
+    tags.push(
+      <div>
+        <span className='siegebadges'>vs Siege +{stack.troop.vsSiegePercent}%</span>{' '}
+        <span>{stack.amount * stack.troop.baseStr * (1 + stack.troop.vsSiegePercent / 100)}</span>
+      </div>
+    )
+  }
+  return <>{tags}</>
 }
 
 export const Citadels = () => {
@@ -341,104 +743,112 @@ export const Citadels = () => {
         CALC
       </button>
 
-      <table>
-        <thead>
-          <th>cat lvl</th>
-          <th>amount</th>
-          <th>damage</th>
-          <th>health</th>
-        </thead>
-        <tbody>
-          {catasResult.lvl7 > 0 && (
+      <div>
+        <table>
+          <thead>
+            <th>cat lvl</th>
+            <th>amount</th>
+            <th>damage</th>
+            <th>health</th>
+          </thead>
+          <tbody>
+            {catasResult.lvl7 > 0 && (
+              <tr>
+                <td>7</td>
+                <td>{catasResult.lvl7}</td>
+                <td>{Math.round(catasResult.lvl7 * cata7.str)}</td>
+                <td>{Math.round(catasResult.lvl7 * cata7.hp)}</td>
+              </tr>
+            )}
+
+            {catasResult.lvl6 > 0 && (
+              <tr>
+                <td>6</td>
+                <td>{catasResult.lvl6}</td>
+                <td>{Math.round(catasResult.lvl6 * cata6.str)}</td>
+                <td>{Math.round(catasResult.lvl6 * cata6.hp)}</td>
+              </tr>
+            )}
+
+            {catasResult.lvl5 > 0 && (
+              <tr>
+                <td>5</td>
+                <td>{catasResult.lvl5}</td>
+                <td>{Math.round(catasResult.lvl5 * cata5.str)}</td>
+                <td>{Math.round(catasResult.lvl5 * cata5.hp)}</td>
+              </tr>
+            )}
+
+            {catasResult.lvl4 > 0 && (
+              <tr>
+                <td>4</td>
+                <td>{catasResult.lvl4}</td>
+                <td>{Math.round(catasResult.lvl4 * cata4.str)}</td>
+                <td>{Math.round(catasResult.lvl4 * cata4.hp)}</td>
+              </tr>
+            )}
+
+            {catasResult.lvl3 > 0 && (
+              <tr>
+                <td>3</td>
+                <td>{catasResult.lvl3}</td>
+                <td>{Math.round(catasResult.lvl3 * cata3.str)}</td>
+                <td>{Math.round(catasResult.lvl3 * cata3.hp)}</td>
+              </tr>
+            )}
+
+            {catasResult.lvl2 > 0 && (
+              <tr>
+                <td>2</td>
+                <td>{catasResult.lvl2}</td>
+                <td>{Math.round(catasResult.lvl2 * cata2.str)}</td>
+                <td>{Math.round(catasResult.lvl2 * cata2.hp)}</td>
+              </tr>
+            )}
+
+            {catasResult.lvl1 > 0 && (
+              <tr>
+                <td>1</td>
+                <td>{catasResult.lvl1}</td>
+                <td>{Math.round(catasResult.lvl1 * cata1.str)}</td>
+                <td>{Math.round(catasResult.lvl1 * cata1.hp)}</td>
+              </tr>
+            )}
+
+            {catasResult.lvl1e > 0 && (
+              <tr>
+                <td>1</td>
+                <td>{catasResult.lvl1e}</td>
+                <td>{Math.round(catasResult.lvl1e * cata1.str)}</td>
+                <td>{Math.round(catasResult.lvl1e * cata1.hp)}</td>
+              </tr>
+            )}
+
             <tr>
-              <td>7</td>
-              <td>{catasResult.lvl7}</td>
-              <td>{Math.round(catasResult.lvl7 * cata7.str)}</td>
-              <td>{Math.round(catasResult.lvl7 * cata7.hp)}</td>
+              <td>{catasResult.lvl1 + catasResult.lvl1e}</td>
+              <td>total dmg</td>
+              <td>{totalDmg}</td>
+              <td></td>
             </tr>
-          )}
+          </tbody>
+        </table>
 
-          {catasResult.lvl6 > 0 && (
-            <tr>
-              <td>6</td>
-              <td>{catasResult.lvl6}</td>
-              <td>{Math.round(catasResult.lvl6 * cata6.str)}</td>
-              <td>{Math.round(catasResult.lvl6 * cata6.hp)}</td>
-            </tr>
-          )}
+        <p>citadel walls hp {citadel.walls.hp}</p>
+        {totalDmg < citadel.walls.hp && (
+          <p style={{ color: 'red' }}>not enough catas to kill the walls</p>
+        )}
+      </div>
+      <hr />
 
-          {catasResult.lvl5 > 0 && (
-            <tr>
-              <td>5</td>
-              <td>{catasResult.lvl5}</td>
-              <td>{Math.round(catasResult.lvl5 * cata5.str)}</td>
-              <td>{Math.round(catasResult.lvl5 * cata5.hp)}</td>
-            </tr>
-          )}
-
-          {catasResult.lvl4 > 0 && (
-            <tr>
-              <td>4</td>
-              <td>{catasResult.lvl4}</td>
-              <td>{Math.round(catasResult.lvl4 * cata4.str)}</td>
-              <td>{Math.round(catasResult.lvl4 * cata4.hp)}</td>
-            </tr>
-          )}
-
-          {catasResult.lvl3 > 0 && (
-            <tr>
-              <td>3</td>
-              <td>{catasResult.lvl3}</td>
-              <td>{Math.round(catasResult.lvl3 * cata3.str)}</td>
-              <td>{Math.round(catasResult.lvl3 * cata3.hp)}</td>
-            </tr>
-          )}
-
-          {catasResult.lvl2 > 0 && (
-            <tr>
-              <td>2</td>
-              <td>{catasResult.lvl2}</td>
-              <td>{Math.round(catasResult.lvl2 * cata2.str)}</td>
-              <td>{Math.round(catasResult.lvl2 * cata2.hp)}</td>
-            </tr>
-          )}
-
-          {catasResult.lvl1 > 0 && (
-            <tr>
-              <td>1</td>
-              <td>{catasResult.lvl1}</td>
-              <td>{Math.round(catasResult.lvl1 * cata1.str)}</td>
-              <td>{Math.round(catasResult.lvl1 * cata1.hp)}</td>
-            </tr>
-          )}
-
-          {catasResult.lvl1e > 0 && (
-            <tr>
-              <td>1</td>
-              <td>{catasResult.lvl1e}</td>
-              <td>{Math.round(catasResult.lvl1e * cata1.str)}</td>
-              <td>{Math.round(catasResult.lvl1e * cata1.hp)}</td>
-            </tr>
-          )}
-
-          <tr>
-            <td>{catasResult.lvl1 + catasResult.lvl1e}</td>
-            <td>total dmg</td>
-            <td>{totalDmg}</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <p>citadel walls hp {citadel.walls.hp}</p>
-
-      <br />
-      {totalDmg < citadel.walls.hp && <p>not enough catas to kill the walls</p>}
+      <div>
+        <div>army</div>
+        <div>citadel army</div>
+      </div>
 
       <h3>Citadel elf 10</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span> or
+        <span className='dragonbadges'>dragon</span>, <span className='meleebadges'>melee</span> or
         <span className='elementalbadges'>elemental</span>
       </h2>
 
@@ -451,79 +861,24 @@ export const Citadels = () => {
           <th>Total health</th>
           <th>Regular Damage</th>
           <th>Dmg + bonus</th>
-          <th>Dmg + bonus</th>
         </thead>
         <tbody>
-          <tr>
-            <td>Bear V</td>
-            <td>9</td>
-            {/* amount */}
-            <td>22000</td>
-            {/* str */}
-            <td>66000</td>
-            {/* hp */}
-            <td>{9 * 66000}</td> {/* total health  */}
-            <td>{9 * 22000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mount +70%</span> {9 * 22000 * 1.7}
-            </td>
-            <td>
-              <span className='elementalbadges'>vs Elemental +50%</span> : {9 * 22000 * 1.5}
-            </td>
-          </tr>
-          <tr>
-            <td>Unicorn rider IV</td>
-            <td>19</td> {/* amount */}
-            <td>8200</td> {/* str */}
-            <td>24600</td> {/* hp */}
-            <td>{19 * 24600}</td> {/* total health  */}
-            <td>{19 * 8200}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +65%</span> : {19 * 8200 * 1.65}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Elf archer I</td>
-            <td>1200</td> {/* amount */}
-            <td>100</td> {/* str */}
-            <td>300</td> {/* hp */}
-            <td>{1200 * 300}</td> {/* total health  */}
-            <td>{1200 * 100}</td> {/* total strength  */}
-            <td>
-              <span className='meleebadges'>vs Melee +35%</span> : {1200 * 100 * 1.35}
-            </td>
-            <td> </td>
-          </tr>
-
-          <tr>
-            <td>Druid II</td>
-            <td>100</td>
-            {/* amount */}
-            <td>900</td>
-            {/* str */}
-            <td>2700</td>
-            {/* hp */}
-            <td>{100 * 2700}</td> {/* total health  */}
-            <td>{100 * 900}</td> {/* total strength  */}
-            <td>
-              <span className='meleebadges'>vs Melee +25%</span> : {100 * 900 * 1.25}
-            </td>
-            <td></td>
-          </tr>
-
-          <tr>
-            <td>Dwarf</td>
-            <td>2200</td> {/* amount */}
-            <td>28</td> {/* str */}
-            <td>84</td> {/* hp */}
-            <td>{2200 * 84}</td> {/* total health  */}
-            <td>{2200 * 28}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mount +10%</span> : {2200 * 28 * 1.1}
-            </td>
-            <td> </td>
-          </tr>
+          {citadele10.stacks.map(stack => {
+            return (
+              <tr>
+                <td> {stack.troop.name}</td>
+                <td> {stack.amount}</td>
+                {/* amount */}
+                <td> {stack.troop.baseStr}</td>
+                {/* str */}
+                <td> {stack.troop.baseHp}</td>
+                {/* hp */}
+                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
+                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{getBadgeValue(stack)}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
 
@@ -545,85 +900,24 @@ export const Citadels = () => {
           <th>Total health</th>
           <th>Regular Damage</th>
           <th>Dmg + bonus</th>
-          <th>Dmg + bonus</th>
         </thead>
         <tbody>
-          <tr>
-            <td>Ent VI</td>
-            <td>21</td>
-            {/* amount */}
-            <td>73000</td>
-            {/* str */}
-            <td>219000</td>
-            {/* hp */}
-            <td>{21 * 219000}</td> {/* total health  */}
-            <td>{21 * 73000}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +55%</span> : {21 * 73000 * 1.55}
-            </td>
-            <td>
-              <span className='dragonbadges'>vs Dragon +45%</span> : {21 * 73000 * 1.45}
-            </td>
-          </tr>
-          <tr>
-            <td>Unicorn rider V</td>
-            <td>47</td>
-            {/* amount */}
-            <td>27000</td>
-            {/* str */}
-            <td>81000</td>
-            {/* hp */}
-            <td>{47 * 81000}</td> {/* total health  */}
-            <td>{47 * 27000}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +65%</span> : {47 * 27000 * 1.65}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Druid II</td>
-            <td>1100</td>
-            {/* amount */}
-            <td>900</td>
-            {/* str */}
-            <td>2700</td>
-            {/* hp */}
-            <td>{1100 * 2700}</td> {/* total health  */}
-            <td>{1100 * 900}</td> {/* total strength  */}
-            <td>
-              <span className='meleebadges'>vs Melee +25%</span> : {1100 * 900 * 1.25}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Centaur III</td>
-            <td>290</td>
-            {/* amount */}
-            <td>2600</td>
-            {/* str */}
-            <td>7800</td>
-            {/* hp */}
-            <td>{290 * 7800}</td> {/* total health  */}
-            <td>{290 * 2600}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +50%</span> : {290 * 2600 * 1.5}
-            </td>
-            <td>
-              <span className='siegebadges'>vs Siege +20%</span> : {290 * 2600 * 1.2}
-            </td>
-          </tr>
-          <tr>
-            <td>Elf archer I</td>
-            <td>5000</td> {/* amount */}
-            <td>100</td> {/* str */}
-            <td>300</td> {/* hp */}
-            <td>{5000 * 300}</td> {/* total health  */}
-            <td>{5000 * 100}</td> {/* total strength  */}
-            <td>
-              <span className='meleebadges'>vs Melee +35%</span> : {5000 * 100 * 1.35}
-            </td>
-            <td> </td>
-          </tr>
+          {citadele15.stacks.map(stack => {
+            return (
+              <tr>
+                <td> {stack.troop.name}</td>
+                <td> {stack.amount}</td>
+                {/* amount */}
+                <td> {stack.troop.baseStr}</td>
+                {/* str */}
+                <td> {stack.troop.baseHp}</td>
+                {/* hp */}
+                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
+                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{getBadgeValue(stack)}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
 
@@ -646,92 +940,24 @@ export const Citadels = () => {
           <th>Total health</th>
           <th>Regular Damage</th>
           <th>Dmg + bonus</th>
-          <th>Dmg + bonus</th>
         </thead>
         <tbody>
-          <tr>
-            <td>Life dragon VII</td>
-            <td>41</td>
-            {/* amount */}
-            <td>240000</td>
-            {/* str */}
-            <td>720000</td>
-            {/* hp */}
-            <td>{41 * 720000}</td> {/* total health  */}
-            <td>{41 * 240000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +60%</span> {41 * 240000 * 1.6}
-            </td>
-            <td>
-              <span className='giantbadges'>vs Giant +50%</span> {41 * 240000 * 1.5}
-            </td>
-          </tr>
-          <tr>
-            <td>Ent VI</td>
-            <td>110</td>
-            {/* amount */}
-            <td>73000</td>
-            {/* str */}
-            <td>219000</td>
-            {/* hp */}
-            <td>{110 * 219000}</td> {/* total health  */}
-            <td>{110 * 73000}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +55%</span> : {110 * 73000 * 1.55}
-            </td>
-            <td>
-              <span className='dragonbadges'>vs Dragon +45%</span> : {110 * 73000 * 1.45}
-            </td>
-          </tr>
-          <tr>
-            <td>Centaur III</td>
-            <td>2500</td>
-            {/* amount */}
-            <td>2600</td>
-            {/* str */}
-            <td>7800</td>
-            {/* hp */}
-            <td>{2500 * 7800}</td> {/* total health  */}
-            <td>{2500 * 2600}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +50%</span> : {2500 * 2600 * 1.5}
-            </td>
-            <td>
-              <span className='siegebadges'>vs Siege +20%</span> : {2500 * 2600 * 1.2}
-            </td>
-          </tr>
-          <tr>
-            <td>Bear V</td>
-            <td>230</td>
-            {/* amount */}
-            <td>22000</td>
-            {/* str */}
-            <td>66000</td>
-            {/* hp */}
-            <td>{230 * 66000}</td> {/* total health  */}
-            <td>{230 * 22000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +70%</span> {230 * 22000 * 1.7}
-            </td>
-            <td>
-              <span className='elementalbadges'>vs Elemental +50%</span> : {230 * 22000 * 1.5}
-            </td>
-          </tr>
-          <tr>
-            <td>Druid II</td>
-            <td>3600</td>
-            {/* amount */}
-            <td>900</td>
-            {/* str */}
-            <td>2700</td>
-            {/* hp */}
-            <td>{3600 * 2700}</td> {/* total health  */}
-            <td>{3600 * 900}</td> {/* total strength  */}
-            <td>
-              <span className='meleebadges'>vs Melee +25%</span> : {3600 * 900 * 1.25}
-            </td>
-            <td></td>
-          </tr>
+          {citadele20.stacks.map(stack => {
+            return (
+              <tr>
+                <td> {stack.troop.name}</td>
+                <td> {stack.amount}</td>
+                {/* amount */}
+                <td> {stack.troop.baseStr}</td>
+                {/* str */}
+                <td> {stack.troop.baseHp}</td>
+                {/* hp */}
+                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
+                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{getBadgeValue(stack)}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
       <hr />
@@ -739,8 +965,8 @@ export const Citadels = () => {
       <h3>Citadel elf 25</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>,{' '}
-        <span className='dragonbadges'>dragon</span> or
+        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
+        <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
         <span className='elementalbadges'>elemental</span>
       </h2>
 
@@ -753,90 +979,24 @@ export const Citadels = () => {
           <th>Total health</th>
           <th>Regular Damage</th>
           <th>Dmg + bonus</th>
-          <th>Dmg + bonus</th>
         </thead>
         <tbody>
-          <tr>
-            <td>Life dragon VII</td>
-            <td>480</td>
-            {/* amount */}
-            <td>240000</td>
-            {/* str */}
-            <td>720000</td>
-            {/* hp */}
-            <td>{480 * 720000}</td> {/* total health  */}
-            <td>{480 * 240000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +60%</span> {480 * 240000 * 1.6}
-            </td>
-            <td>
-              <span className='giantbadges'>vs Giant +50%</span> {480 * 240000 * 1.5}
-            </td>
-          </tr>
-          <tr>
-            <td>Ent VI</td>
-            <td>880</td>
-            {/* amount */}
-            <td>73000</td>
-            {/* str */}
-            <td>219000</td>
-            {/* hp */}
-            <td>{880 * 219000}</td> {/* total health  */}
-            <td>{880 * 73000}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +55%</span> : {880 * 73000 * 1.55}
-            </td>
-            <td>
-              <span className='dragonbadges'>vs Dragon +45%</span> : {880 * 73000 * 1.45}
-            </td>
-          </tr>
-          <tr>
-            <td>Bear V</td>
-            <td>2400</td>
-            {/* amount */}
-            <td>22000</td>
-            {/* str */}
-            <td>66000</td>
-            {/* hp */}
-            <td>{2400 * 66000}</td> {/* total health  */}
-            <td>{2400 * 22000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +70%</span> {2400 * 22000 * 1.7}
-            </td>
-            <td>
-              <span className='elementalbadges'>vs Elemental +50%</span> : {2400 * 22000 * 1.5}
-            </td>
-          </tr>
-
-          <tr>
-            <td>Unicorn rider IV</td>
-            <td>4300</td> {/* amount */}
-            <td>8200</td> {/* str */}
-            <td>24600</td> {/* hp */}
-            <td>{4300 * 24600}</td> {/* total health  */}
-            <td>{4300 * 8200}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +65%</span> : {4300 * 8200 * 1.65}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Centaur III</td>
-            <td>10000</td>
-            {/* amount */}
-            <td>2600</td>
-            {/* str */}
-            <td>7800</td>
-            {/* hp */}
-            <td>{10000 * 7800}</td> {/* total health  */}
-            <td>{10000 * 2600}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +50%</span> : {10000 * 2600 * 1.5}
-            </td>
-            <td>
-              <span className='siegebadges'>vs Siege +20%</span> : {10000 * 2600 * 1.2}
-            </td>
-          </tr>
+          {citadele25.stacks.map(stack => {
+            return (
+              <tr>
+                <td> {stack.troop.name}</td>
+                <td> {stack.amount}</td>
+                {/* amount */}
+                <td> {stack.troop.baseStr}</td>
+                {/* str */}
+                <td> {stack.troop.baseHp}</td>
+                {/* hp */}
+                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
+                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{getBadgeValue(stack)}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
 
@@ -845,8 +1005,8 @@ export const Citadels = () => {
       <h3>Citadel elf 30</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>,{' '}
-        <span className='dragonbadges'>dragon</span> or
+        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
+        <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
         <span className='elementalbadges'>elemental</span>
       </h2>
 
@@ -859,90 +1019,24 @@ export const Citadels = () => {
           <th>Total health</th>
           <th>Regular Damage</th>
           <th>Dmg + bonus</th>
-          <th>Dmg + bonus</th>
         </thead>
         <tbody>
-          <tr>
-            <td>Life dragon VII</td>
-            <td>2300</td>
-            {/* amount */}
-            <td>240000</td>
-            {/* str */}
-            <td>720000</td>
-            {/* hp */}
-            <td>{2300 * 720000}</td> {/* total health  */}
-            <td>{2300 * 240000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +60%</span> {2300 * 240000 * 1.6}
-            </td>
-            <td>
-              <span className='giantbadges'>vs Giant +50%</span> {2300 * 240000 * 1.5}
-            </td>
-          </tr>
-          <tr>
-            <td>Ent VI</td>
-            <td>4300</td>
-            {/* amount */}
-            <td>73000</td>
-            {/* str */}
-            <td>219000</td>
-            {/* hp */}
-            <td>{4300 * 219000}</td> {/* total health  */}
-            <td>{4300 * 73000}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +55%</span> : {4300 * 73000 * 1.55}
-            </td>
-            <td>
-              <span className='dragonbadges'>vs Dragon +45%</span> : {4300 * 73000 * 1.45}
-            </td>
-          </tr>
-          <tr>
-            <td>Bear V</td>
-            <td>12000</td>
-            {/* amount */}
-            <td>22000</td>
-            {/* str */}
-            <td>66000</td>
-            {/* hp */}
-            <td>{12000 * 66000}</td> {/* total health  */}
-            <td>{12000 * 22000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +70%</span> {12000 * 22000 * 1.7}
-            </td>
-            <td>
-              <span className='elementalbadges'>vs Elemental +50%</span> : {12000 * 22000 * 1.5}
-            </td>
-          </tr>
-
-          <tr>
-            <td>Unicorn rider IV</td>
-            <td>21000</td> {/* amount */}
-            <td>8200</td> {/* str */}
-            <td>24600</td> {/* hp */}
-            <td>{21000 * 24600}</td> {/* total health  */}
-            <td>{21000 * 8200}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +65%</span> : {21000 * 8200 * 1.65}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Centaur III</td>
-            <td>49000</td>
-            {/* amount */}
-            <td>2600</td>
-            {/* str */}
-            <td>7800</td>
-            {/* hp */}
-            <td>{49000 * 7800}</td> {/* total health  */}
-            <td>{49000 * 2600}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +50%</span> : {49000 * 2600 * 1.5}
-            </td>
-            <td>
-              <span className='siegebadges'>vs Siege +20%</span> : {49000 * 2600 * 1.2}
-            </td>
-          </tr>
+          {citadele30.stacks.map(stack => {
+            return (
+              <tr>
+                <td> {stack.troop.name}</td>
+                <td> {stack.amount}</td>
+                {/* amount */}
+                <td> {stack.troop.baseStr}</td>
+                {/* str */}
+                <td> {stack.troop.baseHp}</td>
+                {/* hp */}
+                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
+                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{getBadgeValue(stack)}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
 
@@ -965,83 +1059,24 @@ export const Citadels = () => {
           <th>Total health</th>
           <th>Regular Damage</th>
           <th>Dmg + bonus</th>
-          <th>Dmg + bonus</th>
         </thead>
         <tbody>
-          <tr>
-            <td>cursed Dragon VII</td>
-            <td>10</td>
-            {/* amount */}
-            <td>320000</td>
-            {/* str */}
-            <td>960000</td>
-            {/* hp */}
-            <td>{10 * 960000}</td> {/* total health  */}
-            <td>{10 * 320000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +50%</span> {10 * 320000 * 1.5}
-            </td>
-            <td>
-              <span className='giantbadges'>vs Giant +50%</span> {10 * 320000 * 1.5}
-            </td>
-          </tr>
-
-          <tr>
-            <td>Giant zombie V</td>
-            <td>80</td>
-            {/* amount */}
-            <td>33000</td>
-            {/* str */}
-            <td>99000</td>
-            {/* hp */}
-            <td>{80 * 99000}</td> {/* total health  */}
-            <td>{80 * 33000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +70%</span> {80 * 33000 * 1.7}
-            </td>
-            <td>
-              <span className='beastbadges'>vs Beast +45%</span> : {80 * 33000 * 1.45}
-            </td>
-          </tr>
-          <tr>
-            <td>death rider III</td>
-            <td>650</td>
-            {/* amount */}
-            <td>3200</td>
-            {/* str */}
-            <td>9600</td>
-            {/* hp */}
-            <td>{650 * 9600}</td> {/* total health  */}
-            <td>{650 * 3200}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +50%</span> : {650 * 3200 * 1.5}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>bull rider V</td>
-            <td>54</td> {/* amount */}
-            <td>29000</td> {/* str */}
-            <td>87000</td> {/* hp */}
-            <td>{54 * 87000}</td> {/* total health  */}
-            <td>{54 * 29000}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +65%</span> : {54 * 29000 * 1.65}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>wolf man II</td>
-            <td>2900</td> {/* amount */}
-            <td>360</td> {/* str */}
-            <td>1080</td> {/* hp */}
-            <td>{2900 * 1080}</td> {/* total health  */}
-            <td>{2900 * 360}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +65%</span> : {2900 * 360 * 1.65}
-            </td>
-            <td></td>
-          </tr>
+          {citadelc20.stacks.map(stack => {
+            return (
+              <tr>
+                <td> {stack.troop.name}</td>
+                <td> {stack.amount}</td>
+                {/* amount */}
+                <td> {stack.troop.baseStr}</td>
+                {/* str */}
+                <td> {stack.troop.baseHp}</td>
+                {/* hp */}
+                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
+                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{getBadgeValue(stack)}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
 
@@ -1064,88 +1099,24 @@ export const Citadels = () => {
           <th>Total health</th>
           <th>Regular Damage</th>
           <th>Dmg + bonus</th>
-          <th>Dmg + bonus</th>
         </thead>
         <tbody>
-          <tr>
-            <td>cursed Dragon VII</td>
-            <td>120</td>
-            {/* amount */}
-            <td>320000</td>
-            {/* str */}
-            <td>960000</td>
-            {/* hp */}
-            <td>{120 * 960000}</td> {/* total health  */}
-            <td>{120 * 320000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +50%</span> {120 * 320000 * 1.5}
-            </td>
-            <td>
-              <span className='giantbadges'>vs Giant +50%</span> {120 * 320000 * 1.5}
-            </td>
-          </tr>
-          <tr>
-            <td>cursed Dendroid VI</td>
-            <td>205</td>
-            {/* amount */}
-            <td>110000</td>
-            {/* str */}
-            <td>330000</td>
-            {/* hp */}
-            <td>{205 * 330000}</td> {/* total health  */}
-            <td>{205 * 110000}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +55%</span> : {205 * 110000 * 1.55}
-            </td>
-            <td>
-              <span className='dragonbadges'>vs Dragon +45%</span> : {205 * 110000 * 1.45}
-            </td>
-          </tr>
-          <tr>
-            <td>Giant zombie V</td>
-            <td>540</td>
-            {/* amount */}
-            <td>33000</td>
-            {/* str */}
-            <td>99000</td>
-            {/* hp */}
-            <td>{540 * 99000}</td> {/* total health  */}
-            <td>{540 * 33000}</td> {/* total strength  */}
-            <td>
-              <span className='mountbadges'>vs Mounted +70%</span> {540 * 33000 * 1.7}
-            </td>
-            <td>
-              <span className='beastbadges'>vs Beast +45%</span> : {540 * 33000 * 1.45}
-            </td>
-          </tr>
-
-          <tr>
-            <td>bull rider V</td>
-            <td>400</td> {/* amount */}
-            <td>29000</td> {/* str */}
-            <td>87000</td> {/* hp */}
-            <td>{400 * 87000}</td> {/* total health  */}
-            <td>{400 * 29000}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +65%</span> : {400 * 29000 * 1.65}
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>death rider III</td>
-            <td>2750</td>
-            {/* amount */}
-            <td>3200</td>
-            {/* str */}
-            <td>9600</td>
-            {/* hp */}
-            <td>{2750 * 9600}</td> {/* total health  */}
-            <td>{2750 * 3200}</td> {/* total strength  */}
-            <td>
-              <span className='rangedbadges'>vs Ranged +50%</span> : {2750 * 3200 * 1.5}
-            </td>
-            <td></td>
-          </tr>
+          {citadelc25.stacks.map(stack => {
+            return (
+              <tr>
+                <td> {stack.troop.name}</td>
+                <td> {stack.amount}</td>
+                {/* amount */}
+                <td> {stack.troop.baseStr}</td>
+                {/* str */}
+                <td> {stack.troop.baseHp}</td>
+                {/* hp */}
+                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
+                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{getBadgeValue(stack)}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
     </div>

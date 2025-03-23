@@ -493,6 +493,11 @@ table th {
   background-color: pink;
   color: black;
 }
+.flyingbadges {
+  padding: 0 10px;
+  background-color: darkcyan;
+  color: black;
+}
 .elementalbadges {
   padding: 0 10px;
   background-color: darkseagreen;
@@ -516,6 +521,11 @@ table th {
 .siegebadges {
   padding: 0 10px;
   background-color: grey;
+  color: black;
+}
+.fortificationbadges {
+  padding: 0 10px;
+  background-color: darkslategray;
   color: black;
 }
 .giantbadges {
