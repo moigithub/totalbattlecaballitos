@@ -151,6 +151,12 @@ export interface Stack {
   authority: number
   dominance: number
   unit: Unit
+  hpBonus: number
+  strBonus: number
+  useUnitLimit: boolean
+  unitLimit: number
+  useStrLimit: boolean
+  strLimit: number
   units: number
   minSetup: number // used to calculate how many units are needed to kill one monster
   lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount

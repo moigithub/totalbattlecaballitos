@@ -60,6 +60,9 @@ function Dos() {
   const setArmy = useStackStore(state => state.setArmy)
   const resetAllStacks = useStackStore(state => state.resetAllStacks)
   const bonus = useStackStore(state => state.bonus)
+  const getStackUnits = useStackStore(state => state.getStackUnits)
+  const getStackUnitLimit = useStackStore(state => state.getStackUnitLimit)
+
   const addUnits = useStackStore(state => state.addUnits)
   // const getStackHealth = useStackStore(state => state.getStackHealth)
   const getArmyLeadership = useStackStore(state => state.getArmyLeadership)
@@ -73,8 +76,6 @@ function Dos() {
   //-------------------
 
   const [selectedEvent, setSelectedEvent] = useState('0')
-  const [isFirstUnitLimited, setIsFirstUnitLimited] = useState(false)
-  const [limitFirstUnit, setLimitFirstUnit] = useState(1)
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
   const [windowMode, setWindowMode] = useState('showArmyConfig')
   const [cardType, setCardType] = useState('card') // card , smallcard
@@ -365,7 +366,8 @@ function Dos() {
     let lastAuthorityCalculated = 0 // to break the loop, if didnt changed (loop protection)
     let lastDominanceCalculated = 0 // to break the loop, if didnt changed (loop protection)
 
-    while (true) {
+    let playing = true
+    while (playing) {
       // 1. check leadership acumulado del army
       // 2. agregar 1 unit al sacrificio
       let stack = armyRef.current[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
@@ -386,6 +388,7 @@ function Dos() {
       } else {
         // break
       }
+
       console.log('army0', army[0], armyRef.current[0])
 
       // 3. calcular str del sacrificio
@@ -397,7 +400,7 @@ function Dos() {
       // updateMinSetup(stack.id!, unitsNeededToKill1Mob)
 
       for (let i = 1; i < army.length; i++) {
-        stack = army[i]
+        stack = armyRef.current[i]
 
         // 4. calcular cuantos unit necesita pa matar 1 mob
         const monsterStack = getMobTarget(stack.unit)
@@ -411,14 +414,25 @@ function Dos() {
         /**manejo de leadership */
         if (stack.unit.tipo === 'army') {
           // 6. check leadership del nuevo grupo
-          const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
+          // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
+          const unitsCount = 1 // por ahora siempre 1
           const newStackLeadership = stack.unit.LEADERSHIP * unitsCount
 
           // 7 check leadership acumulado + leadership nuevo sea menor que el disponible
           while (getArmyLeadership() + newStackLeadership <= leadership) {
+            console.log(
+              '...lead',
+              stack.unit.name,
+              stack.strBonus,
+              stack.useStrLimit,
+              stack.strLimit,
+              stack.useUnitLimit,
+              stack.unitLimit
+            )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
             const stackStrength = getStackStrength(stack.id!)
-            const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
+            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
@@ -427,24 +441,53 @@ function Dos() {
               groupStrength = previousGroupStrength
             }
 
-            if (stackStrength + newStackStrength < groupStrength) {
-              // 9. agregar al stack
-              console.log('leadership: agregando units en ', stack.id)
-              addUnits(stack.id!, unitsCount)
-            } else {
+            console.log(
+              'unit limit',
+              stack.useUnitLimit,
+              stack.units,
+              getStackUnits(stack.id),
+              stack.unitLimit
+            )
+            if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               break
             }
+
+            if (
+              stack.useStrLimit &&
+              stackStrength + newStackStrength > stack.strLimit &&
+              stackStrength + newStackStrength > groupStrength
+            ) {
+              break
+            }
+
+            if (stackStrength + newStackStrength > groupStrength) {
+              // 9. agregar al stack
+              break
+            }
+
+            console.log('leadership: agregando units en ', stack.id)
+            addUnits(stack.id!, unitsCount)
           }
         }
 
         if (stack.unit.tipo === 'merc') {
           // 5. check authority acumulado del mercenaries
           // 6. check authority del nuevo grupo
-          const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
+          // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
+          const unitsCount = 1 //siempre 1
           const newStackAuthority = stack.unit.AUTHORITY * unitsCount
-
+          console.log('processing merc')
           // 7 check authority acumulado + authority nuevo sea menor que el disponible
           while (getArmyAuthority() + newStackAuthority <= authority) {
+            console.log(
+              '...auth',
+              stack.unit.name,
+              stack.strBonus,
+              stack.useStrLimit,
+              stack.strLimit,
+              stack.useUnitLimit,
+              stack.unitLimit
+            )
             console.log(
               'check auth calc MENOR IGUAL ',
               getArmyAuthority() + newStackAuthority,
@@ -453,7 +496,8 @@ function Dos() {
             )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
             const stackStrength = getStackStrength(stack.id!)
-            const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
@@ -462,27 +506,50 @@ function Dos() {
               groupStrength = previousGroupStrength
             }
 
-            if (stackStrength + newStackStrength < groupStrength) {
-              // 9. agregar al stack
-              console.log('authority: agregando units en ', stack.id)
-              addUnits(stack.id!, unitsCount)
-            } else {
+            if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               break
             }
+
+            if (
+              stack.useStrLimit &&
+              stackStrength + newStackStrength > stack.strLimit &&
+              stackStrength + newStackStrength > groupStrength
+            ) {
+              break
+            }
+
+            if (stackStrength + newStackStrength > groupStrength) {
+              // 9. agregar al stack
+              break
+            }
+
+            console.log('authority: agregando units en ', stack.id)
+            addUnits(stack.id!, unitsCount)
           }
         }
 
         if (stack.unit.tipo === 'monster') {
           // 5. check DOMINANCE acumulado del mercenaries
           // 6. check DOMINANCE del nuevo grupo
-          const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
+          // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
+          const unitsCount = 1
           const newStackDominance = stack.unit.DOMINANCE * unitsCount
 
           // 7 check DOMINANCE acumulado + DOMINANCE nuevo sea menor que el disponible
           while (getArmyDominance() + newStackDominance <= dominance) {
+            console.log(
+              '...domi',
+              stack.unit.name,
+              stack.strBonus,
+              stack.useStrLimit,
+              stack.strLimit,
+              stack.useUnitLimit,
+              stack.unitLimit
+            )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
             const stackStrength = getStackStrength(stack.id!)
-            const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
@@ -491,13 +558,26 @@ function Dos() {
               groupStrength = previousGroupStrength
             }
 
-            if (stackStrength + newStackStrength < groupStrength) {
-              // 9. agregar al stack
-              console.log('dominance: agregando units en ', stack.id)
-              addUnits(stack.id!, unitsCount)
-            } else {
+            console.log('unit limit', stack.useUnitLimit, stack.unitLimit)
+            if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               break
             }
+
+            if (
+              stack.useStrLimit &&
+              stackStrength + newStackStrength > stack.strLimit &&
+              stackStrength + newStackStrength > groupStrength
+            ) {
+              break
+            }
+
+            if (stackStrength + newStackStrength > groupStrength) {
+              // 9. agregar al stack
+              break
+            }
+
+            console.log('dominance: agregando units en ', stack.id)
+            addUnits(stack.id!, unitsCount)
           }
         }
       }
@@ -510,6 +590,7 @@ function Dos() {
         lastDominanceCalculated === getArmyDominance()
       ) {
         console.log('no changes to leadership,authority or dominance, ending')
+        playing = false
         break
       }
       lastLeadershipCalculated = getArmyLeadership()
@@ -522,17 +603,31 @@ function Dos() {
         getArmyLeadership() > leadership
       ) {
         // no deberia pasar
+        playing = false
         break
       }
 
-      console.log('firstunit limit', limitFirstUnit, army[0])
-      if (isFirstUnitLimited && armyRef.current[0].units >= limitFirstUnit) {
+      console.log('unit limit', armyRef.current[0].useUnitLimit, armyRef.current[0].unitLimit)
+      if (
+        armyRef.current[0].useUnitLimit &&
+        armyRef.current[0].units >= armyRef.current[0].unitLimit
+      ) {
         console.log('firstunit break')
+        playing = false
+        break
+      }
+
+      if (
+        armyRef.current[0].useStrLimit &&
+        getStackStrength(army[0].id) >= armyRef.current[0].strLimit
+      ) {
+        playing = false
         break
       }
 
       if (maxLoop-- < 1) {
         console.log('loop protection', maxLoop)
+        playing = false
         break
       }
     }
@@ -614,30 +709,6 @@ function Dos() {
               }}
             />
           </div>
-
-          <div style={{ marginTop: 20 }}>
-            <label>First unit limit</label>
-            <input
-              type='checkbox'
-              checked={isFirstUnitLimited}
-              onChange={() => {
-                setIsFirstUnitLimited(!isFirstUnitLimited)
-              }}
-            />
-            {isFirstUnitLimited && (
-              <input
-                type='number'
-                value={limitFirstUnit}
-                onChange={e => {
-                  if (e.target.value.trim() !== '') {
-                    const value = parseInt(e.target.value)
-                    setLimitFirstUnit(value)
-                  }
-                }}
-                required
-              />
-            )}
-          </div>
         </div>
       </div>
 
@@ -671,7 +742,7 @@ function Dos() {
             />
             <label htmlFor='monsterinfo'>Monster info</label>
           </div>
-          <div className='radiobtn'>
+          {/* <div className='radiobtn'>
             <input
               type='radio'
               value='showBonusConfig'
@@ -683,7 +754,7 @@ function Dos() {
               id='bonusconfig'
             />
             <label htmlFor='bonusconfig'>Bonus config</label>
-          </div>
+          </div> */}
         </div>
 
         <div className='configbar'>

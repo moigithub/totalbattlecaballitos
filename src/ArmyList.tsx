@@ -454,7 +454,13 @@ export const ArmyList = () => {
       units: 0, //unitsNeededToKill1Mob
       minSetup: 0,
       lockMinSetup: true,
-      limit: 0
+      limit: 0,
+      strBonus: 0,
+      hpBonus: 0,
+      unitLimit: 0,
+      useUnitLimit: false,
+      useStrLimit: false,
+      strLimit: 0
     }
     addStack(stack)
   }

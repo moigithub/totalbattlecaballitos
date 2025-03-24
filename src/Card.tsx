@@ -14,6 +14,14 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
   // const getArmyLeadership = useStackStore(state => state.getArmyLeadership)
   // const getStackLeadership = useStackStore(state => state.getStackLeadership)
   // const updateMinSetup = useStackStore(state => state.updateMinSetup)
+
+  const setHpBonus = useStackStore(state => state.setHpBonus)
+  const setStrBonus = useStackStore(state => state.setStrBonus)
+  const toggleUseUnitLimit = useStackStore(state => state.toggleUseUnitLimit)
+  const setUnitLimit = useStackStore(state => state.setUnitLimit)
+  const toggleUseStrLimit = useStackStore(state => state.toggleUseStrLimit)
+  const setStrLimit = useStackStore(state => state.setStrLimit)
+
   const removeStack = useStackStore(state => state.removeStack)
   const resetStack = useStackStore(state => state.resetStack)
   const toggleLockMin = useStackStore(state => state.toggleLockMin)
@@ -34,18 +42,86 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
 
   return (
     <div className='stack-card' ref={setNodeRef} style={style}>
-      <p className='stack-units' {...attributes} {...listeners}>
+      <div className='handle' {...attributes} {...listeners}>
         <div className='drag-handler'></div>
-        {stack.units}
-      </p>
+      </div>
+      <p className='stack-units'>{stack.units}</p>
       <p className='stack-name'>{stack.unit.name} </p>
-      <p className='stack-health'>HP {stackHealth.toFixed(0)}</p>
-      <p className='stack-strength'>STR {stackStrength.toFixed(2)}</p>
+      <p className='stack-health-strength'>
+        <span className='health'>HP {stackHealth.toFixed(0)}</span> /
+        <span className='strength'>STR {stackStrength.toFixed(2)}</span>
+      </p>
       {stack.unit.tipo === 'army' && <p className='stack-leadership'>Lead {stack.leadership}</p>}
       {stack.unit.tipo === 'monster' && <p className='stack-leadership'>Domi {stack.dominance}</p>}
       {stack.unit.tipo === 'merc' && <p className='stack-leadership'>Auth {stack.authority}</p>}
       <p className='stack-minSetup'>Min {stack.minSetup}</p>
       {/* <p className='stack-limit'>Limit {stack.limit}</p> */}
+
+      <div className='stack-hpBonus'>
+        HP bonus %
+        <input
+          type='number'
+          value={stack.hpBonus}
+          onChange={e => {
+            const value = parseFloat(e.target.value) || 0
+            setHpBonus(stack.id!, value)
+          }}
+        />
+      </div>
+      <div className='stack-strBonus'>
+        STR bonus %
+        <input
+          type='number'
+          value={stack.strBonus}
+          onChange={e => {
+            const value = parseFloat(e.target.value) || 0
+            setStrBonus(stack.id!, value)
+          }}
+        />
+      </div>
+
+      <div className='stack-unitLimit'>
+        Unit Limit?
+        <input
+          type='checkbox'
+          checked={stack.useUnitLimit}
+          onChange={() => {
+            toggleUseUnitLimit(stack.id!)
+          }}
+        />
+        {stack.useUnitLimit && (
+          <input
+            type='number'
+            value={stack.unitLimit}
+            onChange={e => {
+              const value = parseInt(e.target.value) || 0
+              setUnitLimit(stack.id!, value)
+            }}
+          />
+        )}
+      </div>
+
+      <div className='stack-strLimit'>
+        Str Limit?
+        <input
+          type='checkbox'
+          checked={stack.useStrLimit}
+          onChange={() => {
+            toggleUseStrLimit(stack.id!)
+          }}
+        />
+        {stack.useStrLimit && (
+          <input
+            type='number'
+            value={stack.strLimit}
+            onChange={e => {
+              const value = parseInt(e.target.value) || 0
+              setStrLimit(stack.id!, value)
+            }}
+          />
+        )}
+      </div>
+
       <div className='stack-action'>
         <button
           className='action-btn'

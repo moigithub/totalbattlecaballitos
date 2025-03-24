@@ -25,12 +25,22 @@ interface StackStore {
   removeStack: (id: string) => void
   resetStack: (id: string) => void
   resetAllStacks: () => void
+
+  setHpBonus: (id: string, value: number) => void
+  setStrBonus: (id: string, value: number) => void
+  toggleUseUnitLimit: (id: string) => void
+  setUnitLimit: (id: string, value: number) => void
+  getStackUnitLimit: (id: string) => number
+  toggleUseStrLimit: (id: string) => void
+  setStrLimit: (id: string, value: number) => void
+
   getArmyLeadership: () => number
   getArmyAuthority: () => number
   getArmyDominance: () => number
   // setStackPosition: (id:string, newPosition: number) => void
   recalculatePosition: () => void
   updateMinSetup: (id: string, minSetup: number) => void
+  getStackUnits: (id: string) => number
   addUnits: (id: string, amount: number) => void
   removeUnits: (id: string, amount: number) => void
   reduceSacrificeUnits: () => void
@@ -309,6 +319,92 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
   },
 
+  setHpBonus: (id: string, value: number) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return {
+            ...stack,
+            hpBonus: value
+          }
+        }
+        return stack
+      })
+    }))
+  },
+
+  setStrBonus: (id: string, value: number) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return {
+            ...stack,
+            strBonus: value
+          }
+        }
+        return stack
+      })
+    }))
+  },
+
+  toggleUseUnitLimit: (id: string) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return { ...stack, useUnitLimit: !stack.useUnitLimit }
+        } else return stack
+      })
+    }))
+  },
+  setUnitLimit: (id: string, value: number) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return {
+            ...stack,
+            unitLimit: value
+          }
+        }
+        return stack
+      })
+    }))
+  },
+  getStackUnitLimit: (id: string) => {
+    console.log('getStackUnitLimit', id)
+    const stack = get().army.find(army => army.id === id)
+    if (!stack) return 0
+
+    return stack.unitLimit
+  },
+  toggleUseStrLimit: (id: string) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return { ...stack, useStrLimit: !stack.useStrLimit }
+        } else return stack
+      })
+    }))
+  },
+  setStrLimit: (id: string, value: number) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return {
+            ...stack,
+            strLimit: value
+          }
+        }
+        return stack
+      })
+    }))
+  },
+  getStackUnits: (id: string) => {
+    console.log('getStackStrength', id)
+    const stack = get().army.find(army => army.id === id)
+    if (!stack) return 0
+
+    return stack.units
+  },
   addUnits: (id: string, amount: number) => {
     set(state => ({
       army: state.army.map(stack => {
@@ -620,23 +716,28 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   getStackStrength: (id: string) => {
     // return the stack strength with bonus,
     // but without extra bonus,ie. vsMeleePercent
-
+    console.log('getStackStrength', id)
     const stack = get().army.find(army => army.id === id)
     if (!stack) return 0
 
-    const bonus = get().bonus
-    const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+    // const bonus = get().bonus
+    // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+    const totalSTRPerUnit =
+      stack.strBonus > 0 ? stack.unit.BASESTR * (1 + stack.strBonus / 100) : stack.unit.BASESTR
     return totalSTRPerUnit * stack.units
   },
   getStackHealth: (id: string) => {
     // const stack = get().army.find(army => army.position === position)
     // return stack?.health ?? 0
+    console.log('getStackHealth', id)
 
     const stack = get().army.find(army => army.id === id)
     if (!stack) return 0
 
-    const bonus = get().bonus
-    const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
+    // const bonus = get().bonus
+    // const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
+    const totalHPPerUnit =
+      stack.hpBonus > 0 ? stack.unit.BASEHP * (1 + stack.hpBonus / 100) : stack.unit.BASEHP
     return totalHPPerUnit * stack.units
   },
   getStackLeadership: (id: string) => {
