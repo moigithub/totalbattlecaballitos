@@ -24,15 +24,17 @@ interface StackStore {
   addStack: (data: Omit<Stack, 'id'>) => void
   removeStack: (id: string) => void
   resetStack: (id: string) => void
+  getStack: (id: string) => Stack | null
   resetAllStacks: () => void
 
   setHpBonus: (id: string, value: number) => void
   setStrBonus: (id: string, value: number) => void
   toggleUseUnitLimit: (id: string) => void
-  setUnitLimit: (id: string, value: number) => void
+  setStackUnitLimit: (id: string, value: number) => void
   getStackUnitLimit: (id: string) => number
   toggleUseStrLimit: (id: string) => void
-  setStrLimit: (id: string, value: number) => void
+  setStackStrLimit: (id: string, value: number) => void
+  getStackStrLimit: (id: string) => number
 
   getArmyLeadership: () => number
   getArmyAuthority: () => number
@@ -282,6 +284,12 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
+  getStack: (id: string) => {
+    const stack = get().army.find(army => army.id === id)
+    if (!stack) return null
+
+    return stack
+  },
   resetAllStacks: () => {
     set(state => ({
       army: state.army.map(stack => {
@@ -356,7 +364,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
-  setUnitLimit: (id: string, value: number) => {
+  setStackUnitLimit: (id: string, value: number) => {
     set(state => ({
       army: state.army.map(stack => {
         if (stack.id === id) {
@@ -370,11 +378,16 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     }))
   },
   getStackUnitLimit: (id: string) => {
-    console.log('getStackUnitLimit', id)
     const stack = get().army.find(army => army.id === id)
     if (!stack) return 0
 
     return stack.unitLimit
+  },
+  getStackStrLimit: (id: string) => {
+    const stack = get().army.find(army => army.id === id)
+    if (!stack) return 0
+
+    return stack.strLimit
   },
   toggleUseStrLimit: (id: string) => {
     set(state => ({
@@ -385,7 +398,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
-  setStrLimit: (id: string, value: number) => {
+  setStackStrLimit: (id: string, value: number) => {
     set(state => ({
       army: state.army.map(stack => {
         if (stack.id === id) {
@@ -399,7 +412,6 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     }))
   },
   getStackUnits: (id: string) => {
-    console.log('getStackStrength', id)
     const stack = get().army.find(army => army.id === id)
     if (!stack) return 0
 
@@ -716,7 +728,6 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   getStackStrength: (id: string) => {
     // return the stack strength with bonus,
     // but without extra bonus,ie. vsMeleePercent
-    console.log('getStackStrength', id)
     const stack = get().army.find(army => army.id === id)
     if (!stack) return 0
 
@@ -729,7 +740,6 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   getStackHealth: (id: string) => {
     // const stack = get().army.find(army => army.position === position)
     // return stack?.health ?? 0
-    console.log('getStackHealth', id)
 
     const stack = get().army.find(army => army.id === id)
     if (!stack) return 0

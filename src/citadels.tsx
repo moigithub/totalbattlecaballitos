@@ -675,61 +675,83 @@ export const Citadels = () => {
     catasResult.lvl1e * cata1.str
 
   return (
-    <div className='info'>
-      <div className='group'>
-        <label>STR bonus </label>
-        <input type='number' value={StrBonus} onChange={changeStrBonus} />
-      </div>
-      <div className='group'>
-        <label>HP bonus </label>
-        <input type='number' value={HPBonus} onChange={changeHPBonus} />
-      </div>
-      <div className='group'>
-        <label>Citadel </label>
-        <select value={selectedCitadel} onChange={changeCitadel}>
-          <option value='c25'>cursed 25</option>
-          <option value='c20'>cursed 20</option>
-          <option value='e30'>elf 30</option>
-          <option value='e25'>elf 25</option>
-          <option value='e20'>elf 20</option>
-          <option value='e15'>elf 15</option>
-          <option value='e10'>elf 10</option>
-        </select>
-      </div>
-      <div className='group'>
-        <label>Catapult level </label>
-        <select value={selectedCatapultLevel} onChange={changeCatapultLevel}>
-          <option value='7'>7</option>
-          <option value='6'>6</option>
-          <option value='5'>5</option>
-          <option value='4'>4</option>
-          <option value='3'>3</option>
-          <option value='2'>2</option>
-          <option value='1'>1</option>
-        </select>
-      </div>
-      <br />
-      <div className='group'>
-        <label>Use stack health limit </label>
-        <input
-          type='checkbox'
-          checked={useStackHealthLimit}
-          onChange={() => {
-            setUseStackHealthLimit(!useStackHealthLimit)
-          }}
-        />
+    <div className='p-2 pt-[56px]'>
+      <form className='max-w-xs '>
+        <div className='group'>
+          <label>STR bonus </label>
+          <input
+            type='number'
+            className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            value={StrBonus}
+            onChange={changeStrBonus}
+          />
+        </div>
+        <div className='group'>
+          <label>HP bonus </label>
+          <input
+            type='number'
+            className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            value={HPBonus}
+            onChange={changeHPBonus}
+          />
+        </div>
+        <div className='group'>
+          <label>Citadel </label>
+          <select
+            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            value={selectedCitadel}
+            onChange={changeCitadel}
+          >
+            <option value='c25'>cursed 25</option>
+            <option value='c20'>cursed 20</option>
+            <option value='e30'>elf 30</option>
+            <option value='e25'>elf 25</option>
+            <option value='e20'>elf 20</option>
+            <option value='e15'>elf 15</option>
+            <option value='e10'>elf 10</option>
+          </select>
+        </div>
+        <div className='group'>
+          <label>Catapult level </label>
+          <select
+            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            value={selectedCatapultLevel}
+            onChange={changeCatapultLevel}
+          >
+            <option value='7'>7</option>
+            <option value='6'>6</option>
+            <option value='5'>5</option>
+            <option value='4'>4</option>
+            <option value='3'>3</option>
+            <option value='2'>2</option>
+            <option value='1'>1</option>
+          </select>
+        </div>
+        <br />
+        <div className='group'>
+          <label>Use stack health limit </label>
+          <input
+            type='checkbox'
+            checked={useStackHealthLimit}
+            onChange={() => {
+              setUseStackHealthLimit(!useStackHealthLimit)
+            }}
+          />
 
-        <input
-          type='number'
-          value={cataMaxHealth}
-          onChange={e => {
-            setCataMaxHealth(parseInt(e.target.value))
-          }}
-        />
-      </div>
+          <input
+            type='number'
+            className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            value={cataMaxHealth}
+            onChange={e => {
+              setCataMaxHealth(parseInt(e.target.value))
+            }}
+          />
+        </div>
+      </form>
 
       <br />
       <button
+        className='focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300   rounded-lg text-xs px-0.5 py-0.5 me-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
         onClick={calc}
         style={{
           backgroundColor: 'blue',

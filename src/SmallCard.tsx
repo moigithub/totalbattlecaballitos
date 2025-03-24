@@ -14,14 +14,7 @@ export const SmallCard = ({ stack }: { stack: Stack; isFirst: boolean }) => {
   // const getArmyLeadership = useStackStore(state => state.getArmyLeadership)
   // const getStackLeadership = useStackStore(state => state.getStackLeadership)
   // const updateMinSetup = useStackStore(state => state.updateMinSetup)
-  const getHpBonus = useStackStore(state => state.getHpBonus)
-  const setHpBonus = useStackStore(state => state.setHpBonus)
-  const getStrBonus = useStackStore(state => state.getStrBonus)
-  const setStrBonus = useStackStore(state => state.setStrBonus)
-  const getUseUnitLimit = useStackStore(state => state.toggleUseUnitLimit)
-  const setUnitLimit = useStackStore(state => state.setUnitLimit)
-  const getUseStrLimit = useStackStore(state => state.toggleUseStrLimit)
-  const setStrLimit = useStackStore(state => state.setStrLimit)
+
   const removeStack = useStackStore(state => state.removeStack)
   const resetStack = useStackStore(state => state.resetStack)
   // const toggleLockMin = useStackStore(state => state.toggleLockMin)
@@ -42,10 +35,10 @@ export const SmallCard = ({ stack }: { stack: Stack; isFirst: boolean }) => {
 
   return (
     <div className='stack-card-small' ref={setNodeRef} style={style}>
-      <p className='stack-units' {...attributes} {...listeners}>
+      <div className='handle' {...attributes} {...listeners}>
         <div className='drag-handler'></div>
-        {stack.units}
-      </p>
+      </div>
+      <p className='stack-units'>{stack.units}</p>
       <p className='stack-name'>
         {stack.unit.name} <span className='stack-health-small'>{stackHealth.toFixed(0)}</span>
         <span> / </span>
@@ -57,7 +50,7 @@ export const SmallCard = ({ stack }: { stack: Stack; isFirst: boolean }) => {
 
       <div className='stack-action'>
         <button
-          className='action-btn'
+          className='shrink-0 bg-gray-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
           onClick={() => {
             addUnits(stack.id!, 1)
           }}
@@ -65,7 +58,7 @@ export const SmallCard = ({ stack }: { stack: Stack; isFirst: boolean }) => {
           +
         </button>
         <button
-          className='action-btn'
+          className='shrink-0 bg-gray-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
           onClick={() => {
             removeUnits(stack.id!, 1)
           }}
@@ -75,12 +68,18 @@ export const SmallCard = ({ stack }: { stack: Stack; isFirst: boolean }) => {
       </div>
 
       <div className='stack-delete'>
-        <button className='remove-btn' onClick={() => removeStack(stack.id!)}>
+        <button
+          className='shrink-0 bg-red-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+          onClick={() => removeStack(stack.id!)}
+        >
           X
         </button>
       </div>
       <div className='stack-reset'>
-        <button className='reset-btn' onClick={() => resetStack(stack.id!)}>
+        <button
+          className='shrink-0 bg-blue-500 cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+          onClick={() => resetStack(stack.id!)}
+        >
           C
         </button>
       </div>

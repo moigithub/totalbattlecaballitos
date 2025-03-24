@@ -18,13 +18,13 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
   const setHpBonus = useStackStore(state => state.setHpBonus)
   const setStrBonus = useStackStore(state => state.setStrBonus)
   const toggleUseUnitLimit = useStackStore(state => state.toggleUseUnitLimit)
-  const setUnitLimit = useStackStore(state => state.setUnitLimit)
+  const setUnitLimit = useStackStore(state => state.setStackUnitLimit)
   const toggleUseStrLimit = useStackStore(state => state.toggleUseStrLimit)
-  const setStrLimit = useStackStore(state => state.setStrLimit)
+  const setStrLimit = useStackStore(state => state.setStackStrLimit)
 
   const removeStack = useStackStore(state => state.removeStack)
   const resetStack = useStackStore(state => state.resetStack)
-  const toggleLockMin = useStackStore(state => state.toggleLockMin)
+  // const toggleLockMin = useStackStore(state => state.toggleLockMin)
   const addUnits = useStackStore(state => state.addUnits)
   const removeUnits = useStackStore(state => state.removeUnits)
   const reduceSacrificeUnits = useStackStore(state => state.reduceSacrificeUnits)
@@ -46,7 +46,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         <div className='drag-handler'></div>
       </div>
       <p className='stack-units'>{stack.units}</p>
-      <p className='stack-name'>{stack.unit.name} </p>
+      <p className='stack-name'>{stack.unit.name}</p>
       <p className='stack-health-strength'>
         <span className='health'>HP {stackHealth.toFixed(0)}</span> /
         <span className='strength'>STR {stackStrength.toFixed(2)}</span>
@@ -61,6 +61,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         HP bonus %
         <input
           type='number'
+          className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
           value={stack.hpBonus}
           onChange={e => {
             const value = parseFloat(e.target.value) || 0
@@ -72,6 +73,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         STR bonus %
         <input
           type='number'
+          className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
           value={stack.strBonus}
           onChange={e => {
             const value = parseFloat(e.target.value) || 0
@@ -92,6 +94,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         {stack.useUnitLimit && (
           <input
             type='number'
+            className='ml-1 inline-flex  bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
             value={stack.unitLimit}
             onChange={e => {
               const value = parseInt(e.target.value) || 0
@@ -113,6 +116,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
         {stack.useStrLimit && (
           <input
             type='number'
+            className='ml-1 inline-flex  bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
             value={stack.strLimit}
             onChange={e => {
               const value = parseInt(e.target.value) || 0
@@ -124,7 +128,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
 
       <div className='stack-action'>
         <button
-          className='action-btn'
+          className='shrink-0 bg-gray-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
           onClick={() => {
             addUnits(stack.id!, 1)
           }}
@@ -132,7 +136,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
           +
         </button>
         <button
-          className='action-btn'
+          className='shrink-0 bg-gray-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
           onClick={() => {
             removeUnits(stack.id!, 1)
           }}
@@ -140,7 +144,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
           -
         </button>
       </div>
-      {!isFirst && (
+      {/* {!isFirst && (
         <div className='stack-config'>
           <label>lock Min</label>
 
@@ -152,11 +156,11 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
             }}
           />
         </div>
-      )}
+      )} */}
       {isFirst && (
         <div className='stack-config'>
           <button
-            className='reduce-btn'
+            className='shrink-0 bg-gray-100 cursor-pointer dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
             onClick={() => {
               reduceSacrificeUnits()
             }}
@@ -168,12 +172,18 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
       )}
 
       <div className='stack-delete'>
-        <button className='remove-btn' onClick={() => removeStack(stack.id!)}>
+        <button
+          className='shrink-0 bg-red-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+          onClick={() => removeStack(stack.id!)}
+        >
           X
         </button>
       </div>
       <div className='stack-reset'>
-        <button className='reset-btn' onClick={() => resetStack(stack.id!)}>
+        <button
+          className='shrink-0 bg-blue-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+          onClick={() => resetStack(stack.id!)}
+        >
           C
         </button>
       </div>

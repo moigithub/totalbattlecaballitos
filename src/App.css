@@ -1,13 +1,15 @@
-body {
-  /* min-height: 100vh; */
-  max-width: 1200px;
-  margin: 0 auto;
+@reference "tailwindcss/theme.css";
 
-  height: 100vh;
+/* body { */
+/* min-height: 100vh; */
+/* max-width: 1600px; */
+/* margin: 0 auto; */
+
+/* height: 100vh;
   max-height: 100vh;
-  overflow: hidden;
-  margin-bottom: 40px;
-}
+  overflow: hidden; */
+/* margin-bottom: 40px; */
+/* } */
 
 #root {
   position: relative;
@@ -27,12 +29,6 @@ td {
 table th {
   font-size: 14px;
   padding: 0 10px;
-}
-
-#root,
-.app {
-  height: 100%;
-  overflow: hidden;
 }
 
 .grow {
@@ -72,14 +68,13 @@ table th {
   overflow: auto;
 }
 
-.dos-main {
+/* .dos-main {
   display: flex;
   flex-direction: column;
 
-  height: calc(100% - 110px);
-  max-height: calc(100% - 110px);
   overflow: hidden;
-}
+  padding: 16px;
+} */
 
 .config-container {
   grid-area: config;
@@ -96,32 +91,34 @@ table th {
   }
 }
 
-.menu-options {
+/* .menu-options {
   grid-area: menu;
   display: flex;
   gap: 8px;
-}
+} */
 
-.stack-army {
+/* .stack-army {
   grid-area: content;
   display: grid;
   grid-template-areas: 'army stack';
   overflow-y: auto;
   grid-template-columns: 30% 70%;
-}
-
+} */
 .army-container {
   grid-area: army;
   width: 100%;
   height: 100%;
   overflow: scroll;
 }
+.collapsed {
+  width: 10px;
+}
 
 .header-title {
   margin: 0.5rem;
 }
 
-.stack-container {
+/* .stack-container {
   grid-area: stack;
   width: 100%;
   height: 100%;
@@ -136,7 +133,7 @@ table th {
       font-weight: bolder;
     }
   }
-}
+} */
 .sticky {
   position: sticky;
   top: 0;
@@ -146,17 +143,19 @@ table th {
 
 .stack-card-small {
   display: grid;
+  grid-template-columns: 30px 80px auto auto auto auto;
+  grid-template-rows: auto;
   grid-template-areas:
-    'units name        name    action     delete'
-    'units atk         atk     .         reset';
+    'handle units name        name    action     delete'
+    'handle units atk         atk     .         reset';
 
-  width: 100%;
+  /* width: 100%; */
   border: 1px solid grey;
   margin: 10px 0;
 }
 .stack-card {
   display: grid;
-  grid-template-columns: auto auto 1fr auto auto;
+  grid-template-columns: 30px 80px auto 1fr auto auto;
   grid-template-rows: auto;
   grid-template-areas:
     'handle units name      name          delete'
@@ -179,13 +178,12 @@ table th {
   background-color: bisque;
   color: black;
   margin-right: 10px;
-
+  padding: 16px;
   position: relative;
 }
 .handle {
   grid-area: handle;
-  width: 20px;
-  margin-right: 10px;
+  width: calc(100% - 5px);
   height: 100%;
   cursor: pointer;
   background-color: bisque;
@@ -237,9 +235,10 @@ table th {
   font-size: 0.8rem;
   font-weight: 500;
   width: 100%;
-  max-width: 95%;
-  text-overflow: ellipsis;
+  max-width: 200px;
+  /* text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap; */
   display: flex;
   align-items: baseline;
 }
@@ -477,12 +476,12 @@ table th {
   }
 }
 
-.info {
+/* .info {
   height: calc(100% - 110px);
   overflow-y: auto;
-}
+} */
 
-@media (min-width: 480px) {
+@media (min-width: 892px) {
   /* tablets or wide screen*/
   .navbar {
     height: 70px;
@@ -491,26 +490,37 @@ table th {
     margin: 1rem 0;
   }
 
-  .stack-container {
+  /* .stack-container {
     .header {
       display: flex;
       flex-wrap: wrap;
       align-items: baseline;
       gap: 20px;
     }
-  }
+  } */
 
   .stack-card {
     /* display: grid; */
+    grid-template-columns: 30px 100px 200px auto auto auto;
+    grid-template-rows: auto;
     grid-template-areas:
-      'handle name      name        healthstrength    action           delete'
-      'handle atk       atk         hpBonus           unitLimit        reset'
-      'handle units     leadership  strBonus          strLimit        config '
-      'handle units     basic       basic               minSetup     .';
+      'handle units  name        name        healthstrength    action           delete'
+      'handle units  atk         atk         hpBonus           unitLimit        reset'
+      'handle units  leadership  .           strBonus          strLimit        config '
+      'handle units  basic       basic       basic             minSetup          .';
+    .stack-name {
+      font-size: 1.2rem;
+
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 
-  .stack-name {
-    font-size: 1.2rem;
+  .stack-card-small {
+    .stack-name {
+      font-size: 1.2rem;
+    }
   }
 
   .stack-health-strength,
@@ -573,4 +583,8 @@ table th {
   padding: 0 10px;
   background-color: brown;
   color: black;
+}
+
+.active {
+  @apply text-blue-600;
 }
