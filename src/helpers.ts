@@ -32,6 +32,17 @@ export const getStackStrength = (army: Stack[], index: number) => {
   return totalSTRPerUnit * stack.units
 }
 
+export const getStackHealth = (army: Stack[], index: number) => {
+  // return the stack strength with bonus,
+  // but without extra bonus,ie. vsMeleePercent
+  const stack = army[index]
+  if (!stack) return 0
+
+  const totalHPPerUnit =
+    stack.hpBonus > 0 ? stack.unit.BASEHP * (1 + stack.hpBonus / 100) : stack.unit.BASEHP
+  return totalHPPerUnit * stack.units
+}
+
 export const addArmyUnits = (army: Stack[], index: number, amount: number) => {
   const stack = army[index]
   const leadership = stack.unit.LEADERSHIP

@@ -40,6 +40,7 @@ import {
   getArmyAuthority,
   getArmyDominance,
   getArmyLeadership,
+  getStackHealth,
   getStackStrength
 } from './helpers'
 
@@ -350,7 +351,7 @@ function Dos() {
     console.log('max dominance', dominance)
     console.log('army', ARMY)
 
-    let maxLoop = 1000 // 000 // should change it for a timer
+    let maxLoop = 1000000 // should change it for a timer
     //let totalLeadership = 0
     // let totalAuthority = 0
     // let totalDominance = 0
@@ -392,6 +393,11 @@ function Dos() {
 
       const unitStrength = stack.unit.BASESTR * (1 + stack.strBonus / 100)
       if (ARMY[0].useStrLimit && getStackStrength(ARMY, 0) + unitStrength > ARMY[0].strLimit) {
+        canIAddToFirstStack = false
+      }
+
+      const unitHealth = stack.unit.BASEHP * (1 + stack.hpBonus / 100)
+      if (ARMY[0].useHpLimit && getStackHealth(ARMY, 0) + unitHealth > ARMY[0].HpLimit) {
         canIAddToFirstStack = false
       }
 
@@ -491,6 +497,23 @@ function Dos() {
               break
             }
 
+            const stackHealth = getStackHealth(ARMY, i)
+            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
+            const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
+            const newStackHealth = totalHPPerUnit * unitsCount
+            if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
+              console.log(
+                'lead: hp limit',
+                ARMY[i].useHpLimit,
+                stackHealth + newStackHealth,
+                '>=',
+                ARMY[i].HpLimit
+              )
+
+              // console.log('rompio lead4')
+              break
+            }
+
             // console.log('leadership: agregando units a ', ARMY[i].unit.name)
             addArmyUnits(ARMY, i, unitsCount)
 
@@ -564,6 +587,23 @@ function Dos() {
               break
             }
 
+            const stackHealth = getStackHealth(ARMY, i)
+            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
+            const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
+            const newStackHealth = totalHPPerUnit * unitsCount
+            if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
+              console.log(
+                'auth: hp limit',
+                ARMY[i].useHpLimit,
+                stackHealth + newStackHealth,
+                '>=',
+                ARMY[i].HpLimit
+              )
+
+              // console.log('rompio merc4')
+              break
+            }
+
             // 9. agregar al stack
             // console.log('authority: agregando units en ', ARMY[i].unit.name)
             addArmyUnits(ARMY, i, unitsCount)
@@ -621,6 +661,23 @@ function Dos() {
             if (stackStrength + newStackStrength >= groupStrength) {
               // 9. agregar al stack
               // console.log('rompio dom3')
+              break
+            }
+
+            const stackHealth = getStackHealth(ARMY, i)
+            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
+            const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
+            const newStackHealth = totalHPPerUnit * unitsCount
+            if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
+              console.log(
+                'dom: hp limit',
+                ARMY[i].useHpLimit,
+                stackHealth + newStackHealth,
+                '>=',
+                ARMY[i].HpLimit
+              )
+
+              // console.log('rompio dom4')
               break
             }
 
@@ -791,6 +848,7 @@ function Dos() {
                   type='radio'
                   value='showArmyConfig'
                   name='extra'
+                  className='invisible'
                   checked={windowMode === 'showArmyConfig'}
                   onChange={() => {
                     setWindowMode('showArmyConfig')
@@ -805,6 +863,7 @@ function Dos() {
                   type='radio'
                   value='showTargetMonsterInfo'
                   name='extra'
+                  className='invisible'
                   checked={windowMode === 'showTargetMonsterInfo'}
                   onChange={() => {
                     setWindowMode('showTargetMonsterInfo')

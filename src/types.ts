@@ -73,18 +73,17 @@ interface BasicUnit {
   // AUTHORITY: number
   // DOMINANCE: number
   INITIATIVE: number
-  vsRangedPercent: number
-  vsSiegePercent: number
-  vsBeastPercent: number
+  vsRangedPercent: number //
+  vsSiegePercent: number //
+  vsBeastPercent: number //
   vsHumanPercent: number
-  vsMountedPercent: number
-  vsFlyingPercent: number
-  vsMeleePercent: number
-  vsFortificationsPercent: number
-  vsGiantPercent: number
-  vsEpicMonster: number
-  vsElementalPercent: number
-  vsDragonPercent: number
+  vsMountedPercent: number //
+  vsFlyingPercent: number //
+  vsMeleePercent: number //
+  vsFortificationsPercent: number //
+  vsGiantPercent: number //
+  vsElementalPercent: number //
+  vsDragonPercent: number //
   vsEpicPercent: number
   troop: string //TroopType
   // category: string //Category
@@ -157,6 +156,8 @@ export interface Stack {
   unitLimit: number
   useStrLimit: boolean
   strLimit: number
+  useHpLimit: boolean
+  HpLimit: number
   units: number
   minSetup: number // used to calculate how many units are needed to kill one monster
   lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount

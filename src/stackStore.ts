@@ -35,6 +35,8 @@ interface StackStore {
   toggleUseStrLimit: (id: string) => void
   setStackStrLimit: (id: string, value: number) => void
   // getStackStrLimit: (id: string) => number
+  toggleUseHpLimit: (id: string) => void
+  setStackHpLimit: (id: string, value: number) => void
 
   // getArmyLeadership: () => number
   // getArmyAuthority: () => number
@@ -49,6 +51,7 @@ interface StackStore {
   // fixStackUnits: (id: string, maxHealth: number) => void
   calcWhichMobIDoMostDmg: (id: string) => MobStack
   getStackStrength: (id: string) => number
+  getStackAllStrength: (id: string) => [] | { type: string; str: number }[]
   getStackHealth: (id: string) => number
   // getStackLeadership: (id: string) => number
   toggleLockMin: (id: string) => void
@@ -411,6 +414,28 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
+  toggleUseHpLimit: (id: string) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return { ...stack, useHpLimit: !stack.useHpLimit }
+        } else return stack
+      })
+    }))
+  },
+  setStackHpLimit: (id: string, value: number) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return {
+            ...stack,
+            HpLimit: value
+          }
+        }
+        return stack
+      })
+    }))
+  },
   // getStackUnits: (id: string) => {
   //   const stack = get().army.find(army => army.id === id)
   //   if (!stack) return 0
@@ -725,17 +750,95 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       return mobListToAttack[0].monsterToAttack
     }
   },
+  getStackAllStrength: (id: string) => {
+    // return a list of the stack strength with bonus
+    const stackStrength: { type: string; str: number }[] = []
+    const stack = get().army.find(army => army.id === id)
+    if (!stack) return stackStrength
+
+    // const totalSTRPerUnit =
+    //   stack.strBonus > 0 ? stack.unit.BASESTR * (1 + stack.strBonus / 100) : stack.unit.BASESTR
+
+    // //  normal strength with bonus, no extra
+    // stackStrength.push({ type: '', str: totalSTRPerUnit * stack.units })
+
+    const strBonus = stack.strBonus ?? 0
+
+    if (stack.unit.vsMeleePercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsMeleePercent) / 100)
+
+      stackStrength.push({ type: 'vsMelee', str: str * stack.units })
+    }
+
+    if (stack.unit.vsRangedPercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsRangedPercent) / 100)
+
+      stackStrength.push({ type: 'vsRanged', str: str * stack.units })
+    }
+
+    if (stack.unit.vsMountedPercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsMountedPercent) / 100)
+
+      stackStrength.push({ type: 'vsMounted', str: str * stack.units })
+    }
+
+    if (stack.unit.vsFlyingPercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsFlyingPercent) / 100)
+
+      stackStrength.push({ type: 'vsFlying', str: str * stack.units })
+    }
+
+    if (stack.unit.vsBeastPercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsBeastPercent) / 100)
+
+      stackStrength.push({ type: 'vsBeast', str: str * stack.units })
+    }
+
+    if (stack.unit.vsGiantPercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsGiantPercent) / 100)
+
+      stackStrength.push({ type: 'vsGiant', str: str * stack.units })
+    }
+
+    if (stack.unit.vsDragonPercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsDragonPercent) / 100)
+
+      stackStrength.push({ type: 'vsDragon', str: str * stack.units })
+    }
+
+    if (stack.unit.vsElementalPercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsElementalPercent) / 100)
+
+      stackStrength.push({ type: 'vsElemental', str: str * stack.units })
+    }
+
+    if (stack.unit.vsSiegePercent > 0) {
+      const str = stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsSiegePercent) / 100)
+
+      stackStrength.push({ type: 'vsSiege', str: str * stack.units })
+    }
+
+    if (stack.unit.vsFortificationsPercent > 0) {
+      const str =
+        stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsFortificationsPercent) / 100)
+
+      stackStrength.push({ type: 'vsFortifications', str: str * stack.units })
+    }
+
+    return stackStrength
+  },
   getStackStrength: (id: string) => {
-    // return the stack strength with bonus,
-    // but without extra bonus,ie. vsMeleePercent
+    // const stack = get().army.find(army => army.position === position)
+    // return stack?.health ?? 0
+
     const stack = get().army.find(army => army.id === id)
     if (!stack) return 0
 
     // const bonus = get().bonus
-    // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
-    const totalSTRPerUnit =
+    // const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
+    const totalHPPerUnit =
       stack.strBonus > 0 ? stack.unit.BASESTR * (1 + stack.strBonus / 100) : stack.unit.BASESTR
-    return totalSTRPerUnit * stack.units
+    return totalHPPerUnit * stack.units
   },
   getStackHealth: (id: string) => {
     // const stack = get().army.find(army => army.position === position)

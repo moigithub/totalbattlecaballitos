@@ -246,14 +246,13 @@ table th {
 .stack-health-strength {
   grid-area: healthstrength;
   margin: 0;
-  font-size: 0.8rem;
   display: none;
-  .health {
-    color: brown;
-  }
-  .strength {
-    color: aquamarine;
-  }
+}
+
+.stack-other-strength {
+  grid-area: otherStrength;
+  margin: 0;
+  display: none;
 }
 
 .stack-health-small {
@@ -313,6 +312,13 @@ table th {
 }
 .stack-strLimit {
   grid-area: strLimit;
+
+  input {
+    max-width: 80px;
+  }
+}
+.stack-hpLimit {
+  grid-area: hpLimit;
 
   input {
     max-width: 80px;
@@ -434,6 +440,7 @@ table th {
 
 .radio-group {
   display: flex;
+  position: relative;
 
   .radiobtn {
     display: flex;
@@ -444,7 +451,7 @@ table th {
       display: block;
       position: absolute;
       top: 0;
-      right: 0;
+      left: 0;
     }
 
     input[type='radio']:checked + label {
@@ -504,10 +511,10 @@ table th {
     grid-template-columns: 30px 100px 200px auto auto auto;
     grid-template-rows: auto;
     grid-template-areas:
-      'handle units  name        name        healthstrength    action           delete'
-      'handle units  atk         atk         hpBonus           unitLimit        reset'
-      'handle units  leadership  .           strBonus          strLimit        config '
-      'handle units  basic       basic       basic             minSetup          .';
+      'handle units  name        name    healthstrength   action      delete'
+      'handle units  atk         atk     otherStrength    unitLimit   reset'
+      'handle units  leadership  .      hpBonus          strLimit    config'
+      'handle units  basic       basic   strBonus         hpLimit     minSetup';
     .stack-name {
       font-size: 1.2rem;
 
@@ -524,6 +531,7 @@ table th {
   }
 
   .stack-health-strength,
+  .stack-other-strength,
   .stack-leadership,
   .stack-basic-info {
     display: block;
@@ -534,51 +542,61 @@ table th {
   }
 }
 
+.vsMounted,
 .mountbadges {
   padding: 0 10px;
   background-color: pink;
   color: black;
 }
+.vsFlying,
 .flyingbadges {
   padding: 0 10px;
   background-color: darkcyan;
   color: black;
 }
+.vsElemental,
 .elementalbadges {
   padding: 0 10px;
   background-color: darkseagreen;
   color: black;
 }
+.vsRanged,
 .rangedbadges {
   padding: 0 10px;
   background-color: orange;
   color: black;
 }
+.vsMelee,
 .meleebadges {
   padding: 0 10px;
   background-color: hotpink;
   color: black;
 }
+.vsDragon,
 .dragonbadges {
   padding: 0 10px;
   background-color: dodgerblue;
   color: black;
 }
+.vsSiege,
 .siegebadges {
   padding: 0 10px;
   background-color: grey;
   color: black;
 }
+.vsFortifications,
 .fortificationbadges {
   padding: 0 10px;
   background-color: darkslategray;
   color: black;
 }
+.vsGiant,
 .giantbadges {
   padding: 0 10px;
   background-color: mediumpurple;
   color: black;
 }
+.vsBeast,
 .beastbadges {
   padding: 0 10px;
   background-color: brown;

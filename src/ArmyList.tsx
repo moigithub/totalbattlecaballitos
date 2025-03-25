@@ -462,7 +462,9 @@ export const ArmyList = () => {
       unitLimit: 0,
       useUnitLimit: false,
       useStrLimit: false,
-      strLimit: 0
+      strLimit: 0,
+      useHpLimit: false,
+      HpLimit: 0
     }
     addStack(stack)
   }

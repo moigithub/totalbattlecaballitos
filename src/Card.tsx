@@ -16,6 +16,8 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
   const setUnitLimit = useStackStore(state => state.setStackUnitLimit)
   const toggleUseStrLimit = useStackStore(state => state.toggleUseStrLimit)
   const setStrLimit = useStackStore(state => state.setStackStrLimit)
+  const toggleUseHpLimit = useStackStore(state => state.toggleUseHpLimit)
+  const setHpLimit = useStackStore(state => state.setStackHpLimit)
 
   const removeStack = useStackStore(state => state.removeStack)
   const resetStack = useStackStore(state => state.resetStack)
@@ -25,6 +27,7 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
   const reduceSacrificeUnits = useStackStore(state => state.reduceSacrificeUnits)
   const getStackHealth = useStackStore(state => state.getStackHealth)
   const getStackStrength = useStackStore(state => state.getStackStrength)
+  const getStackAllStrength = useStackStore(state => state.getStackAllStrength)
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stack.id })
 
   const style = {
@@ -34,6 +37,14 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
 
   const stackHealth = getStackHealth(stack.id!)
   const stackStrength = getStackStrength(stack.id!)
+  const stackAllStrength = getStackAllStrength(stack.id!)
+  const otherStrengthInfo = stackAllStrength.map(data => {
+    return (
+      <span className={data.type}>
+        {data.type} {data.str.toFixed(2)}
+      </span>
+    )
+  })
 
   return (
     <div className='stack-card' ref={setNodeRef} style={style}>
@@ -43,9 +54,10 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
       <p className='stack-units'>{stack.units}</p>
       <p className='stack-name'>{stack.unit.name}</p>
       <p className='stack-health-strength'>
-        <span className='health'>HP {stackHealth.toFixed(0)}</span> /
-        <span className='strength'>STR {stackStrength.toFixed(2)}</span>
+        <span className='text-sm text-red-600'>HP {stackHealth.toFixed(0)}</span> /{' '}
+        <span className='text-sm text-teal-600'>STR {stackStrength.toFixed(2)}</span>
       </p>
+      <p className='stack-other-strength text-sm text-teal-600'>STR {otherStrengthInfo}</p>
       {stack.unit.tipo === 'army' && <p className='stack-leadership'>Lead {stack.leadership}</p>}
       {stack.unit.tipo === 'monster' && <p className='stack-leadership'>Domi {stack.dominance}</p>}
       {stack.unit.tipo === 'merc' && <p className='stack-leadership'>Auth {stack.authority}</p>}
@@ -116,6 +128,28 @@ export const Card = ({ stack, isFirst }: { stack: Stack; isFirst: boolean }) => 
             onChange={e => {
               const value = parseInt(e.target.value) || 0
               setStrLimit(stack.id!, value)
+            }}
+          />
+        )}
+      </div>
+
+      <div className='stack-hpLimit'>
+        Health Limit?
+        <input
+          type='checkbox'
+          checked={stack.useHpLimit}
+          onChange={() => {
+            toggleUseHpLimit(stack.id!)
+          }}
+        />
+        {stack.useHpLimit && (
+          <input
+            type='number'
+            className='ml-1 inline-flex  bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            value={stack.HpLimit}
+            onChange={e => {
+              const value = parseInt(e.target.value) || 0
+              setHpLimit(stack.id!, value)
             }}
           />
         )}

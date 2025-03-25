@@ -862,16 +862,15 @@ export const Citadels = () => {
       </div>
       <hr />
 
-      <div>
-        <div>army</div>
-        <div>citadel army</div>
-      </div>
-
-      <h3>Citadel elf 10</h3>
+      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 10</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
         <span className='dragonbadges'>dragon</span>, <span className='meleebadges'>melee</span> or
         <span className='elementalbadges'>elemental</span>
+        to avoid to have more losses, unless{' '}
+        <a className='text-sm text-blue-400' href='#rule-exception'>
+          you have huge health
+        </a>
       </h2>
 
       <table>
@@ -906,11 +905,15 @@ export const Citadels = () => {
 
       <hr />
 
-      <h3>Citadel elf 15</h3>
+      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 15</h3>
       <h2>
         NO
         <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span> or
         <span className='dragonbadges'>dragon</span>
+        to avoid to have more losses, unless{' '}
+        <a className='text-sm text-blue-400' href='#rule-exception'>
+          you have huge health
+        </a>
       </h2>
 
       <table>
@@ -945,12 +948,16 @@ export const Citadels = () => {
 
       <hr />
 
-      <h3>Citadel elf 20</h3>
+      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 20</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
         <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
         <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
         <span className='elementalbadges'>elemental</span>
+        to avoid to have more losses, unless{' '}
+        <a className='text-sm text-blue-400' href='#rule-exception'>
+          you have huge health
+        </a>
       </h2>
 
       <table>
@@ -984,12 +991,16 @@ export const Citadels = () => {
       </table>
       <hr />
 
-      <h3>Citadel elf 25</h3>
+      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 25</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
         <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
         <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
         <span className='elementalbadges'>elemental</span>
+        to avoid to have more losses, unless{' '}
+        <a className='text-sm text-blue-400' href='#rule-exception'>
+          you have huge health
+        </a>
       </h2>
 
       <table>
@@ -1024,12 +1035,16 @@ export const Citadels = () => {
 
       <hr />
 
-      <h3>Citadel elf 30</h3>
+      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 30</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
         <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
         <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
         <span className='elementalbadges'>elemental</span>
+        to avoid to have more losses, unless{' '}
+        <a className='text-sm text-blue-400' href='#rule-exception'>
+          you have huge health
+        </a>
       </h2>
 
       <table>
@@ -1065,11 +1080,15 @@ export const Citadels = () => {
       <hr />
       <br />
 
-      <h3>Citadel cursed 20</h3>
+      <h3 className='text-lg font-extrabold mt-4'>Citadel cursed 20</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
         <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span> or
         <span className='beastbadges'>beast</span>
+        to avoid to have more losses, unless{' '}
+        <a className='text-sm text-blue-400' href='#rule-exception'>
+          you have huge health
+        </a>
       </h2>
 
       <table>
@@ -1104,12 +1123,16 @@ export const Citadels = () => {
 
       <hr />
 
-      <h3>Citadel cursed 25</h3>
+      <h3 className='text-lg font-extrabold mt-4'>Citadel cursed 25</h3>
       <h2>
         NO <span className='mountbadges'>mounted</span>,{' '}
         <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>,{' '}
         <span className='dragonbadges'>dragon</span> or
         <span className='beastbadges'>beast</span>
+        to avoid to have more losses, unless{' '}
+        <a className='text-sm text-blue-400' href='#rule-exception'>
+          you have huge health
+        </a>
       </h2>
 
       <table>
@@ -1141,6 +1164,57 @@ export const Citadels = () => {
           })}
         </tbody>
       </table>
+
+      <br />
+      <hr />
+      <h4 id='rule-exception' className='text-lg text-red-700'>
+        Rule exception
+      </h4>
+      <ul className='list-disc list-inside text-gray-500'>
+        <li>
+          Each of your meatshield/tank units have higher health than the damage generated by the
+          stack enemy
+        </li>
+      </ul>
+      <br />
+
+      <hr />
+      <h4 id='combat-system' className='text-lg text-green-700'>
+        Combat system &amp; tips
+      </h4>
+      <ul className='list-disc list-inside text-gray-500'>
+        <li>stack order is based on stack strength + bonus (no feature bonus)</li>
+        <li>the stack with highest strength attack first</li>
+        <li>
+          which stack is attacked, is based on the greatest possible damage, AND if the attacked
+          stack have enough health to absorb that damage
+        </li>
+        <div className='ml-8'>
+          <p>example:</p>
+          <ul>
+            <li className='list-disc list-inside'>
+              the attacker can do 1000 damage, and the defender stack have 2000 health, then the
+              attack will be executed
+            </li>
+            <li className='list-disc list-inside'>
+              the attacker can do 1000 damage, but if the defender stack have 900 health only, the
+              attacker will pick another target
+            </li>
+            <li className='list-disc list-inside'>
+              if the attacker have a featured attack bonus type, and the defender unit belong to the
+              same type, then it will get aditional damage
+            </li>
+          </ul>
+        </div>
+        <li>meatshield/tank units should go first</li>
+        <li>
+          is better to avoid sending units with featured attack bonus type, to avoid extra losses
+        </li>
+        <li>
+          to dodge an attack, the defender stack health, must be lower than the attacker damage, so
+          it picks another target
+        </li>
+      </ul>
     </div>
   )
 }
