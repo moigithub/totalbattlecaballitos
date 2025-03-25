@@ -6,13 +6,8 @@ import { Stack } from './types'
 import { whoCanIAttack } from './utils'
 
 export const SmallCard = ({ stack }: { stack: Stack; isFirst: boolean }) => {
-  // const army = useStackStore(state => state.army)
-  // const setArmy = useStackStore(state => state.setArmy)
-  // const addArmy = useStackStore(state => state.addArmy)
-  // const resetAllStacks = useStackStore(state => state.resetAllStacks)
   // const bonus = useStackStore(state => state.bonus)
   // const getArmyLeadership = useStackStore(state => state.getArmyLeadership)
-  // const getStackLeadership = useStackStore(state => state.getStackLeadership)
   // const updateMinSetup = useStackStore(state => state.updateMinSetup)
 
   const removeStack = useStackStore(state => state.removeStack)

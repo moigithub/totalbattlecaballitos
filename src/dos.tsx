@@ -44,8 +44,6 @@ import {
 } from './helpers'
 
 function Dos() {
-  // const getStackStrength = useStackStore(state => state.getStackStrength)
-  // const getStack = useStackStore(state => state.getStack)
   const leadership = useGuardsStore(state => state.leadership)
   const authority = useGuardsStore(state => state.authority)
   const dominance = useGuardsStore(state => state.dominance)
@@ -458,14 +456,18 @@ function Dos() {
               break
             }
 
-            if (
-              (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) ||
-              stackStrength + newStackStrength > groupStrength
-            ) {
+            console.log(
+              'lead: str limit',
+              ARMY[i].useStrLimit,
+              stackStrength + newStackStrength,
+              '>=',
+              ARMY[i].strLimit
+            )
+            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
               break
             }
 
-            if (stackStrength + newStackStrength > groupStrength) {
+            if (stackStrength + newStackStrength >= groupStrength) {
               // 9. agregar al stack
               break
             }
@@ -518,14 +520,11 @@ function Dos() {
               break
             }
 
-            if (
-              (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) ||
-              stackStrength + newStackStrength > groupStrength
-            ) {
+            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
               break
             }
 
-            if (stackStrength + newStackStrength > groupStrength) {
+            if (stackStrength + newStackStrength >= groupStrength) {
               console.log(
                 'break on str mayor ',
                 stackStrength + newStackStrength,
@@ -576,14 +575,11 @@ function Dos() {
               break
             }
 
-            if (
-              (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) ||
-              stackStrength + newStackStrength > groupStrength
-            ) {
+            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
               break
             }
 
-            if (stackStrength + newStackStrength > groupStrength) {
+            if (stackStrength + newStackStrength >= groupStrength) {
               // 9. agregar al stack
               break
             }
