@@ -976,8 +976,8 @@ export const smiterII = unitBuilder<GuardsmanUnit>({
 export const coraxI = unitBuilder<GuardsmanUnit>({
   tipo: 'army',
   name: ARMY.coraxI,
-  BASEHP: 61200,
-  BASESTR: 183600,
+  BASEHP: 183600,
+  BASESTR: 61200,
   LEADERSHIP: 20,
   INITIATIVE: 10,
   vsMountedPercent: 1333,
@@ -991,8 +991,8 @@ export const coraxI = unitBuilder<GuardsmanUnit>({
 export const coraxII = unitBuilder<GuardsmanUnit>({
   tipo: 'army',
   name: ARMY.coraxII,
-  BASEHP: 110200,
-  BASESTR: 330600,
+  BASEHP: 330600,
+  BASESTR: 110200,
   LEADERSHIP: 20,
   INITIATIVE: 10,
   vsMountedPercent: 1999,
