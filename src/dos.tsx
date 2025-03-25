@@ -10,7 +10,7 @@ import {
   citadel10Army,
   doomsdayArmy,
   // EnemyUnit,
-  MobStack,
+  // MobStack,
   ragnarokArmy,
   shadowCastleArmy
 } from './monsters'
@@ -31,51 +31,50 @@ import {
   // sortableKeyboardCoordinates
 } from '@dnd-kit/sortable'
 import { /* getStats, getSTRWithBonus,*/ useStackStore } from './stackStore'
-import { Stack, Unit } from './types'
+import { Stack /*, Unit */ } from './types'
 import { whoCanIAttack } from './utils'
 import { Bonus } from './bonus'
 import { SmallCard } from './SmallCard'
+import {
+  addArmyUnits,
+  getArmyAuthority,
+  getArmyDominance,
+  getArmyLeadership,
+  getStackStrength
+} from './helpers'
 
 function Dos() {
-  // const mobHealth = useGuardsStore(state => state.mobHealth)
-  // const setMobHealth = useGuardsStore(state => state.setMobHealth)
-  // const addArmy = useStackStore(state => state.addArmy)
-  // const removeStack = useStackStore(state => state.removeStack)
-  // const resetStack = useStackStore(state => state.resetStack)
-  // const toggleLockMin = useStackStore(state => state.toggleLockMin)
-  // const removeUnits = useStackStore(state => state.removeUnits)
-  const getStackStrength = useStackStore(state => state.getStackStrength)
-  const getStack = useStackStore(state => state.getStack)
-  // const getStackLeadership = useStackStore(state => state.getStackLeadership)
+  // const getStackStrength = useStackStore(state => state.getStackStrength)
+  // const getStack = useStackStore(state => state.getStack)
   const leadership = useGuardsStore(state => state.leadership)
-  const setLeadership = useGuardsStore(state => state.setLeadership)
-
   const authority = useGuardsStore(state => state.authority)
-  const setAuthority = useGuardsStore(state => state.setAuthority)
-
   const dominance = useGuardsStore(state => state.dominance)
+
+  const setLeadership = useGuardsStore(state => state.setLeadership)
+  const setAuthority = useGuardsStore(state => state.setAuthority)
   const setDominance = useGuardsStore(state => state.setDominance)
-
-  // const army = useStackStore(state => state.army)
-  const { army } = useStackStore()
-  const setArmy = useStackStore(state => state.setArmy)
   const resetAllStacks = useStackStore(state => state.resetAllStacks)
-  // const bonus = useStackStore(state => state.bonus)
-  const getStackUnits = useStackStore(state => state.getStackUnits)
-  const getStackUnitLimit = useStackStore(state => state.getStackUnitLimit)
-  const getStackStrLimit = useStackStore(state => state.getStackStrLimit)
-
-  const addUnits = useStackStore(state => state.addUnits)
-  // const getStackHealth = useStackStore(state => state.getStackHealth)
-  const getArmyLeadership = useStackStore(state => state.getArmyLeadership)
-  const getArmyAuthority = useStackStore(state => state.getArmyAuthority)
-  const getArmyDominance = useStackStore(state => state.getArmyDominance)
+  // const addUnits = useStackStore(state => state.addUnits)
   const updateMinSetup = useStackStore(state => state.updateMinSetup)
-
-  const mobArmy = useStackStore(state => state.mobArmy)
   const setMobArmy = useStackStore(state => state.setMobArmy)
+
   const armyRef = useRef(useStackStore.getState().army)
+
+  //---------------------
+  // para el drag & drop
+  const setArmy = useStackStore(state => state.setArmy)
+  const { army } = useStackStore()
+  //---------------------
+
+  // para mostrar data de mostros
+  const mobArmy = useStackStore(state => state.mobArmy)
   //-------------------
+
+  // const getStackUnits = useStackStore(state => state.getStackUnits)
+  // const getStackUnitLimit = useStackStore(state => state.getStackUnitLimit)
+  // const getStackStrLimit = useStackStore(state => state.getStackStrLimit)
+  // const getArmyAuthority = useStackStore(state => state.getArmyAuthority)
+  // const getArmyDominance = useStackStore(state => state.getArmyDominance)
 
   const [selectedEvent, setSelectedEvent] = useState('0')
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
@@ -136,108 +135,103 @@ function Dos() {
     if (e.target.value.trim() !== '') {
       const value = parseInt(e.target.value)
       setLeadership(value)
-      console.log('changing leadership', value)
     }
   }
   const changeAuthority = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.trim() !== '') {
       const value = parseInt(e.target.value)
       setAuthority(value)
-
-      console.log('changing authority', value)
     }
   }
   const changeDominance = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.trim() !== '') {
       const value = parseInt(e.target.value)
       setDominance(value)
-
-      console.log('changing dominance', value)
     }
   }
 
-  const getMobTarget = (unit: Unit) => {
-    //getMobTarget, usa getMonsterStack, y escoje un monster
-    /**
-     * beast vs mounted
-     * beast vs ranged
-     *
-     * siege vs fortifications
-     */
-    let mob: MobStack | undefined = undefined
-    if (unit.category === 'mounted') {
-      /**
-       * mounted vs ranged
-       * mounted vs siege
-       */
-      // return draugMage
-      mob = mobArmy.find(mob => mob.unit.category === 'ranged')
-      if (!mob) {
-        mob = mobArmy.find(mob => mob.unit.category === 'siege')
-      }
-    } else if (unit.category === 'ranged') {
-      /*
-       * ranged vs melee
-       * ranged vs flying
-       */
-      mob = mobArmy.find(mob => mob.unit.category === 'flying')
-      if (!mob) {
-        mob = mobArmy.find(mob => mob.unit.category === 'melee')
-      }
-    } else if (unit.category === 'melee') {
-      /*
-       * melee vs beasts
-       * melee vs humans
-       * melee vs mounted  **
-       */
-      mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-      if (!mob) {
-        mob = mobArmy.find(mob => mob.unit.race === 'beast')
-      }
-    } else if (unit.category === 'flying') {
-      /*
-       * flying vs elementals
-       * flying vs mounted
-       * flying vs giants
-       */
-      mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-      if (!mob) {
-        mob = mobArmy.find(mob => mob.unit.race === 'giant')
-      }
-    } else if (unit.category === 'siege') {
-      // const mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-    }
+  // const getMobTarget = (unit: Unit) => {
+  //   //getMobTarget, usa getMonsterStack, y escoje un monster
+  //   /**
+  //    * beast vs mounted
+  //    * beast vs ranged
+  //    *
+  //    * siege vs fortifications
+  //    */
+  //   let mob: MobStack | undefined = undefined
+  //   if (unit.category === 'mounted') {
+  //     /**
+  //      * mounted vs ranged
+  //      * mounted vs siege
+  //      */
+  //     // return draugMage
+  //     mob = mobArmy.find(mob => mob.unit.category === 'ranged')
+  //     if (!mob) {
+  //       mob = mobArmy.find(mob => mob.unit.category === 'siege')
+  //     }
+  //   } else if (unit.category === 'ranged') {
+  //     /*
+  //      * ranged vs melee
+  //      * ranged vs flying
+  //      */
+  //     mob = mobArmy.find(mob => mob.unit.category === 'flying')
+  //     if (!mob) {
+  //       mob = mobArmy.find(mob => mob.unit.category === 'melee')
+  //     }
+  //   } else if (unit.category === 'melee') {
+  //     /*
+  //      * melee vs beasts
+  //      * melee vs humans
+  //      * melee vs mounted  **
+  //      */
+  //     mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+  //     if (!mob) {
+  //       mob = mobArmy.find(mob => mob.unit.race === 'beast')
+  //     }
+  //   } else if (unit.category === 'flying') {
+  //     /*
+  //      * flying vs elementals
+  //      * flying vs mounted
+  //      * flying vs giants
+  //      */
+  //     mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+  //     if (!mob) {
+  //       mob = mobArmy.find(mob => mob.unit.race === 'giant')
+  //     }
+  //   } else if (unit.category === 'siege') {
+  //     // const mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+  //   }
 
-    // la raza tiene mayor prioridad, y reemplaza la categoria
-    // ejm. mounstruo battleboard es mounted/beast
-    // pero en el reporte ataca a un mounted
-    // si fuese mounted la prioridad, atacaria un ranged/siege
-    if (unit.group === 'elemental') {
-      mob = mobArmy.find(mob => mob.unit.category === 'flying')
-      if (!mob) {
-        mob = mobArmy.find(mob => mob.unit.category === 'melee')
-      }
-    } else if (unit.group === 'giant') {
-      mob = mobArmy.find(mob => mob.unit.category === 'melee')
-      if (!mob) {
-        mob = mobArmy.find(mob => mob.unit.race === 'beast')
-      }
-    } else if (unit.group === 'dragon') {
-      mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-      if (!mob) {
-        mob = mobArmy.find(mob => mob.unit.race === 'giant')
-      }
-    } else if (unit.group === 'beast') {
-      mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-      if (!mob) {
-        mob = mobArmy.find(mob => mob.unit.category === 'ranged')
-      }
-    }
+  //   // la raza tiene mayor prioridad, y reemplaza la categoria
+  //   // ejm. mounstruo battleboard es mounted/beast
+  //   // pero en el reporte ataca a un mounted
+  //   // si fuese mounted la prioridad, atacaria un ranged/siege
+  //   if (unit.group === 'elemental') {
+  //     mob = mobArmy.find(mob => mob.unit.category === 'flying')
+  //     if (!mob) {
+  //       mob = mobArmy.find(mob => mob.unit.category === 'melee')
+  //     }
+  //   } else if (unit.group === 'giant') {
+  //     mob = mobArmy.find(mob => mob.unit.category === 'melee')
+  //     if (!mob) {
+  //       mob = mobArmy.find(mob => mob.unit.race === 'beast')
+  //     }
+  //   } else if (unit.group === 'dragon') {
+  //     mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+  //     if (!mob) {
+  //       mob = mobArmy.find(mob => mob.unit.race === 'giant')
+  //     }
+  //   } else if (unit.group === 'beast') {
+  //     mob = mobArmy.find(mob => mob.unit.category === 'mounted')
+  //     if (!mob) {
+  //       mob = mobArmy.find(mob => mob.unit.category === 'ranged')
+  //     }
+  //   }
 
-    if (!mob) mob = mobArmy[0]
-    return mob
-    // return draugMage //doomsdayFireswordRider // retornar el que tiene mas hp ?
-  }
+  //   if (!mob) mob = mobArmy[0]
+  //   return mob
+  //   // return draugMage //doomsdayFireswordRider // retornar el que tiene mas hp ?
+  // }
 
   // const calculateUnitsMobKill = (monster: EnemyUnit, unit: Unit): number => {
   //   const monsterHealth = monster.BASEHP
@@ -342,25 +336,23 @@ function Dos() {
      * if beast have lower hp than your squad total damage, then it will attack the mounted squad
      */
 
-    if (army.length === 0) {
+    if (armyRef.current.length === 0) {
       // algo debe estar marcado
       alert('pick riders')
       return
     }
 
-    /* NOTAS:
-     minSetup === how many units on the stack should be used to kill one monster
-     calculate the minSetup for each stack
-
-     hay un selector de monstruos/evento que tiene un stack (varios tipos de) mounstruos, un array de objetos
-     el getmobtarget, deberia iterar el array y devolver el tipo de mostruo
-     de acuerdo al tipo de soldado que tengo.. ejm. mount vs ranged
-     y si no hay, deberia retornar el que tiene mayor hp ??
-*/
-
     resetAllStacks()
 
-    let maxLoop = 1000000 // should change it for a timer
+    // deep copy the army to a normal object
+    const ARMY = structuredClone(armyRef.current)
+
+    console.log('max leadership', leadership)
+    console.log('max authority', authority)
+    console.log('max dominance', dominance)
+    console.log('army', ARMY)
+
+    let maxLoop = 1000 // 000 // should change it for a timer
     //let totalLeadership = 0
     // let totalAuthority = 0
     // let totalDominance = 0
@@ -372,37 +364,40 @@ function Dos() {
     while (playing) {
       // 1. check leadership acumulado del army
       // 2. agregar 1 unit al sacrificio
-      let stack: Stack | null = armyRef.current[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
-      console.log('army0', army[0], armyRef.current[0])
+      let stack: Stack | null = ARMY[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
+      // console.log('army0', army[0], armyRef.current[0])
 
-      if (stack.unit.tipo === 'army' && getArmyLeadership() + stack.unit.LEADERSHIP <= leadership) {
-        addUnits(army[0].id, 1)
+      if (
+        stack.unit.tipo === 'army' &&
+        getArmyLeadership(ARMY) + stack.unit.LEADERSHIP <= leadership
+      ) {
+        addArmyUnits(ARMY, 0, 1)
       } else if (
         stack.unit.tipo === 'merc' &&
-        getArmyAuthority() + stack.unit.AUTHORITY <= authority
+        getArmyAuthority(ARMY) + stack.unit.AUTHORITY <= authority
       ) {
-        addUnits(army[0].id, 1)
+        addArmyUnits(ARMY, 0, 1)
       } else if (
         stack.unit.tipo === 'monster' &&
-        getArmyDominance() + stack.unit.DOMINANCE <= dominance
+        getArmyDominance(ARMY) + stack.unit.DOMINANCE <= dominance
       ) {
-        addUnits(army[0].id, 1)
+        addArmyUnits(ARMY, 0, 1)
       } else {
         // break
       }
 
-      console.log('army0', army[0], armyRef.current[0])
+      // console.log('army0', army[0], armyRef.current[0])
 
       // 3. calcular str del sacrificio
-      const sacrificeGroupStrength = getStackStrength(army[0].id)
-      console.log('sacrifice healt', sacrificeGroupStrength)
+      const sacrificeGroupStrength = getStackStrength(ARMY, 0)
+      console.log('sacrifice strength', sacrificeGroupStrength)
 
       // const monsterStack = getMobTarget(stack.unit)
       // const unitsNeededToKill1Mob = calculateUnitsMobKill(monsterStack.unit, stack.unit)
       // updateMinSetup(stack.id!, unitsNeededToKill1Mob)
 
-      for (let i = 1; i < army.length; i++) {
-        stack = getStack(army[i].id) //armyRef.current[i]
+      for (let i = 1; i < ARMY.length; i++) {
+        stack = ARMY[i] //armyRef.current[i]
         if (!stack) {
           playing = false
           break
@@ -416,7 +411,7 @@ function Dos() {
         // const unitsNeededToKill1Mob = calculateUnitsMobKill(monsterStack.unit, stack.unit)
         const unitsNeededToKill1Mob = 1 //siempre 1
         updateMinSetup(stack.id!, unitsNeededToKill1Mob)
-        console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
+        // console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
 
         /**manejo de leadership */
         if (stack.unit.tipo === 'army') {
@@ -426,7 +421,8 @@ function Dos() {
           const newStackLeadership = stack.unit.LEADERSHIP * unitsCount
 
           // 7 check leadership acumulado + leadership nuevo sea menor que el disponible
-          while (getArmyLeadership() + newStackLeadership <= leadership) {
+
+          while (getArmyLeadership(ARMY) + newStackLeadership <= leadership) {
             console.log(
               '...lead',
               stack.unit.name,
@@ -437,33 +433,33 @@ function Dos() {
               stack.unitLimit
             )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackStrength = getStackStrength(stack.id!)
+            const stackStrength = getStackStrength(ARMY, i)
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
-              const previousGroupStrength = getStackStrength(army[i - 1].id)
+              const previousGroupStrength = getStackStrength(ARMY, i - 1)
               groupStrength = previousGroupStrength
             }
 
-            console.log(
-              'unit limit',
-              stack.useUnitLimit,
-              stack.units,
-              getStackUnits(stack.id),
-              stack.unitLimit,
-              getStackStrLimit(stack.id),
-              stack.strLimit
-            )
-            if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
+            // console.log(
+            //   'unit limit',
+            //   stack.useUnitLimit,
+            //   stack.units,
+            //   getStackUnits(stack.id),
+            //   stack.unitLimit,
+            //   getStackStrLimit(stack.id),
+            //   stack.strLimit
+            // )
+            if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
+              // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               break
             }
 
             if (
-              (stack.useStrLimit &&
-                stackStrength + newStackStrength > getStackStrLimit(stack.id)) ||
+              (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) ||
               stackStrength + newStackStrength > groupStrength
             ) {
               break
@@ -474,8 +470,10 @@ function Dos() {
               break
             }
 
-            console.log('leadership: agregando units en ', stack.id)
-            addUnits(stack.id!, unitsCount)
+            console.log('leadership: agregando units a ', ARMY[i].unit.name)
+            addArmyUnits(ARMY, i, unitsCount)
+
+            console.log('new army', ARMY)
           }
         }
 
@@ -487,7 +485,7 @@ function Dos() {
           const newStackAuthority = stack.unit.AUTHORITY * unitsCount
           console.log('processing merc')
           // 7 check authority acumulado + authority nuevo sea menor que el disponible
-          while (getArmyAuthority() + newStackAuthority <= authority) {
+          while (getArmyAuthority(ARMY) + newStackAuthority <= authority) {
             console.log(
               '...auth',
               stack.unit.name,
@@ -499,41 +497,47 @@ function Dos() {
             )
             console.log(
               'check auth calc MENOR IGUAL ',
-              getArmyAuthority() + newStackAuthority,
+              getArmyAuthority(ARMY) + newStackAuthority,
               'authority',
               authority
             )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackStrength = getStackStrength(stack.id!)
+            const stackStrength = getStackStrength(ARMY, i)
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
-              const previousGroupStrength = getStackStrength(army[i - 1].id)
+              const previousGroupStrength = getStackStrength(ARMY, i - 1)
               groupStrength = previousGroupStrength
             }
 
-            if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
+            if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
+              // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               break
             }
 
             if (
-              (stack.useStrLimit &&
-                stackStrength + newStackStrength > getStackStrLimit(stack.id)) ||
+              (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) ||
               stackStrength + newStackStrength > groupStrength
             ) {
               break
             }
 
             if (stackStrength + newStackStrength > groupStrength) {
-              // 9. agregar al stack
+              console.log(
+                'break on str mayor ',
+                stackStrength + newStackStrength,
+                '>',
+                groupStrength
+              )
               break
             }
 
-            console.log('authority: agregando units en ', stack.id)
-            addUnits(stack.id!, unitsCount)
+            // 9. agregar al stack
+            console.log('authority: agregando units en ', ARMY[i].unit.name)
+            addArmyUnits(ARMY, i, unitsCount)
           }
         }
 
@@ -545,7 +549,7 @@ function Dos() {
           const newStackDominance = stack.unit.DOMINANCE * unitsCount
 
           // 7 check DOMINANCE acumulado + DOMINANCE nuevo sea menor que el disponible
-          while (getArmyDominance() + newStackDominance <= dominance) {
+          while (getArmyDominance(ARMY) + newStackDominance <= dominance) {
             console.log(
               '...domi',
               stack.unit.name,
@@ -556,25 +560,24 @@ function Dos() {
               stack.unitLimit
             )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackStrength = getStackStrength(stack.id!)
+            const stackStrength = getStackStrength(ARMY, i)
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
-              const previousGroupStrength = getStackStrength(army[i - 1].id)
+              const previousGroupStrength = getStackStrength(ARMY, i - 1)
               groupStrength = previousGroupStrength
             }
 
-            console.log('unit limit', stack.useUnitLimit, stack.unitLimit)
-            if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
+            if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
+              // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               break
             }
 
             if (
-              (stack.useStrLimit &&
-                stackStrength + newStackStrength > getStackStrLimit(stack.id)) ||
+              (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) ||
               stackStrength + newStackStrength > groupStrength
             ) {
               break
@@ -585,8 +588,8 @@ function Dos() {
               break
             }
 
-            console.log('dominance: agregando units en ', stack.id)
-            addUnits(stack.id!, unitsCount)
+            console.log('dominance: agregando units en ', ARMY[i].unit.name)
+            addArmyUnits(ARMY, i, unitsCount)
           }
         }
       }
@@ -594,52 +597,54 @@ function Dos() {
       // check if there were any changes
 
       if (
-        lastLeadershipCalculated === getArmyLeadership() &&
-        lastAuthorityCalculated === getArmyAuthority() &&
-        lastDominanceCalculated === getArmyDominance()
+        lastLeadershipCalculated === getArmyLeadership(ARMY) &&
+        lastAuthorityCalculated === getArmyAuthority(ARMY) &&
+        lastDominanceCalculated === getArmyDominance(ARMY)
       ) {
         console.log('no changes to leadership,authority or dominance, ending')
         playing = false
         break
       }
-      lastLeadershipCalculated = getArmyLeadership()
-      lastAuthorityCalculated = getArmyAuthority()
-      lastDominanceCalculated = getArmyDominance()
+      lastLeadershipCalculated = getArmyLeadership(ARMY)
+      lastAuthorityCalculated = getArmyAuthority(ARMY)
+      lastDominanceCalculated = getArmyDominance(ARMY)
+
+      console.log('quedan .........')
+      console.log('leadership ', leadership, getArmyLeadership(ARMY))
+      console.log('Authority ', authority, getArmyAuthority(ARMY))
+      console.log('Dominance ', dominance, getArmyDominance(ARMY))
 
       if (
-        getArmyAuthority() > authority ||
-        getArmyDominance() > dominance ||
-        getArmyLeadership() > leadership
+        getArmyAuthority(ARMY) > authority ||
+        getArmyDominance(ARMY) > dominance ||
+        getArmyLeadership(ARMY) > leadership
       ) {
         // no deberia pasar
         playing = false
         break
       }
 
-      console.log('unit limit', armyRef.current[0].useUnitLimit, armyRef.current[0].unitLimit)
-      if (
-        armyRef.current[0].useUnitLimit &&
-        armyRef.current[0].units >= armyRef.current[0].unitLimit
-      ) {
+      if (ARMY[0].useUnitLimit && ARMY[0].units >= ARMY[0].unitLimit) {
         console.log('firstunit break')
         playing = false
         break
       }
 
-      if (
-        armyRef.current[0].useStrLimit &&
-        getStackStrength(army[0].id) >= armyRef.current[0].strLimit
-      ) {
+      if (ARMY[0].useStrLimit && getStackStrength(ARMY, 0) >= ARMY[0].strLimit) {
         playing = false
         break
       }
 
+      console.log('loop protection', maxLoop)
       if (maxLoop-- < 1) {
-        console.log('loop protection', maxLoop)
+        console.log('loop protection stop!!')
         playing = false
         break
       }
     }
+
+    // update UI
+    setArmy(ARMY)
 
     /**********************************************
      * basado en vitalidad
@@ -849,9 +854,9 @@ function Dos() {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{getArmyLeadership()}</td>
-                      <td>{getArmyAuthority()}</td>
-                      <td>{getArmyDominance()}</td>
+                      <td>{getArmyLeadership(army)}</td>
+                      <td>{getArmyAuthority(army)}</td>
+                      <td>{getArmyDominance(army)}</td>
                     </tr>
                   </tbody>
                 </table>
