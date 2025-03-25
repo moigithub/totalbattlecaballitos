@@ -390,7 +390,7 @@ function Dos() {
         canIAddToFirstStack = false
       }
 
-      const unitStrength = stack.unit.BASESTR * (1 + stack.strBonus)
+      const unitStrength = stack.unit.BASESTR * (1 + stack.strBonus / 100)
       if (ARMY[0].useStrLimit && getStackStrength(ARMY, 0) + unitStrength > ARMY[0].strLimit) {
         canIAddToFirstStack = false
       }
@@ -448,7 +448,7 @@ function Dos() {
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
             const stackStrength = getStackStrength(ARMY, i)
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
-            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
+            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
@@ -468,28 +468,26 @@ function Dos() {
             // )
             if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
               // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
+              // console.log('rompio lead1')
               break
             }
 
-            // console.log(
-            //   'lead: str limit',
-            //   ARMY[i].useStrLimit,
-            //   stackStrength + newStackStrength,
-            //   '>=',
-            //   ARMY[i].strLimit
-            // )
             if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
-              // console.log(
-              //   'stop useSTR limit ',
-              //   stackStrength + newStackStrength,
-              //   '>=',
-              //   ARMY[i].strLimit
-              // )
+              console.log(
+                'lead: str limit',
+                ARMY[i].useStrLimit,
+                stackStrength + newStackStrength,
+                '>=',
+                ARMY[i].strLimit
+              )
+
+              // console.log('rompio lead2')
               break
             }
 
             if (stackStrength + newStackStrength >= groupStrength) {
               // 9. agregar al stack
+              // console.log('rompio lead3')
               break
             }
 
@@ -526,7 +524,7 @@ function Dos() {
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
             const stackStrength = getStackStrength(ARMY, i)
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
-            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
+            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
@@ -537,20 +535,32 @@ function Dos() {
 
             if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
               // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
+              // console.log('rompio merc1')
               break
             }
 
             if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
+              console.log(
+                'auth: str limit',
+                ARMY[i].useStrLimit,
+                stackStrength + newStackStrength,
+                '>=',
+                ARMY[i].strLimit
+              )
+              // console.log('rompio merc2')
               break
             }
 
             if (stackStrength + newStackStrength >= groupStrength) {
-              // console.log(
-              //   'break on str mayor ',
-              //   stackStrength + newStackStrength,
-              //   '>',
-              //   groupStrength
-              // )
+              console.log(
+                'break on str mayor ',
+                stackStrength,
+                newStackStrength,
+                stackStrength + newStackStrength,
+                '>',
+                groupStrength
+              )
+              // console.log('rompio merc3')
               break
             }
 
@@ -581,7 +591,7 @@ function Dos() {
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
             const stackStrength = getStackStrength(ARMY, i)
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
-            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus) // ahora individual cada stack tiene su prpio bonus
+            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
             let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
@@ -592,15 +602,25 @@ function Dos() {
 
             if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
               // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
+              // console.log('rompio dom1')
               break
             }
 
             if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
+              console.log(
+                'dominance: str limit',
+                ARMY[i].useStrLimit,
+                stackStrength + newStackStrength,
+                '>=',
+                ARMY[i].strLimit
+              )
+              // console.log('rompio dom2')
               break
             }
 
             if (stackStrength + newStackStrength >= groupStrength) {
               // 9. agregar al stack
+              // console.log('rompio dom3')
               break
             }
 
