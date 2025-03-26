@@ -838,7 +838,7 @@ function Dos() {
               data-drawer-toggle='sidebar-multi-level-sidebar'
               aria-controls='sidebar-multi-level-sidebar'
               type='button'
-              className='cursor-pointer focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300   rounded-lg text-xs px-0.5 py-0.5 me-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
+              className='cursor-pointer sm:hidden focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300   rounded-lg text-xs px-0.5 py-0.5 me-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
             >
               Show Army
             </button>
@@ -963,11 +963,11 @@ function Dos() {
                 <div className='stack-list'>
                   <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
                     <SortableContext items={army}>
-                      {army.map((stack, index) => {
+                      {army.map(stack => {
                         if (cardType === 'smallcard') {
-                          return <SmallCard stack={stack} key={stack.id} isFirst={index === 0} />
+                          return <SmallCard stack={stack} key={stack.id} />
                         } else {
-                          return <Card stack={stack} key={stack.id} isFirst={index === 0} />
+                          return <Card stack={stack} key={stack.id} />
                         }
                       })}
                     </SortableContext>

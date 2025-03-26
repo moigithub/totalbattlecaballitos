@@ -47,7 +47,7 @@ interface StackStore {
   // getStackUnits: (id: string) => number
   addUnits: (id: string, amount: number) => void
   removeUnits: (id: string, amount: number) => void
-  reduceSacrificeUnits: () => void
+
   // fixStackUnits: (id: string, maxHealth: number) => void
   calcWhichMobIDoMostDmg: (id: string) => MobStack
   getStackStrength: (id: string) => number
@@ -504,34 +504,6 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
               dominance: totalUnits * dominance
             }
           } else return stack
-        } else return stack
-      })
-    }))
-  },
-  reduceSacrificeUnits: () => {
-    if (get().army.length < 2) return
-
-    const firstStack = get().army[0]
-
-    const secondStack = get().army[1]
-    const secondStackUnits = secondStack.units
-    const totalSTRPerUnit = getSTRWithBonus(secondStack.unit, get().bonus)
-    const secondStackStrength = totalSTRPerUnit * secondStackUnits
-
-    set(state => ({
-      army: state.army.map(stack => {
-        if (stack.id === firstStack.id) {
-          // reduce the units amount, so the total stack health is a bit higher than the second stack
-          // so send less sacrifices, but enough to be first position
-          let stackUnits = stack.units
-
-          const totalSTRPerUnit = getSTRWithBonus(stack.unit, state.bonus)
-          let stackStrength = totalSTRPerUnit * stackUnits
-          while (stackStrength >= secondStackStrength && stackUnits > 0) {
-            stackUnits = stackUnits - 1
-            stackStrength = totalSTRPerUnit * stackUnits
-          }
-          return { ...stack, units: stackUnits + 1 }
         } else return stack
       })
     }))

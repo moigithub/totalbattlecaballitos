@@ -155,13 +155,23 @@ table th {
 }
 .stack-card {
   display: grid;
-  grid-template-columns: 30px 80px auto 1fr auto auto;
-  grid-template-rows: auto;
+  grid-template-columns: 30px 80px 200px auto auto auto;
+  /* grid-template-rows: auto;
   grid-template-areas:
     'handle units name      name          delete'
     'handle units atk       atk           reset'
-    'handle units action    minSetup       config';
+    'handle units action    .             config'; */
 
+  /* grid-template-columns: 30px 100px 200px auto auto auto; */
+  grid-template-rows: auto;
+  grid-template-areas:
+    'handle units       name              name           action      delete'
+    'handle units       atk               atk            unitLimit   reset'
+    'handle units       basic             hpBonus        strLimit    config'
+    'handle units       healthstrength    strBonus       hpLimit     .'
+    'handle leadership  otherStrength    otherStrength   otherStrength .';
+  gap: 8px;
+  min-width: 600px;
   width: 100%;
   border: 1px solid grey;
   margin: 10px 0;
@@ -169,27 +179,10 @@ table th {
 
 .stack-units {
   grid-area: units;
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: bisque;
-  color: black;
-  margin-right: 10px;
-  padding: 16px;
-  position: relative;
 }
 .handle {
   grid-area: handle;
   width: calc(100% - 5px);
-  height: 100%;
-  cursor: pointer;
-  background-color: bisque;
-  user-select: none;
-  touch-action: none;
-  position: relative;
 }
 .drag-handler {
   position: absolute;
@@ -197,34 +190,34 @@ table th {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #e5e5f7;
-  opacity: 0.8;
+  background-color: #098620;
+  opacity: 0.4;
   background-image: linear-gradient(
       30deg,
-      #bc6f0f 12%,
+      #098620 12%,
       transparent 12.5%,
       transparent 87%,
-      #bc6f0f 87.5%,
-      #bc6f0f
+      #098620 87.5%,
+      #098620
     ),
-    linear-gradient(150deg, #bc6f0f 12%, transparent 12.5%, transparent 87%, #bc6f0f 87.5%, #bc6f0f),
-    linear-gradient(30deg, #bc6f0f 12%, transparent 12.5%, transparent 87%, #bc6f0f 87.5%, #bc6f0f),
-    linear-gradient(150deg, #bc6f0f 12%, transparent 12.5%, transparent 87%, #bc6f0f 87.5%, #bc6f0f),
+    linear-gradient(150deg, #098620 12%, transparent 12.5%, transparent 87%, #098620 87.5%, #098620),
+    linear-gradient(30deg, #098620 12%, transparent 12.5%, transparent 87%, #098620 87.5%, #098620),
+    linear-gradient(150deg, #098620 12%, transparent 12.5%, transparent 87%, #098620 87.5%, #098620),
     linear-gradient(
       60deg,
-      #bc6f0f77 25%,
+      #09862077 25%,
       transparent 25.5%,
       transparent 75%,
-      #bc6f0f77 75%,
-      #bc6f0f77
+      #09862077 75%,
+      #09862077
     ),
     linear-gradient(
       60deg,
-      #bc6f0f77 25%,
+      #09862077 25%,
       transparent 25.5%,
       transparent 75%,
-      #bc6f0f77 75%,
-      #bc6f0f77
+      #09862077 75%,
+      #09862077
     );
   background-size: 8px 14px;
   background-position: 0 0, 0 0, 4px 7px, 4px 7px, 0 0, 4px 7px;
@@ -246,13 +239,13 @@ table th {
 .stack-health-strength {
   grid-area: healthstrength;
   margin: 0;
-  display: none;
+  /* display: none; */
 }
 
 .stack-other-strength {
   grid-area: otherStrength;
   margin: 0;
-  display: none;
+  /* display: none; */
 }
 
 .stack-health-small {
@@ -270,25 +263,16 @@ table th {
   margin: 0;
   color: cadetblue;
   font-size: 0.8rem;
-  display: none;
+  /* display: none; */
 }
-.stack-minSetup {
+/* .stack-minSetup {
   grid-area: minSetup;
   margin: 0;
   color: darkgoldenrod;
   font-size: 0.8rem;
-}
+} */
 .stack-action {
   grid-area: action;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-
-  .action-btn {
-    width: 35px;
-  }
 }
 .stack-config {
   grid-area: config;
@@ -297,11 +281,6 @@ table th {
   display: flex;
   justify-content: right;
   align-items: flex-start;
-
-  .reduce-btn {
-    background-color: purple;
-    color: white;
-  }
 
   .mobile {
     display: block;
@@ -376,7 +355,7 @@ table th {
 }
 .stack-basic-info {
   grid-area: basic;
-  display: none;
+  /* display: none; */
 }
 
 /* ----------------- */
@@ -511,10 +490,11 @@ table th {
     grid-template-columns: 30px 100px 200px auto auto auto;
     grid-template-rows: auto;
     grid-template-areas:
-      'handle units  name        name    healthstrength   action      delete'
-      'handle units  atk         atk     otherStrength    unitLimit   reset'
-      'handle units  leadership  .      hpBonus          strLimit    config'
-      'handle units  basic       basic   strBonus         hpLimit     minSetup';
+      'handle units      name            name           hpBonus          action      delete'
+      'handle units      atk            atk             strBonus         unitLimit   reset'
+      'handle units      basic          basic           otherStrength    strLimit    config'
+      'handle leadership healthstrength healthstrength  otherStrength    hpLimit     .';
+
     .stack-name {
       font-size: 1.2rem;
 
