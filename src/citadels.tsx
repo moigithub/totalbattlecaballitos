@@ -12,6 +12,7 @@ import {
 
 interface ObjProps {
   name: string
+  type: string // melee, beast,ranged, elemental, etc
   baseStr: number
   baseHp: number
   vsRangedPercent: number
@@ -42,6 +43,7 @@ interface Citadel {
 const objBuilder = (props: Partial<ObjProps>): ObjProps => {
   return {
     name: 'name',
+    type: '',
     baseStr: 0,
     baseHp: 0,
     vsRangedPercent: 0,
@@ -64,6 +66,7 @@ const objectDB: Record<string, ObjProps> = {}
 
 objectDB.bearV = objBuilder({
   name: 'Bear V',
+  type: 'beast, melee',
   baseStr: 22000,
   baseHp: 66000,
   vsMountedPercent: 70,
@@ -72,6 +75,7 @@ objectDB.bearV = objBuilder({
 
 objectDB.pegasoRiderIV = objBuilder({
   name: 'Pegaso Rider IV',
+  type: 'flying',
   baseStr: 8200,
   baseHp: 24600,
   vsMeleePercent: 65,
@@ -79,12 +83,14 @@ objectDB.pegasoRiderIV = objBuilder({
 })
 objectDB.unicornRiderV = objBuilder({
   name: 'Unicorn Rider V',
+  type: 'mounted',
   baseStr: 27000,
   baseHp: 81000,
   vsRangedPercent: 65
 })
 objectDB.elfArcherI = objBuilder({
   name: 'Elf archer I',
+  type: 'ranged',
   baseStr: 100,
   baseHp: 300,
   vsMeleePercent: 35
@@ -92,6 +98,7 @@ objectDB.elfArcherI = objBuilder({
 
 objectDB.druidII = objBuilder({
   name: 'Druid II',
+  type: 'ranged',
   baseStr: 900,
   baseHp: 2700,
   vsMeleePercent: 25
@@ -99,6 +106,7 @@ objectDB.druidII = objBuilder({
 
 objectDB.centaurIII = objBuilder({
   name: 'Centaur III',
+  type: 'mounted',
   baseStr: 2600,
   baseHp: 7800,
   vsRangedPercent: 50,
@@ -107,6 +115,7 @@ objectDB.centaurIII = objBuilder({
 
 objectDB.dwarf = objBuilder({
   name: 'Dwarf',
+  type: 'melee',
   baseStr: 28,
   baseHp: 84,
   vsMountedPercent: 10
@@ -114,6 +123,7 @@ objectDB.dwarf = objBuilder({
 
 objectDB.entVI = objBuilder({
   name: 'Ent VI',
+  type: 'elemental, melee',
   baseStr: 73000,
   baseHp: 219000,
   vsRangedPercent: 55,
@@ -121,6 +131,7 @@ objectDB.entVI = objBuilder({
 })
 objectDB.lifeDragonVII = objBuilder({
   name: 'Life dragon VII',
+  type: 'dragon, flying',
   baseStr: 240000,
   baseHp: 720000,
   vsMountedPercent: 60,
@@ -128,6 +139,7 @@ objectDB.lifeDragonVII = objBuilder({
 })
 objectDB.cursedDragonVII = objBuilder({
   name: 'Cursed dragon VII',
+  type: 'dragon, flying',
   baseStr: 320000,
   baseHp: 960000,
   vsMountedPercent: 50,
@@ -135,6 +147,7 @@ objectDB.cursedDragonVII = objBuilder({
 })
 objectDB.giantZombieV = objBuilder({
   name: 'Giant zombie V',
+  type: 'giant, melee',
   baseStr: 33000,
   baseHp: 99000,
   vsMountedPercent: 70,
@@ -142,24 +155,28 @@ objectDB.giantZombieV = objBuilder({
 })
 objectDB.deathRiderIII = objBuilder({
   name: 'Death rider III',
+  type: 'mounted',
   baseStr: 3200,
   baseHp: 9600,
   vsRangedPercent: 50
 })
 objectDB.bullRiderV = objBuilder({
   name: 'Bull rider V',
+  type: 'mounted',
   baseStr: 29000,
   baseHp: 87000,
   vsRangedPercent: 65
 })
-objectDB.wolfManII = objBuilder({
-  name: 'Wolf Man II',
+objectDB.wereWolfII = objBuilder({
+  name: 'WereWolf II',
+  type: 'beast, melee',
   baseStr: 360,
   baseHp: 1080,
   vsMountedPercent: 65
 })
 objectDB.cursedDendroidVI = objBuilder({
   name: 'Cursed dendroid VI',
+  type: 'elemental, melee',
   baseStr: 110000,
   baseHp: 330000,
   vsRangedPercent: 55,
@@ -315,7 +332,7 @@ const citadelc20 = {
       amount: 54
     },
     {
-      troop: objectDB.wolfManII,
+      troop: objectDB.wereWolfII,
       amount: 2900
     }
   ]
@@ -876,6 +893,7 @@ export const Citadels = () => {
       <table>
         <thead>
           <th>Stack</th>
+          <th>Type</th>
           <th>Amount</th>
           <th>Base strength</th>
           <th>Base health</th>
@@ -888,6 +906,7 @@ export const Citadels = () => {
             return (
               <tr>
                 <td> {stack.troop.name}</td>
+                <td> {stack.troop.type}</td>
                 <td> {stack.amount}</td>
                 {/* amount */}
                 <td> {stack.troop.baseStr}</td>
@@ -919,6 +938,7 @@ export const Citadels = () => {
       <table>
         <thead>
           <th>Stack</th>
+          <th>Type</th>
           <th>Amount</th>
           <th>Base strength</th>
           <th>Base health</th>
@@ -931,6 +951,7 @@ export const Citadels = () => {
             return (
               <tr>
                 <td> {stack.troop.name}</td>
+                <td> {stack.troop.type}</td>
                 <td> {stack.amount}</td>
                 {/* amount */}
                 <td> {stack.troop.baseStr}</td>
@@ -963,6 +984,7 @@ export const Citadels = () => {
       <table>
         <thead>
           <th>Stack</th>
+          <th>Type</th>
           <th>Amount</th>
           <th>Base strength</th>
           <th>Base health</th>
@@ -975,6 +997,7 @@ export const Citadels = () => {
             return (
               <tr>
                 <td> {stack.troop.name}</td>
+                <td> {stack.troop.type}</td>
                 <td> {stack.amount}</td>
                 {/* amount */}
                 <td> {stack.troop.baseStr}</td>
@@ -1006,6 +1029,7 @@ export const Citadels = () => {
       <table>
         <thead>
           <th>Stack</th>
+          <th>Type</th>
           <th>Amount</th>
           <th>Base strength</th>
           <th>Base health</th>
@@ -1018,6 +1042,7 @@ export const Citadels = () => {
             return (
               <tr>
                 <td> {stack.troop.name}</td>
+                <td> {stack.troop.type}</td>
                 <td> {stack.amount}</td>
                 {/* amount */}
                 <td> {stack.troop.baseStr}</td>
@@ -1050,6 +1075,7 @@ export const Citadels = () => {
       <table>
         <thead>
           <th>Stack</th>
+          <th>Type</th>
           <th>Amount</th>
           <th>Base strength</th>
           <th>Base health</th>
@@ -1062,6 +1088,7 @@ export const Citadels = () => {
             return (
               <tr>
                 <td> {stack.troop.name}</td>
+                <td> {stack.troop.type}</td>
                 <td> {stack.amount}</td>
                 {/* amount */}
                 <td> {stack.troop.baseStr}</td>
@@ -1094,6 +1121,7 @@ export const Citadels = () => {
       <table>
         <thead>
           <th>Stack</th>
+          <th>Type</th>
           <th>Amount</th>
           <th>Base strength</th>
           <th>Base health</th>
@@ -1106,6 +1134,7 @@ export const Citadels = () => {
             return (
               <tr>
                 <td> {stack.troop.name}</td>
+                <td> {stack.troop.type}</td>
                 <td> {stack.amount}</td>
                 {/* amount */}
                 <td> {stack.troop.baseStr}</td>
@@ -1138,6 +1167,7 @@ export const Citadels = () => {
       <table>
         <thead>
           <th>Stack</th>
+          <th>Type</th>
           <th>Amount</th>
           <th>Base strength</th>
           <th>Base health</th>
@@ -1150,6 +1180,7 @@ export const Citadels = () => {
             return (
               <tr>
                 <td> {stack.troop.name}</td>
+                <td> {stack.troop.type}</td>
                 <td> {stack.amount}</td>
                 {/* amount */}
                 <td> {stack.troop.baseStr}</td>
