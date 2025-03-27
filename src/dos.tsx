@@ -4,16 +4,6 @@ import './App.css'
 import { useGuardsStore } from './guardStore'
 
 // import classNames from 'classnames'
-import {
-  ancientArmy,
-  arachneArmy,
-  citadel10Army,
-  doomsdayArmy,
-  // EnemyUnit,
-  // MobStack,
-  ragnarokArmy,
-  shadowCastleArmy
-} from './monsters'
 import { ArmyList } from './ArmyList'
 import { Card } from './Card'
 import {
@@ -32,9 +22,9 @@ import {
 } from '@dnd-kit/sortable'
 import { /* getStats, getSTRWithBonus,*/ useStackStore } from './stackStore'
 import { Stack /*, Unit */ } from './types'
-import { whoCanIAttack } from './utils'
-import { Bonus } from './bonus'
+
 import { SmallCard } from './SmallCard'
+import { Citadel } from './citadel.tsx'
 import {
   addArmyUnits,
   getArmyAuthority,
@@ -55,7 +45,6 @@ function Dos() {
   const resetAllStacks = useStackStore(state => state.resetAllStacks)
   // const addUnits = useStackStore(state => state.addUnits)
   const updateMinSetup = useStackStore(state => state.updateMinSetup)
-  const setMobArmy = useStackStore(state => state.setMobArmy)
 
   const armyRef = useRef(useStackStore.getState().army)
 
@@ -65,8 +54,6 @@ function Dos() {
   const { army } = useStackStore()
   //---------------------
 
-  // para mostrar data de mostros
-  const mobArmy = useStackStore(state => state.mobArmy)
   //-------------------
 
   // const getStackUnits = useStackStore(state => state.getStackUnits)
@@ -75,9 +62,9 @@ function Dos() {
   // const getArmyAuthority = useStackStore(state => state.getArmyAuthority)
   // const getArmyDominance = useStackStore(state => state.getArmyDominance)
 
-  const [selectedEvent, setSelectedEvent] = useState('0')
+  const [selectedTarget, setSelectedTarget] = useState('citadele10')
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
-  const [windowMode, setWindowMode] = useState('showArmyConfig')
+
   const [cardType, setCardType] = useState('card') // card , smallcard
 
   // const sensors = useSensor(PointerSensor, {
@@ -104,30 +91,10 @@ function Dos() {
   //   })
   // )
 
-  useEffect(() => {
-    let army = doomsdayArmy
-
-    if (selectedEvent === '0') {
-      army = ragnarokArmy
-    } else if (selectedEvent === '1') {
-      army = ancientArmy
-    } else if (selectedEvent === '2') {
-      army = doomsdayArmy
-    } else if (selectedEvent === '3') {
-      army = shadowCastleArmy
-    } else if (selectedEvent === '4') {
-      army = arachneArmy
-    } else if (selectedEvent === '5') {
-      army = citadel10Army
-    }
-
-    setMobArmy(army)
-  }, [selectedEvent])
-
   useEffect(() => useStackStore.subscribe(state => (armyRef.current = state.army)), [])
 
-  const changeMobEvent = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedEvent(e.target.value)
+  const changeMobTarget = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTarget(e.target.value)
   }
 
   const changeLeadership = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,89 +115,6 @@ function Dos() {
       setDominance(value)
     }
   }
-
-  // const getMobTarget = (unit: Unit) => {
-  //   //getMobTarget, usa getMonsterStack, y escoje un monster
-  //   /**
-  //    * beast vs mounted
-  //    * beast vs ranged
-  //    *
-  //    * siege vs fortifications
-  //    */
-  //   let mob: MobStack | undefined = undefined
-  //   if (unit.category === 'mounted') {
-  //     /**
-  //      * mounted vs ranged
-  //      * mounted vs siege
-  //      */
-  //     // return draugMage
-  //     mob = mobArmy.find(mob => mob.unit.category === 'ranged')
-  //     if (!mob) {
-  //       mob = mobArmy.find(mob => mob.unit.category === 'siege')
-  //     }
-  //   } else if (unit.category === 'ranged') {
-  //     /*
-  //      * ranged vs melee
-  //      * ranged vs flying
-  //      */
-  //     mob = mobArmy.find(mob => mob.unit.category === 'flying')
-  //     if (!mob) {
-  //       mob = mobArmy.find(mob => mob.unit.category === 'melee')
-  //     }
-  //   } else if (unit.category === 'melee') {
-  //     /*
-  //      * melee vs beasts
-  //      * melee vs humans
-  //      * melee vs mounted  **
-  //      */
-  //     mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-  //     if (!mob) {
-  //       mob = mobArmy.find(mob => mob.unit.race === 'beast')
-  //     }
-  //   } else if (unit.category === 'flying') {
-  //     /*
-  //      * flying vs elementals
-  //      * flying vs mounted
-  //      * flying vs giants
-  //      */
-  //     mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-  //     if (!mob) {
-  //       mob = mobArmy.find(mob => mob.unit.race === 'giant')
-  //     }
-  //   } else if (unit.category === 'siege') {
-  //     // const mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-  //   }
-
-  //   // la raza tiene mayor prioridad, y reemplaza la categoria
-  //   // ejm. mounstruo battleboard es mounted/beast
-  //   // pero en el reporte ataca a un mounted
-  //   // si fuese mounted la prioridad, atacaria un ranged/siege
-  //   if (unit.group === 'elemental') {
-  //     mob = mobArmy.find(mob => mob.unit.category === 'flying')
-  //     if (!mob) {
-  //       mob = mobArmy.find(mob => mob.unit.category === 'melee')
-  //     }
-  //   } else if (unit.group === 'giant') {
-  //     mob = mobArmy.find(mob => mob.unit.category === 'melee')
-  //     if (!mob) {
-  //       mob = mobArmy.find(mob => mob.unit.race === 'beast')
-  //     }
-  //   } else if (unit.group === 'dragon') {
-  //     mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-  //     if (!mob) {
-  //       mob = mobArmy.find(mob => mob.unit.race === 'giant')
-  //     }
-  //   } else if (unit.group === 'beast') {
-  //     mob = mobArmy.find(mob => mob.unit.category === 'mounted')
-  //     if (!mob) {
-  //       mob = mobArmy.find(mob => mob.unit.category === 'ranged')
-  //     }
-  //   }
-
-  //   if (!mob) mob = mobArmy[0]
-  //   return mob
-  //   // return draugMage //doomsdayFireswordRider // retornar el que tiene mas hp ?
-  // }
 
   // const calculateUnitsMobKill = (monster: EnemyUnit, unit: Unit): number => {
   //   const monsterHealth = monster.BASEHP
@@ -749,27 +633,9 @@ function Dos() {
 
   return (
     <div className='dos-main'>
-      <nav className='fixed top-[56px] z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700'>
+      <nav className='fixed top-[56px] z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex'>
         <div className='px-3 py-3 lg:px-5 lg:pl-3'>
           <div className='config-container'>
-            <div className='configbar'>
-              <div className='group'>
-                <label>Event </label>
-                <select
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  value={selectedEvent}
-                  onChange={changeMobEvent}
-                >
-                  <option value='0'>Ragnarok/jörmungandr-fenrir </option>
-                  <option value='1'>Ancient/Tinman </option>
-                  <option value='2'>Doomsday </option>
-                  <option value='3'>Shadow castle</option>
-                  <option value='4'>Arachne</option>
-                  {/* <option value='5'>Citadel lvl 10</option> */}
-                  {/* <option value='54'>JacksReturn/Scarecrow</option> */}
-                </select>
-              </div>
-            </div>
             <div className='configbar'>
               <div>
                 <label>Leadership </label>
@@ -803,6 +669,23 @@ function Dos() {
               </div>
             </div>
             <div className='configbar'>
+              <div className='group  hidden lg:block'>
+                <label>Target </label>
+                <select
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  value={selectedTarget}
+                  onChange={changeMobTarget}
+                >
+                  <option value='citadele10'>Elf Citadel lvl 10</option>
+                  <option value='citadele15'>Elf Citadel lvl 15</option>
+                  <option value='citadele20'>Elf Citadel lvl 20</option>
+                  <option value='citadele25'>Elf Citadel lvl 25</option>
+                  <option value='citadele30'>Elf Citadel lvl 30</option>
+                  <option value='citadelc20'>Cursed Citadel lvl 20</option>
+                  <option value='citadelc25'>Cursed Citadel lvl 25</option>
+                </select>
+              </div>
+
               <div>
                 <label>Sacrifice strength limit</label>
                 <input
@@ -842,50 +725,6 @@ function Dos() {
             >
               Show Army
             </button>
-            <div className='radio-group'>
-              <div className='radiobtn'>
-                <input
-                  type='radio'
-                  value='showArmyConfig'
-                  name='extra'
-                  className='invisible'
-                  checked={windowMode === 'showArmyConfig'}
-                  onChange={() => {
-                    setWindowMode('showArmyConfig')
-                  }}
-                  id='armyconfig'
-                />
-                <label htmlFor='armyconfig'>Army config</label>
-              </div>
-
-              <div className='radiobtn'>
-                <input
-                  type='radio'
-                  value='showTargetMonsterInfo'
-                  name='extra'
-                  className='invisible'
-                  checked={windowMode === 'showTargetMonsterInfo'}
-                  onChange={() => {
-                    setWindowMode('showTargetMonsterInfo')
-                  }}
-                  id='monsterinfo'
-                />
-                <label htmlFor='monsterinfo'>Monster info</label>
-              </div>
-              {/* <div className='radiobtn'>
-            <input
-              type='radio'
-              value='showBonusConfig'
-              name='extra'
-              checked={windowMode === 'showBonusConfig'}
-              onChange={() => {
-                setWindowMode('showBonusConfig')
-              }}
-              id='bonusconfig'
-            />
-            <label htmlFor='bonusconfig'>Bonus config</label>
-          </div> */}
-            </div>
 
             <div className='configbar'>
               <div>
@@ -915,89 +754,77 @@ function Dos() {
             </div>
           </div>
         </div>
+
+        <div className='hidden lg:block'>
+          {selectedTarget === 'citadele10' && <Citadel type='e10' />}
+          {selectedTarget === 'citadele15' && <Citadel type='e15' />}
+          {selectedTarget === 'citadele20' && <Citadel type='e20' />}
+          {selectedTarget === 'citadele25' && <Citadel type='e25' />}
+          {selectedTarget === 'citadele30' && <Citadel type='e30' />}
+          {selectedTarget === 'citadelc20' && <Citadel type='c20' />}
+          {selectedTarget === 'citadelc25' && <Citadel type='c25' />}
+        </div>
       </nav>
 
-      {windowMode === 'showArmyConfig' && (
-        <>
-          <ArmyList />
+      <>
+        <ArmyList />
 
-          <div className='pt-[310px] sm:ml-64'>
-            <div className='p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700'>
-              <div className='stack-container'>
-                <h2 className='header-title'>Stacks</h2>
+        <div className='pt-[310px] sm:ml-64'>
+          <div className='p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700'>
+            <div className='stack-container'>
+              <h2 className='header-title'>Stacks</h2>
 
-                <table className='skill-info'>
-                  <thead>
-                    <tr>
-                      <th>Leadrshp</th>
-                      <th>Authrity</th>
-                      <th>Dominnce</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{getArmyLeadership(army)}</td>
-                      <td>{getArmyAuthority(army)}</td>
-                      <td>{getArmyDominance(army)}</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <table className='skill-info'>
+                <thead>
+                  <tr>
+                    <th>Leadrshp</th>
+                    <th>Authrity</th>
+                    <th>Dominnce</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{getArmyLeadership(army)}</td>
+                    <td>{getArmyAuthority(army)}</td>
+                    <td>{getArmyDominance(army)}</td>
+                  </tr>
+                </tbody>
+              </table>
 
-                <div className='btn-group sticky'>
-                  <button
-                    className='inline-flex text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-                    onClick={calcSTR}
-                  >
-                    CALCULATE
-                  </button>
-                  <button
-                    className='inline-flex cursor-pointer focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300    text-lg px-3.5 py-0.5 me-2  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
-                    onClick={() => {
-                      setArmy([])
-                    }}
-                  >
-                    Clear
-                  </button>
-                </div>
+              <div className='btn-group sticky'>
+                <button
+                  className='inline-flex text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                  onClick={calcSTR}
+                >
+                  CALCULATE
+                </button>
+                <button
+                  className='inline-flex cursor-pointer focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300    text-lg px-3.5 py-0.5 me-2  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
+                  onClick={() => {
+                    setArmy([])
+                  }}
+                >
+                  Clear
+                </button>
+              </div>
 
-                <div className='stack-list'>
-                  <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
-                    <SortableContext items={army}>
-                      {army.map(stack => {
-                        if (cardType === 'smallcard') {
-                          return <SmallCard stack={stack} key={stack.id} />
-                        } else {
-                          return <Card stack={stack} key={stack.id} />
-                        }
-                      })}
-                    </SortableContext>
-                  </DndContext>
-                </div>
+              <div className='stack-list'>
+                <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
+                  <SortableContext items={army}>
+                    {army.map(stack => {
+                      if (cardType === 'smallcard') {
+                        return <SmallCard stack={stack} key={stack.id} />
+                      } else {
+                        return <Card stack={stack} key={stack.id} />
+                      }
+                    })}
+                  </SortableContext>
+                </DndContext>
               </div>
             </div>
           </div>
-        </>
-      )}
-
-      {windowMode === 'showTargetMonsterInfo' && (
-        <div className='pt-[310px] mob-container'>
-          {mobArmy.map(army => {
-            return (
-              <div className='mob-army-stack' key={army.id}>
-                <div className='name'>
-                  {army.unit.name} {army.unit.level} {army.unit.category}
-                </div>
-                <div className='units'>Units {army.units}</div>
-                <div className='hp'>Stack HP {army.units * army.unit.BASEHP}</div>
-                <div style={{ color: 'gray' }}>
-                  i attack <span style={{ color: 'green' }}>{whoCanIAttack(army.unit)}</span>
-                </div>
-              </div>
-            )
-          })}
         </div>
-      )}
-      {windowMode === 'showBonusConfig' && <Bonus />}
+      </>
     </div>
   )
 }
