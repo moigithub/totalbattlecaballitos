@@ -470,16 +470,16 @@ export const Citadels = () => {
           {citadele10.stacks.map(stack => {
             return (
               <tr>
-                <td> {stack.troop.name}</td>
-                <td> {stack.troop.type}</td>
-                <td> {stack.amount}</td>
+                <td> {stack.unit.name}</td>
+                <td> {stack.unit.category}</td>
+                <td> {stack.unitsAmount}</td>
                 {/* amount */}
-                <td> {stack.troop.baseStr}</td>
+                <td> {stack.unit.BASESTR}</td>
                 {/* str */}
-                <td> {stack.troop.baseHp}</td>
+                <td> {stack.unit.BASEHP}</td>
                 {/* hp */}
-                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
-                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{stack.unitsAmount * stack.unit.BASEHP}</td> {/* total health  */}
+                <td>{stack.unitsAmount * stack.unit.BASESTR}</td> {/* total strength  */}
                 <td>{getTroopBadges(stack)}</td>
               </tr>
             )
@@ -515,16 +515,16 @@ export const Citadels = () => {
           {citadele15.stacks.map(stack => {
             return (
               <tr>
-                <td> {stack.troop.name}</td>
-                <td> {stack.troop.type}</td>
-                <td> {stack.amount}</td>
-                {/* amount */}
-                <td> {stack.troop.baseStr}</td>
+                <td> {stack.unit.name}</td>
+                <td> {stack.unit.category}</td>
+                <td> {stack.unitsAmount}</td>
+                {/* unitsAmount */}
+                <td> {stack.unit.BASESTR}</td>
                 {/* str */}
-                <td> {stack.troop.baseHp}</td>
+                <td> {stack.unit.BASEHP}</td>
                 {/* hp */}
-                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
-                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{stack.unitsAmount * stack.unit.BASEHP}</td> {/* total health  */}
+                <td>{stack.unitsAmount * stack.unit.BASESTR}</td> {/* total strength  */}
                 <td>{getTroopBadges(stack)}</td>
               </tr>
             )
@@ -561,16 +561,16 @@ export const Citadels = () => {
           {citadele20.stacks.map(stack => {
             return (
               <tr>
-                <td> {stack.troop.name}</td>
-                <td> {stack.troop.type}</td>
-                <td> {stack.amount}</td>
-                {/* amount */}
-                <td> {stack.troop.baseStr}</td>
+                <td> {stack.unit.name}</td>
+                <td> {stack.unit.category}</td>
+                <td> {stack.unitsAmount}</td>
+                {/* unitsAmount */}
+                <td> {stack.unit.BASESTR}</td>
                 {/* str */}
-                <td> {stack.troop.baseHp}</td>
+                <td> {stack.unit.BASEHP}</td>
                 {/* hp */}
-                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
-                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{stack.unitsAmount * stack.unit.BASEHP}</td> {/* total health  */}
+                <td>{stack.unitsAmount * stack.unit.BASESTR}</td> {/* total strength  */}
                 <td>{getTroopBadges(stack)}</td>
               </tr>
             )
@@ -606,16 +606,16 @@ export const Citadels = () => {
           {citadele25.stacks.map(stack => {
             return (
               <tr>
-                <td> {stack.troop.name}</td>
-                <td> {stack.troop.type}</td>
-                <td> {stack.amount}</td>
+                <td> {stack.unit.name}</td>
+                <td> {stack.unit.category}</td>
+                <td> {stack.unitsAmount}</td>
                 {/* amount */}
-                <td> {stack.troop.baseStr}</td>
+                <td> {stack.unit.BASESTR}</td>
                 {/* str */}
-                <td> {stack.troop.baseHp}</td>
+                <td> {stack.unit.BASEHP}</td>
                 {/* hp */}
-                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
-                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{stack.unitsAmount * stack.unit.BASEHP}</td> {/* total health  */}
+                <td>{stack.unitsAmount * stack.unit.BASESTR}</td> {/* total strength  */}
                 <td>{getTroopBadges(stack)}</td>
               </tr>
             )
@@ -652,16 +652,16 @@ export const Citadels = () => {
           {citadele30.stacks.map(stack => {
             return (
               <tr>
-                <td> {stack.troop.name}</td>
-                <td> {stack.troop.type}</td>
-                <td> {stack.amount}</td>
-                {/* amount */}
-                <td> {stack.troop.baseStr}</td>
+                <td> {stack.unit.name}</td>
+                <td> {stack.unit.category}</td>
+                <td> {stack.unitsAmount}</td>
+                {/* unitsAmount */}
+                <td> {stack.unit.BASESTR}</td>
                 {/* str */}
-                <td> {stack.troop.baseHp}</td>
+                <td> {stack.unit.BASEHP}</td>
                 {/* hp */}
-                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
-                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{stack.unitsAmount * stack.unit.BASEHP}</td> {/* total health  */}
+                <td>{stack.unitsAmount * stack.unit.BASESTR}</td> {/* total strength  */}
                 <td>{getTroopBadges(stack)}</td>
               </tr>
             )
@@ -698,16 +698,16 @@ export const Citadels = () => {
           {citadelc20.stacks.map(stack => {
             return (
               <tr>
-                <td> {stack.troop.name}</td>
-                <td> {stack.troop.type}</td>
-                <td> {stack.amount}</td>
-                {/* amount */}
-                <td> {stack.troop.baseStr}</td>
+                <td> {stack.unit.name}</td>
+                <td> {stack.unit.category}</td>
+                <td> {stack.unitsAmount}</td>
+                {/* unitsAmount */}
+                <td> {stack.unit.BASESTR}</td>
                 {/* str */}
-                <td> {stack.troop.baseHp}</td>
+                <td> {stack.unit.BASEHP}</td>
                 {/* hp */}
-                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
-                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{stack.unitsAmount * stack.unit.BASEHP}</td> {/* total health  */}
+                <td>{stack.unitsAmount * stack.unit.BASESTR}</td> {/* total strength  */}
                 <td>{getTroopBadges(stack)}</td>
               </tr>
             )
@@ -744,16 +744,16 @@ export const Citadels = () => {
           {citadelc25.stacks.map(stack => {
             return (
               <tr>
-                <td> {stack.troop.name}</td>
-                <td> {stack.troop.type}</td>
-                <td> {stack.amount}</td>
-                {/* amount */}
-                <td> {stack.troop.baseStr}</td>
+                <td> {stack.unit.name}</td>
+                <td> {stack.unit.category}</td>
+                <td> {stack.unitsAmount}</td>
+                {/* unitsAmount */}
+                <td> {stack.unit.BASESTR}</td>
                 {/* str */}
-                <td> {stack.troop.baseHp}</td>
+                <td> {stack.unit.BASEHP}</td>
                 {/* hp */}
-                <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
-                <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+                <td>{stack.unitsAmount * stack.unit.BASEHP}</td> {/* total health  */}
+                <td>{stack.unitsAmount * stack.unit.BASESTR}</td> {/* total strength  */}
                 <td>{getTroopBadges(stack)}</td>
               </tr>
             )

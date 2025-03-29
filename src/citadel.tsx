@@ -1,5 +1,6 @@
 import { getTroopBadges } from './badges'
 import {
+  Citadel,
   citadelc20,
   citadelc25,
   citadele10,
@@ -9,8 +10,8 @@ import {
   citadele30
 } from './citadelData'
 
-export const Citadel = ({ type }: { type: string }) => {
-  let target = citadele10
+export const CitadelData = ({ type }: { type: string }) => {
+  let target: Citadel = citadele10
   switch (type) {
     case 'e10':
       target = citadele10
@@ -46,15 +47,25 @@ export const Citadel = ({ type }: { type: string }) => {
       <tbody>
         {target.stacks.map(stack => {
           return (
-            <tr key={`stack${stack.troop.name}`}>
-              <td> {stack.troop.name}</td>
-              <td> {stack.troop.type}</td>
-              <td>{stack.amount * stack.troop.baseHp}</td> {/* total health  */}
-              <td>{stack.amount * stack.troop.baseStr}</td> {/* total strength  */}
+            <tr key={`stack${stack.unit.name}`}>
+              <td> {stack.unitsAmount}</td>
+              <td> {stack.unit.name}</td>
+              <td> {stack.unit.category}</td>
+              <td>{stack.unitsAmount * stack.unit.BASEHP}</td> {/* total health  */}
+              <td>{stack.unitsAmount * stack.unit.BASESTR}</td> {/* total strength  */}
               <td>{getTroopBadges(stack)}</td>
             </tr>
           )
         })}
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Total Dmg</td>
+          <td>
+            {target.stacks.reduce((dmg, stack) => dmg + stack.unitsAmount * stack.unit.BASESTR, 0)}
+          </td>
+          <td></td>
+        </tr>
       </tbody>
     </table>
   )

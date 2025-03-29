@@ -40,7 +40,7 @@ export const SmallCard = ({ stack }: { stack: Stack }) => {
         </p>
       </div>
       <p className='stack-units font-bold text-md sm:text-2xl md:text-3xl flex justify-center items-center bg-green-800 text-gray-300 p-1 sm:p-2 md:p-4 mr-2 relative'>
-        {stack.units}
+        {stack.unitsAmount}
       </p>
       <p className='stack-name'>
         {stack.unit.name} <span className='stack-health-small'>{stackHealth.toFixed(0)}</span>

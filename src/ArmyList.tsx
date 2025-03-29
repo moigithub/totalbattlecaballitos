@@ -453,7 +453,7 @@ export const ArmyList = () => {
       authority: 0,
       dominance: 0,
       unit: unitType,
-      units: 0, //unitsNeededToKill1Mob
+      unitsAmount: 0, //unitsNeededToKill1Mob
       minSetup: 0,
       lockMinSetup: true,
       limit: 0,

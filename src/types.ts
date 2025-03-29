@@ -1,5 +1,3 @@
-import { TIPO } from './monsters'
-
 export interface BasicStats {
   str: number
   hp: number
@@ -64,31 +62,31 @@ export type Group = 'guardsman' | 'specialist' | 'engineer' | 'monster'
 
 export type Race = 'human' | 'beast' | 'elemental' | 'dragon' | 'giant'
 
-interface BasicUnit {
-  tipo: TIPO
+export interface BasicUnit {
+  clasification: string
   name: string
   BASEHP: number
   BASESTR: number
-  // LEADERSHIP: number
-  // AUTHORITY: number
-  // DOMINANCE: number
+  LEADERSHIP: number
+  AUTHORITY: number
+  DOMINANCE: number
   INITIATIVE: number
-  vsRangedPercent: number //
-  vsSiegePercent: number //
-  vsBeastPercent: number //
+  vsRangedPercent: number
+  vsSiegePercent: number
+  vsBeastPercent: number
   vsHumanPercent: number
-  vsMountedPercent: number //
-  vsFlyingPercent: number //
-  vsMeleePercent: number //
-  vsFortificationsPercent: number //
-  vsGiantPercent: number //
-  vsElementalPercent: number //
-  vsDragonPercent: number //
+  vsMountedPercent: number
+  vsFlyingPercent: number
+  vsMeleePercent: number
+  vsFortificationsPercent: number
+  vsGiantPercent: number
   vsEpicPercent: number
-  troop: string //TroopType
-  // category: string //Category
-  // group: string // Group
-  // race: string // Race
+  vsElementalPercent: number
+  vsDragonPercent: number
+  troop: string
+  category: string // melee, ranged,mounted,flying,| epic|scout|siege
+  race: string // 'human' | 'beast'| monster
+  group: string // 'guardsman' specialist engineer| 'elemental' | 'dragon' | 'beast' | 'giant'
   level: string
 }
 
@@ -101,7 +99,7 @@ interface HumanUnit extends BasicUnit {
 export interface GuardsmanUnit extends HumanUnit {
   group: 'guardsman'
   race: 'human' | 'beast'
-  tipo: 'army'
+  clasification: 'army'
   category: keyof Guardsman
 }
 
@@ -111,21 +109,21 @@ export interface MercUnit extends BasicUnit {
   DOMINANCE: 0
   group: 'guardsman'
   race: 'human'
-  tipo: 'merc'
+  clasification: 'merc'
   category: keyof Mercs
 }
 
 export interface SpecialistUnit extends HumanUnit {
   group: 'specialist'
   race: 'human' | 'beast'
-  tipo: 'army'
+  clasification: 'army'
   category: keyof Specialist
 }
 
 export interface EngineerUnit extends HumanUnit {
   group: 'engineer'
   race: 'human'
-  tipo: 'army'
+  clasification: 'army'
   category: keyof Engineer
 }
 
@@ -135,7 +133,7 @@ export interface MonsterUnit extends BasicUnit {
   LEADERSHIP: 0
   group: 'elemental' | 'dragon' | 'beast' | 'giant'
   race: 'monster'
-  tipo: 'monster'
+  clasification: 'monster'
   category: keyof Monster
 }
 
@@ -158,7 +156,7 @@ export interface Stack {
   strLimit: number
   useHpLimit: boolean
   HpLimit: number
-  units: number
+  unitsAmount: number
   minSetup: number // used to calculate how many units are needed to kill one monster
   lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount
   limit: number // max unit value

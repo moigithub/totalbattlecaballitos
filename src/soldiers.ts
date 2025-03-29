@@ -1,32 +1,5 @@
-import { EngineerUnit, GuardsmanUnit, MonsterUnit, SpecialistUnit } from './types'
+import { BasicUnit, EngineerUnit, GuardsmanUnit, MonsterUnit, SpecialistUnit } from './types'
 
-interface UnitProps {
-  tipo: string
-  name: string
-  BASEHP: number
-  BASESTR: number
-  LEADERSHIP: number
-  AUTHORITY: number
-  DOMINANCE: number
-  INITIATIVE: number
-  vsRangedPercent: number
-  vsSiegePercent: number
-  vsBeastPercent: number
-  vsHumanPercent: number
-  vsMountedPercent: number
-  vsFlyingPercent: number
-  vsMeleePercent: number
-  vsFortificationsPercent: number
-  vsGiantPercent: number
-  vsEpicPercent: number
-  vsElementalPercent: number
-  vsDragonPercent: number
-  troop: string
-  category: string
-  race: string
-  group: string
-  level: string
-}
 // function unitBuilder<T>(arg: T): T {
 //   return arg
 // }
@@ -214,9 +187,9 @@ export const ARMY = {
   pounderII: 'pounderII'
 }
 
-export const unitBuilder = <T>(props: Partial<UnitProps>): T => {
+export const unitBuilder = <T>(props: Partial<BasicUnit>): T => {
   return {
-    tipo: '',
+    clasification: '',
     name: '',
     BASEHP: 0,
     BASESTR: 0,
@@ -254,7 +227,7 @@ const riderBuilder = (
   level: string
 ): GuardsmanUnit => {
   return unitBuilder<GuardsmanUnit>({
-    tipo: 'army',
+    clasification: 'army',
     name,
     BASEHP,
     BASESTR,
@@ -286,7 +259,7 @@ const swordmanBuilder = (
   level: string
 ) => {
   return unitBuilder<SpecialistUnit>({
-    tipo: 'army',
+    clasification: 'army',
     name,
     BASEHP,
     BASESTR,
@@ -312,7 +285,7 @@ export const SwordmanS5 = swordmanBuilder(ARMY.SwordmanS5, 1560, 520, 203, 105, 
 
 const spyBuilder = (name: string, BASEHP: number, BASESTR: number, level: string) => {
   return unitBuilder<SpecialistUnit>({
-    tipo: 'army',
+    clasification: 'army',
     name,
     BASEHP,
     BASESTR,
@@ -334,7 +307,7 @@ export const SpyS5 = spyBuilder(ARMY.SpyS5, 780, 260, 'S5')
 
 //----------------------------------
 export const deadshotV = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.deadshotsV,
   BASEHP: 1560,
   BASESTR: 520,
@@ -350,7 +323,7 @@ export const deadshotV = unitBuilder<SpecialistUnit>({
   level: 'V'
 })
 export const deadshotVI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.deadshotsVI,
   BASEHP: 2820,
   BASESTR: 940,
@@ -366,7 +339,7 @@ export const deadshotVI = unitBuilder<SpecialistUnit>({
   level: 'VI'
 })
 export const deadshotVII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.deadshotsVII,
   BASEHP: 5100,
   BASESTR: 1700,
@@ -382,7 +355,7 @@ export const deadshotVII = unitBuilder<SpecialistUnit>({
   level: 'VII'
 })
 export const lionRiderV = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.lionRiderV,
   BASEHP: 3150,
   BASESTR: 1050,
@@ -398,7 +371,7 @@ export const lionRiderV = unitBuilder<SpecialistUnit>({
   level: 'V'
 })
 export const lionRiderVI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.lionRiderVI,
   BASEHP: 5700,
   BASESTR: 1900,
@@ -414,7 +387,7 @@ export const lionRiderVI = unitBuilder<SpecialistUnit>({
   level: 'VI'
 })
 export const lionRiderVII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.lionRiderVII,
   BASEHP: 10200,
   BASESTR: 3400,
@@ -430,7 +403,7 @@ export const lionRiderVII = unitBuilder<SpecialistUnit>({
   level: 'VII'
 })
 export const vulturesV = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.vulturesV,
   BASEHP: 1560,
   BASESTR: 520,
@@ -446,7 +419,7 @@ export const vulturesV = unitBuilder<SpecialistUnit>({
   level: 'V'
 })
 export const vulturesVI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.vulturesVI,
   BASEHP: 2820,
   BASESTR: 940,
@@ -462,7 +435,7 @@ export const vulturesVI = unitBuilder<SpecialistUnit>({
   level: 'VI'
 })
 export const vulturesVII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.vulturesVII,
   BASEHP: 5100,
   BASESTR: 1700,
@@ -478,7 +451,7 @@ export const vulturesVII = unitBuilder<SpecialistUnit>({
   level: 'VII'
 })
 export const heavyKnightVI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.heavyKnightVI,
   BASEHP: 2820,
   BASESTR: 940,
@@ -494,7 +467,7 @@ export const heavyKnightVI = unitBuilder<SpecialistUnit>({
   level: 'VI'
 })
 export const heavyKnightVII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.heavyKnightVII,
   BASEHP: 5100,
   BASESTR: 1700,
@@ -510,7 +483,7 @@ export const heavyKnightVII = unitBuilder<SpecialistUnit>({
   level: 'VII'
 })
 export const swiftJaegerVI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.swiftJaegerVI,
   BASEHP: 1410,
   BASESTR: 470,
@@ -523,7 +496,7 @@ export const swiftJaegerVI = unitBuilder<SpecialistUnit>({
   level: 'VI'
 })
 export const swiftJaegerVII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.swiftJaegerVII,
   BASEHP: 2550,
   BASESTR: 850,
@@ -536,7 +509,7 @@ export const swiftJaegerVII = unitBuilder<SpecialistUnit>({
   level: 'VII'
 })
 export const legitimistI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.legitimistI,
   BASEHP: 9180,
   BASESTR: 3060,
@@ -551,7 +524,7 @@ export const legitimistI = unitBuilder<SpecialistUnit>({
   level: 'I'
 })
 export const legitimistII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.legitimistII,
   BASEHP: 16530,
   BASESTR: 5510,
@@ -566,7 +539,7 @@ export const legitimistII = unitBuilder<SpecialistUnit>({
   level: 'II'
 })
 export const duelistI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.duelistI,
   BASEHP: 9180,
   BASESTR: 3060,
@@ -581,7 +554,7 @@ export const duelistI = unitBuilder<SpecialistUnit>({
   level: 'I'
 })
 export const duelistII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.duelistII,
   BASEHP: 16530,
   BASESTR: 5510,
@@ -596,7 +569,7 @@ export const duelistII = unitBuilder<SpecialistUnit>({
   level: 'II'
 })
 export const whitemaneI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.whitemaneI,
   BASEHP: 18360,
   BASESTR: 6120,
@@ -611,7 +584,7 @@ export const whitemaneI = unitBuilder<SpecialistUnit>({
   level: 'I'
 })
 export const whitemaneII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.whitemaneII,
   BASEHP: 33060,
   BASESTR: 11020,
@@ -626,7 +599,7 @@ export const whitemaneII = unitBuilder<SpecialistUnit>({
   level: 'II'
 })
 export const royalLionI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.royalLionI,
   BASEHP: 183600,
   BASESTR: 61200,
@@ -641,7 +614,7 @@ export const royalLionI = unitBuilder<SpecialistUnit>({
   level: 'I'
 })
 export const royalLionII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.royalLionII,
   BASEHP: 330600,
   BASESTR: 110200,
@@ -656,7 +629,7 @@ export const royalLionII = unitBuilder<SpecialistUnit>({
   level: 'II'
 })
 export const panopticI = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.panopticI,
   BASEHP: 4590,
   BASESTR: 1530,
@@ -669,7 +642,7 @@ export const panopticI = unitBuilder<SpecialistUnit>({
   level: 'I'
 })
 export const panopticII = unitBuilder<SpecialistUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.panopticII,
   BASEHP: 8280,
   BASESTR: 2760,
@@ -691,7 +664,7 @@ const spearmanBuilder = (
   level: string
 ): GuardsmanUnit => {
   return unitBuilder<GuardsmanUnit>({
-    tipo: 'army',
+    clasification: 'army',
     name,
     BASEHP,
     BASESTR,
@@ -723,7 +696,7 @@ const archerBuilder = (
   level: string
 ): GuardsmanUnit => {
   return unitBuilder<GuardsmanUnit>({
-    tipo: 'army',
+    clasification: 'army',
     name,
     BASEHP,
     BASESTR,
@@ -745,7 +718,7 @@ export const ArcherG4 = archerBuilder(ARMY.ArcherG4, 870, 290, 226, 176, 'G4')
 export const ArcherG5 = archerBuilder(ARMY.ArcherG5, 1560, 520, 339, 263, 'G5')
 
 export const battleGriffinV = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.battleGriffinV,
   BASEHP: 30000,
   BASESTR: 10000,
@@ -761,7 +734,7 @@ export const battleGriffinV = unitBuilder<GuardsmanUnit>({
   level: 'V'
 })
 export const battleGriffinVI = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.battleGriffinVI,
   BASEHP: 57000,
   BASESTR: 19000,
@@ -777,7 +750,7 @@ export const battleGriffinVI = unitBuilder<GuardsmanUnit>({
   level: 'VI'
 })
 export const battleGriffinVII = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.battleGriffinVII,
   BASEHP: 102000,
   BASESTR: 34000,
@@ -794,7 +767,7 @@ export const battleGriffinVII = unitBuilder<GuardsmanUnit>({
 })
 
 export const heavyArbalesterVI = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.heavyArbalesterVI,
   BASEHP: 2820,
   BASESTR: 940,
@@ -809,7 +782,7 @@ export const heavyArbalesterVI = unitBuilder<GuardsmanUnit>({
   level: 'VI'
 })
 export const heavyArbalesterVII = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.heavyArbalesterVII,
   BASEHP: 5100,
   BASESTR: 1700,
@@ -824,7 +797,7 @@ export const heavyArbalesterVII = unitBuilder<GuardsmanUnit>({
   level: 'VII'
 })
 export const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.heavyHalberdierVI,
   BASESTR: 940,
   BASEHP: 2820,
@@ -839,7 +812,7 @@ export const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
   level: 'VI'
 })
 export const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.heavyHalberdierVII,
   BASESTR: 1700,
   BASEHP: 5100,
@@ -854,7 +827,7 @@ export const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
   level: 'VII'
 })
 export const mountedKnightVI = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.mountedKnightVI,
   BASESTR: 1900,
   BASEHP: 5700,
@@ -869,7 +842,7 @@ export const mountedKnightVI = unitBuilder<GuardsmanUnit>({
   level: 'VI'
 })
 export const mountedKnightVII = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.mountedKnightVII,
   BASESTR: 3400,
   BASEHP: 10200,
@@ -884,7 +857,7 @@ export const mountedKnightVII = unitBuilder<GuardsmanUnit>({
   level: 'VII'
 })
 export const purifierI = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.purifierI,
   BASEHP: 3060,
   BASESTR: 9180,
@@ -899,7 +872,7 @@ export const purifierI = unitBuilder<GuardsmanUnit>({
   level: 'I'
 })
 export const purifierII = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.purifierII,
   BASEHP: 5510,
   BASESTR: 16530,
@@ -914,7 +887,7 @@ export const purifierII = unitBuilder<GuardsmanUnit>({
   level: 'II'
 })
 export const punisherI = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.punisherI,
   BASESTR: 3060,
   BASEHP: 9180,
@@ -929,7 +902,7 @@ export const punisherI = unitBuilder<GuardsmanUnit>({
   level: 'I'
 })
 export const punisherII = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.punisherII,
   BASESTR: 5510,
   BASEHP: 16530,
@@ -944,7 +917,7 @@ export const punisherII = unitBuilder<GuardsmanUnit>({
   level: 'II'
 })
 export const smiterI = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.smiterI,
   BASESTR: 6120,
   BASEHP: 18360,
@@ -959,7 +932,7 @@ export const smiterI = unitBuilder<GuardsmanUnit>({
   level: 'VI'
 })
 export const smiterII = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.smiterII,
   BASESTR: 11020,
   BASEHP: 33060,
@@ -974,7 +947,7 @@ export const smiterII = unitBuilder<GuardsmanUnit>({
   level: 'VI'
 })
 export const coraxI = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.coraxI,
   BASEHP: 183600,
   BASESTR: 61200,
@@ -989,7 +962,7 @@ export const coraxI = unitBuilder<GuardsmanUnit>({
   level: 'I'
 })
 export const coraxII = unitBuilder<GuardsmanUnit>({
-  tipo: 'army',
+  clasification: 'army',
   name: ARMY.coraxII,
   BASEHP: 330600,
   BASESTR: 110200,
@@ -1012,7 +985,7 @@ const catapultBuilder = (
   level: string
 ): EngineerUnit => {
   return unitBuilder<EngineerUnit>({
-    tipo: 'army',
+    clasification: 'army',
     name,
     BASEHP,
     BASESTR,
@@ -1040,7 +1013,7 @@ export const CatapultE7 = catapultBuilder(ARMY.CatapultE7, 51000, 8500, 740, 'E7
 
 //------------------------------------
 export const waterElemental = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.waterElemental, //'waterElemental',
   BASEHP: 5700,
   BASESTR: 1900,
@@ -1055,7 +1028,7 @@ export const waterElemental = unitBuilder<MonsterUnit>({
   level: 'III'
 })
 export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.icePhoenix, //'iceFenix',
   BASESTR: 17000,
   BASEHP: 51000,
@@ -1070,7 +1043,7 @@ export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'IV'
 })
 export const burningCentaurus: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.flamingCentaur, //'burningCentaurus',
   BASESTR: 44000,
   BASEHP: 132000,
@@ -1085,7 +1058,7 @@ export const burningCentaurus: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'V'
 })
 export const rubiGolem: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.rubiGolem, //'rubiGolem',
@@ -1100,7 +1073,7 @@ export const rubiGolem: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'VI'
 })
 export const windLord: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.windLord, //'windLord',
@@ -1115,7 +1088,7 @@ export const windLord: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'VII'
 })
 export const fireFenixI: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.firePhoenixI, //'fireFenixI',
@@ -1130,7 +1103,7 @@ export const fireFenixI: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'I'
 })
 export const fireFenixII: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.firePhoenixII, //'fireFenixII',
@@ -1147,7 +1120,7 @@ export const fireFenixII: MonsterUnit = unitBuilder<MonsterUnit>({
 
 //-----------------------------
 export const battleBoar: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.battleBoar, //'battleBoar',
@@ -1162,7 +1135,7 @@ export const battleBoar: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'III'
 })
 export const gorgonMedusa: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.gorgonMedusa, //'gorgonMedusa',
@@ -1177,7 +1150,7 @@ export const gorgonMedusa: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'IV'
 })
 export const fearManticora: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.fearsomeManticora, //'fearManticora',
@@ -1192,7 +1165,7 @@ export const fearManticora: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'V'
 })
 export const forestDestructor: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.jungleDestructor, //'forestDestructor',
@@ -1207,7 +1180,7 @@ export const forestDestructor: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'VI'
 })
 export const oldTerror: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.ancientTerror, //'oldTerror',
@@ -1222,7 +1195,7 @@ export const oldTerror: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'VII'
 })
 export const embaucatorI: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.tricksterI, //'embaucatorI',
@@ -1237,7 +1210,7 @@ export const embaucatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'I'
 })
 export const embaucatorII: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.tricksterII, //'embaucatorII',
@@ -1253,7 +1226,7 @@ export const embaucatorII: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 //-----------------------------
 export const emeraldDragon: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.emeraldDragon, //'emeraldDragon',
   BASESTR: 4500,
   BASEHP: 13500,
@@ -1268,7 +1241,7 @@ export const emeraldDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'III'
 })
 export const magicDragon: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.magicDragon, //'magicDragon',
   BASESTR: 15000,
   BASEHP: 45000,
@@ -1283,7 +1256,7 @@ export const magicDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'IV'
 })
 export const desertConquer: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.desertConquer, //'desertConquer',
   BASESTR: 42000,
   BASEHP: 126000,
@@ -1299,7 +1272,7 @@ export const desertConquer: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 
 export const crystalDragon: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.crystalDragon, //'crystalDragon',
   BASESTR: 120000,
   BASEHP: 360000,
@@ -1314,7 +1287,7 @@ export const crystalDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'VI'
 })
 export const blackDragon: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.blackDragon, //'blackDragon',
   BASESTR: 300000,
   BASEHP: 900000,
@@ -1329,7 +1302,7 @@ export const blackDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'VII'
 })
 export const devastatorI: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.devastatorI, //'devastatorI',
   BASESTR: 650000,
   BASEHP: 1950000,
@@ -1344,7 +1317,7 @@ export const devastatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'I'
 })
 export const devastatorII: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   name: ARMY.devastatorII, //'devastatorII',
   BASESTR: 1170000,
   BASEHP: 3510000,
@@ -1360,7 +1333,7 @@ export const devastatorII: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 
 export const stoneGargole: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.stoneGargole, //'stoneGargole',
@@ -1375,7 +1348,7 @@ export const stoneGargole: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'III'
 })
 export const multiArmGuardian: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.manyArmedGuardian, //'multiArmGuardian',
@@ -1390,7 +1363,7 @@ export const multiArmGuardian: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'IV'
 })
 export const Ettin: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.Ettin, //'Ettin',
@@ -1405,7 +1378,7 @@ export const Ettin: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'V'
 })
 export const trollRider: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.trollRider, //'trollRider',
@@ -1420,7 +1393,7 @@ export const trollRider: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'VI'
 })
 export const destroyerColossus: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.destructiveColossus, //'destroyerColossus',
@@ -1435,7 +1408,7 @@ export const destroyerColossus: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'VII'
 })
 export const krakenI: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.krakenI, //'krakenI',
@@ -1450,7 +1423,7 @@ export const krakenI: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'I'
 })
 export const krakenII: MonsterUnit = unitBuilder<MonsterUnit>({
-  tipo: 'monster',
+  clasification: 'monster',
   troop: 'monster',
   race: 'monster',
   name: ARMY.krakenII, //'krakenII',

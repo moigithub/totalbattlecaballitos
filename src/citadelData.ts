@@ -1,8 +1,9 @@
 interface ObjProps {
   name: string
-  type: string // melee, beast,ranged, elemental, etc
-  baseStr: number
-  baseHp: number
+  category: string // melee, beast,ranged, elemental, etc
+  BASESTR: number
+  BASEHP: number
+  strBonus?: number
   vsRangedPercent: number
   vsSiegePercent: number
   vsBeastPercent: number
@@ -17,24 +18,25 @@ interface ObjProps {
   vsDragonPercent: number
 }
 
-export interface Stack {
-  troop: ObjProps
-  amount: number
+export interface FightStack {
+  unit: ObjProps
+  unitsAmount: number
+  damage: number
 }
 
-interface Citadel {
+export interface Citadel {
   walls: {
     hp: number
   }
-  stacks: Stack[]
+  stacks: FightStack[]
 }
 
 const objBuilder = (props: Partial<ObjProps>): ObjProps => {
   return {
     name: 'name',
-    type: '',
-    baseStr: 0,
-    baseHp: 0,
+    category: '',
+    BASESTR: 0,
+    BASEHP: 0,
     vsRangedPercent: 0,
     vsSiegePercent: 0,
     vsBeastPercent: 0,
@@ -55,119 +57,119 @@ const objectDB: Record<string, ObjProps> = {}
 
 objectDB.bearV = objBuilder({
   name: 'Bear V',
-  type: 'beast, melee',
-  baseStr: 22000,
-  baseHp: 66000,
+  category: 'beast, melee',
+  BASESTR: 22000,
+  BASEHP: 66000,
   vsMountedPercent: 70,
   vsElementalPercent: 50
 })
 
 objectDB.pegasoRiderIV = objBuilder({
   name: 'Pegaso Rider IV',
-  type: 'flying',
-  baseStr: 8200,
-  baseHp: 24600,
+  category: 'flying',
+  BASESTR: 8200,
+  BASEHP: 24600,
   vsMeleePercent: 65,
   vsDragonPercent: 50
 })
 objectDB.unicornRiderV = objBuilder({
   name: 'Unicorn Rider V',
-  type: 'mounted',
-  baseStr: 27000,
-  baseHp: 81000,
+  category: 'mounted',
+  BASESTR: 27000,
+  BASEHP: 81000,
   vsRangedPercent: 65
 })
 objectDB.elfArcherI = objBuilder({
   name: 'Elf archer I',
-  type: 'ranged',
-  baseStr: 100,
-  baseHp: 300,
+  category: 'ranged',
+  BASESTR: 100,
+  BASEHP: 300,
   vsMeleePercent: 35
 })
 
 objectDB.druidII = objBuilder({
   name: 'Druid II',
-  type: 'ranged',
-  baseStr: 900,
-  baseHp: 2700,
+  category: 'ranged',
+  BASESTR: 900,
+  BASEHP: 2700,
   vsMeleePercent: 25
 })
 
 objectDB.centaurIII = objBuilder({
   name: 'Centaur III',
-  type: 'mounted',
-  baseStr: 2600,
-  baseHp: 7800,
+  category: 'mounted',
+  BASESTR: 2600,
+  BASEHP: 7800,
   vsRangedPercent: 50,
   vsSiegePercent: 20
 })
 
 objectDB.dwarf = objBuilder({
   name: 'Dwarf',
-  type: 'melee',
-  baseStr: 28,
-  baseHp: 84,
+  category: 'melee',
+  BASESTR: 28,
+  BASEHP: 84,
   vsMountedPercent: 10
 })
 
 objectDB.entVI = objBuilder({
   name: 'Ent VI',
-  type: 'elemental, melee',
-  baseStr: 73000,
-  baseHp: 219000,
+  category: 'elemental, melee',
+  BASESTR: 73000,
+  BASEHP: 219000,
   vsRangedPercent: 55,
   vsDragonPercent: 45
 })
 objectDB.lifeDragonVII = objBuilder({
   name: 'Life dragon VII',
-  type: 'dragon, flying',
-  baseStr: 240000,
-  baseHp: 720000,
+  category: 'dragon, flying',
+  BASESTR: 240000,
+  BASEHP: 720000,
   vsMountedPercent: 60,
   vsGiantPercent: 50
 })
 objectDB.cursedDragonVII = objBuilder({
   name: 'Cursed dragon VII',
-  type: 'dragon, flying',
-  baseStr: 320000,
-  baseHp: 960000,
+  category: 'dragon, flying',
+  BASESTR: 320000,
+  BASEHP: 960000,
   vsMountedPercent: 50,
   vsGiantPercent: 50
 })
 objectDB.giantZombieV = objBuilder({
   name: 'Giant zombie V',
-  type: 'giant, melee',
-  baseStr: 33000,
-  baseHp: 99000,
+  category: 'giant, melee',
+  BASESTR: 33000,
+  BASEHP: 99000,
   vsMountedPercent: 70,
   vsBeastPercent: 45
 })
 objectDB.deathRiderIII = objBuilder({
   name: 'Death rider III',
-  type: 'mounted',
-  baseStr: 3200,
-  baseHp: 9600,
+  category: 'mounted',
+  BASESTR: 3200,
+  BASEHP: 9600,
   vsRangedPercent: 50
 })
 objectDB.bullRiderV = objBuilder({
   name: 'Bull rider V',
-  type: 'mounted',
-  baseStr: 29000,
-  baseHp: 87000,
+  category: 'mounted',
+  BASESTR: 29000,
+  BASEHP: 87000,
   vsRangedPercent: 65
 })
 objectDB.wereWolfII = objBuilder({
   name: 'WereWolf II',
-  type: 'beast, melee',
-  baseStr: 360,
-  baseHp: 1080,
+  category: 'beast, melee',
+  BASESTR: 360,
+  BASEHP: 1080,
   vsMountedPercent: 65
 })
 objectDB.cursedDendroidVI = objBuilder({
   name: 'Cursed dendroid VI',
-  type: 'elemental, melee',
-  baseStr: 110000,
-  baseHp: 330000,
+  category: 'elemental, melee',
+  BASESTR: 110000,
+  BASEHP: 330000,
   vsRangedPercent: 55,
   vsDragonPercent: 45
 })
@@ -176,24 +178,29 @@ export const citadele10: Citadel = {
   walls: { hp: 90 * 30_000 },
   stacks: [
     {
-      troop: objectDB.bearV,
-      amount: 9
+      unit: objectDB.bearV,
+      unitsAmount: 9,
+      damage: 0
     },
     {
-      troop: objectDB.pegasoRiderIV,
-      amount: 19
+      unit: objectDB.pegasoRiderIV,
+      unitsAmount: 19,
+      damage: 0
     },
     {
-      troop: objectDB.elfArcherI,
-      amount: 1200
+      unit: objectDB.elfArcherI,
+      unitsAmount: 1200,
+      damage: 0
     },
     {
-      troop: objectDB.druidII,
-      amount: 100
+      unit: objectDB.druidII,
+      unitsAmount: 100,
+      damage: 0
     },
     {
-      troop: objectDB.dwarf,
-      amount: 2200
+      unit: objectDB.dwarf,
+      unitsAmount: 2200,
+      damage: 0
     }
   ]
 }
@@ -202,24 +209,29 @@ export const citadele15 = {
   walls: { hp: 700 * 30_000 },
   stacks: [
     {
-      troop: objectDB.entVI,
-      amount: 21
+      unit: objectDB.entVI,
+      unitsAmount: 21,
+      damage: 0
     },
     {
-      troop: objectDB.unicornRiderV,
-      amount: 47
+      unit: objectDB.unicornRiderV,
+      unitsAmount: 47,
+      damage: 0
     },
     {
-      troop: objectDB.druidII,
-      amount: 1100
+      unit: objectDB.druidII,
+      unitsAmount: 1100,
+      damage: 0
     },
     {
-      troop: objectDB.centaurIII,
-      amount: 290
+      unit: objectDB.centaurIII,
+      unitsAmount: 290,
+      damage: 0
     },
     {
-      troop: objectDB.elfArcherI,
-      amount: 5000
+      unit: objectDB.elfArcherI,
+      unitsAmount: 5000,
+      damage: 0
     }
   ]
 }
@@ -228,24 +240,29 @@ export const citadele20 = {
   walls: { hp: 3650 * 30_000 },
   stacks: [
     {
-      troop: objectDB.lifeDragonVII,
-      amount: 41
+      unit: objectDB.lifeDragonVII,
+      unitsAmount: 41,
+      damage: 0
     },
     {
-      troop: objectDB.entVI,
-      amount: 110
+      unit: objectDB.entVI,
+      unitsAmount: 110,
+      damage: 0
     },
     {
-      troop: objectDB.centaurIII,
-      amount: 2500
+      unit: objectDB.centaurIII,
+      unitsAmount: 2500,
+      damage: 0
     },
     {
-      troop: objectDB.bearV,
-      amount: 230
+      unit: objectDB.bearV,
+      unitsAmount: 230,
+      damage: 0
     },
     {
-      troop: objectDB.druidII,
-      amount: 3600
+      unit: objectDB.druidII,
+      unitsAmount: 3600,
+      damage: 0
     }
   ]
 }
@@ -253,24 +270,29 @@ export const citadele25 = {
   walls: { hp: 31900 * 30_000 },
   stacks: [
     {
-      troop: objectDB.lifeDragonVII,
-      amount: 480
+      unit: objectDB.lifeDragonVII,
+      unitsAmount: 480,
+      damage: 0
     },
     {
-      troop: objectDB.entVI,
-      amount: 880
+      unit: objectDB.entVI,
+      unitsAmount: 880,
+      damage: 0
     },
     {
-      troop: objectDB.bearV,
-      amount: 2400
+      unit: objectDB.bearV,
+      unitsAmount: 2400,
+      damage: 0
     },
     {
-      troop: objectDB.pegasoRiderIV,
-      amount: 4300
+      unit: objectDB.pegasoRiderIV,
+      unitsAmount: 4300,
+      damage: 0
     },
     {
-      troop: objectDB.centaurIII,
-      amount: 10000
+      unit: objectDB.centaurIII,
+      unitsAmount: 10000,
+      damage: 0
     }
   ]
 }
@@ -279,24 +301,29 @@ export const citadele30 = {
   walls: { hp: 135000 * 30_000 },
   stacks: [
     {
-      troop: objectDB.lifeDragonVII,
-      amount: 2300
+      unit: objectDB.lifeDragonVII,
+      unitsAmount: 2300,
+      damage: 0
     },
     {
-      troop: objectDB.entVI,
-      amount: 4300
+      unit: objectDB.entVI,
+      unitsAmount: 4300,
+      damage: 0
     },
     {
-      troop: objectDB.bearV,
-      amount: 12000
+      unit: objectDB.bearV,
+      unitsAmount: 12000,
+      damage: 0
     },
     {
-      troop: objectDB.pegasoRiderIV,
-      amount: 21000
+      unit: objectDB.pegasoRiderIV,
+      unitsAmount: 21000,
+      damage: 0
     },
     {
-      troop: objectDB.centaurIII,
-      amount: 49000
+      unit: objectDB.centaurIII,
+      unitsAmount: 49000,
+      damage: 0
     }
   ]
 }
@@ -305,24 +332,29 @@ export const citadelc20 = {
   walls: { hp: 9200 * 30_000 },
   stacks: [
     {
-      troop: objectDB.cursedDragonVII,
-      amount: 10
+      unit: objectDB.cursedDragonVII,
+      unitsAmount: 10,
+      damage: 0
     },
     {
-      troop: objectDB.giantZombieV,
-      amount: 80
+      unit: objectDB.giantZombieV,
+      unitsAmount: 80,
+      damage: 0
     },
     {
-      troop: objectDB.deathRiderIII,
-      amount: 650
+      unit: objectDB.deathRiderIII,
+      unitsAmount: 650,
+      damage: 0
     },
     {
-      troop: objectDB.bullRiderV,
-      amount: 54
+      unit: objectDB.bullRiderV,
+      unitsAmount: 54,
+      damage: 0
     },
     {
-      troop: objectDB.wereWolfII,
-      amount: 2900
+      unit: objectDB.wereWolfII,
+      unitsAmount: 2900,
+      damage: 0
     }
   ]
 }
@@ -330,24 +362,29 @@ export const citadelc25 = {
   walls: { hp: 77500 * 30_000 },
   stacks: [
     {
-      troop: objectDB.cursedDragonVII,
-      amount: 120
+      unit: objectDB.cursedDragonVII,
+      unitsAmount: 120,
+      damage: 0
     },
     {
-      troop: objectDB.cursedDendroidVI,
-      amount: 205
+      unit: objectDB.cursedDendroidVI,
+      unitsAmount: 205,
+      damage: 0
     },
     {
-      troop: objectDB.giantZombieV,
-      amount: 540
+      unit: objectDB.giantZombieV,
+      unitsAmount: 540,
+      damage: 0
     },
     {
-      troop: objectDB.bullRiderV,
-      amount: 400
+      unit: objectDB.bullRiderV,
+      unitsAmount: 400,
+      damage: 0
     },
     {
-      troop: objectDB.deathRiderIII,
-      amount: 2750
+      unit: objectDB.deathRiderIII,
+      unitsAmount: 2750,
+      damage: 0
     }
   ]
 }

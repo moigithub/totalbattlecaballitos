@@ -40,7 +40,7 @@ export const Card = ({ stack }: { stack: Stack }) => {
   const otherStrengthInfo = stackAllStrength.map(data => {
     return (
       <span className={data.type}>
-        {data.type} {data.str.toFixed(2)}
+        {data.type}({data.percent}%) {data.str.toFixed(2)}
       </span>
     )
   })
@@ -58,7 +58,7 @@ export const Card = ({ stack }: { stack: Stack }) => {
         </p>
       </div>
       <p className='stack-units font-bold text-lg sm:text-2xl md:text-3xl flex justify-center items-center bg-green-800 text-gray-300 p-1 sm:p-2 md:p-4 mr-2 relative'>
-        {stack.units}
+        {stack.unitsAmount}
       </p>
       <p className='stack-name'>{stack.unit.name}</p>
       <p className='stack-health-strength flex flex-wrap'>
@@ -68,9 +68,15 @@ export const Card = ({ stack }: { stack: Stack }) => {
       <p className='stack-other-strength flex flex-wrap text-sm text-teal-600'>
         STR {otherStrengthInfo}
       </p>
-      {stack.unit.tipo === 'army' && <p className='stack-leadership'>Lead {stack.leadership}</p>}
-      {stack.unit.tipo === 'monster' && <p className='stack-leadership'>Domi {stack.dominance}</p>}
-      {stack.unit.tipo === 'merc' && <p className='stack-leadership'>Auth {stack.authority}</p>}
+      {stack.unit.clasification === 'army' && (
+        <p className='stack-leadership'>Lead {stack.leadership}</p>
+      )}
+      {stack.unit.clasification === 'monster' && (
+        <p className='stack-leadership'>Domi {stack.dominance}</p>
+      )}
+      {stack.unit.clasification === 'merc' && (
+        <p className='stack-leadership'>Auth {stack.authority}</p>
+      )}
       {/* <p className='stack-minSetup'>Min {stack.minSetup}</p> */}
       {/* <p className='stack-limit'>Limit {stack.limit}</p> */}
 

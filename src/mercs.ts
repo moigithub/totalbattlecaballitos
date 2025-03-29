@@ -10,7 +10,7 @@ const mercRiderBuilder = (
   level: string
 ): MercUnit => {
   return unitBuilder<MercUnit>({
-    tipo: 'merc',
+    clasification: 'merc',
     name,
     BASEHP,
     BASESTR,
@@ -28,7 +28,7 @@ const mercRiderBuilder = (
 
 //---------------------------
 export const scorpionRiderV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.scorpionRiderV,
   BASEHP: 111000,
   BASESTR: 37000,
@@ -45,7 +45,7 @@ export const scorpionRiderV: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const cyclopsV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.cyclopsV,
   BASEHP: 135000,
   BASESTR: 45000,
@@ -62,7 +62,7 @@ export const cyclopsV: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const gargoyleV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.gargoyleV,
   BASEHP: 57000,
   BASESTR: 19000,
@@ -78,7 +78,7 @@ export const gargoyleV: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const bearV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.bearV,
   BASEHP: 66000,
   BASESTR: 22000,
@@ -94,7 +94,7 @@ export const bearV: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const ifritV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.ifritV,
   BASEHP: 132000,
   BASESTR: 44000,
@@ -110,7 +110,7 @@ export const ifritV: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const giantZombieV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.giantZombieV,
   BASEHP: 99000,
   BASESTR: 33000,
@@ -126,7 +126,7 @@ export const giantZombieV: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const firewormRiderV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.firewormRiderV,
   BASEHP: 150000,
   BASESTR: 50000,
@@ -141,7 +141,7 @@ export const firewormRiderV: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const unicornRiderV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.unicornRiderV,
   BASEHP: 81000,
   BASESTR: 27000,
@@ -156,7 +156,7 @@ export const unicornRiderV: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const bullRiderV: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.bullRiderV,
   BASEHP: 87000,
   BASESTR: 29000,
@@ -171,7 +171,7 @@ export const bullRiderV: MercUnit = unitBuilder<MercUnit>({
 })
 //------------------------------------
 export const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.epicMonsterHunterVI,
   BASEHP: 6090,
   BASESTR: 2030,
@@ -190,7 +190,7 @@ export const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
 export const chariotVI = mercRiderBuilder(ARMY.chariotVI, 11400, 3800, 493, 410, 'VI')
 
 export const legionaryVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.legionaryVI,
   BASEHP: 5700,
   BASESTR: 1900,
@@ -206,7 +206,7 @@ export const legionaryVI: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const arbalesterVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.arbalesterVI,
   BASEHP: 5700,
   BASESTR: 1900,
@@ -222,7 +222,7 @@ export const arbalesterVI: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const sphynxVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.sphynxVI,
   BASEHP: 56700,
   BASESTR: 18900,
@@ -238,7 +238,7 @@ export const sphynxVI: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const knightVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.knightVI,
   BASEHP: 5700,
   BASESTR: 1900,
@@ -254,7 +254,7 @@ export const knightVI: MercUnit = unitBuilder<MercUnit>({
   level: 'VI'
 })
 export const trailseekerVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.trailseekerVI,
   BASEHP: 5670,
   BASESTR: 1890,
@@ -270,7 +270,7 @@ export const trailseekerVI: MercUnit = unitBuilder<MercUnit>({
   level: 'VI'
 })
 export const rhinoRiderVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.rhinoRiderVI,
   BASEHP: 11340,
   BASESTR: 3780,
@@ -287,7 +287,7 @@ export const rhinoRiderVI: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const deathChariotVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.deathChariotVI,
   BASEHP: 171000,
   BASESTR: 57000,
@@ -301,7 +301,7 @@ export const deathChariotVI: MercUnit = unitBuilder<MercUnit>({
   level: 'VI'
 })
 export const sheduVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.sheduVI,
   BASEHP: 56700,
   BASESTR: 18900,
@@ -318,7 +318,7 @@ export const sheduVI: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const abominationVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.abominationVI,
   BASEHP: 390000,
   BASESTR: 130000,
@@ -333,7 +333,7 @@ export const abominationVI: MercUnit = unitBuilder<MercUnit>({
   level: 'VI'
 })
 export const boneGolemVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.boneGolemVI,
   BASEHP: 210000,
   BASESTR: 70000,
@@ -348,7 +348,7 @@ export const boneGolemVI: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const archidemonVI: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.archidemonVI,
   BASEHP: 540000,
   BASESTR: 180000,
@@ -364,7 +364,7 @@ export const archidemonVI: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const lightningLordVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.lightningLordVII,
   BASEHP: 460000,
   BASESTR: 153000,
@@ -380,7 +380,7 @@ export const lightningLordVII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const cursedDragonVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.cursedDragonVII,
   BASEHP: 960000,
   BASESTR: 320000,
@@ -396,7 +396,7 @@ export const cursedDragonVII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const seaLordVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.seaLordVII,
   BASEHP: 420000,
   BASESTR: 140000,
@@ -412,7 +412,7 @@ export const seaLordVII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const sandwormVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.sandwormVII,
   BASEHP: 1290000,
   BASESTR: 430000,
@@ -428,7 +428,7 @@ export const sandwormVII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const lifeDragonVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.lifeDragonVII,
   BASEHP: 720000,
   BASESTR: 240000,
@@ -444,7 +444,7 @@ export const lifeDragonVII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const goldenDragonVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.goldenDragonVII,
   BASEHP: 510000,
   BASESTR: 170000,
@@ -459,7 +459,7 @@ export const goldenDragonVII: MercUnit = unitBuilder<MercUnit>({
   level: 'VII'
 })
 export const overlordVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.overlordVII,
   BASEHP: 600000,
   BASESTR: 200000,
@@ -475,7 +475,7 @@ export const overlordVII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const fireLordVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.fireLordVII,
   BASEHP: 1680000,
   BASESTR: 560000,
@@ -490,7 +490,7 @@ export const fireLordVII: MercUnit = unitBuilder<MercUnit>({
   level: 'VII'
 })
 export const jungleKingVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.jungleKingVII,
   BASEHP: 330000,
   BASESTR: 110000,
@@ -506,7 +506,7 @@ export const jungleKingVII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const wyvernII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.wyvernII,
   BASEHP: 2070000,
   BASESTR: 690000,
@@ -521,7 +521,7 @@ export const wyvernII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const arielII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.arielII,
   BASEHP: 330000,
   BASESTR: 55000,
@@ -536,7 +536,7 @@ export const arielII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const jagoII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.jagoII,
   BASEHP: 660000,
   BASESTR: 220000,
@@ -552,7 +552,7 @@ export const jagoII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const eternalCannoneerII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.eternalCannoneerII,
   BASEHP: 1320000,
   BASESTR: 440000,
@@ -566,7 +566,7 @@ export const eternalCannoneerII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const warregalII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.warregalII,
   BASEHP: 660000,
   BASESTR: 220000,
@@ -581,7 +581,7 @@ export const warregalII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.epicMonsterHunterVII,
   BASEHP: 11220,
   BASESTR: 3740,
@@ -595,7 +595,7 @@ export const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
   level: 'VII'
 })
 export const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.epicMonsterHunterII,
   BASEHP: 75000,
   BASESTR: 25000,
@@ -610,7 +610,7 @@ export const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
 })
 
 export const demonicSalamanderII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.demonicSalamanderII,
   BASEHP: 1230000,
   BASESTR: 410000,
@@ -624,7 +624,7 @@ export const demonicSalamanderII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const slavicWarriorII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.slavicWarriorII,
   BASEHP: 33000,
   BASESTR: 11000,
@@ -639,7 +639,7 @@ export const slavicWarriorII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const pounderII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.pounderII,
   BASEHP: 33000,
   BASESTR: 11000,
@@ -654,7 +654,7 @@ export const pounderII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const highlanderII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.highlanderII,
   BASEHP: 33000,
   BASESTR: 11000,
@@ -669,7 +669,7 @@ export const highlanderII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const wardenII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.wardenII,
   BASEHP: 1410000,
   BASESTR: 470000,
@@ -683,7 +683,7 @@ export const wardenII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const galloperII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.galloperII,
   BASEHP: 66000,
   BASESTR: 22000,
@@ -698,7 +698,7 @@ export const galloperII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const quicksandII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.quicksandII,
   BASEHP: 66000,
   BASESTR: 22000,
@@ -713,7 +713,7 @@ export const quicksandII: MercUnit = unitBuilder<MercUnit>({
   level: 'II'
 })
 export const scarfaceII: MercUnit = unitBuilder<MercUnit>({
-  tipo: 'merc',
+  clasification: 'merc',
   name: ARMY.scarfaceII,
   BASEHP: 33000,
   BASESTR: 11000,

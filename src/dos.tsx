@@ -24,15 +24,29 @@ import { /* getStats, getSTRWithBonus,*/ useStackStore } from './stackStore'
 import { Stack /*, Unit */ } from './types'
 
 import { SmallCard } from './SmallCard'
-import { Citadel } from './citadel.tsx'
+import { CitadelData } from './citadel.tsx'
 import {
   addArmyUnits,
+  fight,
+  // findStrongestTarget,
+  // findTargetOfTypeWithHealth,
+  // findTargetOfTypeWithHeath,
+  // findTargetWithHealth,
+  // getStackDamage,
   getArmyAuthority,
   getArmyDominance,
   getArmyLeadership,
   getStackHealth,
-  getStackStrength
+  getStackStrength,
+  getStrongestTroopAlive,
+  haveTroopsAlive,
+  prepareArmyData
 } from './helpers'
+import { citadele10, FightStack } from './citadelData.ts'
+export interface Result {
+  status: number
+  msg: string
+}
 
 function Dos() {
   const leadership = useGuardsStore(state => state.leadership)
@@ -64,6 +78,7 @@ function Dos() {
 
   const [selectedTarget, setSelectedTarget] = useState('citadele10')
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
+  const [report, setReport] = useState<{ status: number; msg: string }[]>([])
 
   const [cardType, setCardType] = useState('card') // card , smallcard
 
@@ -252,26 +267,26 @@ function Dos() {
 
       let canIAddToFirstStack = true
       if (
-        stack.unit.tipo === 'army' &&
+        stack.unit.clasification === 'army' &&
         getArmyLeadership(ARMY) + stack.unit.LEADERSHIP > leadership
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
       } else if (
-        stack.unit.tipo === 'merc' &&
+        stack.unit.clasification === 'merc' &&
         getArmyAuthority(ARMY) + stack.unit.AUTHORITY > authority
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
       } else if (
-        stack.unit.tipo === 'monster' &&
+        stack.unit.clasification === 'monster' &&
         getArmyDominance(ARMY) + stack.unit.DOMINANCE > dominance
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
       }
 
-      if (ARMY[0].useUnitLimit && ARMY[0].units >= ARMY[0].unitLimit) {
+      if (ARMY[0].useUnitLimit && ARMY[0].unitsAmount >= ARMY[0].unitLimit) {
         canIAddToFirstStack = false
       }
 
@@ -317,7 +332,7 @@ function Dos() {
         // console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
 
         /**manejo de leadership */
-        if (stack.unit.tipo === 'army') {
+        if (stack.unit.clasification === 'army') {
           // 6. check leadership del nuevo grupo
           // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
           const unitsCount = 1 // por ahora siempre 1
@@ -356,7 +371,7 @@ function Dos() {
             //   getStackStrLimit(stack.id),
             //   stack.strLimit
             // )
-            if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
+            if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
               // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               // console.log('rompio lead1')
               break
@@ -405,7 +420,7 @@ function Dos() {
           }
         }
 
-        if (stack.unit.tipo === 'merc') {
+        if (stack.unit.clasification === 'merc') {
           // 5. check authority acumulado del mercenaries
           // 6. check authority del nuevo grupo
           // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
@@ -440,7 +455,7 @@ function Dos() {
               groupStrength = previousGroupStrength
             }
 
-            if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
+            if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
               // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               // console.log('rompio merc1')
               break
@@ -494,7 +509,7 @@ function Dos() {
           }
         }
 
-        if (stack.unit.tipo === 'monster') {
+        if (stack.unit.clasification === 'monster') {
           // 5. check DOMINANCE acumulado del mercenaries
           // 6. check DOMINANCE del nuevo grupo
           // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
@@ -524,7 +539,7 @@ function Dos() {
               groupStrength = previousGroupStrength
             }
 
-            if (ARMY[i].useUnitLimit && ARMY[i].units >= ARMY[i].unitLimit) {
+            if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
               // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
               // console.log('rompio dom1')
               break
@@ -619,6 +634,302 @@ function Dos() {
      * el sacrificio siempre incrementa de 1 en 1 sus unidades
      *
      */
+  }
+
+  const verifyCitadele10 = () => {
+    console.log('verifying citadele10')
+    const checkResult: Result[] = []
+    // let troopsTypes: boolean = false
+    let firstEnemyKilled: boolean = false
+    let secondEnemyKilled: boolean = false
+    let thirdEnemyKilled: boolean = false
+    let fourthEnemyKilled: boolean = false
+    // let fifthEnemyKilled: boolean = false
+
+    let firstStackDied: boolean = false
+    let secondStackDied: boolean = false
+    let thirdStackDied: boolean = false
+    let fourthStackDied: boolean = false
+    // let fifthStackDied: boolean = false
+
+    const myFirstStackUnitHealth = 1 * army[0].unit.BASEHP * (1 + army[0].hpBonus / 100)
+    let enemyFirstStackStrength =
+      citadele10.stacks[0].unitsAmount * citadele10.stacks[0].unit.BASESTR
+    let enemySecondStackStrength =
+      citadele10.stacks[1].unitsAmount * citadele10.stacks[1].unit.BASESTR
+    let enemyThirdStackStrength =
+      citadele10.stacks[2].unitsAmount * citadele10.stacks[2].unit.BASESTR
+    let enemyFourthStackStrength =
+      citadele10.stacks[3].unitsAmount * citadele10.stacks[3].unit.BASESTR
+    let enemyFifthStackStrength =
+      citadele10.stacks[4].unitsAmount * citadele10.stacks[4].unit.BASESTR
+
+    const enemyFirstStackHealth =
+      citadele10.stacks[0].unitsAmount * citadele10.stacks[0].unit.BASEHP
+    const enemySecondStackHealth =
+      citadele10.stacks[1].unitsAmount * citadele10.stacks[1].unit.BASEHP
+    const enemyThirdStackHealth =
+      citadele10.stacks[2].unitsAmount * citadele10.stacks[2].unit.BASEHP
+    const enemyFourthStackHealth =
+      citadele10.stacks[3].unitsAmount * citadele10.stacks[3].unit.BASEHP
+    const enemyFifthStackHealth =
+      citadele10.stacks[4].unitsAmount * citadele10.stacks[4].unit.BASEHP
+
+    // check all stack type should NOT be mounted,dragon,melee,elemental
+    checkResult.push({ status: 0, msg: '=== Checking troop types ===' })
+
+    for (let i = 0; i < army.length; i++) {
+      if (
+        army[i].unit.category !== 'mounted' &&
+        army[i].unit.category !== 'melee' &&
+        army[i].unit.group !== 'dragon' &&
+        army[i].unit.group !== 'elemental'
+      ) {
+        checkResult.push({ status: 1, msg: `Stack ${i} : troop type GOOD!` })
+      } else {
+        checkResult.push({
+          status: 2,
+          msg: `Stack ${i} : will get extra damage =( ...because its troop type`
+        })
+      }
+    }
+
+    //===============================================================
+    checkResult.push({ status: 0, msg: '=== Checking meatshield/tank capability ===' })
+    let totalDamage: number = 0
+    //first hit will be against bear who have bonus against mounted, elemental
+    // and will get aditional damage
+    if (army[0].unit.category === 'mounted') {
+      enemyFirstStackStrength =
+        enemyFirstStackStrength * (1 + citadele10.stacks[0].unit.vsMountedPercent / 100)
+    }
+    if (army[0].unit.group === 'elemental') {
+      enemyFirstStackStrength =
+        enemyFirstStackStrength * (1 + citadele10.stacks[0].unit.vsElementalPercent / 100)
+    }
+
+    totalDamage = totalDamage + enemyFirstStackStrength
+    // first stack, each unit must have health(+bonus) higher than the enemy first stack strength+bonus
+    if (myFirstStackUnitHealth > totalDamage) {
+      checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy first attack' })
+    } else {
+      checkResult.push({
+        status: 2,
+        msg: 'first stack will die on enemy first attack, add more health'
+      })
+      firstStackDied = true
+    }
+
+    // check if first stack,can tank enemy 2nd stack attack
+    // vs Pegaso Rider IV who havebonus against melee,dragon
+    if (army[0].unit.category === 'melee') {
+      enemySecondStackStrength =
+        enemySecondStackStrength * (1 + citadele10.stacks[1].unit.vsMeleePercent / 100)
+    }
+    if (army[0].unit.group === 'dragon') {
+      enemySecondStackStrength =
+        enemySecondStackStrength * (1 + citadele10.stacks[1].unit.vsDragonPercent / 100)
+    }
+
+    // first stack, each unit must have health(+bonus) higher than the enemy 2nd stack strength+bonus
+    if (!firstStackDied) {
+      totalDamage = totalDamage + enemySecondStackStrength
+
+      if (myFirstStackUnitHealth > totalDamage) {
+        checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy second attack' })
+      } else {
+        checkResult.push({
+          status: 2,
+          msg: 'first stack will die on enemy second attack, add more health'
+        })
+        secondStackDied = true
+      }
+
+      // check if first stack,can tank enemy 3rd stack attack
+      // vs Elf archer I who havebonus against melee
+      if (army[0].unit.category === 'melee') {
+        enemyThirdStackStrength =
+          enemyThirdStackStrength * (1 + citadele10.stacks[2].unit.vsMeleePercent / 100)
+      }
+
+      if (!secondStackDied) {
+        totalDamage = totalDamage + enemyThirdStackStrength
+        // first stack, each unit must have health(+bonus) higher than the enemy 3rd stack strength+bonus
+        if (myFirstStackUnitHealth > totalDamage) {
+          checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy third attack' })
+        } else {
+          checkResult.push({
+            status: 2,
+            msg: 'first stack will die on enemy third attack, add more health'
+          })
+          thirdStackDied = true
+        }
+
+        // check if first stack,can tank enemy 4th stack attack
+        // vs Druid II who havebonus against melee
+        if (army[0].unit.category === 'melee') {
+          enemyFourthStackStrength =
+            enemyFourthStackStrength * (1 + citadele10.stacks[3].unit.vsMeleePercent / 100)
+        }
+
+        if (!thirdStackDied) {
+          totalDamage = totalDamage + enemyFourthStackStrength
+          // first stack, each unit must have health(+bonus) higher than the enemy 4th stack strength+bonus
+          if (myFirstStackUnitHealth > totalDamage) {
+            checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy fourth attack' })
+          } else {
+            checkResult.push({
+              status: 2,
+              msg: 'first stack will die on enemy fourth attack, add more health'
+            })
+            fourthStackDied = true
+          }
+
+          // check if first stack,can tank enemy 5th stack attack
+          // vs Dwarf who havebonus against mount
+          if (army[0].unit.category === 'mounted') {
+            enemyFifthStackStrength =
+              enemyFifthStackStrength * (1 + citadele10.stacks[4].unit.vsMountedPercent / 100)
+          }
+
+          if (!fourthStackDied) {
+            totalDamage = totalDamage + enemyFifthStackStrength
+            // first stack, each unit must have health(+bonus) higher than the enemy 5th stack strength+bonus
+            if (myFirstStackUnitHealth > totalDamage) {
+              checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy fifth attack' })
+              checkResult.push({ status: 4, msg: 'WHOA!, EXCELENT MEATSHIELD!!' })
+            } else {
+              checkResult.push({
+                status: 2,
+                msg: 'first stack will die on enemy fifth attack, add more health'
+              })
+            }
+          }
+        }
+      }
+    }
+    //===============================================================
+    checkResult.push({ status: 0, msg: '=== Checking first stack strength ===' })
+
+    // first stack, should be powerful enough to kill enemy first stack
+    const myFirstStackStrength =
+      army[0].unitsAmount * army[0].unit.BASESTR * (1 + army[0].strBonus / 100)
+
+    // if (!firstStackDied) {
+    if (myFirstStackStrength >= enemyFirstStackHealth) {
+      checkResult.push({ status: 1, msg: 'first stack can kill enemy first stack' })
+      firstEnemyKilled = true
+    } else {
+      checkResult.push({
+        status: 2,
+        msg: 'first stack is not strong enough to kill first enemy, ADD MORE UNITS!'
+      })
+      firstEnemyKilled = false
+    }
+
+    if (firstEnemyKilled) {
+      if (myFirstStackStrength >= enemySecondStackHealth) {
+        checkResult.push({ status: 1, msg: 'first stack can kill enemy second stack' })
+        secondEnemyKilled = true
+      } else {
+        checkResult.push({
+          status: 2,
+          msg: 'first stack is not strong enough to kill second enemy, ADD MORE UNITS!'
+        })
+        secondEnemyKilled = false
+      }
+
+      if (secondEnemyKilled) {
+        if (myFirstStackStrength >= enemyThirdStackHealth) {
+          checkResult.push({ status: 1, msg: 'first stack can kill enemy third stack' })
+          thirdEnemyKilled = true
+        } else {
+          checkResult.push({
+            status: 2,
+            msg: 'first stack is not strong enough to kill third enemy, ADD MORE UNITS!'
+          })
+          thirdEnemyKilled = false
+        }
+
+        if (thirdEnemyKilled) {
+          if (myFirstStackStrength >= enemyFourthStackHealth) {
+            checkResult.push({ status: 1, msg: 'first stack can kill enemy fourth stack' })
+            fourthEnemyKilled = true
+          } else {
+            checkResult.push({
+              status: 2,
+              msg: 'first stack is not strong enough to kill fourth enemy, ADD MORE UNITS!'
+            })
+            fourthEnemyKilled = false
+          }
+
+          if (fourthEnemyKilled) {
+            if (myFirstStackStrength >= enemyFifthStackHealth) {
+              checkResult.push({ status: 1, msg: 'first stack can kill enemy fifth stack' })
+              checkResult.push({ status: 4, msg: 'WHOA!, EXCELENT KILLER!!' })
+              // fifthEnemyKilled = true
+            } else {
+              checkResult.push({
+                status: 2,
+                msg: 'first stack is not strong enough to kill fifth enemy, ADD MORE UNITS!'
+              })
+              // fifthEnemyKilled = false
+            }
+          }
+        }
+      }
+      // }
+    }
+
+    // ***********************************
+    // simulation
+
+    // BOTH sides my army, citadel already ordered based on stack strength, so no need to do anything
+    // INFO: I DO first attack
+    checkResult.push({ status: 0, msg: 'simulation i attack first' })
+
+    // prepare army units for fighting, format data to have same structure as citadel
+    const myArmy = prepareArmyData(army)
+    const citadel = structuredClone(citadele10.stacks)
+
+    let isMyTurn = true
+    let attacker: FightStack | null = myArmy[0] // single stack
+    let defender: FightStack[] | null = citadel // array of stacks
+    // check both sides have troops alive
+    let loopProtect = 20
+    while (haveTroopsAlive(myArmy) && haveTroopsAlive(citadel)) {
+      if (isMyTurn) {
+        attacker = getStrongestTroopAlive(myArmy)
+        if (!attacker) {
+          break
+        }
+
+        defender = citadel
+      } else {
+        attacker = getStrongestTroopAlive(citadel)
+        if (!attacker) {
+          break
+        }
+
+        defender = myArmy
+      }
+      console.log('attacker', attacker, 'defender', defender)
+      console.log('fight')
+      fight(attacker, defender, checkResult)
+
+      isMyTurn = !isMyTurn
+
+      loopProtect--
+      if (loopProtect < 1) {
+        console.log('loop protection')
+        break
+      }
+    }
+
+    console.log('citadel after hit', citadel)
+
+    setReport(checkResult)
+    console.log(' citadele10 result', checkResult)
   }
 
   const handleDrag = (event: DragEndEvent) => {
@@ -756,20 +1067,29 @@ function Dos() {
         </div>
 
         <div className='hidden lg:block'>
-          {selectedTarget === 'citadele10' && <Citadel type='e10' />}
-          {selectedTarget === 'citadele15' && <Citadel type='e15' />}
-          {selectedTarget === 'citadele20' && <Citadel type='e20' />}
-          {selectedTarget === 'citadele25' && <Citadel type='e25' />}
-          {selectedTarget === 'citadele30' && <Citadel type='e30' />}
-          {selectedTarget === 'citadelc20' && <Citadel type='c20' />}
-          {selectedTarget === 'citadelc25' && <Citadel type='c25' />}
+          {selectedTarget === 'citadele10' && <CitadelData type='e10' />}
+          {selectedTarget === 'citadele15' && <CitadelData type='e15' />}
+          {selectedTarget === 'citadele20' && <CitadelData type='e20' />}
+          {selectedTarget === 'citadele25' && <CitadelData type='e25' />}
+          {selectedTarget === 'citadele30' && <CitadelData type='e30' />}
+          {selectedTarget === 'citadelc20' && <CitadelData type='c20' />}
+          {selectedTarget === 'citadelc25' && <CitadelData type='c25' />}
+
+          {selectedTarget === 'citadele10' && (
+            <button
+              className='bg-indigo-500 text-md font-bold text-white'
+              onClick={verifyCitadele10}
+            >
+              Verify
+            </button>
+          )}
         </div>
       </nav>
 
       <>
         <ArmyList />
 
-        <div className='pt-[310px] sm:ml-64'>
+        <div className='pt-[332px] sm:ml-64 flex'>
           <div className='p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700'>
             <div className='stack-container'>
               <h2 className='header-title'>Stacks</h2>
@@ -822,6 +1142,25 @@ function Dos() {
                 </DndContext>
               </div>
             </div>
+          </div>
+          <div className='mt-4 p-4 border-2'>
+            {report.map((data, i) => {
+              let color = 'text-green-700'
+              if (data.status == 0) {
+                color = 'text-blue-700'
+              }
+              if (data.status == 2) {
+                color = 'text-red-700'
+              }
+              if (data.status == 4) {
+                color = 'text-yellow-300'
+              }
+              return (
+                <li key={`rpt${i}`} className={`text-sm ${color}`}>
+                  {data.msg}
+                </li>
+              )
+            })}
           </div>
         </div>
       </>

@@ -51,7 +51,7 @@ interface StackStore {
   // fixStackUnits: (id: string, maxHealth: number) => void
   calcWhichMobIDoMostDmg: (id: string) => MobStack
   getStackStrength: (id: string) => number
-  getStackAllStrength: (id: string) => [] | { type: string; str: number }[]
+  getStackAllStrength: (id: string) => [] | { type: string; percent: number; str: number }[]
   getStackHealth: (id: string) => number
   // getStackLeadership: (id: string) => number
   toggleLockMin: (id: string) => void
@@ -88,9 +88,9 @@ export const getStats = (unit: Unit, bonus: Bonus) => {
   // let stats: BasicStats = { str: 0, hp: 0 }
   let stats: BasicStats = { str: 0, hp: 0 } //bonus[unit.group] [unit.category]
 
-  if (unit.group === 'guardsman' && unit.race === 'human' && unit.tipo === 'merc') {
+  if (unit.group === 'guardsman' && unit.race === 'human' && unit.clasification === 'merc') {
     stats = bonus.guardsman[unit.category]
-  } else if (unit.group === 'guardsman' && unit.race === 'human' && unit.tipo === 'army') {
+  } else if (unit.group === 'guardsman' && unit.race === 'human' && unit.clasification === 'army') {
     stats = bonus.guardsman[unit.category]
   } else if (unit.group === 'specialist' && unit.race === 'human') {
     stats = bonus.specialist[unit.category]
@@ -277,7 +277,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
         if (stack.id === id) {
           return {
             ...stack,
-            units: 0,
+            unitsAmount: 0,
             leadership: 0,
             authority: 0,
             dominance: 0
@@ -298,7 +298,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       army: state.army.map(stack => {
         return {
           ...stack,
-          units: 0,
+          unitsAmount: 0,
           leadership: 0,
           authority: 0,
           dominance: 0
@@ -454,7 +454,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
           // all others stack should check index 0 health, and keep lower health
           // const unitToAdd = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
 
-          const totalUnits = stack.units + amount
+          const totalUnits = stack.unitsAmount + amount
 
           console.log(
             'adding units',
@@ -466,7 +466,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 
           return {
             ...stack,
-            units: totalUnits,
+            unitsAmount: totalUnits,
             leadership: totalUnits * leadership,
             authority: totalUnits * authority,
             dominance: totalUnits * dominance
@@ -485,8 +485,8 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 
           // const unitToRemove = stack.lockMinSetup && index > 0 ? stack.minSetup : 1
 
-          if (stack.units - amount >= 0) {
-            const totalUnits = stack.units - amount
+          if (stack.unitsAmount - amount >= 0) {
+            const totalUnits = stack.unitsAmount - amount
 
             console.log(
               'removing units',
@@ -498,7 +498,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 
             return {
               ...stack,
-              units: totalUnits,
+              unitsAmount: totalUnits,
               leadership: totalUnits * leadership,
               authority: totalUnits * authority,
               dominance: totalUnits * dominance
@@ -550,7 +550,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     const mobListToAttack = []
 
     if (stack) {
-      const stackUnits = stack.units
+      const stackUnits = stack.unitsAmount
       const unit = stack.unit
       const targets = whoCanIAttack(unit)
 
@@ -724,7 +724,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   },
   getStackAllStrength: (id: string) => {
     // return a list of the stack strength with bonus
-    const stackStrength: { type: string; str: number }[] = []
+    const stackStrength: { type: string; percent: number; str: number }[] = []
     const stack = get().army.find(army => army.id === id)
     if (!stack) return stackStrength
 
@@ -739,62 +739,102 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     if (stack.unit.vsMeleePercent > 0) {
       const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsMeleePercent) / 100)
 
-      stackStrength.push({ type: 'vsMelee', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsMelee',
+        percent: stack.unit.vsMeleePercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsRangedPercent > 0) {
       const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsRangedPercent) / 100)
 
-      stackStrength.push({ type: 'vsRanged', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsRanged',
+        percent: stack.unit.vsRangedPercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsMountedPercent > 0) {
       const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsMountedPercent) / 100)
 
-      stackStrength.push({ type: 'vsMounted', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsMounted',
+        percent: stack.unit.vsMountedPercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsFlyingPercent > 0) {
       const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsFlyingPercent) / 100)
 
-      stackStrength.push({ type: 'vsFlying', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsFlying',
+        percent: stack.unit.vsFlyingPercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsBeastPercent > 0) {
       const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsBeastPercent) / 100)
 
-      stackStrength.push({ type: 'vsBeast', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsBeast',
+        percent: stack.unit.vsBeastPercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsGiantPercent > 0) {
       const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsGiantPercent) / 100)
 
-      stackStrength.push({ type: 'vsGiant', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsGiant',
+        percent: stack.unit.vsGiantPercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsDragonPercent > 0) {
       const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsDragonPercent) / 100)
 
-      stackStrength.push({ type: 'vsDragon', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsDragon',
+        percent: stack.unit.vsDragonPercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsElementalPercent > 0) {
       const str = stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsElementalPercent) / 100)
 
-      stackStrength.push({ type: 'vsElemental', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsElemental',
+        percent: stack.unit.vsElementalPercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsSiegePercent > 0) {
       const str = stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsSiegePercent) / 100)
 
-      stackStrength.push({ type: 'vsSiege', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsSiege',
+        percent: stack.unit.vsSiegePercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     if (stack.unit.vsFortificationsPercent > 0) {
       const str =
         stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsFortificationsPercent) / 100)
 
-      stackStrength.push({ type: 'vsFortifications', str: str * stack.units })
+      stackStrength.push({
+        type: 'vsFortifications',
+        percent: stack.unit.vsFortificationsPercent,
+        str: str * stack.unitsAmount
+      })
     }
 
     return stackStrength
@@ -810,7 +850,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     // const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
     const totalHPPerUnit =
       stack.strBonus > 0 ? stack.unit.BASESTR * (1 + stack.strBonus / 100) : stack.unit.BASESTR
-    return totalHPPerUnit * stack.units
+    return totalHPPerUnit * stack.unitsAmount
   },
   getStackHealth: (id: string) => {
     // const stack = get().army.find(army => army.position === position)
@@ -823,7 +863,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     // const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
     const totalHPPerUnit =
       stack.hpBonus > 0 ? stack.unit.BASEHP * (1 + stack.hpBonus / 100) : stack.unit.BASEHP
-    return totalHPPerUnit * stack.units
+    return totalHPPerUnit * stack.unitsAmount
   },
   // getStackLeadership: (id: string) => {
   //   const stack = get().army.find(army => army.id === id)
@@ -990,5 +1030,5 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 })
 
 export const useStackStore = create<StackStore>()(
-  persist(stackSlice, { name: 'stackstore', version: 2 })
+  persist(stackSlice, { name: 'stackstore', version: 5 })
 )
