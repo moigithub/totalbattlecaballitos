@@ -155,6 +155,7 @@ export interface Stack {
   unitLimit: number
   useStrLimit: boolean
   strLimit: number
+  strLimitType: string // vsMelee | vsMounted | vsRanged ...etc
   useHpLimit: boolean
   HpLimit: number
   unitsAmount: number

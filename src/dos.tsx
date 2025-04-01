@@ -38,6 +38,7 @@ import {
   getArmyLeadership,
   getStackHealth,
   getStackStrength,
+  getStrengthWithBonus,
   getStrongestTroopAlive,
   haveTroopsAlive,
   prepareArmyData
@@ -291,8 +292,28 @@ function Dos() {
       }
 
       const unitStrength = stack.unit.BASESTR * (1 + stack.strBonus / 100)
-      if (ARMY[0].useStrLimit && getStackStrength(ARMY, 0) + unitStrength > ARMY[0].strLimit) {
-        canIAddToFirstStack = false
+
+      if (ARMY[0].useStrLimit) {
+        if (
+          stack.strLimitType === '' &&
+          getStackStrength(ARMY, 0) + unitStrength >= ARMY[0].strLimit
+        ) {
+          canIAddToFirstStack = false
+        } else {
+          const stackStrengthWithBonus = getStrengthWithBonus(ARMY[0])
+
+          const strLimitValue = stackStrengthWithBonus.find(
+            limit => limit.type === stack?.strLimitType
+          )
+          if (strLimitValue) {
+            const stackStrength = strLimitValue.str
+            const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+
+            if (stackStrength + unitStrength >= ARMY[0].strLimit) {
+              canIAddToFirstStack = false
+            }
+          }
+        }
       }
 
       const unitHealth = stack.unit.BASEHP * (1 + stack.hpBonus / 100)
@@ -352,6 +373,7 @@ function Dos() {
             // )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
             const stackStrength = getStackStrength(ARMY, i)
+
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
@@ -377,17 +399,40 @@ function Dos() {
               break
             }
 
-            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
-              // console.log(
-              //   'lead: str limit',
-              //   ARMY[i].useStrLimit,
-              //   stackStrength + newStackStrength,
-              //   '>=',
-              //   ARMY[i].strLimit
-              // )
+            // if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
+            //   // console.log(
+            //   //   'lead: str limit',
+            //   //   ARMY[i].useStrLimit,
+            //   //   stackStrength + newStackStrength,
+            //   //   '>=',
+            //   //   ARMY[i].strLimit
+            //   // )
 
-              // console.log('rompio lead2')
-              break
+            //   // console.log('rompio lead2')
+            //   break
+            // }
+
+            if (ARMY[i].useStrLimit) {
+              if (
+                stack.strLimitType === '' &&
+                stackStrength + newStackStrength >= ARMY[i].strLimit
+              ) {
+                break
+              } else {
+                const stackStrengthWithBonus = getStrengthWithBonus(ARMY[i])
+
+                const strLimitValue = stackStrengthWithBonus.find(
+                  limit => limit.type === stack?.strLimitType
+                )
+                if (strLimitValue) {
+                  const stackStrength = strLimitValue.str
+                  const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+
+                  if (stackStrength + unitStrength >= ARMY[i].strLimit) {
+                    break
+                  }
+                }
+              }
             }
 
             if (stackStrength + newStackStrength >= groupStrength) {
@@ -461,16 +506,38 @@ function Dos() {
               break
             }
 
-            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
-              // console.log(
-              //   'auth: str limit',
-              //   ARMY[i].useStrLimit,
-              //   stackStrength + newStackStrength,
-              //   '>=',
-              //   ARMY[i].strLimit
-              // )
-              // console.log('rompio merc2')
-              break
+            // if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
+            //   // console.log(
+            //   //   'auth: str limit',
+            //   //   ARMY[i].useStrLimit,
+            //   //   stackStrength + newStackStrength,
+            //   //   '>=',
+            //   //   ARMY[i].strLimit
+            //   // )
+            //   // console.log('rompio merc2')
+            //   break
+            // }
+            if (ARMY[i].useStrLimit) {
+              if (
+                stack.strLimitType === '' &&
+                stackStrength + newStackStrength >= ARMY[i].strLimit
+              ) {
+                break
+              } else {
+                const stackStrengthWithBonus = getStrengthWithBonus(ARMY[i])
+
+                const strLimitValue = stackStrengthWithBonus.find(
+                  limit => limit.type === stack?.strLimitType
+                )
+                if (strLimitValue) {
+                  const stackStrength = strLimitValue.str
+                  const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+
+                  if (stackStrength + unitStrength >= ARMY[i].strLimit) {
+                    break
+                  }
+                }
+              }
             }
 
             if (stackStrength + newStackStrength >= groupStrength) {
@@ -545,16 +612,38 @@ function Dos() {
               break
             }
 
-            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
-              // console.log(
-              //   'dominance: str limit',
-              //   ARMY[i].useStrLimit,
-              //   stackStrength + newStackStrength,
-              //   '>=',
-              //   ARMY[i].strLimit
-              // )
-              // console.log('rompio dom2')
-              break
+            // if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
+            //   // console.log(
+            //   //   'dominance: str limit',
+            //   //   ARMY[i].useStrLimit,
+            //   //   stackStrength + newStackStrength,
+            //   //   '>=',
+            //   //   ARMY[i].strLimit
+            //   // )
+            //   // console.log('rompio dom2')
+            //   break
+            // }
+            if (ARMY[i].useStrLimit) {
+              if (
+                stack.strLimitType === '' &&
+                stackStrength + newStackStrength >= ARMY[i].strLimit
+              ) {
+                break
+              } else {
+                const stackStrengthWithBonus = getStrengthWithBonus(ARMY[i])
+
+                const strLimitValue = stackStrengthWithBonus.find(
+                  limit => limit.type === stack?.strLimitType
+                )
+                if (strLimitValue) {
+                  const stackStrength = strLimitValue.str
+                  const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+
+                  if (stackStrength + unitStrength >= ARMY[i].strLimit) {
+                    break
+                  }
+                }
+              }
             }
 
             if (stackStrength + newStackStrength >= groupStrength) {

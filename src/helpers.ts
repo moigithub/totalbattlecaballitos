@@ -185,6 +185,124 @@ export const getStackDamage = (stack: FightStack) => {
   return damage
 }
 
+export const getStrengthWithBonus = (stack: Stack) => {
+  const stackStrength: { type: string; percent: number; str: number }[] = []
+  if (!stack) return stackStrength
+
+  // const totalSTRPerUnit =
+  //   stack.strBonus > 0 ? stack.unit.BASESTR * (1 + stack.strBonus / 100) : stack.unit.BASESTR
+
+  // //  normal strength with bonus, no extra
+  // stackStrength.push({ type: '', str: totalSTRPerUnit * stack.units })
+
+  const strBonus = stack.strBonus ?? 0
+
+  if (stack.unit.vsMeleePercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsMeleePercent) / 100)
+
+    stackStrength.push({
+      type: 'vsMelee',
+      percent: stack.unit.vsMeleePercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsRangedPercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsRangedPercent) / 100)
+
+    stackStrength.push({
+      type: 'vsRanged',
+      percent: stack.unit.vsRangedPercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsMountedPercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsMountedPercent) / 100)
+
+    stackStrength.push({
+      type: 'vsMounted',
+      percent: stack.unit.vsMountedPercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsFlyingPercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsFlyingPercent) / 100)
+
+    stackStrength.push({
+      type: 'vsFlying',
+      percent: stack.unit.vsFlyingPercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsBeastPercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsBeastPercent) / 100)
+
+    stackStrength.push({
+      type: 'vsBeast',
+      percent: stack.unit.vsBeastPercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsGiantPercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsGiantPercent) / 100)
+
+    stackStrength.push({
+      type: 'vsGiant',
+      percent: stack.unit.vsGiantPercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsDragonPercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (strBonus + stack.unit.vsDragonPercent) / 100)
+
+    stackStrength.push({
+      type: 'vsDragon',
+      percent: stack.unit.vsDragonPercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsElementalPercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsElementalPercent) / 100)
+
+    stackStrength.push({
+      type: 'vsElemental',
+      percent: stack.unit.vsElementalPercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsSiegePercent > 0) {
+    const str = stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsSiegePercent) / 100)
+
+    stackStrength.push({
+      type: 'vsSiege',
+      percent: stack.unit.vsSiegePercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  if (stack.unit.vsFortificationsPercent > 0) {
+    const str =
+      stack.unit.BASESTR *
+      stack.unit.multiplier *
+      (1 + (stack.strBonus + stack.unit.vsFortificationsPercent) / 100)
+
+    stackStrength.push({
+      type: 'vsFortifications',
+      percent: stack.unit.vsFortificationsPercent,
+      str: str * stack.unitsAmount
+    })
+  }
+
+  return stackStrength
+}
+
 export const findTargetOfTypeWithHealth = (
   defender: FightStack[],
   type: string,

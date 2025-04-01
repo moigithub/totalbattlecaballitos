@@ -16,6 +16,7 @@ export const Card = ({ stack }: { stack: Stack }) => {
   const setUnitLimit = useStackStore(state => state.setStackUnitLimit)
   const toggleUseStrLimit = useStackStore(state => state.toggleUseStrLimit)
   const setStrLimit = useStackStore(state => state.setStackStrLimit)
+  const setStrLimitType = useStackStore(state => state.setStackStrLimitType)
   const toggleUseHpLimit = useStackStore(state => state.toggleUseHpLimit)
   const setHpLimit = useStackStore(state => state.setStackHpLimit)
 
@@ -46,6 +47,7 @@ export const Card = ({ stack }: { stack: Stack }) => {
       </span>
     )
   })
+  const strBonusOptions = stackAllStrength.map(data => data.type)
 
   return (
     <div className='stack-card' ref={setNodeRef} style={style}>
@@ -145,15 +147,32 @@ export const Card = ({ stack }: { stack: Stack }) => {
           }}
         />
         {stack.useStrLimit && (
-          <input
-            type='number'
-            className='ml-1 inline-flex  bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            value={stack.strLimit}
-            onChange={e => {
-              const value = parseInt(e.target.value) || 0
-              setStrLimit(stack.id!, value)
-            }}
-          />
+          <>
+            <select
+              className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full max-w-[130px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              onChange={e => {
+                setStrLimitType(stack.id!, e.target.value)
+              }}
+            >
+              <option value='' selected>
+                Stack Str
+              </option>
+              {strBonusOptions.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+            <input
+              type='number'
+              className='ml-1 inline-flex  bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full max-w-[120px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              value={stack.strLimit}
+              onChange={e => {
+                const value = parseInt(e.target.value) || 0
+                setStrLimit(stack.id!, value)
+              }}
+            />
+          </>
         )}
       </div>
 
