@@ -124,10 +124,10 @@ export const ARMY = {
 
   //giants
   stoneGargole: 'stoneGargoyleIII',
-  manyArmedGuardian: 'many-Armed GuardianIV',
+  multiArmGuardianIV: 'many-Armed GuardianIV',
   Ettin: 'EttinV',
   trollRider: 'trollRiderVI',
-  destructiveColossus: 'destructiveColossusVII',
+  destructiveColossusVII: 'destructiveColossusVII',
   krakenI: 'krakenI',
   krakenII: 'krakenII',
 
@@ -135,8 +135,8 @@ export const ARMY = {
   battleBoar: 'battleBoarIII',
   gorgonMedusa: 'gorgonMedusaIV',
   fearsomeManticora: 'fearsomeManticoreV',
-  jungleDestructor: 'jungleDestroyerVI',
-  ancientTerror: 'ancientTerrorVII',
+  jungleDestroyerVI: 'jungleDestroyerVI',
+  ancientTerrorVII: 'ancientTerrorVII',
   tricksterI: 'tricksterI',
   tricksterII: 'tricksterII',
 
@@ -726,7 +726,7 @@ export const battleGriffinV = unitBuilder<GuardsmanUnit>({
   name: ARMY.battleGriffinV,
   BASEHP: 30000,
   BASESTR: 10000,
-  LEADERSHIP: 10,
+  LEADERSHIP: 20,
   DOMINANCE: 0,
   INITIATIVE: 10,
   vsMountedPercent: 395,
@@ -742,7 +742,7 @@ export const battleGriffinVI = unitBuilder<GuardsmanUnit>({
   name: ARMY.battleGriffinVI,
   BASEHP: 57000,
   BASESTR: 19000,
-  LEADERSHIP: 10,
+  LEADERSHIP: 20,
   DOMINANCE: 0,
   INITIATIVE: 10,
   vsMountedPercent: 592,
@@ -758,7 +758,7 @@ export const battleGriffinVII = unitBuilder<GuardsmanUnit>({
   name: ARMY.battleGriffinVII,
   BASEHP: 102000,
   BASESTR: 34000,
-  LEADERSHIP: 10,
+  LEADERSHIP: 20,
   DOMINANCE: 0,
   INITIATIVE: 10,
   vsMountedPercent: 888,
@@ -1033,7 +1033,7 @@ export const waterElemental = unitBuilder<MonsterUnit>({
   race: 'monster',
   level: 'III'
 })
-export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
+export const icePhoenix: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   name: ARMY.icePhoenix, //'iceFenix',
   BASESTR: 17000,
@@ -1048,7 +1048,7 @@ export const iceFenix: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'IV'
 })
-export const burningCentaurus: MonsterUnit = unitBuilder<MonsterUnit>({
+export const flamingCentaurusV: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   name: ARMY.flamingCentaur, //'burningCentaurus',
   BASESTR: 44000,
@@ -1093,11 +1093,11 @@ export const windLord: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'VII'
 })
-export const fireFenixI: MonsterUnit = unitBuilder<MonsterUnit>({
+export const firePhoenixI: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.firePhoenixI, //'fireFenixI',
+  name: ARMY.firePhoenixI, //'firePhoenixI',
   BASESTR: 660000,
   BASEHP: 1980000,
   DOMINANCE: 54,
@@ -1108,11 +1108,11 @@ export const fireFenixI: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'I'
 })
-export const fireFenixII: MonsterUnit = unitBuilder<MonsterUnit>({
+export const firePhoenixII: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.firePhoenixII, //'fireFenixII',
+  name: ARMY.firePhoenixII, //'firePhoenixII',
   BASESTR: 1190000,
   BASEHP: 3570000,
   DOMINANCE: 54,
@@ -1155,7 +1155,7 @@ export const gorgonMedusa: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'ranged',
   level: 'IV'
 })
-export const fearManticora: MonsterUnit = unitBuilder<MonsterUnit>({
+export const fearsomeManticoraV: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
@@ -1170,11 +1170,11 @@ export const fearManticora: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'V'
 })
-export const forestDestructor: MonsterUnit = unitBuilder<MonsterUnit>({
+export const jungleDestroyerVI: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.jungleDestructor, //'forestDestructor',
+  name: ARMY.jungleDestroyerVI, //'forestDestructor',
   BASESTR: 130000,
   BASEHP: 390000,
   DOMINANCE: 34,
@@ -1185,11 +1185,11 @@ export const forestDestructor: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'VI'
 })
-export const oldTerror: MonsterUnit = unitBuilder<MonsterUnit>({
+export const ancientTerrorVII: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.ancientTerror, //'oldTerror',
+  name: ARMY.ancientTerrorVII, //'oldTerror',
   BASESTR: 280000,
   BASEHP: 840000,
   DOMINANCE: 41,
@@ -1200,11 +1200,11 @@ export const oldTerror: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'mounted',
   level: 'VII'
 })
-export const embaucatorI: MonsterUnit = unitBuilder<MonsterUnit>({
+export const tricksterI: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.tricksterI, //'embaucatorI',
+  name: ARMY.tricksterI, //'tricksterI',
   BASESTR: 640000,
   BASEHP: 1920000,
   DOMINANCE: 52,
@@ -1215,11 +1215,11 @@ export const embaucatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'ranged',
   level: 'I'
 })
-export const embaucatorII: MonsterUnit = unitBuilder<MonsterUnit>({
+export const tricksterII: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.tricksterII, //'embaucatorII',
+  name: ARMY.tricksterII, //'tricksterII',
   BASESTR: 1150000,
   BASEHP: 3450000,
   DOMINANCE: 52,
@@ -1353,11 +1353,11 @@ export const stoneGargole: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'III'
 })
-export const multiArmGuardian: MonsterUnit = unitBuilder<MonsterUnit>({
+export const multiArmGuardianIV: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.manyArmedGuardian, //'multiArmGuardian',
+  name: ARMY.multiArmGuardianIV, //'multiArmGuardianIV',
   BASESTR: 13000,
   BASEHP: 39000,
   DOMINANCE: 11,
@@ -1398,11 +1398,11 @@ export const trollRider: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'mounted',
   level: 'VI'
 })
-export const destroyerColossus: MonsterUnit = unitBuilder<MonsterUnit>({
+export const destructiveColossusVII: MonsterUnit = unitBuilder<MonsterUnit>({
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.destructiveColossus, //'destroyerColossus',
+  name: ARMY.destructiveColossusVII, //'destructiveColossusVII',
   BASESTR: 290000,
   BASEHP: 870000,
   DOMINANCE: 43,

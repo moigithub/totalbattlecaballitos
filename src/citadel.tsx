@@ -12,7 +12,6 @@ import {
 } from './citadelData'
 
 export const CitadelData = ({ type }: { type: string }) => {
-  const [totalStr, setTotalStr] = useState(0)
   const [selected, setSelected] = useState<string[]>([])
 
   let target: Citadel = citadele10
