@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { getTroopBadges } from './badges'
 import {
   Citadel,
@@ -11,6 +12,9 @@ import {
 } from './citadelData'
 
 export const CitadelData = ({ type }: { type: string }) => {
+  const [totalStr, setTotalStr] = useState(0)
+  const [selected, setSelected] = useState<string[]>([])
+
   let target: Citadel = citadele10
   switch (type) {
     case 'e10':
@@ -35,6 +39,17 @@ export const CitadelData = ({ type }: { type: string }) => {
       target = citadelc25
       break
   }
+
+  const markTroop = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      if (!selected.includes(e.target.value)) {
+        setSelected([...selected, e.target.value])
+      }
+    } else {
+      setSelected(selected.filter(troop => troop !== e.target.value))
+    }
+  }
+
   return (
     <table>
       <thead>
@@ -44,6 +59,7 @@ export const CitadelData = ({ type }: { type: string }) => {
           <th>Amount</th>
           <th>Total health</th>
           <th>Regular Damage</th>
+          <th>+</th>
           <th>Dmg + bonus</th>
         </tr>
       </thead>
@@ -74,6 +90,9 @@ export const CitadelData = ({ type }: { type: string }) => {
                 {totalStrength.toLocaleString().replace(/,/g, '_')}
               </td>
               {/* total strength  */}
+              <td>
+                <input type='checkbox' value={totalStrength.toString()} onChange={markTroop} />
+              </td>
               <td className='px-1 py-0.5'>{getTroopBadges(stack)}</td>
             </tr>
           )
@@ -93,42 +112,15 @@ export const CitadelData = ({ type }: { type: string }) => {
         </tr>
         <tr>
           <td colSpan={6}>
-            {target.stacks
-              .map((stack, i) => {
-                if (i % 2 === 0) {
-                  return `${stack.unitsAmount * stack.unit.BASESTR}`
-                }
+            Selected strengths:{' '}
+            {selected
+              .map(str => {
+                return str
               })
-              .filter(n => !!n)
               .join(' + ')}
             {` = `}
-            {target.stacks
-              .reduce(
-                (dmg, stack, i) =>
-                  i % 2 === 0 ? dmg + stack.unitsAmount * stack.unit.BASESTR : dmg,
-                0
-              )
-              .toLocaleString()
-              .replace(/,/g, '_')}
-          </td>
-        </tr>
-        <tr>
-          <td colSpan={6}>
-            {target.stacks
-              .map((stack, i) => {
-                if (i % 2 === 1) {
-                  return `${stack.unitsAmount * stack.unit.BASESTR}`
-                }
-              })
-              .filter(n => !!n)
-              .join(' + ')}
-            {` = `}
-            {target.stacks
-              .reduce(
-                (dmg, stack, i) =>
-                  i % 2 === 1 ? dmg + stack.unitsAmount * stack.unit.BASESTR : dmg,
-                0
-              )
+            {selected
+              .reduce((total, str) => total + parseInt(str), 0)
               .toLocaleString()
               .replace(/,/g, '_')}
           </td>
