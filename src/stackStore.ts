@@ -8,6 +8,9 @@ import { hashStorage } from '@/hashStore'
 import { createDebouncedJSONStorage } from 'zustand-debounce'
 
 interface StackStore {
+  leadership: number
+  authority: number
+  dominance: number
   army: Stack[]
   mobArmy: MobStack[]
   bonus: Bonus
@@ -19,6 +22,9 @@ interface StackStore {
   //   swordsman: { G1: { str: number; hp: number } }
   //   catapult: { G1: { str: number; hp: number } }
   // }
+  setLeadership: (value: number) => void
+  setAuthority: (value: number) => void
+  setDominance: (value: number) => void
   setMobArmy: (data: MobStack[]) => void
   setArmy: (data: Stack[]) => void
   // getArmyStrength: () => number
@@ -130,6 +136,9 @@ export const getSTRWithBonus = (unit: Unit, bonus: Bonus) => {
 }
 
 const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> = (set, get) => ({
+  leadership: 10000,
+  authority: 10000,
+  dominance: 10000,
   mobArmy: [],
   army: [],
   bonus: {
@@ -258,6 +267,15 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
         hp: 0
       }
     }
+  },
+  setLeadership: value => {
+    set(() => ({ leadership: value }))
+  },
+  setAuthority: value => {
+    set(() => ({ authority: value }))
+  },
+  setDominance: value => {
+    set(() => ({ dominance: value }))
   },
   setMobArmy: (data: MobStack[]) => {
     //TODO: generate id for each stack
@@ -1037,10 +1055,10 @@ export const useStackStore = create<StackStore>()(
   devtools(
     persist(stackSlice, {
       name: 'stacks',
-      version: 5,
+      version: 6,
       // storage: createJSONStorage(() => hashStorage),
       storage: createDebouncedJSONStorage(hashStorage, {
-        debounceTime: 2000 // Debounce time in milliseconds ⏳
+        debounceTime: 500 // Debounce time in milliseconds ⏳
         // Other options can be specified here
       })
     })

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 import './App.css'
-import { useGuardsStore } from './guardStore'
+// import { useGuardsStore } from './guardStore'
 
 // import classNames from 'classnames'
 import { ArmyList } from './ArmyList'
@@ -49,16 +49,16 @@ export interface Result {
 }
 
 function Dos() {
-  const leadership = useGuardsStore(state => state.leadership)
-  const authority = useGuardsStore(state => state.authority)
-  const dominance = useGuardsStore(state => state.dominance)
+  const leadership = useStackStore(state => state.leadership)
+  const authority = useStackStore(state => state.authority)
+  const dominance = useStackStore(state => state.dominance)
 
-  const setLeadership = useGuardsStore(state => state.setLeadership)
-  const setAuthority = useGuardsStore(state => state.setAuthority)
-  const setDominance = useGuardsStore(state => state.setDominance)
+  const setLeadership = useStackStore(state => state.setLeadership)
+  const setAuthority = useStackStore(state => state.setAuthority)
+  const setDominance = useStackStore(state => state.setDominance)
   const resetAllStacks = useStackStore(state => state.resetAllStacks)
   // const addUnits = useStackStore(state => state.addUnits)
-  const updateMinSetup = useStackStore(state => state.updateMinSetup)
+  // const updateMinSetup = useStackStore(state => state.updateMinSetup)
 
   const armyRef = useRef(useStackStore.getState().army)
 
@@ -327,8 +327,8 @@ function Dos() {
 
         // TODO: move calc minsetup when add the soldier (left panel)
         // const unitsNeededToKill1Mob = calculateUnitsMobKill(monsterStack.unit, stack.unit)
-        const unitsNeededToKill1Mob = 1 //siempre 1
-        updateMinSetup(stack.id!, unitsNeededToKill1Mob)
+        // const unitsNeededToKill1Mob = 1 //siempre 1
+        // updateMinSetup(stack.id!, unitsNeededToKill1Mob)
         // console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
 
         /**manejo de leadership */
@@ -377,7 +377,7 @@ function Dos() {
               break
             }
 
-            if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
+            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
               // console.log(
               //   'lead: str limit',
               //   ARMY[i].useStrLimit,
@@ -400,7 +400,7 @@ function Dos() {
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
             const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackHealth = totalHPPerUnit * unitsCount
-            if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
+            if (ARMY[i].useHpLimit && stackHealth + newStackHealth >= ARMY[i].HpLimit) {
               // console.log(
               //   'lead: hp limit',
               //   ARMY[i].useHpLimit,
@@ -461,7 +461,7 @@ function Dos() {
               break
             }
 
-            if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
+            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
               // console.log(
               //   'auth: str limit',
               //   ARMY[i].useStrLimit,
@@ -490,7 +490,7 @@ function Dos() {
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
             const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackHealth = totalHPPerUnit * unitsCount
-            if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
+            if (ARMY[i].useHpLimit && stackHealth + newStackHealth >= ARMY[i].HpLimit) {
               // console.log(
               //   'auth: hp limit',
               //   ARMY[i].useHpLimit,
@@ -545,7 +545,7 @@ function Dos() {
               break
             }
 
-            if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
+            if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
               // console.log(
               //   'dominance: str limit',
               //   ARMY[i].useStrLimit,
@@ -567,7 +567,7 @@ function Dos() {
             // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
             const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackHealth = totalHPPerUnit * unitsCount
-            if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
+            if (ARMY[i].useHpLimit && stackHealth + newStackHealth >= ARMY[i].HpLimit) {
               // console.log(
               //   'dom: hp limit',
               //   ARMY[i].useHpLimit,
