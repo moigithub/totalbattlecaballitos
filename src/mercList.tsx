@@ -97,7 +97,7 @@ export const MercList = () => {
         <tbody>
           {mercList.map((merc, i) => {
             return (
-              <tr>
+              <tr key={`merc${i}`}>
                 {/* <td>
                   <input type='checkbox' name='xx' id='' />
                 </td> */}

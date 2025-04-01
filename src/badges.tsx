@@ -85,11 +85,11 @@ export const getTroopBadges = (stack: FightStack): ReactNode => {
     })
   }
   return tags.map((data, i) => (
-    <div key={`badge+${i}`}>
+    <div key={`badge+${i}`} className='flex flex-wrap text-xs'>
       <span className={data.badge}>
         {data.desc} +{data.percent}%
       </span>{' '}
-      <span>{data.value}</span>
+      <span>{data.value.toLocaleString().replace(/,/g, '_')}</span>
     </div>
   ))
 }

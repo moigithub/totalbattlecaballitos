@@ -34,13 +34,15 @@ export const Card = ({ stack }: { stack: Stack }) => {
     transition
   }
 
+  const unitHealth = stack.unit.BASEHP * (1 + stack.hpBonus / 100)
+  const unitStrength = stack.unit.BASESTR * (1 + stack.strBonus / 100)
   const stackHealth = getStackHealth(stack.id!)
   const stackStrength = getStackStrength(stack.id!)
   const stackAllStrength = getStackAllStrength(stack.id!)
   const otherStrengthInfo = stackAllStrength.map(data => {
     return (
-      <span className={data.type}>
-        {data.type}({data.percent}%) {data.str.toFixed(2)}
+      <span className={data.type} key={data.type}>
+        {data.type}({data.percent}%) {data.str.toLocaleString().replace(/,/g, '_')}
       </span>
     )
   })
@@ -62,8 +64,13 @@ export const Card = ({ stack }: { stack: Stack }) => {
       </p>
       <p className='stack-name'>{stack.unit.name}</p>
       <p className='stack-health-strength flex flex-wrap'>
-        <span className='text-sm text-red-600'>HP {stackHealth.toFixed(0)}</span> /{' '}
-        <span className='text-sm text-teal-600'>STR {stackStrength.toFixed(2)}</span>
+        Stack{' '}
+        <span className='text-sm text-red-600'>
+          HP {stackHealth.toLocaleString().replace(/,/g, '_')}
+        </span>{' '}
+        <span className='text-sm text-teal-600'>
+          STR {stackStrength.toLocaleString().replace(/,/g, '_')}
+        </span>
       </p>
       <p className='stack-other-strength flex flex-wrap text-sm text-teal-600'>
         STR {otherStrengthInfo}
@@ -225,7 +232,13 @@ export const Card = ({ stack }: { stack: Stack }) => {
         <span>{whoCanIAttack(stack.unit).join(',')}</span>
       </div>
       <div className='stack-basic-info'>
-        base Hp {stack.unit.BASEHP} Str {stack.unit.BASESTR}
+        Unit{' '}
+        <span className='text-sm text-red-600'>
+          Hp {unitHealth.toLocaleString().replace(/,/g, '_')}
+        </span>{' '}
+        <span className='text-sm text-teal-600'>
+          Str {unitStrength.toLocaleString().replace(/,/g, '_')}
+        </span>
       </div>
       {/* <span className='stack-id tiny'>(id.{stack.id})</span> */}
     </div>

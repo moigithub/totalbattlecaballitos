@@ -91,12 +91,6 @@ table th {
   }
 }
 
-/* .menu-options {
-  grid-area: menu;
-  display: flex;
-  gap: 8px;
-} */
-
 /* .stack-army {
   grid-area: content;
   display: grid;
@@ -585,4 +579,9 @@ table th {
 
 .active {
   @apply text-blue-600;
+}
+
+.sticky-top-57 {
+  @apply sticky;
+  top: 57px;
 }

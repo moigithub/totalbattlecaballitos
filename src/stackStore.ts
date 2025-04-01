@@ -1,9 +1,11 @@
 import { create, StateCreator } from 'zustand'
 import { v4 as uuidv4 } from 'uuid'
 import { MobStack } from './monsters'
-import { persist } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 import { BasicStats, Bonus, Stack, Unit } from './types'
 import { getStrWithExtraBonus, whoCanIAttack } from './utils'
+import { hashStorage } from '@/hashStore'
+import { createDebouncedJSONStorage } from 'zustand-debounce'
 
 interface StackStore {
   army: Stack[]
@@ -456,13 +458,13 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 
           const totalUnits = stack.unitsAmount + amount
 
-          console.log(
-            'adding units',
-            totalUnits,
+          // console.log(
+          //   'adding units',
+          //   totalUnits,
 
-            'lead',
-            totalUnits * leadership
-          )
+          //   'lead',
+          //   totalUnits * leadership
+          // )
 
           return {
             ...stack,
@@ -488,13 +490,13 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
           if (stack.unitsAmount - amount >= 0) {
             const totalUnits = stack.unitsAmount - amount
 
-            console.log(
-              'removing units',
-              totalUnits,
+            // console.log(
+            //   'removing units',
+            //   totalUnits,
 
-              'lead',
-              totalUnits * leadership
-            )
+            //   'lead',
+            //   totalUnits * leadership
+            // )
 
             return {
               ...stack,
@@ -828,7 +830,9 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 
     if (stack.unit.vsFortificationsPercent > 0) {
       const str =
-        stack.unit.BASESTR * (1 + (stack.strBonus + stack.unit.vsFortificationsPercent) / 100)
+        stack.unit.BASESTR *
+        stack.unit.multiplier *
+        (1 + (stack.strBonus + stack.unit.vsFortificationsPercent) / 100)
 
       stackStrength.push({
         type: 'vsFortifications',
@@ -1030,5 +1034,15 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 })
 
 export const useStackStore = create<StackStore>()(
-  persist(stackSlice, { name: 'stackstore', version: 5 })
+  devtools(
+    persist(stackSlice, {
+      name: 'stacks',
+      version: 5,
+      // storage: createJSONStorage(() => hashStorage),
+      storage: createDebouncedJSONStorage(hashStorage, {
+        debounceTime: 2000 // Debounce time in milliseconds ⏳
+        // Other options can be specified here
+      })
+    })
+  )
 )

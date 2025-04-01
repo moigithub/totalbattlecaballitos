@@ -71,6 +71,7 @@ export interface BasicUnit {
   AUTHORITY: number
   DOMINANCE: number
   INITIATIVE: number
+  multiplier: number // para las catapultas que tienen x 20
   vsRangedPercent: number
   vsSiegePercent: number
   vsBeastPercent: number

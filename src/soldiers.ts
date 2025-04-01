@@ -99,8 +99,10 @@ export const ARMY = {
   CatapultE3: 'CatapultE3',
   CatapultE4: 'CatapultE4',
   CatapultE5: 'CatapultE5',
-  CatapultE6: 'CatapultE6',
-  CatapultE7: 'CatapultE7',
+  CatapultE6: 'E6 Ballistae VI',
+  CatapultE7: 'E7 Ballistae VII',
+  CatapultE8: 'E8 Josephine I',
+  CatapultE9: 'E9 Josephine II',
   //monsters
   // dragons
   emeraldDragon: 'emeraldDragonIII',
@@ -197,6 +199,7 @@ export const unitBuilder = <T>(props: Partial<BasicUnit>): T => {
     AUTHORITY: 0,
     DOMINANCE: 0,
     INITIATIVE: 0,
+    multiplier: 1,
     vsRangedPercent: 0,
     vsSiegePercent: 0,
     vsHumanPercent: 0,
@@ -991,7 +994,7 @@ const catapultBuilder = (
     BASESTR,
     LEADERSHIP: 10,
     INITIATIVE: 10,
-    //str * 20 ?
+    multiplier: 20,
     vsFortificationsPercent,
     troop: 'catapult',
     category: 'siege',
@@ -1008,6 +1011,8 @@ export const CatapultE4 = catapultBuilder(ARMY.CatapultE4, 8750, 1460, 219, 'E4'
 export const CatapultE5 = catapultBuilder(ARMY.CatapultE5, 15800, 2630, 329, 'E5')
 export const CatapultE6 = catapultBuilder(ARMY.CatapultE6, 28400, 4730, 494, 'E6')
 export const CatapultE7 = catapultBuilder(ARMY.CatapultE7, 51000, 8500, 740, 'E7')
+export const CatapultE8 = catapultBuilder(ARMY.CatapultE8, 91800, 15310, 1111, 'E8')
+export const CatapultE9 = catapultBuilder(ARMY.CatapultE9, 165300, 27550, 1667, 'E9')
 
 //------------------------
 

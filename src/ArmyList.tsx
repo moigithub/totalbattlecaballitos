@@ -57,6 +57,8 @@ import {
   CatapultE5,
   CatapultE6,
   CatapultE7,
+  CatapultE8,
+  CatapultE9,
   coraxI,
   coraxII,
   crystalDragon,
@@ -300,6 +302,10 @@ export const ArmyList = () => {
       unitType = CatapultE6
     } else if (type === 'Catapult E7') {
       unitType = CatapultE7
+    } else if (type === 'Catapult E8') {
+      unitType = CatapultE8
+    } else if (type === 'Catapult E9') {
+      unitType = CatapultE9
     }
 
     // MERCENARIES ------------------------------
@@ -479,7 +485,7 @@ export const ArmyList = () => {
   return (
     <aside
       id='sidebar-multi-level-sidebar'
-      className='fixed top-[56px] left-0 z-40 w-64 h-[calc(100vh-56px)] pt-[300px] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
+      className='fixed top-[56px] left-0 z-40 w-64 h-[calc(100vh-56px)] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
       aria-label='Sidebar'
     >
       <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
@@ -1324,7 +1330,7 @@ export const ArmyList = () => {
                     addTroops('Catapult E6')
                   }}
                 >
-                  E6
+                  E6 Ballistae VI
                 </button>
               )}
               {!selectedStacks.includes(ARMY.CatapultE7) && (
@@ -1334,7 +1340,27 @@ export const ArmyList = () => {
                     addTroops('Catapult E7')
                   }}
                 >
-                  E7
+                  E7 Ballistae VII
+                </button>
+              )}
+              {!selectedStacks.includes(ARMY.CatapultE8) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('Catapult E8')
+                  }}
+                >
+                  E8 Josephine I
+                </button>
+              )}
+              {!selectedStacks.includes(ARMY.CatapultE9) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('Catapult E9')
+                  }}
+                >
+                  E9 Josephine II
                 </button>
               )}
             </div>

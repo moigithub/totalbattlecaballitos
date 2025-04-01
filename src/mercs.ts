@@ -527,6 +527,7 @@ export const arielII: MercUnit = unitBuilder<MercUnit>({
   BASESTR: 55000,
   AUTHORITY: 10,
   INITIATIVE: 10,
+  multiplier: 20,
   vsFortificationsPercent: 1667,
   troop: 'merc',
   category: 'asedio',

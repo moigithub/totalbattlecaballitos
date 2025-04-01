@@ -60,14 +60,14 @@ export const addArmyUnits = (army: Stack[], index: number, amount: number) => {
     authority: totalUnits * authority,
     dominance: totalUnits * dominance
   }
-  console.log(
-    'adding units',
-    stack.unit.name,
-    totalUnits,
+  // console.log(
+  //   'adding units',
+  //   stack.unit.name,
+  //   totalUnits,
 
-    'lead',
-    totalUnits * leadership
-  )
+  //   'lead',
+  //   totalUnits * leadership
+  // )
 }
 
 export const getStackDamage = (stack: FightStack) => {
@@ -212,6 +212,7 @@ export const prepareArmyData = (army: Stack[]): FightStack[] => {
         category: stack.unit.category, //'beast, melee'
         BASESTR: stack.unit.BASESTR,
         BASEHP: stack.unit.BASEHP * (1 + stack.hpBonus / 100),
+        multiplier: 1,
         strBonus: stack.strBonus, // must include bonus
         vsRangedPercent: stack.unit.vsRangedPercent,
         vsSiegePercent: stack.unit.vsSiegePercent,
@@ -227,7 +228,8 @@ export const prepareArmyData = (army: Stack[]): FightStack[] => {
         vsDragonPercent: stack.unit.vsDragonPercent
       },
       unitsAmount: stack.unitsAmount,
-      damage: 0
+      damage: 0,
+      turn: 0
     }
   })
 }
@@ -236,25 +238,26 @@ export const haveTroopsAlive = (army: FightStack[]) => {
   return army.filter(stack => stack.unitsAmount > 0).length > 0
 }
 
-export const getStrongestTroopAlive = (army: FightStack[]) => {
-  const armyAlive = army.filter(stack => stack.unitsAmount > 0)
-  if (armyAlive.length > 0) {
-    armyAlive.sort((a, b) => b.unitsAmount * b.unit.BASESTR - a.unitsAmount * a.unit.BASESTR)
-    return armyAlive[0]
-  }
-  return null
+export const getStrongestTroopAlive = (army: FightStack[], turn: number) => {
+  // console.log('getStrongestTroopAlive', army)
+  const armyAlive = army.filter(stack => stack.unitsAmount > 0 && stack.turn === turn)
+  if (!armyAlive.length) return null
+  return armyAlive.reduce(
+    (a, b) => (a.unitsAmount * a.unit.BASESTR > b.unitsAmount * b.unit.BASESTR ? a : b),
+    armyAlive[0]
+  )
 }
 
 export const fight = (attacker: FightStack, defender: FightStack[], checkResult: Result[]) => {
   // check what kind of str featured bonus i have, and calculate damage
   const myDamage = getStackDamage(attacker)
-  console.log('damages i can do', myDamage)
+  // console.log('damages i can do', myDamage)
 
   let iHitSomething = false
   let dmgCount = 0
 
   while (!iHitSomething && dmgCount < myDamage.length) {
-    console.log('searching for troop type', myDamage[dmgCount].type, defender)
+    // console.log('searching for troop type', myDamage[dmgCount].type, defender)
     const target = findTargetOfTypeWithHealth(
       defender,
       myDamage[dmgCount].type,
@@ -269,7 +272,8 @@ export const fight = (attacker: FightStack, defender: FightStack[], checkResult:
           ` by ${myDamage[dmgCount].damage} featured damage,` +
           ` killing ${unitsKilled}`
       })
-      console.log('target found stage1', target)
+      // console.log('target found stage1', target)
+      attacker.turn++
       target.damage += myDamage[dmgCount].damage
       target.unitsAmount -= unitsKilled
       iHitSomething = true
@@ -282,7 +286,7 @@ export const fight = (attacker: FightStack, defender: FightStack[], checkResult:
 
   // if damage is lower than available health
   if (!iHitSomething) {
-    console.log('killing first troop stage2', 'attacker', attacker)
+    // console.log('killing first troop stage2', 'attacker', attacker)
     // regular damage
     const damage = Math.trunc(
       attacker.unitsAmount * attacker.unit.BASESTR * (1 + (attacker.unit?.strBonus ?? 0) / 100)
@@ -298,8 +302,9 @@ export const fight = (attacker: FightStack, defender: FightStack[], checkResult:
           ` by ${damage},` +
           ` killing ${unitsKilled}`
       })
-      console.log('target found stage2', target)
+      // console.log('target found stage2', target)
 
+      attacker.turn++
       target.damage += damage
       target.unitsAmount -= unitsKilled
       iHitSomething = true
@@ -308,7 +313,7 @@ export const fight = (attacker: FightStack, defender: FightStack[], checkResult:
 
   // if damage is higher than available health
   if (!iHitSomething) {
-    console.log('killing first troop stage3')
+    // console.log('killing first troop stage3')
     // regular damage
     const target = findTargetWithHealth(defender, 1)
     if (target /* found */) {
@@ -321,8 +326,9 @@ export const fight = (attacker: FightStack, defender: FightStack[], checkResult:
           ` by ${targetHealth},` +
           ` killing ${unitsKilled}`
       })
-      console.log('target found stage3', target)
+      // console.log('target found stage3', target)
 
+      attacker.turn++
       target.damage += targetHealth
       target.unitsAmount = 0
       iHitSomething = true

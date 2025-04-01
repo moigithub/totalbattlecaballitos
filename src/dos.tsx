@@ -245,10 +245,10 @@ function Dos() {
     // deep copy the army to a normal object
     const ARMY = structuredClone(armyRef.current)
 
-    console.log('max leadership', leadership)
-    console.log('max authority', authority)
-    console.log('max dominance', dominance)
-    console.log('army', ARMY)
+    // console.log('max leadership', leadership)
+    // console.log('max authority', authority)
+    // console.log('max dominance', dominance)
+    // console.log('army', ARMY)
 
     let maxLoop = 1000000 // should change it for a timer
     //let totalLeadership = 0
@@ -320,7 +320,7 @@ function Dos() {
           playing = false
           break
         }
-        console.log('current stack', stack)
+        // console.log('current stack', stack)
 
         // 4. calcular cuantos unit necesita pa matar 1 mob
         // const monsterStack = getMobTarget(stack.unit)
@@ -378,13 +378,13 @@ function Dos() {
             }
 
             if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
-              console.log(
-                'lead: str limit',
-                ARMY[i].useStrLimit,
-                stackStrength + newStackStrength,
-                '>=',
-                ARMY[i].strLimit
-              )
+              // console.log(
+              //   'lead: str limit',
+              //   ARMY[i].useStrLimit,
+              //   stackStrength + newStackStrength,
+              //   '>=',
+              //   ARMY[i].strLimit
+              // )
 
               // console.log('rompio lead2')
               break
@@ -401,13 +401,13 @@ function Dos() {
             const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackHealth = totalHPPerUnit * unitsCount
             if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
-              console.log(
-                'lead: hp limit',
-                ARMY[i].useHpLimit,
-                stackHealth + newStackHealth,
-                '>=',
-                ARMY[i].HpLimit
-              )
+              // console.log(
+              //   'lead: hp limit',
+              //   ARMY[i].useHpLimit,
+              //   stackHealth + newStackHealth,
+              //   '>=',
+              //   ARMY[i].HpLimit
+              // )
 
               // console.log('rompio lead4')
               break
@@ -416,7 +416,7 @@ function Dos() {
             // console.log('leadership: agregando units a ', ARMY[i].unit.name)
             addArmyUnits(ARMY, i, unitsCount)
 
-            console.log('new army', ARMY)
+            // console.log('new army', ARMY)
           }
         }
 
@@ -462,26 +462,26 @@ function Dos() {
             }
 
             if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
-              console.log(
-                'auth: str limit',
-                ARMY[i].useStrLimit,
-                stackStrength + newStackStrength,
-                '>=',
-                ARMY[i].strLimit
-              )
+              // console.log(
+              //   'auth: str limit',
+              //   ARMY[i].useStrLimit,
+              //   stackStrength + newStackStrength,
+              //   '>=',
+              //   ARMY[i].strLimit
+              // )
               // console.log('rompio merc2')
               break
             }
 
             if (stackStrength + newStackStrength >= groupStrength) {
-              console.log(
-                'break on str mayor ',
-                stackStrength,
-                newStackStrength,
-                stackStrength + newStackStrength,
-                '>',
-                groupStrength
-              )
+              // console.log(
+              //   'break on str mayor ',
+              //   stackStrength,
+              //   newStackStrength,
+              //   stackStrength + newStackStrength,
+              //   '>',
+              //   groupStrength
+              // )
               // console.log('rompio merc3')
               break
             }
@@ -491,13 +491,13 @@ function Dos() {
             const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackHealth = totalHPPerUnit * unitsCount
             if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
-              console.log(
-                'auth: hp limit',
-                ARMY[i].useHpLimit,
-                stackHealth + newStackHealth,
-                '>=',
-                ARMY[i].HpLimit
-              )
+              // console.log(
+              //   'auth: hp limit',
+              //   ARMY[i].useHpLimit,
+              //   stackHealth + newStackHealth,
+              //   '>=',
+              //   ARMY[i].HpLimit
+              // )
 
               // console.log('rompio merc4')
               break
@@ -546,13 +546,13 @@ function Dos() {
             }
 
             if (ARMY[i].useStrLimit && stackStrength + newStackStrength > ARMY[i].strLimit) {
-              console.log(
-                'dominance: str limit',
-                ARMY[i].useStrLimit,
-                stackStrength + newStackStrength,
-                '>=',
-                ARMY[i].strLimit
-              )
+              // console.log(
+              //   'dominance: str limit',
+              //   ARMY[i].useStrLimit,
+              //   stackStrength + newStackStrength,
+              //   '>=',
+              //   ARMY[i].strLimit
+              // )
               // console.log('rompio dom2')
               break
             }
@@ -568,13 +568,13 @@ function Dos() {
             const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackHealth = totalHPPerUnit * unitsCount
             if (ARMY[i].useHpLimit && stackHealth + newStackHealth > ARMY[i].HpLimit) {
-              console.log(
-                'dom: hp limit',
-                ARMY[i].useHpLimit,
-                stackHealth + newStackHealth,
-                '>=',
-                ARMY[i].HpLimit
-              )
+              // console.log(
+              //   'dom: hp limit',
+              //   ARMY[i].useHpLimit,
+              //   stackHealth + newStackHealth,
+              //   '>=',
+              //   ARMY[i].HpLimit
+              // )
 
               // console.log('rompio dom4')
               break
@@ -593,7 +593,7 @@ function Dos() {
         lastAuthorityCalculated === getArmyAuthority(ARMY) &&
         lastDominanceCalculated === getArmyDominance(ARMY)
       ) {
-        console.log('no changes to leadership,authority or dominance, ending')
+        // console.log('no changes to leadership,authority or dominance, ending')
         playing = false
         break
       }
@@ -637,7 +637,7 @@ function Dos() {
   }
 
   const verifyCitadele10 = () => {
-    console.log('verifying citadele10')
+    // console.log('verifying citadele10')
     const checkResult: Result[] = []
     // let troopsTypes: boolean = false
     let firstEnemyKilled: boolean = false
@@ -715,7 +715,7 @@ function Dos() {
     } else {
       checkResult.push({
         status: 2,
-        msg: 'first stack will die on enemy first attack, add more health'
+        msg: 'first stack might die on enemy first attack, add more health'
       })
       firstStackDied = true
     }
@@ -740,7 +740,7 @@ function Dos() {
       } else {
         checkResult.push({
           status: 2,
-          msg: 'first stack will die on enemy second attack, add more health'
+          msg: 'first stack might die on enemy second attack, if enemy is not killed first, add more health'
         })
         secondStackDied = true
       }
@@ -760,7 +760,7 @@ function Dos() {
         } else {
           checkResult.push({
             status: 2,
-            msg: 'first stack will die on enemy third attack, add more health'
+            msg: 'first stack might die on enemy third attack, if enemy is not killed first, add more health'
           })
           thirdStackDied = true
         }
@@ -780,7 +780,7 @@ function Dos() {
           } else {
             checkResult.push({
               status: 2,
-              msg: 'first stack will die on enemy fourth attack, add more health'
+              msg: 'first stack might die on enemy fourth attack, if enemy is not killed first, add more health'
             })
             fourthStackDied = true
           }
@@ -801,7 +801,7 @@ function Dos() {
             } else {
               checkResult.push({
                 status: 2,
-                msg: 'first stack will die on enemy fifth attack, add more health'
+                msg: 'first stack might die on enemy fifth attack, if enemy is not killed first, add more health'
               })
             }
           }
@@ -892,32 +892,39 @@ function Dos() {
     const myArmy = prepareArmyData(army)
     const citadel = structuredClone(citadele10.stacks)
 
-    let isMyTurn = true
     let attacker: FightStack | null = myArmy[0] // single stack
     let defender: FightStack[] | null = citadel // array of stacks
     // check both sides have troops alive
     let loopProtect = 20
+    let turn = 0
+    const stacksCount = myArmy.length + citadel.length
+    let tmpCounter = 1
     while (haveTroopsAlive(myArmy) && haveTroopsAlive(citadel)) {
-      if (isMyTurn) {
-        attacker = getStrongestTroopAlive(myArmy)
-        if (!attacker) {
-          break
-        }
-
+      // get strongest troop alive who didnt fight yet
+      attacker = getStrongestTroopAlive(myArmy, turn)
+      if (attacker) {
         defender = citadel
-      } else {
-        attacker = getStrongestTroopAlive(citadel)
-        if (!attacker) {
-          break
-        }
 
-        defender = myArmy
+        // console.log('attacker', attacker, 'defender', defender)
+        // console.log('fight')
+        fight(attacker, defender, checkResult)
+        tmpCounter++
       }
-      console.log('attacker', attacker, 'defender', defender)
-      console.log('fight')
-      fight(attacker, defender, checkResult)
 
-      isMyTurn = !isMyTurn
+      attacker = getStrongestTroopAlive(citadel, turn)
+      if (attacker) {
+        defender = myArmy
+
+        // console.log('attacker', attacker, 'defender', defender)
+        // console.log('fight')
+        fight(attacker, defender, checkResult)
+        tmpCounter++
+      }
+
+      if (tmpCounter >= stacksCount) {
+        turn++
+        tmpCounter = 1
+      }
 
       loopProtect--
       if (loopProtect < 1) {
@@ -926,10 +933,10 @@ function Dos() {
       }
     }
 
-    console.log('citadel after hit', citadel)
+    // console.log('citadel after hit', citadel)
 
     setReport(checkResult)
-    console.log(' citadele10 result', checkResult)
+    // console.log(' citadele10 result', checkResult)
   }
 
   const handleDrag = (event: DragEndEvent) => {
@@ -943,8 +950,10 @@ function Dos() {
   }
 
   return (
-    <div className='dos-main'>
-      <nav className='fixed top-[56px] z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex'>
+    <>
+      <ArmyList />
+
+      <nav className='pt-[57px] sm:ml-64 flex'>
         <div className='px-3 py-3 lg:px-5 lg:pl-3'>
           <div className='config-container'>
             <div className='configbar'>
@@ -1026,7 +1035,7 @@ function Dos() {
 
           {/* ---------------------- */}
 
-          <div className='inline-flex menu-options'>
+          <div className=''>
             <button
               data-drawer-target='sidebar-multi-level-sidebar'
               data-drawer-toggle='sidebar-multi-level-sidebar'
@@ -1086,12 +1095,10 @@ function Dos() {
         </div>
       </nav>
 
-      <>
-        <ArmyList />
-
-        <div className='pt-[332px] sm:ml-64 flex'>
-          <div className='p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700'>
-            <div className='stack-container'>
+      <div className='pt-[57px] sm:ml-64 flex bg-gray-900'>
+        <div className='p-4 border-2 '>
+          <div className='stack-container'>
+            <div className='sticky  top-[57px]'>
               <h2 className='header-title'>Stacks</h2>
 
               <table className='skill-info'>
@@ -1111,7 +1118,7 @@ function Dos() {
                 </tbody>
               </table>
 
-              <div className='btn-group sticky'>
+              <div className='btn-group'>
                 <button
                   className='inline-flex text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
                   onClick={calcSTR}
@@ -1127,22 +1134,24 @@ function Dos() {
                   Clear
                 </button>
               </div>
+            </div>
 
-              <div className='stack-list'>
-                <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
-                  <SortableContext items={army}>
-                    {army.map(stack => {
-                      if (cardType === 'smallcard') {
-                        return <SmallCard stack={stack} key={stack.id} />
-                      } else {
-                        return <Card stack={stack} key={stack.id} />
-                      }
-                    })}
-                  </SortableContext>
-                </DndContext>
-              </div>
+            <div className='stack-list'>
+              <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
+                <SortableContext items={army}>
+                  {army.map(stack => {
+                    if (cardType === 'smallcard') {
+                      return <SmallCard stack={stack} key={stack.id} />
+                    } else {
+                      return <Card stack={stack} key={stack.id} />
+                    }
+                  })}
+                </SortableContext>
+              </DndContext>
             </div>
           </div>
+        </div>
+        {report.length > 0 && (
           <div className='mt-4 p-4 border-2'>
             {report.map((data, i) => {
               let color = 'text-green-700'
@@ -1162,9 +1171,9 @@ function Dos() {
               )
             })}
           </div>
-        </div>
-      </>
-    </div>
+        )}
+      </div>
+    </>
   )
 }
 
