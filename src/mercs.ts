@@ -317,6 +317,21 @@ export const sheduVI: MercUnit = unitBuilder<MercUnit>({
   level: 'VI'
 })
 
+export const entVI: MercUnit = unitBuilder<MercUnit>({
+  clasification: 'merc',
+  name: ARMY.entVI,
+  BASEHP: 219000,
+  BASESTR: 73000,
+  AUTHORITY: 39,
+  INITIATIVE: 10,
+  vsDragonPercent: 45,
+  vsRangedPercent: 55,
+  troop: 'merc',
+  category: 'melee',
+  race: 'elf',
+  group: '',
+  level: 'VI'
+})
 export const abominationVI: MercUnit = unitBuilder<MercUnit>({
   clasification: 'merc',
   name: ARMY.abominationVI,

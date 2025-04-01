@@ -160,6 +160,7 @@ export const ARMY = {
   trailseekerVI: 'trailseekerVI',
   rhinoRiderVI: 'rhinoRiderVI',
   sheduVI: 'sheduVI',
+  entVI: 'entVI',
   boneGolemVI: 'boneGolemVI',
   abominationVI: 'abominationVI',
   archidemonVI: 'archidemonVI',

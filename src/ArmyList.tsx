@@ -35,7 +35,8 @@ import {
   trailseekerVI,
   wardenII,
   warregalII,
-  wyvernII
+  wyvernII,
+  entVI
 } from './mercs'
 import {
   ArcherG1,
@@ -333,6 +334,8 @@ export const ArmyList = () => {
       unitType = sheduVI
     } else if (type === 'abominationVI') {
       unitType = abominationVI
+    } else if (type === 'entVI') {
+      unitType = entVI
     } else if (type === 'archidemonVI') {
       unitType = archidemonVI
     } else if (type === 'lightningLordVII') {
@@ -1768,6 +1771,16 @@ export const ArmyList = () => {
             </div>
 
             <div className='btn-group'>
+              {!selectedStacks.includes(ARMY.entVI) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('entVI')
+                  }}
+                >
+                  ent VI
+                </button>
+              )}
               {!selectedStacks.includes(ARMY.abominationVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'

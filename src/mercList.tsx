@@ -1,4 +1,5 @@
 import {
+  entVI,
   abominationVI,
   arbalesterVI,
   archidemonVI,
@@ -50,6 +51,7 @@ export const MercList = () => {
     rhinoRiderVI,
     boneGolemVI,
     sheduVI,
+    entVI,
     abominationVI,
     archidemonVI,
     lightningLordVII,
@@ -129,11 +131,11 @@ los stats son correctos pero el authority esta mal
     T5 Bear  ***
     T5 Giant Zombie **
     T5 Scorpion Rider  ***
-    T5 Ifrit ***
     T5 Cyclops ***
     T5 Fireworm Rider **
 
 
+    T5 Ifrit ***
     T6 Arbalester **
     Trailseeker **
     T6 Legionary ***
