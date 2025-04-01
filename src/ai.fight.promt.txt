@@ -1,0 +1,16 @@
+crear un codigo en javascript para crear un sistema de peleas entre 2 partes
+con las siguientes reglas:
+1. debe tener turnos alternados
+2. las partes pueden tener N numero de tropas
+3. la cantidad de tropas pueden ser diferentes entre partes
+4. el orden de ataque se basa en la tropa que tiene mas fuerza
+5. las tropas pueden ser de tipo guardias y monstruos, y los monstruos pueden ser bestias, elementales, gigantes y dragones
+6. ademas los guardias y monstruos tienen un categoria que puede ser melee,ranged,mounted y flying
+7. existen tipos de bonos que afectan el daño total producido
+8. las tropas de tipo melee tiene bono adicional contra tropas del tipo ranged al 30%
+9. las tropas de tipo ranged tiene bono adicional contra tropas del tipo flying al 40%
+10. las tropas de tipo mounted tienen bono adicional contra tropas del tipo melee al 15%
+11. el atacante selecciona su objetivo en base al mayor daño que posiblemente pueda hacer
+12. si la vida disponible de las tropas que selecciono el atacante es menor que el daño, el ataque no procedera
+13. si el atacante no encuentra ningun objetivo, se procedera a atacar a la tropa que aun este viva y que sea la mas fuerte
+
