@@ -298,6 +298,25 @@ function Dos() {
           stack.strLimitType === '' &&
           getStackStrength(ARMY, 0) + unitStrength >= ARMY[0].strLimit
         ) {
+          // el strLimit se pone la vida del enemigo
+          // para que calcule la cantidad maxima de tropas a enviar
+          // en el calculo del strLimit SIN  feature bonus: ejm. SIN vsMelee
+          // la fuerza maxima del stack debe ser menor que la vida del enemigo
+          // para que al seleccionar objetivo se tenga como target ese stack espeficico del enemigo
+          // ejm.
+          // si tengo bono de ataque vsMounted, y el enemigo tiene una tropa de tipo mounted, y su vida es de 1000
+          // para poder atacarlo, la fuerza maxima de mi stack debe ser menor que 1000
+          //--
+          // SI incluyo el bono vsMounted en el calculo de la fuerza maxima, debo agregar 1 unidad extra a la cuenta de tropas
+          // para que el daño efectivo total (incluido vsMounted) sobrepase a la vida disponible del enemigo
+          //--
+          // SI NO incluyo algun bono en el calculo de la fuerza maxima, voy a tener unidades extra, que aun van a atacar al mismo objetivo
+          // y el daño efectivo total, va a exceder mucho mas que la vida disponible del enemigo
+          //--
+          // en ambos casos se apunta al mismo objetivo, pero al incluir el bono vsMounted y agregar 1, se ahorran mas tropas
+          //--
+          // en el codigo al tener la comprobacion con > y NO con >= automaticamente se suma 1 a la cuenta, por lo que el usuario no tiene que agregar nada
+
           canIAddToFirstStack = false
         } else {
           const stackStrengthWithBonus = getStrengthWithBonus(ARMY[0])
@@ -308,8 +327,14 @@ function Dos() {
           if (strLimitValue) {
             const stackStrength = strLimitValue.str
             const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
-
-            if (stackStrength + unitStrength >= ARMY[0].strLimit) {
+            // en strLimit se pone la vida del enemigo
+            // para que calcule la cantidad maxima de tropas a enviar
+            // en el calculo del strLimit se usa el feature bonus: ejm. vsMelee
+            // que se usa para el calculo del "daño efectivo" que es lo que se aplica al restar vida en una pelea
+            // por lo tanto, este "daño efectivo" debe ser mayor o igual a la vida
+            // por lo que debo agregar 1 unidad extra a la cuenta de tropas
+            // y se debe usar > en lugar de >=
+            if (stackStrength + unitStrength > ARMY[0].strLimit) {
               canIAddToFirstStack = false
             }
           }
@@ -428,7 +453,7 @@ function Dos() {
                   const stackStrength = strLimitValue.str
                   const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength >= ARMY[i].strLimit) {
+                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
                     break
                   }
                 }
@@ -533,7 +558,7 @@ function Dos() {
                   const stackStrength = strLimitValue.str
                   const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength >= ARMY[i].strLimit) {
+                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
                     break
                   }
                 }
@@ -639,7 +664,7 @@ function Dos() {
                   const stackStrength = strLimitValue.str
                   const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength >= ARMY[i].strLimit) {
+                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
                     break
                   }
                 }

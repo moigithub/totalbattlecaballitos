@@ -673,44 +673,6 @@ export const Citadels = () => {
       <br />
 
       <hr />
-      <h4 id='combat-system' className='text-lg text-green-700'>
-        Combat system &amp; tips
-      </h4>
-      <ul className='list-disc list-inside text-gray-500'>
-        <li>stack order is based on stack strength + bonus (no feature bonus)</li>
-        <li>the stack with highest strength attack first</li>
-        <li>
-          which stack is attacked, is based on the greatest possible damage, AND if the attacked
-          stack have enough health to absorb that damage
-        </li>
-        <div className='ml-8'>
-          <p>example:</p>
-          <ul>
-            <li className='list-disc list-inside'>
-              if the attacker have a featured attack bonus type (ie vsMelee), the defender unit
-              belong to the same type (ie Spearman), the attacker do 1000 damage and the defender
-              have 1001 health, then the attack will be executed
-            </li>
-            <li className='list-disc list-inside'>
-              if the attacker have a featured attack bonus type (ie vsMelee), the defender unit
-              belong to the same type (ie Spearman), the attacker do 1000 damage and the defender
-              have 999 health, then the attack will be avoided, the attacker will find another
-              target
-            </li>
-            <li className='list-disc list-inside'>
-              if the attacker cant find a target, the strongest defender will be targeted
-            </li>
-          </ul>
-        </div>
-        <li>meatshield/tank units should go first</li>
-        <li>
-          is better to avoid sending units with featured attack bonus type, to avoid extra losses
-        </li>
-        <li>
-          to dodge an attack, the defender stack health, must be lower than the attacker damage, so
-          it picks another target
-        </li>
-      </ul>
     </div>
   )
 }

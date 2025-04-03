@@ -18,7 +18,7 @@ function App() {
                   to={`/calc`}
                   className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
                 >
-                  Calc
+                  Stack Calc
                 </NavLink>
               </li>
               <li>
@@ -39,10 +39,18 @@ function App() {
               </li>
               <li>
                 <NavLink
-                  to={`/citadels`}
+                  to={`/citadels-catas`}
                   className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
                 >
-                  Citadels
+                  Citadels catapults
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to={`/game-combat`}
+                  className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
+                >
+                  Game combat
                 </NavLink>
               </li>
             </ul>
