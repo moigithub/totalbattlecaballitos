@@ -82,6 +82,7 @@ function Dos() {
   const [report, setReport] = useState<{ status: number; msg: string }[]>([])
 
   const [cardType, setCardType] = useState('card') // card , smallcard
+  const [gapPercent, setGapPercent] = useState(10) // card , smallcard
 
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
@@ -235,6 +236,36 @@ function Dos() {
      * if beast have lower hp than your squad total damage, then it will attack the mounted squad
      */
 
+    /**
+       im going to add a gap, void, empty, threshold, space (whatever term to describe a jump between troops strength) to try to avoid changes in stack order
+to my useless calc
+---
+example...
+first stack: melee (spearman) strength: 100,000
+second stack: monster,flying, strength: 99,999
+captain: stror (no bonus on strength) ^_^
+---
+everything works like a charm... you kill 100 citadels... all ok..
+then you change captain to ingrid... monster 20% bonus strength added...
+--
+now ... your stack order are broken
+second stack: monster,flying, strength: becomes 120,000 strength..
+its no longer the 2nd stack
+---
+IF use "gap 50%"
+first stack: melee (spearman) strength: 100,000
+second stack: monster,flying, strength: 50,000
+captain: stror (no bonus on strength) ^_^
+--
+change ingrid +20% bonus on monster
+--
+first stack: melee (spearman) strength: 100,000
+second stack: monster,flying, strength:  60,000
+--
+second REMAINS second
+
+     */
+
     if (armyRef.current.length === 0) {
       // algo debe estar marcado
       alert('pick riders')
@@ -242,6 +273,11 @@ function Dos() {
     }
 
     resetAllStacks()
+
+    // gapPercent will be calculated based on first stack strength only
+    // because if use the "previous stack" to calculate.. and each previous stack have lower strength
+    // some of the latest troops will be affected negativelly
+    // having less room to grow
 
     // deep copy the army to a normal object
     const ARMY = structuredClone(armyRef.current)
@@ -260,6 +296,7 @@ function Dos() {
     let lastDominanceCalculated = 0 // to break the loop, if didnt changed (loop protection)
 
     let playing = true
+    let gapStrength = 0
     while (playing) {
       // 1. check leadership acumulado del army
       // 2. agregar 1 unit al sacrificio
@@ -356,6 +393,9 @@ function Dos() {
       const sacrificeGroupStrength = getStackStrength(ARMY, 0)
       // console.log('sacrifice strength', sacrificeGroupStrength)
 
+      // calculate gap for next stacks
+      gapStrength = (sacrificeGroupStrength * gapPercent) / 100
+
       // const monsterStack = getMobTarget(stack.unit)
       // const unitsNeededToKill1Mob = calculateUnitsMobKill(monsterStack.unit, stack.unit)
       // updateMinSetup(stack.id!, unitsNeededToKill1Mob)
@@ -403,10 +443,10 @@ function Dos() {
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
-            let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
+            let groupStrength = sacrificeGroupStrength - gapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
               const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength
+              groupStrength = previousGroupStrength - gapStrength
             }
 
             // console.log(
@@ -519,10 +559,10 @@ function Dos() {
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
-            let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
+            let groupStrength = sacrificeGroupStrength - gapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
               const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength
+              groupStrength = previousGroupStrength - gapStrength
             }
 
             if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
@@ -625,10 +665,10 @@ function Dos() {
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
-            let groupStrength = sacrificeGroupStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
+            let groupStrength = sacrificeGroupStrength - gapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
               const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength
+              groupStrength = previousGroupStrength - gapStrength
             }
 
             if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
@@ -1213,25 +1253,60 @@ function Dos() {
         <div className='p-4 border-2 '>
           <div className='stack-container'>
             <div className='sticky  top-[57px]'>
-              <h2 className='header-title'>Stacks</h2>
+              <div className='flex  items-baseline'>
+                <table className='skill-info'>
+                  <thead>
+                    <tr>
+                      <th>Leadrshp</th>
+                      <th>Authrity</th>
+                      <th>Dominnce</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{getArmyLeadership(army)}</td>
+                      <td>{getArmyAuthority(army)}</td>
+                      <td>{getArmyDominance(army)}</td>
+                    </tr>
+                  </tbody>
+                </table>
 
-              <table className='skill-info'>
-                <thead>
-                  <tr>
-                    <th>Leadrshp</th>
-                    <th>Authrity</th>
-                    <th>Dominnce</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{getArmyLeadership(army)}</td>
-                    <td>{getArmyAuthority(army)}</td>
-                    <td>{getArmyDominance(army)}</td>
-                  </tr>
-                </tbody>
-              </table>
-
+                <div className='ml-5 flex'>
+                  <label
+                    htmlFor='gap'
+                    title='is a space between troops strength, in case a strength percent changes to avoid loosing the stack order and its calculated based on the first troop stack strength'
+                  >
+                    Gap Percent
+                  </label>
+                  <input
+                    id='gap'
+                    className='ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full max-w-[60px] h-[2.5rem] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                    type='number'
+                    min={0}
+                    max={100}
+                    value={gapPercent}
+                    onChange={e => setGapPercent(parseInt(e.target.value))}
+                  />
+                </div>
+              </div>
+              <div>
+                <p>whats a gap?</p>
+                <p>
+                  its a space between troops strength, in case a strength percent changes to avoid
+                  loosing the stack order and its calculated based on the first troop stack
+                  strength, the downside is you will have less room for your next troops, because
+                  the max strength of your other troops available would be reduced
+                </p>
+                <p className='bg-green-800 w-fit'>[army (all troops) max strength___________]</p>
+                <p className='bg-blue-800 w-fit'>
+                  [first troop]<span className='bg-orange-800 text-white'>[gap 50%______]</span>
+                  [second troop]
+                </p>
+                <p className='bg-fuchsia-800 w-fit'>
+                  [first troop]<span className='bg-orange-800 text-white'>[gap 10%__]</span>[second
+                  troop____]
+                </p>
+              </div>
               <div className='btn-group'>
                 <button
                   className='inline-flex text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
