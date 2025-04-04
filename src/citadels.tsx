@@ -350,24 +350,6 @@ export const Citadels = () => {
     <div className='p-2 pt-[56px]'>
       <form className='max-w-xs '>
         <div className='group'>
-          <label>STR bonus </label>
-          <input
-            type='number'
-            className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            value={StrBonus}
-            onChange={changeStrBonus}
-          />
-        </div>
-        <div className='group'>
-          <label>HP bonus </label>
-          <input
-            type='number'
-            className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            value={HPBonus}
-            onChange={changeHPBonus}
-          />
-        </div>
-        <div className='group'>
           <label>Citadel </label>
           <select
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -402,6 +384,26 @@ export const Citadels = () => {
             <option value='1'>1 Catapult I</option>
           </select>
         </div>
+
+        <div className='group'>
+          <label>STR bonus </label>
+          <input
+            type='number'
+            className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            value={StrBonus}
+            onChange={changeStrBonus}
+          />
+        </div>
+        <div className='group'>
+          <label>HP bonus </label>
+          <input
+            type='number'
+            className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            value={HPBonus}
+            onChange={changeHPBonus}
+          />
+        </div>
+
         <br />
         <div className='group'>
           <label>Use stack health limit </label>
@@ -673,6 +675,13 @@ export const Citadels = () => {
       <br />
 
       <hr />
+      <h2 className='text-lg font-bold'>
+        Example calculating how many cat4 units needed to kill walls on citadel lvl 15
+      </h2>
+      <img src='./cataFormula.jpg' alt='calculate catapults units to kill walls' />
+
+      <h2 className='text-lg font-bold'>Tutorial to calculate catapults amount</h2>
+      <img src='./tutorialCataCalc.jpg' alt='tutorial to calculate catapults' />
     </div>
   )
 }
