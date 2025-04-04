@@ -1,10 +1,8 @@
 export const GameCombatInfo = () => {
   return (
-    <div className='p-2 pt-[56px] text-white'>
+    <div className='p-4 pt-[56px] text-white'>
       <hr />
-      <h1 id='combat-system' className='text-5xl font-bold text-green-700 '>
-        Combat system &amp; tips
-      </h1>
+      <h1 className='text-5xl font-bold text-green-700 '>Combat system &amp; tips</h1>
       <ul className='list-disc list-inside text-gray-500'>
         <li>
           <span className='text-lime-700'>Stack order</span> is based on{' '}
@@ -192,6 +190,31 @@ export const GameCombatInfo = () => {
         <li>
           to dodge an attack, the defender stack health, must be lower than the attacker damage
           (+bonus, without feature bonus), so it picks another target
+        </li>
+      </ul>
+
+      <h2 className='mt-8 font-bold text-4xl text-green-700'>Some strategies used on citadels</h2>
+      <ul>
+        <li>To AVOID centaurus kill your catapults</li>
+        <div className='ml-5'>
+          <p>
+            SEND some units with vsMounted feature bonus to kill centaur, like vultures or griffins,
+            make sure the total strength of those units is not higher than the centaurus total
+            health, and position it (stack order) before centaur hit your catapult
+          </p>
+          <img src='./killCentaurStrategy.jpg' alt='kill centaur before it hit our catapults' />
+        </div>
+
+        <li>
+          ADD a ranged unit with HUGE health (like canoner), so it can survive centaur attack,
+          centaurs have a 50% feature bonus against ranged unit, so they will "prefer" to attack
+          your canoner instead your catapults
+        </li>
+
+        <li>
+          REDUCE your catapults health, and use as many catapults stack needed to compensate your
+          previous damage, having lower health than centaur damage, centaur will skip your catapults
+          and find another target where it can do more damage,
         </li>
       </ul>
     </div>
