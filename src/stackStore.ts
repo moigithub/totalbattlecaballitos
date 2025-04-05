@@ -1,5 +1,4 @@
 import { create, StateCreator } from 'zustand'
-import { v4 as uuidv4 } from 'uuid'
 import { MobStack } from './monsters'
 import { devtools, persist } from 'zustand/middleware'
 import { BasicStats, Bonus, Stack, Unit } from './types'
@@ -7,6 +6,7 @@ import { getStrWithExtraBonus, whoCanIAttack } from './utils'
 import { hashStorage } from '@/hashStore'
 import { createDebouncedJSONStorage } from 'zustand-debounce'
 import { getStrengthWithBonus } from './helpers'
+import { ARMY } from './soldiers'
 
 interface StackStore {
   leadership: number
@@ -30,7 +30,7 @@ interface StackStore {
   setArmy: (data: Stack[]) => void
   // getArmyStrength: () => number
   // getArmyHealth: () => number
-  addStack: (data: Omit<Stack, 'id'>) => void
+  addStack: (data: Stack) => void
   removeStack: (id: string) => void
   resetStack: (id: string) => void
   // getStack: (id: string) => Stack | null
@@ -287,8 +287,8 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     //TODO: generate id for each stack
     set(() => ({ army: data }))
   },
-  addStack: (data: Omit<Stack, 'id'>) => {
-    set(state => ({ army: [...state.army, { ...data, id: uuidv4() }] }))
+  addStack: (data: Stack) => {
+    set(state => ({ army: [...state.army, data] }))
   },
   removeStack: (id: string) => {
     set(state => ({ army: state.army.filter(stack => stack.id !== id) }))
@@ -958,12 +958,44 @@ export const useStackStore = create<StackStore>()(
   devtools(
     persist(stackSlice, {
       name: 'stacks',
-      version: 6,
+      version: 8,
       // storage: createJSONStorage(() => hashStorage),
       storage: createDebouncedJSONStorage(hashStorage, {
         debounceTime: 500 // Debounce time in milliseconds ⏳
         // Other options can be specified here
-      })
+      }),
+      partialize: s => {
+        return {
+          leadership: s.leadership,
+          authority: s.authority,
+          dominance: s.dominance,
+          army: s.army.map(({ unit, ...stack }) => {
+            return { ...stack, unitKey: unit.id }
+          })
+          // mobArmy:s.mobArmy,
+          // bonus:s.bonus,
+        }
+      },
+      merge: (persistedState, currentState): StackStore => {
+        // console.log('persistedState', persistedState)
+        // console.log('currentstate', currentState)
+        // console.log('ARMY', ARMY)
+        const state: StackStore = persistedState as StackStore
+        const newState = {
+          ...currentState,
+          ...state,
+          army: state.army.map(stack => {
+            const unit = ARMY[stack.unitKey as string] as Unit
+            return {
+              ...stack,
+              unit
+            }
+          })
+        }
+
+        // console.log('newstate', newState)
+        return newState
+      }
     })
   )
 )

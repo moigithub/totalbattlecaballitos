@@ -63,6 +63,7 @@ export type Group = 'guardsman' | 'specialist' | 'engineer' | 'monster'
 export type Race = 'human' | 'beast' | 'elemental' | 'dragon' | 'giant'
 
 export interface BasicUnit {
+  id: string
   clasification: string
   name: string
   BASEHP: number
@@ -141,7 +142,8 @@ export interface MonsterUnit extends BasicUnit {
 export type Unit = GuardsmanUnit | SpecialistUnit | EngineerUnit | MonsterUnit | MercUnit
 
 export interface Stack {
-  id: string // whichever at first position will be used as sacrifice, increases 1 by 1, ignoring lockMinSetup
+  id: string // stack ID,,, i think this can be random, but since unit.id is unique, im using it
+  unitKey: string // to reload store data on rehydratation
   // health: number // (base hp+bonus) *units // DEBE ser calculado y no guardado, por si cambia el bono no tener que recalcular de nuevo
   //healthLeft o damageTaken
   // strength: number // (base str+bonus) *units// calculado basado contra que esta atacando// recalculado, no guardado

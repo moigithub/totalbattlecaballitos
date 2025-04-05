@@ -1,17 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import {
-  CatapultE1,
-  CatapultE2,
-  CatapultE3,
-  CatapultE4,
-  CatapultE5,
-  CatapultE6,
-  CatapultE7,
-  CatapultE8,
-  CatapultE9
-} from './soldiers'
-import {
   citadelc20,
   citadelc25,
   citadele10,
@@ -22,7 +11,7 @@ import {
 } from './citadelData'
 
 import { LargeCitadel } from './citadel'
-import { arielII } from './mercs'
+import { ARMY } from './soldiers'
 
 export const Citadels = () => {
   const [selectedCitadel, setSelectedCitadel] = useState('e15')
@@ -46,74 +35,74 @@ export const Citadels = () => {
   })
 
   const cata1 = {
-    hp: CatapultE1.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE1.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE1.BASESTR *
-      CatapultE1.multiplier *
-      (1 + (StrBonus + CatapultE1.vsFortificationsPercent) / 100)
+      ARMY.CatapultE1.BASESTR *
+      ARMY.CatapultE1.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE1.vsFortificationsPercent) / 100)
   }
   const cata2 = {
-    hp: CatapultE2.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE2.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE2.BASESTR *
-      CatapultE2.multiplier *
-      (1 + (StrBonus + CatapultE2.vsFortificationsPercent) / 100)
+      ARMY.CatapultE2.BASESTR *
+      ARMY.CatapultE2.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE2.vsFortificationsPercent) / 100)
   }
   const cata3 = {
-    hp: CatapultE3.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE3.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE3.BASESTR *
-      CatapultE3.multiplier *
-      (1 + (StrBonus + CatapultE3.vsFortificationsPercent) / 100)
+      ARMY.CatapultE3.BASESTR *
+      ARMY.CatapultE3.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE3.vsFortificationsPercent) / 100)
   }
   const cata4 = {
-    hp: CatapultE4.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE4.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE4.BASESTR *
-      CatapultE4.multiplier *
-      (1 + (StrBonus + CatapultE4.vsFortificationsPercent) / 100)
+      ARMY.CatapultE4.BASESTR *
+      ARMY.CatapultE4.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE4.vsFortificationsPercent) / 100)
   }
   const cata5 = {
-    hp: CatapultE5.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE5.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE5.BASESTR *
-      CatapultE5.multiplier *
-      (1 + (StrBonus + CatapultE5.vsFortificationsPercent) / 100)
+      ARMY.CatapultE5.BASESTR *
+      ARMY.CatapultE5.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE5.vsFortificationsPercent) / 100)
   }
   const cata6 = {
-    hp: CatapultE6.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE6.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE6.BASESTR *
-      CatapultE6.multiplier *
-      (1 + (StrBonus + CatapultE6.vsFortificationsPercent) / 100)
+      ARMY.CatapultE6.BASESTR *
+      ARMY.CatapultE6.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE6.vsFortificationsPercent) / 100)
   }
   const cata7 = {
-    hp: CatapultE7.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE7.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE7.BASESTR *
-      CatapultE7.multiplier *
-      (1 + (StrBonus + CatapultE7.vsFortificationsPercent) / 100)
+      ARMY.CatapultE7.BASESTR *
+      ARMY.CatapultE7.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE7.vsFortificationsPercent) / 100)
   }
   const cata8 = {
-    hp: CatapultE8.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE8.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE8.BASESTR *
-      CatapultE8.multiplier *
-      (1 + (StrBonus + CatapultE8.vsFortificationsPercent) / 100)
+      ARMY.CatapultE8.BASESTR *
+      ARMY.CatapultE8.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE8.vsFortificationsPercent) / 100)
   }
   const cata9 = {
-    hp: CatapultE9.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE9.BASEHP * (1 + HPBonus / 100),
     str:
-      CatapultE9.BASESTR *
-      CatapultE9.multiplier *
-      (1 + (StrBonus + CatapultE9.vsFortificationsPercent) / 100)
+      ARMY.CatapultE9.BASESTR *
+      ARMY.CatapultE9.multiplier *
+      (1 + (StrBonus + ARMY.CatapultE9.vsFortificationsPercent) / 100)
   }
   const cata10 = {
-    hp: arielII.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.arielII.BASEHP * (1 + HPBonus / 100),
     str:
-      arielII.BASESTR *
-      arielII.multiplier *
-      (1 + (StrBonus + arielII.vsFortificationsPercent) / 100)
+      ARMY.arielII.BASESTR *
+      ARMY.arielII.multiplier *
+      (1 + (StrBonus + ARMY.arielII.vsFortificationsPercent) / 100)
   }
 
   const changeStrBonus = (e: React.ChangeEvent<HTMLInputElement>) => {

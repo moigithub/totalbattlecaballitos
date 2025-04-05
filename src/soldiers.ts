@@ -1,4 +1,11 @@
-import { BasicUnit, EngineerUnit, GuardsmanUnit, MonsterUnit, SpecialistUnit } from './types'
+import {
+  BasicUnit,
+  EngineerUnit,
+  GuardsmanUnit,
+  MercUnit,
+  MonsterUnit,
+  SpecialistUnit
+} from './types'
 
 // function unitBuilder<T>(arg: T): T {
 //   return arg
@@ -6,191 +13,8 @@ import { BasicUnit, EngineerUnit, GuardsmanUnit, MonsterUnit, SpecialistUnit } f
 // const genericArrowFunction = <T>(arg: T): T => {
 //   return arg
 // }
-export const ARMY = {
-  // guardsmen
-  RiderG1: 'RiderG1',
-  RiderG2: 'RiderG2',
-  RiderG3: 'RiderG3',
-  RiderG4: 'RiderG4',
-  RiderG5: 'RiderG5',
 
-  SpearmanG1: 'SpearmanG1',
-  SpearmanG2: 'SpearmanG2',
-  SpearmanG3: 'SpearmanG3',
-  SpearmanG4: 'SpearmanG4',
-  SpearmanG5: 'SpearmanG5',
-  ArcherG1: 'ArcherG1',
-  ArcherG2: 'ArcherG2',
-  ArcherG3: 'ArcherG3',
-  ArcherG4: 'ArcherG4',
-  ArcherG5: 'ArcherG5',
-
-  battleGriffinV: 'battleGriffinV',
-  battleGriffinVI: 'battleGriffinVI',
-  battleGriffinVII: 'battleGriffinVII',
-  heavyArbalesterVI: 'heavyArbalesterVI',
-  heavyArbalesterVII: 'heavyArbalesterVII',
-
-  heavyHalberdierVI: 'heavyHalberdierVI',
-  heavyHalberdierVII: 'heavyHalberdierVII',
-
-  mountedKnightVI: 'mountedKnightVI',
-  mountedKnightVII: 'mountedKnightVII',
-
-  purifierI: 'purifierI',
-  purifierII: 'purifierII',
-
-  punisherI: 'punisherI',
-  punisherII: 'punisherII',
-
-  smiterI: 'smiterI',
-  smiterII: 'smiterII',
-
-  coraxI: 'coraxI',
-  coraxII: 'coraxII',
-
-  // specialist
-
-  SwordmanS1: 'SwordmanS1',
-  SwordmanS2: 'SwordmanS2',
-  SwordmanS3: 'SwordmanS3',
-  SwordmanS4: 'SwordmanS4',
-  SwordmanS5: 'SwordmanS5',
-  SpyS1: 'SpyS1',
-  SpyS2: 'SpyS2',
-  SpyS3: 'SpyS3',
-  SpyS4: 'SpyS4',
-  SpyS5: 'SpyS5',
-  deadshotsV: 'deadshotsV',
-  deadshotsVI: 'deadshotsVI',
-  deadshotsVII: 'deadshotsVII',
-
-  lionRiderV: 'lionRiderV',
-  lionRiderVI: 'lionRiderVI',
-  lionRiderVII: 'lionRiderVII',
-
-  vulturesV: 'vulturesV',
-  vulturesVI: 'vulturesVI',
-  vulturesVII: 'vulturesVII',
-
-  heavyKnightVI: 'heavyKnightVI',
-  heavyKnightVII: 'heavyKnightVII',
-
-  swiftJaegerVI: 'swiftJaegerVI',
-  swiftJaegerVII: 'swiftJaegerVII',
-
-  legitimistI: 'legitimistI',
-  legitimistII: 'legitimistII',
-
-  duelistI: 'duelistI',
-  duelistII: 'duelistII',
-
-  whitemaneI: 'whitemaneI',
-  whitemaneII: 'whitemaneII',
-
-  royalLionI: 'royalLionI',
-  royalLionII: 'royalLionII',
-
-  panopticI: 'panopticI',
-  panopticII: 'panopticII',
-
-  CatapultE1: 'CatapultE1',
-  CatapultE2: 'CatapultE2',
-  CatapultE3: 'CatapultE3',
-  CatapultE4: 'CatapultE4',
-  CatapultE5: 'CatapultE5',
-  CatapultE6: 'E6 Ballistae VI',
-  CatapultE7: 'E7 Ballistae VII',
-  CatapultE8: 'E8 Josephine I',
-  CatapultE9: 'E9 Josephine II',
-  //monsters
-  // dragons
-  emeraldDragon: 'emeraldDragonIII',
-  magicDragon: 'magicDragonIV',
-  desertConquer: 'desertVanquisherV',
-  crystalDragon: 'crystalDragonVI',
-  blackDragon: 'blackDragonVII',
-  devastatorI: 'devastatorI',
-  devastatorII: 'devastatorII',
-
-  //elementals
-  waterElemental: 'waterElementalIII',
-  icePhoenix: 'icePhoenixIV',
-  flamingCentaur: 'flamingCentaurV',
-  rubiGolem: 'rubiGolemVI',
-  windLord: 'windLordVII',
-  firePhoenixI: 'firePhoenixI',
-  firePhoenixII: 'firePhoenixII',
-
-  //giants
-  stoneGargole: 'stoneGargoyleIII',
-  multiArmGuardianIV: 'many-Armed GuardianIV',
-  Ettin: 'EttinV',
-  trollRider: 'trollRiderVI',
-  destructiveColossusVII: 'destructiveColossusVII',
-  krakenI: 'krakenI',
-  krakenII: 'krakenII',
-
-  //beasts
-  battleBoar: 'battleBoarIII',
-  gorgonMedusa: 'gorgonMedusaIV',
-  fearsomeManticora: 'fearsomeManticoreV',
-  jungleDestroyerVI: 'jungleDestroyerVI',
-  ancientTerrorVII: 'ancientTerrorVII',
-  tricksterI: 'tricksterI',
-  tricksterII: 'tricksterII',
-
-  //mercenaries
-  scorpionRiderV: 'scorpionRiderV',
-  cyclopsV: 'cyclopsV',
-  gargoyleV: 'gargoyleV',
-  bearV: 'bearV',
-  ifritV: 'ifritV',
-  giantZombieV: 'giantZombieV',
-  firewormRiderV: 'firewormRiderV',
-  bullRiderV: 'bullRiderV',
-  unicornRiderV: 'unicornRiderV',
-  epicMonsterHunterVI: 'epicMonsterHunterVI',
-  chariotVI: 'chariotVI',
-  deathChariotVI: 'deathChariotVI',
-  legionaryVI: 'legionaryVI',
-  arbalesterVI: 'arbalesterVI',
-  sphynxVI: 'sphynxVI',
-  knightVI: 'knightVI',
-  trailseekerVI: 'trailseekerVI',
-  rhinoRiderVI: 'rhinoRiderVI',
-  sheduVI: 'sheduVI',
-  entVI: 'entVI',
-  boneGolemVI: 'boneGolemVI',
-  abominationVI: 'abominationVI',
-  archidemonVI: 'archidemonVI',
-  lightningLordVII: 'lightningLordVII',
-  cursedDragonVII: 'cursedDragonVII',
-  seaLordVII: 'seaLordVII',
-  sandwormVII: 'sandwormVII',
-  lifeDragonVII: 'lifeDragonVII',
-  goldenDragonVII: 'goldenDragonVII',
-  overlordVII: 'overlordVII',
-  fireLordVII: 'fireLordVII',
-  jungleKingVII: 'jungleKingVII',
-  wyvernII: 'wyvernII',
-  arielII: 'arielII',
-  jagoII: 'jagoII',
-  warregalII: 'warregalII',
-  epicMonsterHunterVII: 'epicMonsterHunterVII',
-  epicMonsterHunterII: 'epicMonsterHunterII',
-  demonicSalamanderII: 'demonicSalamanderII',
-  eternalCannoneerII: 'eternalCannoneerII',
-  slavicWarriorII: 'slavicWarriorII',
-  wardenII: 'wardenII',
-  highlanderII: 'highlanderII',
-  galloperII: 'galloperII',
-  scarfaceII: 'scarfaceII',
-  quicksandII: 'quicksandII',
-  pounderII: 'pounderII'
-}
-
-export const unitBuilder = <T>(props: Partial<BasicUnit>): T => {
+const unitBuilder = <T>(props: Partial<BasicUnit> & Pick<BasicUnit, 'id'>): T => {
   return {
     clasification: '',
     name: '',
@@ -223,6 +47,7 @@ export const unitBuilder = <T>(props: Partial<BasicUnit>): T => {
 }
 
 const riderBuilder = (
+  id: string,
   name: string,
   BASEHP: number,
   BASESTR: number,
@@ -231,6 +56,7 @@ const riderBuilder = (
   level: string
 ): GuardsmanUnit => {
   return unitBuilder<GuardsmanUnit>({
+    id,
     clasification: 'army',
     name,
     BASEHP,
@@ -246,14 +72,15 @@ const riderBuilder = (
     level
   })
 }
-export const RiderG1 = riderBuilder(ARMY.RiderG1, 300, 100, 65, 54, 'G1')
-export const RiderG2 = riderBuilder(ARMY.RiderG2, 540, 180, 98, 81, 'G2')
-export const RiderG3 = riderBuilder(ARMY.RiderG3, 960, 320, 146, 122, 'G3')
-export const RiderG4 = riderBuilder(ARMY.RiderG4, 1740, 580, 219, 182, 'G4')
-export const RiderG5 = riderBuilder(ARMY.RiderG5, 3150, 1050, 329, 273, 'G5')
+const RiderG1 = riderBuilder('RiderG1', 'RiderG1', 300, 100, 65, 54, 'G1')
+const RiderG2 = riderBuilder('RiderG2', 'RiderG2', 540, 180, 98, 81, 'G2')
+const RiderG3 = riderBuilder('RiderG3', 'RiderG3', 960, 320, 146, 122, 'G3')
+const RiderG4 = riderBuilder('RiderG4', 'RiderG4', 1740, 580, 219, 182, 'G4')
+const RiderG5 = riderBuilder('RiderG5', 'RiderG5', 3150, 1050, 329, 273, 'G5')
 
 //--------------------------------
 const swordmanBuilder = (
+  id: string,
   name: string,
   BASEHP: number,
   BASESTR: number,
@@ -263,6 +90,7 @@ const swordmanBuilder = (
   level: string
 ) => {
   return unitBuilder<SpecialistUnit>({
+    id,
     clasification: 'army',
     name,
     BASEHP,
@@ -279,16 +107,17 @@ const swordmanBuilder = (
     level
   })
 }
-export const SwordmanS1 = swordmanBuilder(ARMY.SwordmanS1, 150, 50, 40, 105, 20, 'S1')
-export const SwordmanS2 = swordmanBuilder(ARMY.SwordmanS2, 270, 90, 60, 105, 29, 'S2')
-export const SwordmanS3 = swordmanBuilder(ARMY.SwordmanS3, 480, 160, 90, 105, 44, 'S3')
-export const SwordmanS4 = swordmanBuilder(ARMY.SwordmanS4, 870, 290, 135, 105, 66, 'S4')
-export const SwordmanS5 = swordmanBuilder(ARMY.SwordmanS5, 1560, 520, 203, 105, 99, 'S5')
+const SwordmanS1 = swordmanBuilder('SwordmanS1', 'SwordmanS1', 150, 50, 40, 105, 20, 'S1')
+const SwordmanS2 = swordmanBuilder('SwordmanS2', 'SwordmanS2', 270, 90, 60, 105, 29, 'S2')
+const SwordmanS3 = swordmanBuilder('SwordmanS3', 'SwordmanS3', 480, 160, 90, 105, 44, 'S3')
+const SwordmanS4 = swordmanBuilder('SwordmanS4', 'SwordmanS4', 870, 290, 135, 105, 66, 'S4')
+const SwordmanS5 = swordmanBuilder('SwordmanS5', 'SwordmanS5', 1560, 520, 203, 105, 99, 'S5')
 
 //----------------------------
 
-const spyBuilder = (name: string, BASEHP: number, BASESTR: number, level: string) => {
+const spyBuilder = (id: string, name: string, BASEHP: number, BASESTR: number, level: string) => {
   return unitBuilder<SpecialistUnit>({
+    id,
     clasification: 'army',
     name,
     BASEHP,
@@ -303,16 +132,17 @@ const spyBuilder = (name: string, BASEHP: number, BASESTR: number, level: string
   })
 }
 
-export const SpyS1 = spyBuilder(ARMY.SpyS1, 75, 25, 'S1')
-export const SpyS2 = spyBuilder(ARMY.SpyS2, 135, 45, 'S2')
-export const SpyS3 = spyBuilder(ARMY.SpyS3, 240, 80, 'S3')
-export const SpyS4 = spyBuilder(ARMY.SpyS4, 450, 150, 'S4')
-export const SpyS5 = spyBuilder(ARMY.SpyS5, 780, 260, 'S5')
+const SpyS1 = spyBuilder('SpyS1', 'SpyS1', 75, 25, 'S1')
+const SpyS2 = spyBuilder('SpyS2', 'SpyS2', 135, 45, 'S2')
+const SpyS3 = spyBuilder('SpyS3', 'SpyS3', 240, 80, 'S3')
+const SpyS4 = spyBuilder('SpyS4', 'SpyS4', 450, 150, 'S4')
+const SpyS5 = spyBuilder('SpyS5', 'SpyS5', 780, 260, 'S5')
 
 //----------------------------------
-export const deadshotV = unitBuilder<SpecialistUnit>({
+const deadshotV = unitBuilder<SpecialistUnit>({
+  id: 'deadshotsV',
   clasification: 'army',
-  name: ARMY.deadshotsV,
+  name: 'deadshotsV',
   BASEHP: 1560,
   BASESTR: 520,
   LEADERSHIP: 1,
@@ -326,9 +156,10 @@ export const deadshotV = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'V'
 })
-export const deadshotVI = unitBuilder<SpecialistUnit>({
+const deadshotVI = unitBuilder<SpecialistUnit>({
+  id: 'deadshotsVI',
   clasification: 'army',
-  name: ARMY.deadshotsVI,
+  name: 'deadshotsVI',
   BASEHP: 2820,
   BASESTR: 940,
   LEADERSHIP: 1,
@@ -342,9 +173,10 @@ export const deadshotVI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VI'
 })
-export const deadshotVII = unitBuilder<SpecialistUnit>({
+const deadshotVII = unitBuilder<SpecialistUnit>({
+  id: 'deadshotsVII',
   clasification: 'army',
-  name: ARMY.deadshotsVII,
+  name: 'deadshotsVII',
   BASEHP: 5100,
   BASESTR: 1700,
   LEADERSHIP: 1,
@@ -358,9 +190,10 @@ export const deadshotVII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VII'
 })
-export const lionRiderV = unitBuilder<SpecialistUnit>({
+const lionRiderV = unitBuilder<SpecialistUnit>({
+  id: 'lionRiderV',
   clasification: 'army',
-  name: ARMY.lionRiderV,
+  name: 'lionRiderV',
   BASEHP: 3150,
   BASESTR: 1050,
   LEADERSHIP: 2,
@@ -374,9 +207,10 @@ export const lionRiderV = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'V'
 })
-export const lionRiderVI = unitBuilder<SpecialistUnit>({
+const lionRiderVI = unitBuilder<SpecialistUnit>({
+  id: 'lionRiderVI',
   clasification: 'army',
-  name: ARMY.lionRiderVI,
+  name: 'lionRiderVI',
   BASEHP: 5700,
   BASESTR: 1900,
   LEADERSHIP: 2,
@@ -390,9 +224,10 @@ export const lionRiderVI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VI'
 })
-export const lionRiderVII = unitBuilder<SpecialistUnit>({
+const lionRiderVII = unitBuilder<SpecialistUnit>({
+  id: 'lionRiderVII',
   clasification: 'army',
-  name: ARMY.lionRiderVII,
+  name: 'lionRiderVII',
   BASEHP: 10200,
   BASESTR: 3400,
   LEADERSHIP: 2,
@@ -406,9 +241,10 @@ export const lionRiderVII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VII'
 })
-export const vulturesV = unitBuilder<SpecialistUnit>({
+const vulturesV = unitBuilder<SpecialistUnit>({
+  id: 'vulturesV',
   clasification: 'army',
-  name: ARMY.vulturesV,
+  name: 'vulturesV',
   BASEHP: 1560,
   BASESTR: 520,
   LEADERSHIP: 1,
@@ -422,9 +258,10 @@ export const vulturesV = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'V'
 })
-export const vulturesVI = unitBuilder<SpecialistUnit>({
+const vulturesVI = unitBuilder<SpecialistUnit>({
+  id: 'vulturesVI',
   clasification: 'army',
-  name: ARMY.vulturesVI,
+  name: 'vulturesVI',
   BASEHP: 2820,
   BASESTR: 940,
   LEADERSHIP: 1,
@@ -438,9 +275,10 @@ export const vulturesVI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VI'
 })
-export const vulturesVII = unitBuilder<SpecialistUnit>({
+const vulturesVII = unitBuilder<SpecialistUnit>({
+  id: 'vulturesVII',
   clasification: 'army',
-  name: ARMY.vulturesVII,
+  name: 'vulturesVII',
   BASEHP: 5100,
   BASESTR: 1700,
   LEADERSHIP: 1,
@@ -454,9 +292,10 @@ export const vulturesVII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VII'
 })
-export const heavyKnightVI = unitBuilder<SpecialistUnit>({
+const heavyKnightVI = unitBuilder<SpecialistUnit>({
+  id: 'heavyKnightVI',
   clasification: 'army',
-  name: ARMY.heavyKnightVI,
+  name: 'heavyKnightVI',
   BASEHP: 2820,
   BASESTR: 940,
   LEADERSHIP: 1,
@@ -470,9 +309,10 @@ export const heavyKnightVI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VI'
 })
-export const heavyKnightVII = unitBuilder<SpecialistUnit>({
+const heavyKnightVII = unitBuilder<SpecialistUnit>({
+  id: 'heavyKnightVII',
   clasification: 'army',
-  name: ARMY.heavyKnightVII,
+  name: 'heavyKnightVII',
   BASEHP: 5100,
   BASESTR: 1700,
   LEADERSHIP: 1,
@@ -486,9 +326,10 @@ export const heavyKnightVII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VII'
 })
-export const swiftJaegerVI = unitBuilder<SpecialistUnit>({
+const swiftJaegerVI = unitBuilder<SpecialistUnit>({
+  id: 'swiftJaegerVI',
   clasification: 'army',
-  name: ARMY.swiftJaegerVI,
+  name: 'swiftJaegerVI',
   BASEHP: 1410,
   BASESTR: 470,
   LEADERSHIP: 5,
@@ -499,9 +340,10 @@ export const swiftJaegerVI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VI'
 })
-export const swiftJaegerVII = unitBuilder<SpecialistUnit>({
+const swiftJaegerVII = unitBuilder<SpecialistUnit>({
+  id: 'swiftJaegerVII',
   clasification: 'army',
-  name: ARMY.swiftJaegerVII,
+  name: 'swiftJaegerVII',
   BASEHP: 2550,
   BASESTR: 850,
   LEADERSHIP: 5,
@@ -512,9 +354,10 @@ export const swiftJaegerVII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'VII'
 })
-export const legitimistI = unitBuilder<SpecialistUnit>({
+const legitimistI = unitBuilder<SpecialistUnit>({
+  id: 'legitimistI',
   clasification: 'army',
-  name: ARMY.legitimistI,
+  name: 'legitimistI',
   BASEHP: 9180,
   BASESTR: 3060,
   LEADERSHIP: 1,
@@ -527,9 +370,10 @@ export const legitimistI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'I'
 })
-export const legitimistII = unitBuilder<SpecialistUnit>({
+const legitimistII = unitBuilder<SpecialistUnit>({
+  id: 'legitimistII',
   clasification: 'army',
-  name: ARMY.legitimistII,
+  name: 'legitimistII',
   BASEHP: 16530,
   BASESTR: 5510,
   LEADERSHIP: 1,
@@ -542,9 +386,10 @@ export const legitimistII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'II'
 })
-export const duelistI = unitBuilder<SpecialistUnit>({
+const duelistI = unitBuilder<SpecialistUnit>({
+  id: 'duelistI',
   clasification: 'army',
-  name: ARMY.duelistI,
+  name: 'duelistI',
   BASEHP: 9180,
   BASESTR: 3060,
   LEADERSHIP: 1,
@@ -557,9 +402,10 @@ export const duelistI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'I'
 })
-export const duelistII = unitBuilder<SpecialistUnit>({
+const duelistII = unitBuilder<SpecialistUnit>({
+  id: 'duelistII',
   clasification: 'army',
-  name: ARMY.duelistII,
+  name: 'duelistII',
   BASEHP: 16530,
   BASESTR: 5510,
   LEADERSHIP: 1,
@@ -572,9 +418,10 @@ export const duelistII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'II'
 })
-export const whitemaneI = unitBuilder<SpecialistUnit>({
+const whitemaneI = unitBuilder<SpecialistUnit>({
+  id: 'whitemaneI',
   clasification: 'army',
-  name: ARMY.whitemaneI,
+  name: 'whitemaneI',
   BASEHP: 18360,
   BASESTR: 6120,
   LEADERSHIP: 2,
@@ -587,9 +434,10 @@ export const whitemaneI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'I'
 })
-export const whitemaneII = unitBuilder<SpecialistUnit>({
+const whitemaneII = unitBuilder<SpecialistUnit>({
+  id: 'whitemaneII',
   clasification: 'army',
-  name: ARMY.whitemaneII,
+  name: 'whitemaneII',
   BASEHP: 33060,
   BASESTR: 11020,
   LEADERSHIP: 2,
@@ -602,9 +450,10 @@ export const whitemaneII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'II'
 })
-export const royalLionI = unitBuilder<SpecialistUnit>({
+const royalLionI = unitBuilder<SpecialistUnit>({
+  id: 'royalLionI',
   clasification: 'army',
-  name: ARMY.royalLionI,
+  name: 'royalLionI',
   BASEHP: 183600,
   BASESTR: 61200,
   LEADERSHIP: 20,
@@ -617,9 +466,10 @@ export const royalLionI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'I'
 })
-export const royalLionII = unitBuilder<SpecialistUnit>({
+const royalLionII = unitBuilder<SpecialistUnit>({
+  id: 'royalLionII',
   clasification: 'army',
-  name: ARMY.royalLionII,
+  name: 'royalLionII',
   BASEHP: 330600,
   BASESTR: 110200,
   LEADERSHIP: 20,
@@ -632,9 +482,10 @@ export const royalLionII = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'II'
 })
-export const panopticI = unitBuilder<SpecialistUnit>({
+const panopticI = unitBuilder<SpecialistUnit>({
+  id: 'panopticI',
   clasification: 'army',
-  name: ARMY.panopticI,
+  name: 'panopticI',
   BASEHP: 4590,
   BASESTR: 1530,
   LEADERSHIP: 5,
@@ -645,9 +496,10 @@ export const panopticI = unitBuilder<SpecialistUnit>({
   group: 'specialist',
   level: 'I'
 })
-export const panopticII = unitBuilder<SpecialistUnit>({
+const panopticII = unitBuilder<SpecialistUnit>({
+  id: 'panopticII',
   clasification: 'army',
-  name: ARMY.panopticII,
+  name: 'panopticII',
   BASEHP: 8280,
   BASESTR: 2760,
   LEADERSHIP: 5,
@@ -660,6 +512,7 @@ export const panopticII = unitBuilder<SpecialistUnit>({
 })
 //----------------------------------
 const spearmanBuilder = (
+  id: string,
   name: string,
   BASEHP: number,
   BASESTR: number,
@@ -668,6 +521,7 @@ const spearmanBuilder = (
   level: string
 ): GuardsmanUnit => {
   return unitBuilder<GuardsmanUnit>({
+    id,
     clasification: 'army',
     name,
     BASEHP,
@@ -684,14 +538,15 @@ const spearmanBuilder = (
   })
 }
 
-export const SpearmanG1 = spearmanBuilder(ARMY.SpearmanG1, 150, 50, 80, 39, 'G1')
-export const SpearmanG2 = spearmanBuilder(ARMY.SpearmanG2, 270, 90, 120, 59, 'G2')
-export const SpearmanG3 = spearmanBuilder(ARMY.SpearmanG3, 480, 160, 180, 88, 'G3')
-export const SpearmanG4 = spearmanBuilder(ARMY.SpearmanG4, 870, 290, 270, 132, 'G4')
-export const SpearmanG5 = spearmanBuilder(ARMY.SpearmanG5, 1560, 520, 405, 197, 'G5')
+const SpearmanG1 = spearmanBuilder('SpearmanG1', 'SpearmanG1', 150, 50, 80, 39, 'G1')
+const SpearmanG2 = spearmanBuilder('SpearmanG2', 'SpearmanG2', 270, 90, 120, 59, 'G2')
+const SpearmanG3 = spearmanBuilder('SpearmanG3', 'SpearmanG3', 480, 160, 180, 88, 'G3')
+const SpearmanG4 = spearmanBuilder('SpearmanG4', 'SpearmanG4', 870, 290, 270, 132, 'G4')
+const SpearmanG5 = spearmanBuilder('SpearmanG5', 'SpearmanG5', 1560, 520, 405, 197, 'G5')
 
 //----------------------------------
 const archerBuilder = (
+  id: string,
   name: string,
   BASEHP: number,
   BASESTR: number,
@@ -700,6 +555,7 @@ const archerBuilder = (
   level: string
 ): GuardsmanUnit => {
   return unitBuilder<GuardsmanUnit>({
+    id,
     clasification: 'army',
     name,
     BASEHP,
@@ -715,15 +571,16 @@ const archerBuilder = (
     level
   })
 }
-export const ArcherG1 = archerBuilder(ARMY.ArcherG1, 150, 50, 67, 52, 'G1')
-export const ArcherG2 = archerBuilder(ARMY.ArcherG2, 270, 90, 101, 78, 'G2')
-export const ArcherG3 = archerBuilder(ARMY.ArcherG3, 480, 160, 151, 117, 'G3')
-export const ArcherG4 = archerBuilder(ARMY.ArcherG4, 870, 290, 226, 176, 'G4')
-export const ArcherG5 = archerBuilder(ARMY.ArcherG5, 1560, 520, 339, 263, 'G5')
+const ArcherG1 = archerBuilder('ArcherG1', 'ArcherG1', 150, 50, 67, 52, 'G1')
+const ArcherG2 = archerBuilder('ArcherG2', 'ArcherG2', 270, 90, 101, 78, 'G2')
+const ArcherG3 = archerBuilder('ArcherG3', 'ArcherG3', 480, 160, 151, 117, 'G3')
+const ArcherG4 = archerBuilder('ArcherG4', 'ArcherG4', 870, 290, 226, 176, 'G4')
+const ArcherG5 = archerBuilder('ArcherG5', 'ArcherG5', 1560, 520, 339, 263, 'G5')
 
-export const battleGriffinV = unitBuilder<GuardsmanUnit>({
+const battleGriffinV = unitBuilder<GuardsmanUnit>({
+  id: 'battleGriffinV',
   clasification: 'army',
-  name: ARMY.battleGriffinV,
+  name: 'battleGriffinV',
   BASEHP: 30000,
   BASESTR: 10000,
   LEADERSHIP: 20,
@@ -737,9 +594,10 @@ export const battleGriffinV = unitBuilder<GuardsmanUnit>({
   race: 'human',
   level: 'V'
 })
-export const battleGriffinVI = unitBuilder<GuardsmanUnit>({
+const battleGriffinVI = unitBuilder<GuardsmanUnit>({
+  id: 'battleGriffinVI',
   clasification: 'army',
-  name: ARMY.battleGriffinVI,
+  name: 'battleGriffinVI',
   BASEHP: 57000,
   BASESTR: 19000,
   LEADERSHIP: 20,
@@ -753,9 +611,10 @@ export const battleGriffinVI = unitBuilder<GuardsmanUnit>({
   race: 'human',
   level: 'VI'
 })
-export const battleGriffinVII = unitBuilder<GuardsmanUnit>({
+const battleGriffinVII = unitBuilder<GuardsmanUnit>({
+  id: 'battleGriffinVII',
   clasification: 'army',
-  name: ARMY.battleGriffinVII,
+  name: 'battleGriffinVII',
   BASEHP: 102000,
   BASESTR: 34000,
   LEADERSHIP: 20,
@@ -770,9 +629,10 @@ export const battleGriffinVII = unitBuilder<GuardsmanUnit>({
   level: 'VII'
 })
 
-export const heavyArbalesterVI = unitBuilder<GuardsmanUnit>({
+const heavyArbalesterVI = unitBuilder<GuardsmanUnit>({
+  id: 'heavyArbalesterVI',
   clasification: 'army',
-  name: ARMY.heavyArbalesterVI,
+  name: 'heavyArbalesterVI',
   BASEHP: 2820,
   BASESTR: 940,
   LEADERSHIP: 1,
@@ -785,9 +645,10 @@ export const heavyArbalesterVI = unitBuilder<GuardsmanUnit>({
   race: 'guardsman',
   level: 'VI'
 })
-export const heavyArbalesterVII = unitBuilder<GuardsmanUnit>({
+const heavyArbalesterVII = unitBuilder<GuardsmanUnit>({
+  id: 'heavyArbalesterVII',
   clasification: 'army',
-  name: ARMY.heavyArbalesterVII,
+  name: 'heavyArbalesterVII',
   BASEHP: 5100,
   BASESTR: 1700,
   LEADERSHIP: 1,
@@ -800,9 +661,10 @@ export const heavyArbalesterVII = unitBuilder<GuardsmanUnit>({
   race: 'guardsman',
   level: 'VII'
 })
-export const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
+const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
+  id: 'heavyHalberdierVI',
   clasification: 'army',
-  name: ARMY.heavyHalberdierVI,
+  name: 'heavyHalberdierVI',
   BASESTR: 940,
   BASEHP: 2820,
   LEADERSHIP: 1,
@@ -815,9 +677,10 @@ export const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
   group: 'guardsman',
   level: 'VI'
 })
-export const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
+const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
+  id: 'heavyHalberdierVII',
   clasification: 'army',
-  name: ARMY.heavyHalberdierVII,
+  name: 'heavyHalberdierVII',
   BASESTR: 1700,
   BASEHP: 5100,
   LEADERSHIP: 1,
@@ -830,9 +693,10 @@ export const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
   group: 'guardsman',
   level: 'VII'
 })
-export const mountedKnightVI = unitBuilder<GuardsmanUnit>({
+const mountedKnightVI = unitBuilder<GuardsmanUnit>({
+  id: 'mountedKnightVI',
   clasification: 'army',
-  name: ARMY.mountedKnightVI,
+  name: 'mountedKnightVI',
   BASESTR: 1900,
   BASEHP: 5700,
   LEADERSHIP: 2,
@@ -845,9 +709,10 @@ export const mountedKnightVI = unitBuilder<GuardsmanUnit>({
   group: 'guardsman',
   level: 'VI'
 })
-export const mountedKnightVII = unitBuilder<GuardsmanUnit>({
+const mountedKnightVII = unitBuilder<GuardsmanUnit>({
+  id: 'mountedKnightVII',
   clasification: 'army',
-  name: ARMY.mountedKnightVII,
+  name: 'mountedKnightVII',
   BASESTR: 3400,
   BASEHP: 10200,
   LEADERSHIP: 2,
@@ -860,9 +725,10 @@ export const mountedKnightVII = unitBuilder<GuardsmanUnit>({
   group: 'guardsman',
   level: 'VII'
 })
-export const purifierI = unitBuilder<GuardsmanUnit>({
+const purifierI = unitBuilder<GuardsmanUnit>({
+  id: 'purifierI',
   clasification: 'army',
-  name: ARMY.purifierI,
+  name: 'purifierI',
   BASEHP: 3060,
   BASESTR: 9180,
   LEADERSHIP: 1,
@@ -875,9 +741,10 @@ export const purifierI = unitBuilder<GuardsmanUnit>({
   race: 'guardsman',
   level: 'I'
 })
-export const purifierII = unitBuilder<GuardsmanUnit>({
+const purifierII = unitBuilder<GuardsmanUnit>({
+  id: 'purifierII',
   clasification: 'army',
-  name: ARMY.purifierII,
+  name: 'purifierII',
   BASEHP: 5510,
   BASESTR: 16530,
   LEADERSHIP: 1,
@@ -890,9 +757,10 @@ export const purifierII = unitBuilder<GuardsmanUnit>({
   race: 'guardsman',
   level: 'II'
 })
-export const punisherI = unitBuilder<GuardsmanUnit>({
+const punisherI = unitBuilder<GuardsmanUnit>({
+  id: 'punisherI',
   clasification: 'army',
-  name: ARMY.punisherI,
+  name: 'punisherI',
   BASESTR: 3060,
   BASEHP: 9180,
   LEADERSHIP: 1,
@@ -905,9 +773,10 @@ export const punisherI = unitBuilder<GuardsmanUnit>({
   group: 'guardsman',
   level: 'I'
 })
-export const punisherII = unitBuilder<GuardsmanUnit>({
+const punisherII = unitBuilder<GuardsmanUnit>({
+  id: 'punisherII',
   clasification: 'army',
-  name: ARMY.punisherII,
+  name: 'punisherII',
   BASESTR: 5510,
   BASEHP: 16530,
   LEADERSHIP: 1,
@@ -920,9 +789,10 @@ export const punisherII = unitBuilder<GuardsmanUnit>({
   group: 'guardsman',
   level: 'II'
 })
-export const smiterI = unitBuilder<GuardsmanUnit>({
+const smiterI = unitBuilder<GuardsmanUnit>({
+  id: 'smiterI',
   clasification: 'army',
-  name: ARMY.smiterI,
+  name: 'smiterI',
   BASESTR: 6120,
   BASEHP: 18360,
   LEADERSHIP: 2,
@@ -935,9 +805,10 @@ export const smiterI = unitBuilder<GuardsmanUnit>({
   group: 'guardsman',
   level: 'VI'
 })
-export const smiterII = unitBuilder<GuardsmanUnit>({
+const smiterII = unitBuilder<GuardsmanUnit>({
+  id: 'smiterII',
   clasification: 'army',
-  name: ARMY.smiterII,
+  name: 'smiterII',
   BASESTR: 11020,
   BASEHP: 33060,
   LEADERSHIP: 2,
@@ -950,9 +821,10 @@ export const smiterII = unitBuilder<GuardsmanUnit>({
   group: 'guardsman',
   level: 'VI'
 })
-export const coraxI = unitBuilder<GuardsmanUnit>({
+const coraxI = unitBuilder<GuardsmanUnit>({
+  id: 'coraxI',
   clasification: 'army',
-  name: ARMY.coraxI,
+  name: 'coraxI',
   BASEHP: 183600,
   BASESTR: 61200,
   LEADERSHIP: 20,
@@ -965,9 +837,10 @@ export const coraxI = unitBuilder<GuardsmanUnit>({
   race: 'guardsman',
   level: 'I'
 })
-export const coraxII = unitBuilder<GuardsmanUnit>({
+const coraxII = unitBuilder<GuardsmanUnit>({
+  id: 'coraxII',
   clasification: 'army',
-  name: ARMY.coraxII,
+  name: 'coraxII',
   BASEHP: 330600,
   BASESTR: 110200,
   LEADERSHIP: 20,
@@ -982,6 +855,7 @@ export const coraxII = unitBuilder<GuardsmanUnit>({
 })
 //----------------------------------
 const catapultBuilder = (
+  id: string,
   name: string,
   BASEHP: number,
   BASESTR: number,
@@ -989,6 +863,7 @@ const catapultBuilder = (
   level: string
 ): EngineerUnit => {
   return unitBuilder<EngineerUnit>({
+    id,
     clasification: 'army',
     name,
     BASEHP,
@@ -1005,22 +880,23 @@ const catapultBuilder = (
   })
 }
 
-export const CatapultE1 = catapultBuilder(ARMY.CatapultE1, 1500, 250, 65, 'E1')
-export const CatapultE2 = catapultBuilder(ARMY.CatapultE2, 2700, 450, 98, 'E2')
-export const CatapultE3 = catapultBuilder(ARMY.CatapultE3, 4860, 810, 146, 'E3')
-export const CatapultE4 = catapultBuilder(ARMY.CatapultE4, 8750, 1460, 219, 'E4')
-export const CatapultE5 = catapultBuilder(ARMY.CatapultE5, 15800, 2630, 329, 'E5')
-export const CatapultE6 = catapultBuilder(ARMY.CatapultE6, 28400, 4730, 494, 'E6')
-export const CatapultE7 = catapultBuilder(ARMY.CatapultE7, 51000, 8500, 740, 'E7')
-export const CatapultE8 = catapultBuilder(ARMY.CatapultE8, 91800, 15310, 1111, 'E8')
-export const CatapultE9 = catapultBuilder(ARMY.CatapultE9, 165300, 27550, 1667, 'E9')
+const CatapultE1 = catapultBuilder('CatapultE1', 'CatapultE1', 1500, 250, 65, 'E1')
+const CatapultE2 = catapultBuilder('CatapultE2', 'CatapultE2', 2700, 450, 98, 'E2')
+const CatapultE3 = catapultBuilder('CatapultE3', 'CatapultE3', 4860, 810, 146, 'E3')
+const CatapultE4 = catapultBuilder('CatapultE4', 'CatapultE4', 8750, 1460, 219, 'E4')
+const CatapultE5 = catapultBuilder('CatapultE5', 'CatapultE5', 15800, 2630, 329, 'E5')
+const CatapultE6 = catapultBuilder('CatapultE6', 'CatapultE6', 28400, 4730, 494, 'E6')
+const CatapultE7 = catapultBuilder('CatapultE7', 'CatapultE7', 51000, 8500, 740, 'E7')
+const CatapultE8 = catapultBuilder('CatapultE8', 'CatapultE8', 91800, 15310, 1111, 'E8')
+const CatapultE9 = catapultBuilder('CatapultE9', 'CatapultE9', 165300, 27550, 1667, 'E9')
 
 //------------------------
 
 //------------------------------------
-export const waterElemental = unitBuilder<MonsterUnit>({
+const waterElementalIII = unitBuilder<MonsterUnit>({
+  id: 'waterElemental',
   clasification: 'monster',
-  name: ARMY.waterElemental, //'waterElemental',
+  name: 'waterElementalIII', //'waterElemental',
   BASEHP: 5700,
   BASESTR: 1900,
   DOMINANCE: 3,
@@ -1033,9 +909,10 @@ export const waterElemental = unitBuilder<MonsterUnit>({
   race: 'monster',
   level: 'III'
 })
-export const icePhoenix: MonsterUnit = unitBuilder<MonsterUnit>({
+const icePhoenixIV = unitBuilder<MonsterUnit>({
+  id: 'icePhoenix',
   clasification: 'monster',
-  name: ARMY.icePhoenix, //'iceFenix',
+  name: 'icePhoenixIV', //'iceFenix',
   BASESTR: 17000,
   BASEHP: 51000,
   DOMINANCE: 15,
@@ -1048,9 +925,10 @@ export const icePhoenix: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'IV'
 })
-export const flamingCentaurusV: MonsterUnit = unitBuilder<MonsterUnit>({
+const flamingCentaurV = unitBuilder<MonsterUnit>({
+  id: 'flamingCentaurV',
   clasification: 'monster',
-  name: ARMY.flamingCentaur, //'burningCentaurus',
+  name: 'flamingCentaurV', //'burningCentaurus',
   BASESTR: 44000,
   BASEHP: 132000,
   DOMINANCE: 21,
@@ -1063,11 +941,12 @@ export const flamingCentaurusV: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'mounted',
   level: 'V'
 })
-export const rubiGolem: MonsterUnit = unitBuilder<MonsterUnit>({
+const rubiGolemVI = unitBuilder<MonsterUnit>({
+  id: 'rubiGolemVI',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.rubiGolem, //'rubiGolem',
+  name: 'rubiGolemVI', //'rubiGolem',
   BASESTR: 130000,
   BASEHP: 390000,
   DOMINANCE: 35,
@@ -1078,11 +957,12 @@ export const rubiGolem: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'VI'
 })
-export const windLord: MonsterUnit = unitBuilder<MonsterUnit>({
+const windLordVII = unitBuilder<MonsterUnit>({
+  id: 'windLordVII',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.windLord, //'windLord',
+  name: 'windLordVII', //'windLord',
   BASESTR: 310000,
   BASEHP: 930000,
   DOMINANCE: 45,
@@ -1093,11 +973,12 @@ export const windLord: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'VII'
 })
-export const firePhoenixI: MonsterUnit = unitBuilder<MonsterUnit>({
+const firePhoenixI = unitBuilder<MonsterUnit>({
+  id: 'firePhoenixI',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.firePhoenixI, //'firePhoenixI',
+  name: 'firePhoenixI', //'firePhoenixI',
   BASESTR: 660000,
   BASEHP: 1980000,
   DOMINANCE: 54,
@@ -1108,11 +989,12 @@ export const firePhoenixI: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'I'
 })
-export const firePhoenixII: MonsterUnit = unitBuilder<MonsterUnit>({
+const firePhoenixII = unitBuilder<MonsterUnit>({
+  id: 'firePhoenixII',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.firePhoenixII, //'firePhoenixII',
+  name: 'firePhoenixII', //'firePhoenixII',
   BASESTR: 1190000,
   BASEHP: 3570000,
   DOMINANCE: 54,
@@ -1125,11 +1007,12 @@ export const firePhoenixII: MonsterUnit = unitBuilder<MonsterUnit>({
 })
 
 //-----------------------------
-export const battleBoar: MonsterUnit = unitBuilder<MonsterUnit>({
+const battleBoarIII = unitBuilder<MonsterUnit>({
+  id: 'battleBoar',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.battleBoar, //'battleBoar',
+  name: 'battleBoarIII', //'battleBoar',
   BASESTR: 3900,
   BASEHP: 11700,
   DOMINANCE: 6,
@@ -1140,11 +1023,12 @@ export const battleBoar: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'mounted',
   level: 'III'
 })
-export const gorgonMedusa: MonsterUnit = unitBuilder<MonsterUnit>({
+const gorgonMedusaIV = unitBuilder<MonsterUnit>({
+  id: 'gorgonMedusa',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.gorgonMedusa, //'gorgonMedusa',
+  name: 'gorgonMedusaIV', //'gorgonMedusa',
   BASESTR: 12000,
   BASEHP: 36000,
   DOMINANCE: 10,
@@ -1155,11 +1039,12 @@ export const gorgonMedusa: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'ranged',
   level: 'IV'
 })
-export const fearsomeManticoraV: MonsterUnit = unitBuilder<MonsterUnit>({
+const fearsomeManticoraV = unitBuilder<MonsterUnit>({
+  id: 'fearsomeManticoraV',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.fearsomeManticora, //'fearManticora',
+  name: 'fearsomeManticoraV', //'fearManticora',
   BASESTR: 46000,
   BASEHP: 138000,
   DOMINANCE: 22,
@@ -1170,11 +1055,12 @@ export const fearsomeManticoraV: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'V'
 })
-export const jungleDestroyerVI: MonsterUnit = unitBuilder<MonsterUnit>({
+const jungleDestroyerVI = unitBuilder<MonsterUnit>({
+  id: 'jungleDestroyerVI',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.jungleDestroyerVI, //'forestDestructor',
+  name: 'jungleDestroyerVI', //'forestDestructor',
   BASESTR: 130000,
   BASEHP: 390000,
   DOMINANCE: 34,
@@ -1185,11 +1071,12 @@ export const jungleDestroyerVI: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'VI'
 })
-export const ancientTerrorVII: MonsterUnit = unitBuilder<MonsterUnit>({
+const ancientTerrorVII = unitBuilder<MonsterUnit>({
+  id: 'ancientTerrorVII',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.ancientTerrorVII, //'oldTerror',
+  name: 'ancientTerrorVII', //'oldTerror',
   BASESTR: 280000,
   BASEHP: 840000,
   DOMINANCE: 41,
@@ -1200,11 +1087,12 @@ export const ancientTerrorVII: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'mounted',
   level: 'VII'
 })
-export const tricksterI: MonsterUnit = unitBuilder<MonsterUnit>({
+const tricksterI = unitBuilder<MonsterUnit>({
+  id: 'tricksterI',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.tricksterI, //'tricksterI',
+  name: 'tricksterI', //'tricksterI',
   BASESTR: 640000,
   BASEHP: 1920000,
   DOMINANCE: 52,
@@ -1215,11 +1103,12 @@ export const tricksterI: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'ranged',
   level: 'I'
 })
-export const tricksterII: MonsterUnit = unitBuilder<MonsterUnit>({
+const tricksterII = unitBuilder<MonsterUnit>({
+  id: 'tricksterII',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.tricksterII, //'tricksterII',
+  name: 'tricksterII', //'tricksterII',
   BASESTR: 1150000,
   BASEHP: 3450000,
   DOMINANCE: 52,
@@ -1231,9 +1120,10 @@ export const tricksterII: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'II'
 })
 //-----------------------------
-export const emeraldDragon: MonsterUnit = unitBuilder<MonsterUnit>({
+const emeraldDragonIII = unitBuilder<MonsterUnit>({
+  id: 'emeraldDragon',
   clasification: 'monster',
-  name: ARMY.emeraldDragon, //'emeraldDragon',
+  name: 'emeraldDragonIII', //'emeraldDragon',
   BASESTR: 4500,
   BASEHP: 13500,
   DOMINANCE: 7,
@@ -1246,9 +1136,10 @@ export const emeraldDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'III'
 })
-export const magicDragon: MonsterUnit = unitBuilder<MonsterUnit>({
+const magicDragonIV = unitBuilder<MonsterUnit>({
+  id: 'magicDragon',
   clasification: 'monster',
-  name: ARMY.magicDragon, //'magicDragon',
+  name: 'magicDragonIV', //'magicDragon',
   BASESTR: 15000,
   BASEHP: 45000,
   DOMINANCE: 13,
@@ -1261,9 +1152,10 @@ export const magicDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'ranged',
   level: 'IV'
 })
-export const desertConquer: MonsterUnit = unitBuilder<MonsterUnit>({
+const desertConquerV = unitBuilder<MonsterUnit>({
+  id: 'desertConquer',
   clasification: 'monster',
-  name: ARMY.desertConquer, //'desertConquer',
+  name: 'desertConquerV', //'desertConquer',
   BASESTR: 42000,
   BASEHP: 126000,
   DOMINANCE: 20,
@@ -1277,9 +1169,10 @@ export const desertConquer: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'V'
 })
 
-export const crystalDragon: MonsterUnit = unitBuilder<MonsterUnit>({
+const crystalDragonVI = unitBuilder<MonsterUnit>({
+  id: 'crystalDragon',
   clasification: 'monster',
-  name: ARMY.crystalDragon, //'crystalDragon',
+  name: 'crystalDragonVI', //'crystalDragon',
   BASESTR: 120000,
   BASEHP: 360000,
   DOMINANCE: 33,
@@ -1292,9 +1185,10 @@ export const crystalDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'VI'
 })
-export const blackDragon: MonsterUnit = unitBuilder<MonsterUnit>({
+const blackDragonVII = unitBuilder<MonsterUnit>({
+  id: 'blackDragonVII',
   clasification: 'monster',
-  name: ARMY.blackDragon, //'blackDragon',
+  name: 'blackDragonVII', //'blackDragon',
   BASESTR: 300000,
   BASEHP: 900000,
   DOMINANCE: 44,
@@ -1307,9 +1201,10 @@ export const blackDragon: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'VII'
 })
-export const devastatorI: MonsterUnit = unitBuilder<MonsterUnit>({
+const devastatorI = unitBuilder<MonsterUnit>({
+  id: 'devastatorI',
   clasification: 'monster',
-  name: ARMY.devastatorI, //'devastatorI',
+  name: 'devastatorI', //'devastatorI',
   BASESTR: 650000,
   BASEHP: 1950000,
   DOMINANCE: 53,
@@ -1322,9 +1217,10 @@ export const devastatorI: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'mounted',
   level: 'I'
 })
-export const devastatorII: MonsterUnit = unitBuilder<MonsterUnit>({
+const devastatorII = unitBuilder<MonsterUnit>({
+  id: 'devastatorII',
   clasification: 'monster',
-  name: ARMY.devastatorII, //'devastatorII',
+  name: 'devastatorII', //'devastatorII',
   BASESTR: 1170000,
   BASEHP: 3510000,
   DOMINANCE: 53,
@@ -1338,11 +1234,12 @@ export const devastatorII: MonsterUnit = unitBuilder<MonsterUnit>({
   level: 'II'
 })
 
-export const stoneGargole: MonsterUnit = unitBuilder<MonsterUnit>({
+const stoneGargoyleIII = unitBuilder<MonsterUnit>({
+  id: 'stoneGargoyleIII',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.stoneGargole, //'stoneGargole',
+  name: 'stoneGargoyleIII', //'stoneGargole',
   BASESTR: 5200,
   BASEHP: 15600,
   DOMINANCE: 8,
@@ -1353,11 +1250,12 @@ export const stoneGargole: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'flying',
   level: 'III'
 })
-export const multiArmGuardianIV: MonsterUnit = unitBuilder<MonsterUnit>({
+const manyArmedGuardianIV = unitBuilder<MonsterUnit>({
+  id: 'manyArmedGuardianIV',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.multiArmGuardianIV, //'multiArmGuardianIV',
+  name: 'manyArmedGuardianIV', //'multiArmGuardianIV',
   BASESTR: 13000,
   BASEHP: 39000,
   DOMINANCE: 11,
@@ -1368,11 +1266,12 @@ export const multiArmGuardianIV: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'IV'
 })
-export const Ettin: MonsterUnit = unitBuilder<MonsterUnit>({
+const EttinV = unitBuilder<MonsterUnit>({
+  id: 'Ettin',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.Ettin, //'Ettin',
+  name: 'EttinV', //'Ettin',
   BASESTR: 48000,
   BASEHP: 144000,
   DOMINANCE: 23,
@@ -1383,11 +1282,12 @@ export const Ettin: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'V'
 })
-export const trollRider: MonsterUnit = unitBuilder<MonsterUnit>({
+const trollRiderVI = unitBuilder<MonsterUnit>({
+  id: 'trollRiderVI',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.trollRider, //'trollRider',
+  name: 'trollRiderVI', //'trollRider',
   BASESTR: 110000,
   BASEHP: 330000,
   DOMINANCE: 30,
@@ -1398,11 +1298,12 @@ export const trollRider: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'mounted',
   level: 'VI'
 })
-export const destructiveColossusVII: MonsterUnit = unitBuilder<MonsterUnit>({
+const destructiveColossusVII = unitBuilder<MonsterUnit>({
+  id: 'destructiveColossusVII',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.destructiveColossusVII, //'destructiveColossusVII',
+  name: 'destructiveColossusVII', //'destructiveColossusVII',
   BASESTR: 290000,
   BASEHP: 870000,
   DOMINANCE: 43,
@@ -1413,11 +1314,12 @@ export const destructiveColossusVII: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'ranged',
   level: 'VII'
 })
-export const krakenI: MonsterUnit = unitBuilder<MonsterUnit>({
+const krakenI = unitBuilder<MonsterUnit>({
+  id: 'krakenI',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.krakenI, //'krakenI',
+  name: 'krakenI', //'krakenI',
   BASESTR: 670000,
   BASEHP: 2010000,
   DOMINANCE: 55,
@@ -1428,11 +1330,12 @@ export const krakenI: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'I'
 })
-export const krakenII: MonsterUnit = unitBuilder<MonsterUnit>({
+const krakenII = unitBuilder<MonsterUnit>({
+  id: 'krakenII',
   clasification: 'monster',
   troop: 'monster',
   race: 'monster',
-  name: ARMY.krakenII, //'krakenII',
+  name: 'krakenII', //'krakenII',
   BASESTR: 1210000,
   BASEHP: 3630000,
   DOMINANCE: 55,
@@ -1443,3 +1346,948 @@ export const krakenII: MonsterUnit = unitBuilder<MonsterUnit>({
   category: 'melee',
   level: 'II'
 })
+
+// mercenaries
+
+//---------------------------
+const scorpionRiderV: MercUnit = unitBuilder<MercUnit>({
+  id: 'scorpionRiderV',
+  clasification: 'merc',
+  name: 'scorpionRiderV',
+  BASEHP: 111000,
+  BASESTR: 37000,
+  AUTHORITY: 71,
+  INITIATIVE: 10,
+  vsRangedPercent: 40,
+  vsSiegePercent: 0,
+  vsEpicPercent: 0,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'barbarian',
+  group: '',
+  level: 'V'
+})
+
+const cyclopsV: MercUnit = unitBuilder<MercUnit>({
+  id: 'cyclopsV',
+  clasification: 'merc',
+  name: 'cyclopsV',
+  BASEHP: 135000,
+  BASESTR: 45000,
+  AUTHORITY: 85,
+  INITIATIVE: 10,
+  vsFortificationsPercent: 100,
+  vsBeastPercent: 40,
+  vsMeleePercent: 45,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'barbarian',
+  group: 'giant',
+  level: 'V'
+})
+
+const gargoyleV: MercUnit = unitBuilder<MercUnit>({
+  id: 'gargoyleV',
+  clasification: 'merc',
+  name: 'gargoyleV',
+  BASEHP: 57000,
+  BASESTR: 19000,
+  AUTHORITY: 37,
+  INITIATIVE: 10,
+  vsMountedPercent: 70,
+  vsElementalPercent: 45,
+  troop: 'merc',
+  category: 'flying',
+  race: 'beast',
+  group: 'undead',
+  level: 'V'
+})
+
+const bearV: MercUnit = unitBuilder<MercUnit>({
+  id: 'bearV',
+  clasification: 'merc',
+  name: 'bearV',
+  BASEHP: 66000,
+  BASESTR: 22000,
+  AUTHORITY: 41,
+  INITIATIVE: 10,
+  vsMountedPercent: 70,
+  vsElementalPercent: 50,
+  troop: 'merc',
+  category: 'melee',
+  race: 'beast',
+  group: 'elf',
+  level: 'V'
+})
+
+const ifritV: MercUnit = unitBuilder<MercUnit>({
+  id: 'ifritV',
+  clasification: 'merc',
+  name: 'ifritV',
+  BASEHP: 132000,
+  BASESTR: 44000,
+  AUTHORITY: 83,
+  INITIATIVE: 10,
+  vsMeleePercent: 70,
+  vsDragonPercent: 40,
+  troop: 'merc',
+  category: 'flying',
+  race: 'demon',
+  group: 'elemental',
+  level: 'V'
+})
+
+const giantZombieV: MercUnit = unitBuilder<MercUnit>({
+  id: 'giantZombieV',
+  clasification: 'merc',
+  name: 'giantZombieV',
+  BASEHP: 99000,
+  BASESTR: 33000,
+  AUTHORITY: 63,
+  INITIATIVE: 10,
+  vsMountedPercent: 70,
+  vsBeastPercent: 45,
+  troop: 'merc',
+  category: 'melee',
+  race: 'giant',
+  group: 'cursed',
+  level: 'V'
+})
+
+const firewormRiderV: MercUnit = unitBuilder<MercUnit>({
+  id: 'firewormRiderV',
+  clasification: 'merc',
+  name: 'firewormRiderV',
+  BASEHP: 150000,
+  BASESTR: 50000,
+  AUTHORITY: 96,
+  INITIATIVE: 10,
+  vsRangedPercent: 55,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'demon',
+  group: '',
+  level: 'V'
+})
+
+const unicornRiderV: MercUnit = unitBuilder<MercUnit>({
+  id: 'unicornRiderV',
+  clasification: 'merc',
+  name: 'unicornRiderV',
+  BASEHP: 81000,
+  BASESTR: 27000,
+  AUTHORITY: 96,
+  INITIATIVE: 10,
+  vsRangedPercent: 65,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'elf',
+  group: '',
+  level: 'V'
+})
+
+const bullRiderV: MercUnit = unitBuilder<MercUnit>({
+  id: 'bullRiderV',
+  clasification: 'merc',
+  name: 'bullRiderV',
+  BASEHP: 87000,
+  BASESTR: 29000,
+  AUTHORITY: 56,
+  INITIATIVE: 10,
+  vsRangedPercent: 55,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'cursed',
+  group: '',
+  level: 'V'
+})
+//------------------------------------
+const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'epicMonsterHunterVI',
+  clasification: 'merc',
+  name: 'epicMonsterHunterVI',
+  BASEHP: 6090,
+  BASESTR: 2030,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 329,
+  vsSiegePercent: 273,
+  vsEpicPercent: 609,
+  troop: 'merc',
+  category: 'epic',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VI'
+})
+
+const chariotVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'chariotVI',
+  clasification: 'merc',
+  name: 'chariotVI',
+  BASEHP: 11400,
+  BASESTR: 3800,
+  AUTHORITY: 71,
+  INITIATIVE: 10,
+  vsRangedPercent: 493,
+  vsSiegePercent: 410,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'barbarian',
+  group: '',
+  level: 'VI'
+})
+
+const legionaryVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'legionaryVI',
+  clasification: 'merc',
+  name: 'legionaryVI',
+  BASEHP: 5700,
+  BASESTR: 1900,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsMountedPercent: 295,
+  vsBeastPercent: 608,
+  troop: 'merc',
+  category: 'melee',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VI'
+})
+
+const arbalesterVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'arbalesterVI',
+  clasification: 'merc',
+  name: 'arbalesterVI',
+  BASEHP: 5700,
+  BASESTR: 1900,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsFlyingPercent: 509,
+  vsMeleePercent: 394,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VI'
+})
+
+const sphynxVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'sphynxVI',
+  clasification: 'merc',
+  name: 'sphynxVI',
+  BASEHP: 56700,
+  BASESTR: 18900,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsFortificationsPercent: 311,
+  vsMountedPercent: 592,
+  troop: 'merc',
+  category: 'flying',
+  race: 'beast',
+  group: 'guardsman',
+  level: 'VI'
+})
+
+const knightVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'knightVI',
+  clasification: 'merc',
+  name: 'knightVI',
+  BASEHP: 5700,
+  BASESTR: 1900,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsBeastPercent: 304,
+  vsHumanPercent: 105,
+  vsMountedPercent: 148,
+  troop: 'merc',
+  category: 'melee',
+  race: 'human',
+  group: 'specialist',
+  level: 'VI'
+})
+const trailseekerVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'trailseekerVI',
+  clasification: 'merc',
+  name: 'trailseekerVI',
+  BASEHP: 5670,
+  BASESTR: 1890,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsFlyingPercent: 254,
+  vsHumanPercent: 105,
+  vsMeleePercent: 198,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'human',
+  group: 'specialist',
+  level: 'VI'
+})
+const rhinoRiderVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'rhinoRiderVI',
+  clasification: 'merc',
+  name: 'rhinoRiderVI',
+  BASEHP: 11340,
+  BASESTR: 3780,
+  AUTHORITY: 2,
+  INITIATIVE: 10,
+  vsHumanPercent: 105,
+  vsRangedPercent: 247,
+  vsSiegePercent: 205,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'human',
+  group: 'specialist',
+  level: 'VI'
+})
+
+const deathChariotVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'deathChariotVI',
+  clasification: 'merc',
+  name: 'deathChariotVI',
+  BASEHP: 171000,
+  BASESTR: 57000,
+  AUTHORITY: 30,
+  INITIATIVE: 10,
+  vsRangedPercent: 60,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'undead',
+  group: '',
+  level: 'VI'
+})
+const sheduVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'sheduVI',
+  clasification: 'merc',
+  name: 'sheduVI',
+  BASEHP: 56700,
+  BASESTR: 18900,
+  AUTHORITY: 10,
+  INITIATIVE: 10,
+  vsFortificationsPercent: 156,
+  vsHumanPercent: 105,
+  vsMountedPercent: 296,
+  troop: 'merc',
+  category: 'flying',
+  race: 'beast',
+  group: 'guardsman',
+  level: 'VI'
+})
+
+const entVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'entVI',
+  clasification: 'merc',
+  name: 'entVI',
+  BASEHP: 219000,
+  BASESTR: 73000,
+  AUTHORITY: 39,
+  INITIATIVE: 10,
+  vsDragonPercent: 45,
+  vsRangedPercent: 55,
+  troop: 'merc',
+  category: 'melee',
+  race: 'elf',
+  group: '',
+  level: 'VI'
+})
+const abominationVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'abominationVI',
+  clasification: 'merc',
+  name: 'abominationVI',
+  BASEHP: 390000,
+  BASESTR: 130000,
+  AUTHORITY: 68,
+  INITIATIVE: 10,
+  vsElementalPercent: 50,
+  vsRangedPercent: 60,
+  troop: 'merc',
+  category: 'melee',
+  race: 'beast',
+  group: '',
+  level: 'VI'
+})
+const boneGolemVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'boneGolemVI',
+  clasification: 'merc',
+  name: 'boneGolemVI',
+  BASEHP: 210000,
+  BASESTR: 70000,
+  AUTHORITY: 37,
+  INITIATIVE: 10,
+  vsDragonPercent: 40,
+  troop: 'merc',
+  category: 'melee',
+  race: 'undead',
+  group: '',
+  level: 'VI'
+})
+
+const archidemonVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'archidemonVI',
+  clasification: 'merc',
+  name: 'archidemonVI',
+  BASEHP: 540000,
+  BASESTR: 180000,
+  AUTHORITY: 95,
+  INITIATIVE: 10,
+  vsBeastPercent: 40,
+  vsMountedPercent: 60,
+  troop: 'merc',
+  category: 'melee',
+  race: 'giant',
+  group: 'demon',
+  level: 'VI'
+})
+
+const lightningLordVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'lightningLordVII',
+  clasification: 'merc',
+  name: 'lightningLordVII',
+  BASEHP: 460000,
+  BASESTR: 153000,
+  AUTHORITY: 45,
+  INITIATIVE: 10,
+  vsBeastPercent: 729,
+  vsMeleePercent: 570,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'giant',
+  group: '',
+  level: 'VII'
+})
+
+const cursedDragonVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'cursedDragonVII',
+  clasification: 'merc',
+  name: 'cursedDragonVII',
+  BASEHP: 960000,
+  BASESTR: 320000,
+  AUTHORITY: 93,
+  INITIATIVE: 10,
+  vsGiantPercent: 50,
+  vsMountedPercent: 50,
+  troop: 'merc',
+  category: 'flying',
+  race: 'dragon',
+  group: 'cursed',
+  level: 'VII'
+})
+
+const seaLordVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'seaLordVII',
+  clasification: 'merc',
+  name: 'seaLordVII',
+  BASEHP: 420000,
+  BASESTR: 140000,
+  AUTHORITY: 40,
+  INITIATIVE: 10,
+  vsDragonPercent: 547,
+  vsRangedPercent: 752,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'elemental',
+  group: '',
+  level: 'VII'
+})
+
+const sandwormVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'sandwormVII',
+  clasification: 'merc',
+  name: 'sandwormVII',
+  BASEHP: 1290000,
+  BASESTR: 430000,
+  AUTHORITY: 128,
+  INITIATIVE: 10,
+  vsDragonPercent: 50,
+  vsMountedPercent: 75,
+  troop: 'merc',
+  category: 'melee',
+  race: 'elemental',
+  group: 'barbarian',
+  level: 'VII'
+})
+
+const lifeDragonVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'lifeDragonVII',
+  clasification: 'merc',
+  name: 'lifeDragonVII',
+  BASEHP: 720000,
+  BASESTR: 240000,
+  AUTHORITY: 70,
+  INITIATIVE: 10,
+  vsGiantPercent: 50,
+  vsMountedPercent: 60,
+  troop: 'merc',
+  category: 'flying',
+  race: 'dragon',
+  group: 'elf',
+  level: 'VII'
+})
+
+const goldenDragonVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'goldenDragonVII',
+  clasification: 'merc',
+  name: 'goldenDragonVII',
+  BASEHP: 510000,
+  BASESTR: 170000,
+  AUTHORITY: 50,
+  INITIATIVE: 10,
+  vsGiantPercent: 365,
+  vsMountedPercent: 934,
+  troop: 'merc',
+  category: 'flying',
+  race: 'dragon',
+  group: '',
+  level: 'VII'
+})
+const overlordVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'overlordVII',
+  clasification: 'merc',
+  name: 'overlordVII',
+  BASEHP: 600000,
+  BASESTR: 200000,
+  AUTHORITY: 60,
+  INITIATIVE: 10,
+  vsBeastPercent: 50,
+  vsMeleePercent: 60,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'giant',
+  group: 'undead',
+  level: 'VII'
+})
+
+const fireLordVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'fireLordVII',
+  clasification: 'merc',
+  name: 'fireLordVII',
+  BASEHP: 1680000,
+  BASESTR: 560000,
+  AUTHORITY: 164,
+  INITIATIVE: 10,
+  vsDragonPercent: 45,
+  vsMeleePercent: 80,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'elemental',
+  group: 'demon',
+  level: 'VII'
+})
+const jungleKingVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'jungleKingVII',
+  clasification: 'merc',
+  name: 'jungleKingVII',
+  BASEHP: 330000,
+  BASESTR: 110000,
+  AUTHORITY: 33,
+  INITIATIVE: 10,
+  vsElementalPercent: 911,
+  vsMountedPercent: 387,
+  troop: 'merc',
+  category: 'melee',
+  race: 'beast',
+  group: '',
+  level: 'VII'
+})
+
+const wyvernII: MercUnit = unitBuilder<MercUnit>({
+  id: 'wyvernII',
+  clasification: 'merc',
+  name: 'wyvernII',
+  BASEHP: 2070000,
+  BASESTR: 690000,
+  AUTHORITY: 63,
+  INITIATIVE: 10,
+  vsMeleePercent: 75,
+  troop: 'merc',
+  category: 'flying',
+  race: 'cursed',
+  group: '',
+  level: 'II'
+})
+
+const arielII: MercUnit = unitBuilder<MercUnit>({
+  id: 'arielII',
+  clasification: 'merc',
+  name: 'arielII',
+  BASEHP: 330000,
+  BASESTR: 55000,
+  AUTHORITY: 10,
+  INITIATIVE: 10,
+  multiplier: 20,
+  vsFortificationsPercent: 1667,
+  troop: 'merc',
+  category: 'asedio',
+  race: 'human',
+  group: '',
+  level: 'II'
+})
+
+const jagoII: MercUnit = unitBuilder<MercUnit>({
+  id: 'jagoII',
+  clasification: 'merc',
+  name: 'jagoII',
+  BASEHP: 660000,
+  BASESTR: 220000,
+  AUTHORITY: 20,
+  INITIATIVE: 10,
+  vsMountedPercent: 1000,
+  vsFortificationsPercent: 525,
+  troop: 'merc',
+  category: 'flying',
+  race: 'beast',
+  group: '',
+  level: 'II'
+})
+
+const eternalCannoneerII: MercUnit = unitBuilder<MercUnit>({
+  id: 'eternalCannoneerII',
+  clasification: 'merc',
+  name: 'eternalCannoneerII',
+  BASEHP: 1320000,
+  BASESTR: 440000,
+  AUTHORITY: 40,
+  INITIATIVE: 10,
+  vsFlyingPercent: 65,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'undead',
+  group: '',
+  level: 'II'
+})
+const warregalII: MercUnit = unitBuilder<MercUnit>({
+  id: 'warregalII',
+  clasification: 'merc',
+  name: 'warregalII',
+  BASEHP: 660000,
+  BASESTR: 220000,
+  AUTHORITY: 20,
+  INITIATIVE: 10,
+  vsMountedPercent: 1999,
+  vsFortificationsPercent: 1051,
+  troop: 'merc',
+  category: 'flying',
+  race: 'beast',
+  group: '',
+  level: 'II'
+})
+const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'epicMonsterHunterVII',
+  clasification: 'merc',
+  name: 'epicMonsterHunterVII',
+  BASEHP: 11220,
+  BASESTR: 3740,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsEpicPercent: 934,
+  troop: 'merc',
+  category: 'epic',
+  race: 'human',
+  group: 'guardsman',
+  level: 'VII'
+})
+const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
+  id: 'epicMonsterHunterII',
+  clasification: 'merc',
+  name: 'epicMonsterHunterII',
+  BASEHP: 75000,
+  BASESTR: 25000,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsEpicPercent: 1000,
+  troop: 'merc',
+  category: 'epic',
+  race: 'human',
+  group: 'guardsman',
+  level: 'II'
+})
+
+const demonicSalamanderII: MercUnit = unitBuilder<MercUnit>({
+  id: 'demonicSalamanderII',
+  clasification: 'merc',
+  name: 'demonicSalamanderII',
+  BASEHP: 1230000,
+  BASESTR: 410000,
+  AUTHORITY: 38,
+  INITIATIVE: 10,
+  vsMountedPercent: 65,
+  troop: 'merc',
+  category: 'melee',
+  race: 'demon',
+  group: '',
+  level: 'II'
+})
+const slavicWarriorII: MercUnit = unitBuilder<MercUnit>({
+  id: 'slavicWarriorII',
+  clasification: 'merc',
+  name: 'slavicWarriorII',
+  BASEHP: 33000,
+  BASESTR: 11000,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsBeastPercent: 2050,
+  vsMountedPercent: 1000,
+  troop: 'merc',
+  category: 'melee',
+  race: 'human',
+  group: '',
+  level: 'II'
+})
+const pounderII: MercUnit = unitBuilder<MercUnit>({
+  id: 'pounderII',
+  clasification: 'merc',
+  name: 'pounderII',
+  BASEHP: 33000,
+  BASESTR: 11000,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsMeleePercent: 667,
+  vsFlyingPercent: 859,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+const highlanderII: MercUnit = unitBuilder<MercUnit>({
+  id: 'highlanderII',
+  clasification: 'merc',
+  name: 'highlanderII',
+  BASEHP: 33000,
+  BASESTR: 11000,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsMeleePercent: 1333,
+  vsFlyingPercent: 1717,
+  troop: 'merc',
+  category: 'ranged',
+  race: 'human',
+  group: 'guardsman',
+  level: 'II'
+})
+const wardenII: MercUnit = unitBuilder<MercUnit>({
+  id: 'wardenII',
+  clasification: 'merc',
+  name: 'wardenII',
+  BASEHP: 1410000,
+  BASESTR: 470000,
+  AUTHORITY: 43,
+  INITIATIVE: 10,
+  vsRangedPercent: 70,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'human',
+  group: 'elves',
+  level: 'II'
+})
+const galloperII: MercUnit = unitBuilder<MercUnit>({
+  id: 'galloperII',
+  clasification: 'merc',
+  name: 'galloperII',
+  BASEHP: 66000,
+  BASESTR: 22000,
+  AUTHORITY: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 833,
+  vsSiegePercent: 692,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+const quicksandII: MercUnit = unitBuilder<MercUnit>({
+  id: 'quicksandII',
+  clasification: 'merc',
+  name: 'quicksandII',
+  BASEHP: 66000,
+  BASESTR: 22000,
+  AUTHORITY: 2,
+  INITIATIVE: 10,
+  vsRangedPercent: 1667,
+  vsSiegePercent: 1384,
+  troop: 'merc',
+  category: 'mounted',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+const scarfaceII: MercUnit = unitBuilder<MercUnit>({
+  id: 'scarfaceII',
+  clasification: 'merc',
+  name: 'scarfaceII',
+  BASEHP: 33000,
+  BASESTR: 11000,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsMountedPercent: 500,
+  vsBeastPercent: 1025,
+  troop: 'merc',
+  category: 'melee',
+  race: 'human',
+  group: 'specialist',
+  level: 'II'
+})
+/*
+trebuchetVI
+deathchariot
+archdemon
+
+
+
+*/
+export interface Army {
+  [key: string]: BasicUnit
+}
+export const ARMY: Army = {
+  RiderG1,
+  RiderG2,
+  RiderG3,
+  RiderG4,
+  RiderG5,
+  SwordmanS1,
+  SwordmanS2,
+  SwordmanS3,
+  SwordmanS4,
+  SwordmanS5,
+  SpyS1,
+  SpyS2,
+  SpyS3,
+  SpyS4,
+  SpyS5,
+  deadshotV,
+  deadshotVI,
+  deadshotVII,
+  lionRiderV,
+  lionRiderVI,
+  lionRiderVII,
+  vulturesV,
+  vulturesVI,
+  vulturesVII,
+  heavyKnightVI,
+  heavyKnightVII,
+  swiftJaegerVI,
+  swiftJaegerVII,
+  legitimistI,
+  legitimistII,
+  duelistI,
+  duelistII,
+  whitemaneI,
+  whitemaneII,
+  royalLionI,
+  royalLionII,
+  panopticI,
+  panopticII,
+  SpearmanG1,
+  SpearmanG2,
+  SpearmanG3,
+  SpearmanG4,
+  SpearmanG5,
+  ArcherG1,
+  ArcherG2,
+  ArcherG3,
+  ArcherG4,
+  ArcherG5,
+  battleGriffinV,
+  battleGriffinVI,
+  battleGriffinVII,
+  heavyArbalesterVI,
+  heavyArbalesterVII,
+  heavyHalberdierVI,
+  heavyHalberdierVII,
+  mountedKnightVI,
+  mountedKnightVII,
+  purifierI,
+  purifierII,
+  punisherI,
+  punisherII,
+  smiterI,
+  smiterII,
+  coraxI,
+  coraxII,
+  CatapultE1,
+  CatapultE2,
+  CatapultE3,
+  CatapultE4,
+  CatapultE5,
+  CatapultE6,
+  CatapultE7,
+  CatapultE8,
+  CatapultE9,
+  waterElementalIII,
+  icePhoenixIV,
+  flamingCentaurV,
+  rubiGolemVI,
+  windLordVII,
+  firePhoenixI,
+  firePhoenixII,
+  battleBoarIII,
+  gorgonMedusaIV,
+  fearsomeManticoraV,
+  jungleDestroyerVI,
+  ancientTerrorVII,
+  tricksterI,
+  tricksterII,
+  emeraldDragonIII,
+  magicDragonIV,
+  desertConquerV,
+  crystalDragonVI,
+  blackDragonVII,
+  devastatorI,
+  devastatorII,
+  stoneGargoyleIII,
+  manyArmedGuardianIV,
+  EttinV,
+  trollRiderVI,
+  destructiveColossusVII,
+  krakenI,
+  krakenII,
+
+  // mercenaries
+  scorpionRiderV,
+  cyclopsV,
+  gargoyleV,
+  bearV,
+  ifritV,
+  giantZombieV,
+  firewormRiderV,
+  unicornRiderV,
+  bullRiderV,
+  epicMonsterHunterVI,
+  chariotVI,
+  legionaryVI,
+  arbalesterVI,
+  sphynxVI,
+  knightVI,
+  trailseekerVI,
+  rhinoRiderVI,
+  deathChariotVI,
+  sheduVI,
+  entVI,
+  abominationVI,
+  boneGolemVI,
+  archidemonVI,
+  lightningLordVII,
+  cursedDragonVII,
+  seaLordVII,
+  sandwormVII,
+  lifeDragonVII,
+  goldenDragonVII,
+  overlordVII,
+  fireLordVII,
+  jungleKingVII,
+  wyvernII,
+  arielII,
+  jagoII,
+  eternalCannoneerII,
+  warregalII,
+  epicMonsterHunterVII,
+  epicMonsterHunterII,
+  demonicSalamanderII,
+  slavicWarriorII,
+  pounderII,
+  highlanderII,
+  wardenII,
+  galloperII,
+  quicksandII,
+  scarfaceII
+}

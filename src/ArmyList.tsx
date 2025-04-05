@@ -1,150 +1,8 @@
-import {
-  abominationVI,
-  arbalesterVI,
-  archidemonVI,
-  arielII,
-  boneGolemVI,
-  chariotVI,
-  cursedDragonVII,
-  deathChariotVI,
-  demonicSalamanderII,
-  epicMonsterHunterII,
-  epicMonsterHunterVII,
-  eternalCannoneerII,
-  fireLordVII,
-  galloperII,
-  goldenDragonVII,
-  highlanderII,
-  jagoII,
-  jungleKingVII,
-  knightVI,
-  legionaryVI,
-  lifeDragonVII,
-  lightningLordVII,
-  epicMonsterHunterVI,
-  overlordVII,
-  pounderII,
-  quicksandII,
-  rhinoRiderVI,
-  sandwormVII,
-  scarfaceII,
-  seaLordVII,
-  sheduVI,
-  slavicWarriorII,
-  sphynxVI,
-  trailseekerVI,
-  wardenII,
-  warregalII,
-  wyvernII,
-  entVI
-} from './mercs'
-import {
-  ArcherG1,
-  ArcherG2,
-  ArcherG3,
-  ArcherG4,
-  ArcherG5,
-  ARMY,
-  battleBoar,
-  battleGriffinV,
-  battleGriffinVI,
-  battleGriffinVII,
-  blackDragon,
-  flamingCentaurusV,
-  CatapultE1,
-  CatapultE2,
-  CatapultE3,
-  CatapultE4,
-  CatapultE5,
-  CatapultE6,
-  CatapultE7,
-  CatapultE8,
-  CatapultE9,
-  coraxI,
-  coraxII,
-  crystalDragon,
-  deadshotV,
-  deadshotVI,
-  deadshotVII,
-  desertConquer,
-  destructiveColossusVII,
-  devastatorI,
-  devastatorII,
-  duelistI,
-  duelistII,
-  tricksterI,
-  tricksterII,
-  emeraldDragon,
-  Ettin,
-  fearsomeManticoraV,
-  firePhoenixI,
-  firePhoenixII,
-  jungleDestroyerVI,
-  gorgonMedusa,
-  heavyArbalesterVI,
-  heavyArbalesterVII,
-  heavyHalberdierVI,
-  heavyHalberdierVII,
-  heavyKnightVI,
-  heavyKnightVII,
-  icePhoenix,
-  legitimistI,
-  legitimistII,
-  lionRiderV,
-  lionRiderVI,
-  lionRiderVII,
-  magicDragon,
-  mountedKnightVI,
-  mountedKnightVII,
-  multiArmGuardianIV,
-  ancientTerrorVII,
-  panopticI,
-  panopticII,
-  punisherI,
-  punisherII,
-  purifierI,
-  purifierII,
-  RiderG1,
-  RiderG2,
-  RiderG3,
-  RiderG4,
-  RiderG5,
-  royalLionI,
-  royalLionII,
-  rubiGolem,
-  smiterI,
-  smiterII,
-  SpearmanG1,
-  SpearmanG2,
-  SpearmanG3,
-  SpearmanG4,
-  SpearmanG5,
-  SpyS1,
-  SpyS2,
-  SpyS3,
-  SpyS4,
-  SpyS5,
-  stoneGargole,
-  swiftJaegerVI,
-  swiftJaegerVII,
-  SwordmanS1,
-  SwordmanS2,
-  SwordmanS3,
-  SwordmanS4,
-  SwordmanS5,
-  trollRider,
-  vulturesV,
-  vulturesVI,
-  vulturesVII,
-  waterElemental,
-  whitemaneI,
-  whitemaneII,
-  windLord
-} from './soldiers'
 import { useStackStore } from './stackStore'
-import { EngineerUnit, GuardsmanUnit, MercUnit, MonsterUnit, SpecialistUnit, Stack } from './types'
+import { BasicUnit, MonsterUnit, Stack, Unit } from './types'
 import './armyList.css'
 import { useState } from 'react'
+import { ARMY } from './soldiers'
 // import { useState } from 'react'
 
 export const ArmyList = () => {
@@ -172,292 +30,292 @@ export const ArmyList = () => {
   const addTroops = (type: string) => {
     let unitType = null
     if (type === 'Rider G1') {
-      unitType = RiderG1
+      unitType = ARMY.RiderG1
     } else if (type === 'Rider G2') {
-      unitType = RiderG2
+      unitType = ARMY.RiderG2
     } else if (type === 'Rider G3') {
-      unitType = RiderG3
+      unitType = ARMY.RiderG3
     } else if (type === 'Rider G4') {
-      unitType = RiderG4
+      unitType = ARMY.RiderG4
     } else if (type === 'Rider G5') {
-      unitType = RiderG5
+      unitType = ARMY.RiderG5
     } else if (type === 'Spearman G1') {
-      unitType = SpearmanG1
+      unitType = ARMY.SpearmanG1
     } else if (type === 'Spearman G2') {
-      unitType = SpearmanG2
+      unitType = ARMY.SpearmanG2
     } else if (type === 'Spearman G3') {
-      unitType = SpearmanG3
+      unitType = ARMY.SpearmanG3
     } else if (type === 'Spearman G4') {
-      unitType = SpearmanG4
+      unitType = ARMY.SpearmanG4
     } else if (type === 'Spearman G5') {
-      unitType = SpearmanG5
+      unitType = ARMY.SpearmanG5
     } else if (type === 'Archer G1') {
-      unitType = ArcherG1
+      unitType = ARMY.ArcherG1
     } else if (type === 'Archer G2') {
-      unitType = ArcherG2
+      unitType = ARMY.ArcherG2
     } else if (type === 'Archer G3') {
-      unitType = ArcherG3
+      unitType = ARMY.ArcherG3
     } else if (type === 'Archer G4') {
-      unitType = ArcherG4
+      unitType = ARMY.ArcherG4
     } else if (type === 'Archer G5') {
-      unitType = ArcherG5
+      unitType = ARMY.ArcherG5
     } else if (type === 'battleGriffinV') {
-      unitType = battleGriffinV
+      unitType = ARMY.battleGriffinV
     } else if (type === 'battleGriffinVI') {
-      unitType = battleGriffinVI
+      unitType = ARMY.battleGriffinVI
     } else if (type === 'battleGriffinVII') {
-      unitType = battleGriffinVII
+      unitType = ARMY.battleGriffinVII
     } else if (type === 'heavyArbalesterVI') {
-      unitType = heavyArbalesterVI
+      unitType = ARMY.heavyArbalesterVI
     } else if (type === 'heavyArbalesterVII') {
-      unitType = heavyArbalesterVII
+      unitType = ARMY.heavyArbalesterVII
     } else if (type === 'heavyHalberdierVI') {
-      unitType = heavyHalberdierVI
+      unitType = ARMY.heavyHalberdierVI
     } else if (type === 'heavyHalberdierVII') {
-      unitType = heavyHalberdierVII
+      unitType = ARMY.heavyHalberdierVII
     } else if (type === 'mountedKnightVI') {
-      unitType = mountedKnightVI
+      unitType = ARMY.mountedKnightVI
     } else if (type === 'mountedKnightVII') {
-      unitType = mountedKnightVII
+      unitType = ARMY.mountedKnightVII
     } else if (type === 'purifierI') {
-      unitType = purifierI
+      unitType = ARMY.purifierI
     } else if (type === 'purifierII') {
-      unitType = purifierII
+      unitType = ARMY.purifierII
     } else if (type === 'punisherI') {
-      unitType = punisherI
+      unitType = ARMY.punisherI
     } else if (type === 'punisherII') {
-      unitType = punisherII
+      unitType = ARMY.punisherII
     } else if (type === 'smiterI') {
-      unitType = smiterI
+      unitType = ARMY.smiterI
     } else if (type === 'smiterII') {
-      unitType = smiterII
+      unitType = ARMY.smiterII
     } else if (type === 'coraxI') {
-      unitType = coraxI
+      unitType = ARMY.coraxI
     } else if (type === 'coraxII') {
-      unitType = coraxII
+      unitType = ARMY.coraxII
     }
 
     //specialists
     else if (type === 'Swordsman S1') {
-      unitType = SwordmanS1
+      unitType = ARMY.SwordmanS1
     } else if (type === 'Swordsman S2') {
-      unitType = SwordmanS2
+      unitType = ARMY.SwordmanS2
     } else if (type === 'Swordsman S3') {
-      unitType = SwordmanS3
+      unitType = ARMY.SwordmanS3
     } else if (type === 'Swordsman S4') {
-      unitType = SwordmanS4
+      unitType = ARMY.SwordmanS4
     } else if (type === 'Swordsman S5') {
-      unitType = SwordmanS5
+      unitType = ARMY.SwordmanS5
     } else if (type === 'Spy S1') {
-      unitType = SpyS1
+      unitType = ARMY.SpyS1
     } else if (type === 'Spy S2') {
-      unitType = SpyS2
+      unitType = ARMY.SpyS2
     } else if (type === 'Spy S3') {
-      unitType = SpyS3
+      unitType = ARMY.SpyS3
     } else if (type === 'Spy S4') {
-      unitType = SpyS4
+      unitType = ARMY.SpyS4
     } else if (type === 'Spy S5') {
-      unitType = SpyS5
+      unitType = ARMY.SpyS5
     } else if (type === 'deadshotV') {
-      unitType = deadshotV
+      unitType = ARMY.deadshotV
     } else if (type === 'deadshotVI') {
-      unitType = deadshotVI
+      unitType = ARMY.deadshotVI
     } else if (type === 'deadshotVII') {
-      unitType = deadshotVII
+      unitType = ARMY.deadshotVII
     } else if (type === 'lionRiderV') {
-      unitType = lionRiderV
+      unitType = ARMY.lionRiderV
     } else if (type === 'lionRiderVI') {
-      unitType = lionRiderVI
+      unitType = ARMY.lionRiderVI
     } else if (type === 'lionRiderVII') {
-      unitType = lionRiderVII
+      unitType = ARMY.lionRiderVII
     } else if (type === 'vulturesV') {
-      unitType = vulturesV
+      unitType = ARMY.vulturesV
     } else if (type === 'vulturesVI') {
-      unitType = vulturesVI
+      unitType = ARMY.vulturesVI
     } else if (type === 'vulturesVII') {
-      unitType = vulturesVII
+      unitType = ARMY.vulturesVII
     } else if (type === 'heavyKnightVI') {
-      unitType = heavyKnightVI
+      unitType = ARMY.heavyKnightVI
     } else if (type === 'heavyKnightVII') {
-      unitType = heavyKnightVII
+      unitType = ARMY.heavyKnightVII
     } else if (type === 'swiftJaegerVI') {
-      unitType = swiftJaegerVI
+      unitType = ARMY.swiftJaegerVI
     } else if (type === 'swiftJaegerVII') {
-      unitType = swiftJaegerVII
+      unitType = ARMY.swiftJaegerVII
     } else if (type === 'legitimistI') {
-      unitType = legitimistI
+      unitType = ARMY.legitimistI
     } else if (type === 'legitimistII') {
-      unitType = legitimistII
+      unitType = ARMY.legitimistII
     } else if (type === 'duelistI') {
-      unitType = duelistI
+      unitType = ARMY.duelistI
     } else if (type === 'duelistII') {
-      unitType = duelistII
+      unitType = ARMY.duelistII
     } else if (type === 'whitemaneI') {
-      unitType = whitemaneI
+      unitType = ARMY.whitemaneI
     } else if (type === 'whitemaneII') {
-      unitType = whitemaneII
+      unitType = ARMY.whitemaneII
     } else if (type === 'royalLionI') {
-      unitType = royalLionI
+      unitType = ARMY.royalLionI
     } else if (type === 'royalLionII') {
-      unitType = royalLionII
+      unitType = ARMY.royalLionII
     } else if (type === 'panopticI') {
-      unitType = panopticI
+      unitType = ARMY.panopticI
     } else if (type === 'panopticII') {
-      unitType = panopticII
+      unitType = ARMY.panopticII
     }
     //ENGINEERING
     else if (type === 'Catapult E1') {
-      unitType = CatapultE1
+      unitType = ARMY.CatapultE1
     } else if (type === 'Catapult E2') {
-      unitType = CatapultE2
+      unitType = ARMY.CatapultE2
     } else if (type === 'Catapult E3') {
-      unitType = CatapultE3
+      unitType = ARMY.CatapultE3
     } else if (type === 'Catapult E4') {
-      unitType = CatapultE4
+      unitType = ARMY.CatapultE4
     } else if (type === 'Catapult E5') {
-      unitType = CatapultE5
+      unitType = ARMY.CatapultE5
     } else if (type === 'Catapult E6') {
-      unitType = CatapultE6
+      unitType = ARMY.CatapultE6
     } else if (type === 'Catapult E7') {
-      unitType = CatapultE7
+      unitType = ARMY.CatapultE7
     } else if (type === 'Catapult E8') {
-      unitType = CatapultE8
+      unitType = ARMY.CatapultE8
     } else if (type === 'Catapult E9') {
-      unitType = CatapultE9
+      unitType = ARMY.CatapultE9
     }
 
     // MERCENARIES ------------------------------
     else if (type === 'mercEpicMonsterHunter') {
-      unitType = epicMonsterHunterVI
+      unitType = ARMY.epicMonsterHunterVI
     } else if (type === 'chariotVI') {
-      unitType = chariotVI
+      unitType = ARMY.chariotVI
     } else if (type === 'deathChariotVI') {
-      unitType = deathChariotVI
+      unitType = ARMY.deathChariotVI
     } else if (type === 'legionaryVI') {
-      unitType = legionaryVI
+      unitType = ARMY.legionaryVI
     } else if (type === 'arbalesterVI') {
-      unitType = arbalesterVI
+      unitType = ARMY.arbalesterVI
     } else if (type === 'sphynxVI') {
-      unitType = sphynxVI
+      unitType = ARMY.sphynxVI
     } else if (type === 'knightVI') {
-      unitType = knightVI
+      unitType = ARMY.knightVI
     } else if (type === 'trailseekerVI') {
-      unitType = trailseekerVI
+      unitType = ARMY.trailseekerVI
     } else if (type === 'rhinoRiderVI') {
-      unitType = rhinoRiderVI
+      unitType = ARMY.rhinoRiderVI
     } else if (type === 'boneGolemVI') {
-      unitType = boneGolemVI
+      unitType = ARMY.boneGolemVI
     } else if (type === 'sheduVI') {
-      unitType = sheduVI
+      unitType = ARMY.sheduVI
     } else if (type === 'abominationVI') {
-      unitType = abominationVI
+      unitType = ARMY.abominationVI
     } else if (type === 'entVI') {
-      unitType = entVI
+      unitType = ARMY.entVI
     } else if (type === 'archidemonVI') {
-      unitType = archidemonVI
+      unitType = ARMY.archidemonVI
     } else if (type === 'lightningLordVII') {
-      unitType = lightningLordVII
+      unitType = ARMY.lightningLordVII
     } else if (type === 'cursedDragonVII') {
-      unitType = cursedDragonVII
+      unitType = ARMY.cursedDragonVII
     } else if (type === 'seaLordVII') {
-      unitType = seaLordVII
+      unitType = ARMY.seaLordVII
     } else if (type === 'sandwormVII') {
-      unitType = sandwormVII
+      unitType = ARMY.sandwormVII
     } else if (type === 'lifeDragonVII') {
-      unitType = lifeDragonVII
+      unitType = ARMY.lifeDragonVII
     } else if (type === 'goldenDragonVII') {
-      unitType = goldenDragonVII
+      unitType = ARMY.goldenDragonVII
     } else if (type === 'overlordVII') {
-      unitType = overlordVII
+      unitType = ARMY.overlordVII
     } else if (type === 'fireLordVII') {
-      unitType = fireLordVII
+      unitType = ARMY.fireLordVII
     } else if (type === 'jungleKingVII') {
-      unitType = jungleKingVII
+      unitType = ARMY.jungleKingVII
     } else if (type === 'epicMonsterHunterVII') {
-      unitType = epicMonsterHunterVII
+      unitType = ARMY.epicMonsterHunterVII
     } else if (type === 'wyvernII') {
-      unitType = wyvernII
+      unitType = ARMY.wyvernII
     } else if (type === 'arielII') {
-      unitType = arielII
+      unitType = ARMY.arielII
     } else if (type === 'warregalII') {
-      unitType = warregalII
+      unitType = ARMY.warregalII
     } else if (type === 'demonicSalamanderII') {
-      unitType = demonicSalamanderII
+      unitType = ARMY.demonicSalamanderII
     } else if (type === 'epicMonsterHunterII') {
-      unitType = epicMonsterHunterII
+      unitType = ARMY.epicMonsterHunterII
     } else if (type === 'jagoII') {
-      unitType = jagoII
+      unitType = ARMY.jagoII
     } else if (type === 'eternalCannoneerII') {
-      unitType = eternalCannoneerII
+      unitType = ARMY.eternalCannoneerII
     } else if (type === 'slavicWarriorII') {
-      unitType = slavicWarriorII
+      unitType = ARMY.slavicWarriorII
     } else if (type === 'wardenII') {
-      unitType = wardenII
+      unitType = ARMY.wardenII
     } else if (type === 'highlanderII') {
-      unitType = highlanderII
+      unitType = ARMY.highlanderII
     } else if (type === 'galloperII') {
-      unitType = galloperII
+      unitType = ARMY.galloperII
     } else if (type === 'quicksandII') {
-      unitType = quicksandII
+      unitType = ARMY.quicksandII
     } else if (type === 'scarfaceII') {
-      unitType = scarfaceII
+      unitType = ARMY.scarfaceII
     } else if (type === 'pounderII') {
-      unitType = pounderII
+      unitType = ARMY.pounderII
     }
 
     // MONSTERS ------------------------------
-    else if (type === 'waterElemental') {
-      unitType = waterElemental
-    } else if (type === 'battleBoar') {
-      unitType = battleBoar
-    } else if (type === 'emeraldDragon') {
-      unitType = emeraldDragon
-    } else if (type === 'stoneGargole') {
-      unitType = stoneGargole
-    } else if (type === 'icePhoenix') {
-      unitType = icePhoenix
-    } else if (type === 'flamingCentaurusV') {
-      unitType = flamingCentaurusV
-    } else if (type === 'rubiGolem') {
-      unitType = rubiGolem
-    } else if (type === 'windLord') {
-      unitType = windLord
+    else if (type === 'waterElementalIII') {
+      unitType = ARMY.waterElementalIII
+    } else if (type === 'battleBoarIII') {
+      unitType = ARMY.battleBoarIII
+    } else if (type === 'emeraldDragonIII') {
+      unitType = ARMY.emeraldDragonIII
+    } else if (type === 'stoneGargoleIII') {
+      unitType = ARMY.stoneGargoyleIII
+    } else if (type === 'icePhoenixIV') {
+      unitType = ARMY.icePhoenixIV
+    } else if (type === 'flamingCentaurV') {
+      unitType = ARMY.flamingCentaurV
+    } else if (type === 'rubiGolemVI') {
+      unitType = ARMY.rubiGolemVI
+    } else if (type === 'windLordVII') {
+      unitType = ARMY.windLordVII
     } else if (type === 'firePhoenixI') {
-      unitType = firePhoenixI
+      unitType = ARMY.firePhoenixI
     } else if (type === 'firePhoenixII') {
-      unitType = firePhoenixII
+      unitType = ARMY.firePhoenixII
     } else if (type === 'gorgonMedusa') {
-      unitType = gorgonMedusa
+      unitType = ARMY.gorgonMedusaIV
     } else if (type === 'fearsomeManticoraV') {
-      unitType = fearsomeManticoraV
+      unitType = ARMY.fearsomeManticoraV
     } else if (type === 'jungleDestroyerVI') {
-      unitType = jungleDestroyerVI
+      unitType = ARMY.jungleDestroyerVI
     } else if (type === 'ancientTerrorVII') {
-      unitType = ancientTerrorVII
+      unitType = ARMY.ancientTerrorVII
     } else if (type === 'tricksterI') {
-      unitType = tricksterI
+      unitType = ARMY.tricksterI
     } else if (type === 'tricksterII') {
-      unitType = tricksterII
-    } else if (type === 'magicDragon') {
-      unitType = magicDragon
-    } else if (type === 'desertConquer') {
-      unitType = desertConquer
-    } else if (type === 'crystalDragon') {
-      unitType = crystalDragon
-    } else if (type === 'blackDragon') {
-      unitType = blackDragon
+      unitType = ARMY.tricksterII
+    } else if (type === 'magicDragonIV') {
+      unitType = ARMY.magicDragonIV
+    } else if (type === 'desertConquerV') {
+      unitType = ARMY.desertConquerV
+    } else if (type === 'crystalDragonVI') {
+      unitType = ARMY.crystalDragonVI
+    } else if (type === 'blackDragonVII') {
+      unitType = ARMY.blackDragonVII
     } else if (type === 'devastatorII') {
-      unitType = devastatorII
-    } else if (type === 'Ettin') {
-      unitType = Ettin
-    } else if (type === 'trollRider') {
-      unitType = trollRider
+      unitType = ARMY.devastatorII
+    } else if (type === 'EttinV') {
+      unitType = ARMY.EttinV
+    } else if (type === 'trollRiderVI') {
+      unitType = ARMY.trollRiderVI
     } else if (type === 'destructiveColossusVII') {
-      unitType = destructiveColossusVII
+      unitType = ARMY.destructiveColossusVII
     } else if (type === 'devastatorI') {
-      unitType = devastatorI
-    } else if (type === 'multiArmGuardianIV') {
-      unitType = multiArmGuardianIV
+      unitType = ARMY.devastatorI
+    } else if (type === 'manyArmedGuardianIV') {
+      unitType = ARMY.manyArmedGuardianIV
     }
 
     if (!unitType) {
@@ -472,13 +330,15 @@ export const ArmyList = () => {
 
     // console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
 
-    const stack: Omit<Stack, 'id'> = {
+    const stack: Stack = {
       // health: RiderG1.BASEHP + (RiderG1.BASEHP * bonus.rider.G1.hp) / 100,
       // strength: RiderG1.BASESTR + (RiderG1.BASESTR * bonus.rider.G1.str) / 100,
       leadership: 0, //RiderG1.LEADERSHIP,
       authority: 0,
       dominance: 0,
-      unit: unitType,
+      unit: unitType as Unit,
+      id: unitType.id,
+      unitKey: unitType.id, // key for ARMY object
       unitsAmount: 0, //unitsNeededToKill1Mob
       minSetup: 0,
       lockMinSetup: true,
@@ -515,11 +375,9 @@ export const ArmyList = () => {
     }
   }
 
-  const shouldShow = (
-    unitname: string,
-    unit: GuardsmanUnit | SpecialistUnit | EngineerUnit | MonsterUnit | MercUnit
-  ) => {
+  const shouldShow = (unit: BasicUnit) => {
     let show = true
+    const unitname = unit.name
 
     if (filterTypes.length > 0) {
       show = filterTypes.includes(unit.category) // melee, ranged, mounted, scout, flying
@@ -534,8 +392,9 @@ export const ArmyList = () => {
     return show
   }
 
-  const shouldShowMonster = (unitname: string, unit: MonsterUnit) => {
+  const shouldShowMonster = (unit: BasicUnit) => {
     let show = true
+    const unitname = unit.name.toLowerCase()
 
     if (filterTypes.length === 0) {
       show = filterGroups.includes(unit.group) //dragon, elemental, beast, giant
@@ -711,7 +570,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Spearman</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.SpearmanG1, SpearmanG1) && (
+              {shouldShow(ARMY.SpearmanG1) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -722,7 +581,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.SpearmanG2, SpearmanG2) && (
+              {shouldShow(ARMY.SpearmanG2) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -733,7 +592,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.SpearmanG3, SpearmanG3) && (
+              {shouldShow(ARMY.SpearmanG3) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -744,7 +603,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.SpearmanG4, SpearmanG4) && (
+              {shouldShow(ARMY.SpearmanG4) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -755,7 +614,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.SpearmanG5, SpearmanG5) && (
+              {shouldShow(ARMY.SpearmanG5) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -771,7 +630,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Archer</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.ArcherG1, ArcherG1) && (
+              {shouldShow(ARMY.ArcherG1) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -782,7 +641,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.ArcherG2, ArcherG2) && (
+              {shouldShow(ARMY.ArcherG2) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -793,7 +652,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.ArcherG3, ArcherG3) && (
+              {shouldShow(ARMY.ArcherG3) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -804,7 +663,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.ArcherG4, ArcherG4) && (
+              {shouldShow(ARMY.ArcherG4) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -815,7 +674,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.ArcherG5, ArcherG5) && (
+              {shouldShow(ARMY.ArcherG5) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -831,7 +690,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Rider</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.RiderG1, RiderG1) && (
+              {shouldShow(ARMY.RiderG1) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -842,7 +701,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.RiderG2, RiderG2) && (
+              {shouldShow(ARMY.RiderG2) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -853,7 +712,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.RiderG3, RiderG3) && (
+              {shouldShow(ARMY.RiderG3) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -864,7 +723,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.RiderG4, RiderG4) && (
+              {shouldShow(ARMY.RiderG4) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -875,7 +734,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.RiderG5, RiderG5) && (
+              {shouldShow(ARMY.RiderG5) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -891,7 +750,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>battle Griffin</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.battleGriffinV, battleGriffinV) && (
+              {shouldShow(ARMY.battleGriffinV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -902,7 +761,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.battleGriffinVI, battleGriffinVI) && (
+              {shouldShow(ARMY.battleGriffinVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -913,7 +772,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.battleGriffinVII, battleGriffinVII) && (
+              {shouldShow(ARMY.battleGriffinVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -929,7 +788,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Heavy arbalester</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.heavyArbalesterVI, heavyArbalesterVI) && (
+              {shouldShow(ARMY.heavyArbalesterVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -940,7 +799,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.heavyArbalesterVII, heavyArbalesterVII) && (
+              {shouldShow(ARMY.heavyArbalesterVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -956,7 +815,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Heavy Halberdier</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.heavyHalberdierVI, heavyHalberdierVI) && (
+              {shouldShow(ARMY.heavyHalberdierVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -967,7 +826,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.heavyHalberdierVII, heavyHalberdierVII) && (
+              {shouldShow(ARMY.heavyHalberdierVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -983,7 +842,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Mounted Knight</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.mountedKnightVI, mountedKnightVI) && (
+              {shouldShow(ARMY.mountedKnightVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -994,7 +853,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.mountedKnightVII, mountedKnightVII) && (
+              {shouldShow(ARMY.mountedKnightVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1010,7 +869,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Purifier</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.purifierI, purifierI) && (
+              {shouldShow(ARMY.purifierI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1021,7 +880,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.purifierII, purifierII) && (
+              {shouldShow(ARMY.purifierII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1037,7 +896,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Punisher</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.punisherI, punisherI) && (
+              {shouldShow(ARMY.punisherI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1048,7 +907,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.punisherII, punisherII) && (
+              {shouldShow(ARMY.punisherII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1064,7 +923,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Smiter</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.smiterI, smiterI) && (
+              {shouldShow(ARMY.smiterI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1075,7 +934,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.smiterII, smiterII) && (
+              {shouldShow(ARMY.smiterII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1091,7 +950,7 @@ export const ArmyList = () => {
           <div className='guardsmen'>
             <p className='group-title'>Corax</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.coraxI, coraxI) && (
+              {shouldShow(ARMY.coraxI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1102,7 +961,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.coraxII, coraxII) && (
+              {shouldShow(ARMY.coraxII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1118,7 +977,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>Swordsman</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) && (
+              {shouldShow(ARMY.SwordmanS1) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1128,7 +987,7 @@ export const ArmyList = () => {
                   S1
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS2, SwordmanS2) && (
+              {shouldShow(ARMY.SwordmanS2) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1138,7 +997,7 @@ export const ArmyList = () => {
                   S2
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS3, SwordmanS3) && (
+              {shouldShow(ARMY.SwordmanS3) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1148,7 +1007,7 @@ export const ArmyList = () => {
                   S3
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS4, SwordmanS4) && (
+              {shouldShow(ARMY.SwordmanS4) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1158,7 +1017,7 @@ export const ArmyList = () => {
                   S4
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS5, SwordmanS5) && (
+              {shouldShow(ARMY.SwordmanS5) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1174,7 +1033,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>Spy</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.SpyS1, SpyS1) && (
+              {shouldShow(ARMY.SpyS1) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1184,7 +1043,7 @@ export const ArmyList = () => {
                   S1
                 </button>
               )}
-              {shouldShow(ARMY.SpyS2, SpyS2) && (
+              {shouldShow(ARMY.SpyS2) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1200,7 +1059,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>deadshot</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.deadshotsV, deadshotV) && (
+              {shouldShow(ARMY.deadshotV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1210,7 +1069,7 @@ export const ArmyList = () => {
                   DS5
                 </button>
               )}
-              {shouldShow(ARMY.deadshotsVI, deadshotVI) && (
+              {shouldShow(ARMY.deadshotVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1220,7 +1079,7 @@ export const ArmyList = () => {
                   DS6
                 </button>
               )}
-              {shouldShow(ARMY.deadshotsVII, deadshotVII) && (
+              {shouldShow(ARMY.deadshotVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1236,7 +1095,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>lionRider</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.lionRiderV, lionRiderV) && (
+              {shouldShow(ARMY.lionRiderV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1246,7 +1105,7 @@ export const ArmyList = () => {
                   LR5
                 </button>
               )}
-              {shouldShow(ARMY.lionRiderVI, lionRiderVI) && (
+              {shouldShow(ARMY.lionRiderVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1256,7 +1115,7 @@ export const ArmyList = () => {
                   LR6
                 </button>
               )}
-              {shouldShow(ARMY.lionRiderVII, lionRiderVII) && (
+              {shouldShow(ARMY.lionRiderVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1272,7 +1131,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>vultures</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.vulturesV, vulturesV) && (
+              {shouldShow(ARMY.vulturesV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1282,7 +1141,7 @@ export const ArmyList = () => {
                   V5
                 </button>
               )}
-              {shouldShow(ARMY.vulturesVI, vulturesVI) && (
+              {shouldShow(ARMY.vulturesVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1292,7 +1151,7 @@ export const ArmyList = () => {
                   V6
                 </button>
               )}
-              {shouldShow(ARMY.vulturesVII, vulturesVII) && (
+              {shouldShow(ARMY.vulturesVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1308,7 +1167,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>heavy Knight</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.heavyKnightVI, heavyKnightVI) && (
+              {shouldShow(ARMY.heavyKnightVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1318,7 +1177,7 @@ export const ArmyList = () => {
                   HK5
                 </button>
               )}
-              {shouldShow(ARMY.heavyKnightVII, heavyKnightVII) && (
+              {shouldShow(ARMY.heavyKnightVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1334,7 +1193,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>swift Jaeger</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.swiftJaegerVI, swiftJaegerVI) && (
+              {shouldShow(ARMY.swiftJaegerVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1344,7 +1203,7 @@ export const ArmyList = () => {
                   SJ5
                 </button>
               )}
-              {shouldShow(ARMY.swiftJaegerVII, swiftJaegerVII) && (
+              {shouldShow(ARMY.swiftJaegerVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1360,7 +1219,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>legitimist</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.legitimistI, legitimistI) && (
+              {shouldShow(ARMY.legitimistI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1370,7 +1229,7 @@ export const ArmyList = () => {
                   L1
                 </button>
               )}
-              {shouldShow(ARMY.legitimistII, legitimistII) && (
+              {shouldShow(ARMY.legitimistII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1386,7 +1245,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>duelist</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.duelistI, duelistI) && (
+              {shouldShow(ARMY.duelistI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1396,7 +1255,7 @@ export const ArmyList = () => {
                   D1
                 </button>
               )}
-              {shouldShow(ARMY.duelistII, duelistII) && (
+              {shouldShow(ARMY.duelistII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1412,7 +1271,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>whitemane</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.whitemaneI, whitemaneI) && (
+              {shouldShow(ARMY.whitemaneI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1422,7 +1281,7 @@ export const ArmyList = () => {
                   W1
                 </button>
               )}
-              {shouldShow(ARMY.whitemaneII, whitemaneII) && (
+              {shouldShow(ARMY.whitemaneII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1438,7 +1297,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>royal Lion</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.royalLionI, royalLionI) && (
+              {shouldShow(ARMY.royalLionI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1448,7 +1307,7 @@ export const ArmyList = () => {
                   RL1
                 </button>
               )}
-              {shouldShow(ARMY.royalLionII, royalLionII) && (
+              {shouldShow(ARMY.royalLionII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1464,7 +1323,7 @@ export const ArmyList = () => {
           <div className='specialists'>
             <p className='group-title'>panoptic</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.panopticI, panopticI) && (
+              {shouldShow(ARMY.panopticI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1474,7 +1333,7 @@ export const ArmyList = () => {
                   P1
                 </button>
               )}
-              {shouldShow(ARMY.panopticII, panopticII) && (
+              {shouldShow(ARMY.panopticII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1490,7 +1349,7 @@ export const ArmyList = () => {
           <div className='engineer'>
             <p className='group-title'>Catapult</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.CatapultE1, CatapultE1) && (
+              {shouldShow(ARMY.CatapultE1) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1500,7 +1359,7 @@ export const ArmyList = () => {
                   E1
                 </button>
               )}
-              {shouldShow(ARMY.CatapultE2, CatapultE2) && (
+              {shouldShow(ARMY.CatapultE2) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1510,7 +1369,7 @@ export const ArmyList = () => {
                   E2
                 </button>
               )}
-              {shouldShow(ARMY.CatapultE3, CatapultE3) && (
+              {shouldShow(ARMY.CatapultE3) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1520,7 +1379,7 @@ export const ArmyList = () => {
                   E3
                 </button>
               )}
-              {shouldShow(ARMY.CatapultE4, CatapultE4) && (
+              {shouldShow(ARMY.CatapultE4) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1530,7 +1389,7 @@ export const ArmyList = () => {
                   E4
                 </button>
               )}
-              {shouldShow(ARMY.CatapultE5, CatapultE5) && (
+              {shouldShow(ARMY.CatapultE5) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1540,7 +1399,7 @@ export const ArmyList = () => {
                   E5
                 </button>
               )}
-              {shouldShow(ARMY.CatapultE6, CatapultE6) && (
+              {shouldShow(ARMY.CatapultE6) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1550,7 +1409,7 @@ export const ArmyList = () => {
                   E6 Ballistae VI
                 </button>
               )}
-              {shouldShow(ARMY.CatapultE7, CatapultE7) && (
+              {shouldShow(ARMY.CatapultE7) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1560,7 +1419,7 @@ export const ArmyList = () => {
                   E7 Ballistae VII
                 </button>
               )}
-              {shouldShow(ARMY.CatapultE8, CatapultE8) && (
+              {shouldShow(ARMY.CatapultE8) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1570,7 +1429,7 @@ export const ArmyList = () => {
                   E8 Josephine I
                 </button>
               )}
-              {shouldShow(ARMY.CatapultE9, CatapultE9) && (
+              {shouldShow(ARMY.CatapultE9) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1586,57 +1445,57 @@ export const ArmyList = () => {
           <div className='monsters'>
             <p className='group-title'>Monsters</p>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.waterElemental, waterElemental) &&
-                ARMY.waterElemental.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(waterElemental.category) ||
-                  filterGroups.includes(waterElemental.group)) &&
-                !selectedStacks.includes(ARMY.waterElemental) && (
+              {shouldShowMonster(ARMY.waterElementalIII) &&
+                ARMY.waterElementalIII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.waterElementalIII.category) ||
+                  filterGroups.includes(ARMY.waterElementalIII.group)) &&
+                !selectedStacks.includes(ARMY.waterElementalIII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
-                      addTroops('waterElemental')
+                      addTroops('waterElementalIII')
                     }}
                   >
                     Water Elemental III
                   </button>
                 )}
-              {shouldShowMonster(ARMY.battleBoar, battleBoar) &&
-                ARMY.battleBoar.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(battleBoar.category) ||
-                  filterGroups.includes(battleBoar.group)) &&
-                !selectedStacks.includes(ARMY.battleBoar) && (
+              {shouldShowMonster(ARMY.battleBoarIII) &&
+                ARMY.battleBoarIII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.battleBoarIII.category) ||
+                  filterGroups.includes(ARMY.battleBoarIII.group)) &&
+                !selectedStacks.includes(ARMY.battleBoarIII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
-                      addTroops('battleBoar')
+                      addTroops('battleBoarIII')
                     }}
                   >
                     Battle Boar III
                   </button>
                 )}
-              {shouldShowMonster(ARMY.emeraldDragon, emeraldDragon) &&
-                ARMY.emeraldDragon.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(emeraldDragon.category) ||
-                  filterGroups.includes(emeraldDragon.group)) &&
-                !selectedStacks.includes(ARMY.emeraldDragon) && (
+              {shouldShowMonster(ARMY.emeraldDragonIII) &&
+                ARMY.emeraldDragonIII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.emeraldDragonIII.category) ||
+                  filterGroups.includes(ARMY.emeraldDragonIII.group)) &&
+                !selectedStacks.includes(ARMY.emeraldDragonIII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
-                      addTroops('emeraldDragon')
+                      addTroops('emeraldDragonIII')
                     }}
                   >
                     Emerald Dragon III
                   </button>
                 )}
-              {shouldShowMonster(ARMY.stoneGargole, stoneGargole) &&
-                ARMY.stoneGargole.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(stoneGargole.category) ||
-                  filterGroups.includes(stoneGargole.group)) &&
-                !selectedStacks.includes(ARMY.stoneGargole) && (
+              {shouldShowMonster(ARMY.stoneGargoyleIII) &&
+                ARMY.stoneGargoyleIII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.stoneGargoyleIII.category) ||
+                  filterGroups.includes(ARMY.stoneGargoyleIII.group)) &&
+                !selectedStacks.includes(ARMY.stoneGargoyleIII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
-                      addTroops('stoneGargole')
+                      addTroops('stoneGargoleIII')
                     }}
                   >
                     Stone Gargole III
@@ -1644,25 +1503,25 @@ export const ArmyList = () => {
                 )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.icePhoenix, icePhoenix) &&
-                ARMY.icePhoenix.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(icePhoenix.category) ||
-                  filterGroups.includes(icePhoenix.group)) &&
-                !selectedStacks.includes(ARMY.icePhoenix) && (
+              {shouldShowMonster(ARMY.icePhoenixIV) &&
+                ARMY.icePhoenixIV.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.icePhoenixIV.category) ||
+                  filterGroups.includes(ARMY.icePhoenixIV.group)) &&
+                !selectedStacks.includes(ARMY.icePhoenixIV.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
-                      addTroops('icePhoenix')
+                      addTroops('icePhoenixIV')
                     }}
                   >
                     ice Phoenix IV
                   </button>
                 )}
-              {shouldShowMonster(ARMY.gorgonMedusa, gorgonMedusa) &&
-                ARMY.gorgonMedusa.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(gorgonMedusa.category) ||
-                  filterGroups.includes(gorgonMedusa.group)) &&
-                !selectedStacks.includes(ARMY.gorgonMedusa) && (
+              {shouldShowMonster(ARMY.gorgonMedusaIV) &&
+                ARMY.gorgonMedusaIV.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.gorgonMedusaIV.category) ||
+                  filterGroups.includes(ARMY.gorgonMedusaIV.group)) &&
+                !selectedStacks.includes(ARMY.gorgonMedusaIV.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
@@ -1672,29 +1531,29 @@ export const ArmyList = () => {
                     gorgon Medusa IV
                   </button>
                 )}
-              {shouldShowMonster(ARMY.magicDragon, magicDragon) &&
-                ARMY.magicDragon.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(magicDragon.category) ||
-                  filterGroups.includes(magicDragon.group)) &&
-                !selectedStacks.includes(ARMY.magicDragon) && (
+              {shouldShowMonster(ARMY.magicDragonIV) &&
+                ARMY.magicDragonIV.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.magicDragonIV.category) ||
+                  filterGroups.includes(ARMY.magicDragonIV.group)) &&
+                !selectedStacks.includes(ARMY.magicDragonIV.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
-                      addTroops('magicDragon')
+                      addTroops('magicDragonIV')
                     }}
                   >
                     magic Dragon IV
                   </button>
                 )}
-              {shouldShowMonster(ARMY.multiArmGuardianIV, multiArmGuardianIV) &&
-                ARMY.multiArmGuardianIV.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(multiArmGuardianIV.category) ||
-                  filterGroups.includes(multiArmGuardianIV.group)) &&
-                !selectedStacks.includes(ARMY.multiArmGuardianIV) && (
+              {shouldShowMonster(ARMY.manyArmedGuardianIV) &&
+                ARMY.manyArmedGuardianIV.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.manyArmedGuardianIV.category) ||
+                  filterGroups.includes(ARMY.manyArmedGuardianIV.group)) &&
+                !selectedStacks.includes(ARMY.manyArmedGuardianIV.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
-                      addTroops('multiArmGuardianIV')
+                      addTroops('manyArmedGuardianIV')
                     }}
                   >
                     many-Armed Guardian IV
@@ -1702,17 +1561,17 @@ export const ArmyList = () => {
                 )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.flamingCentaur, flamingCentaurusV) && (
+              {shouldShowMonster(ARMY.flamingCentaurV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('flamingCentaurusV')
+                    addTroops('flamingCentaurV')
                   }}
                 >
                   flaming Centaurus V
                 </button>
               )}
-              {shouldShowMonster(ARMY.fearsomeManticora, fearsomeManticoraV) && (
+              {shouldShowMonster(ARMY.fearsomeManticoraV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1722,21 +1581,21 @@ export const ArmyList = () => {
                   fear Manticora V
                 </button>
               )}
-              {shouldShowMonster(ARMY.desertConquer, desertConquer) && (
+              {shouldShowMonster(ARMY.desertConquerV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('desertConquer')
+                    addTroops('desertConquerV')
                   }}
                 >
                   desert Vanquisher V
                 </button>
               )}
-              {shouldShowMonster(ARMY.Ettin, Ettin) && (
+              {shouldShowMonster(ARMY.EttinV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('Ettin')
+                    addTroops('EttinV')
                   }}
                 >
                   Ettin V
@@ -1744,7 +1603,7 @@ export const ArmyList = () => {
               )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.jungleDestroyerVI, jungleDestroyerVI) && (
+              {shouldShowMonster(ARMY.jungleDestroyerVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1754,31 +1613,31 @@ export const ArmyList = () => {
                   jungle Destroyer VI
                 </button>
               )}
-              {shouldShowMonster(ARMY.crystalDragon, crystalDragon) && (
+              {shouldShowMonster(ARMY.crystalDragonVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('crystalDragon')
+                    addTroops('crystalDragonVI')
                   }}
                 >
                   crystal Dragon VI
                 </button>
               )}
-              {shouldShowMonster(ARMY.trollRider, trollRider) && (
+              {shouldShowMonster(ARMY.trollRiderVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('trollRider')
+                    addTroops('trollRiderVI')
                   }}
                 >
                   troll Rider VI
                 </button>
               )}
-              {shouldShowMonster(ARMY.rubiGolem, rubiGolem) && (
+              {shouldShowMonster(ARMY.rubiGolemVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('rubiGolem')
+                    addTroops('rubiGolemVI')
                   }}
                 >
                   rubi Golem VI
@@ -1786,17 +1645,17 @@ export const ArmyList = () => {
               )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.windLord, windLord) && (
+              {shouldShowMonster(ARMY.windLordVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('windLord')
+                    addTroops('windLordVII')
                   }}
                 >
                   wind Lord VII
                 </button>
               )}
-              {shouldShowMonster(ARMY.ancientTerrorVII, ancientTerrorVII) && (
+              {shouldShowMonster(ARMY.ancientTerrorVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1806,17 +1665,17 @@ export const ArmyList = () => {
                   ancient Terror VII
                 </button>
               )}
-              {shouldShowMonster(ARMY.blackDragon, blackDragon) && (
+              {shouldShowMonster(ARMY.blackDragonVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('blackDragon')
+                    addTroops('blackDragonVII')
                   }}
                 >
                   black Dragon VII
                 </button>
               )}
-              {shouldShowMonster(ARMY.destructiveColossusVII, destructiveColossusVII) && (
+              {shouldShowMonster(ARMY.destructiveColossusVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1828,7 +1687,7 @@ export const ArmyList = () => {
               )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.firePhoenixI, firePhoenixI) && (
+              {shouldShowMonster(ARMY.firePhoenixI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1838,7 +1697,7 @@ export const ArmyList = () => {
                   fire Phoenix I
                 </button>
               )}
-              {shouldShowMonster(ARMY.tricksterI, tricksterI) && (
+              {shouldShowMonster(ARMY.tricksterI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1848,7 +1707,7 @@ export const ArmyList = () => {
                   trickster I
                 </button>
               )}
-              {shouldShowMonster(ARMY.devastatorI, devastatorI) && (
+              {shouldShowMonster(ARMY.devastatorI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1861,7 +1720,7 @@ export const ArmyList = () => {
             </div>
 
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.firePhoenixII, firePhoenixII) && (
+              {shouldShowMonster(ARMY.firePhoenixII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1871,7 +1730,7 @@ export const ArmyList = () => {
                   firePhoenix II
                 </button>
               )}
-              {shouldShowMonster(ARMY.tricksterII, tricksterII) && (
+              {shouldShowMonster(ARMY.tricksterII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1881,7 +1740,7 @@ export const ArmyList = () => {
                   trickster II
                 </button>
               )}
-              {shouldShowMonster(ARMY.devastatorII, devastatorII) && (
+              {shouldShowMonster(ARMY.devastatorII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1897,7 +1756,7 @@ export const ArmyList = () => {
           <div className='mercs'>
             <p className='group-title'>Mercs</p>
             <div className='btn-group'>
-              {shouldShow(ARMY.epicMonsterHunterVI, epicMonsterHunterVI) && (
+              {shouldShow(ARMY.epicMonsterHunterVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1907,7 +1766,7 @@ export const ArmyList = () => {
                   Epic Monster Hunter VI
                 </button>
               )}
-              {shouldShow(ARMY.chariotVI, chariotVI) && (
+              {shouldShow(ARMY.chariotVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1917,7 +1776,7 @@ export const ArmyList = () => {
                   Chariot VI
                 </button>
               )}
-              {shouldShow(ARMY.legionaryVI, legionaryVI) && (
+              {shouldShow(ARMY.legionaryVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1927,7 +1786,7 @@ export const ArmyList = () => {
                   Legionary VI
                 </button>
               )}
-              {shouldShow(ARMY.deathChariotVI, deathChariotVI) && (
+              {shouldShow(ARMY.deathChariotVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1940,7 +1799,7 @@ export const ArmyList = () => {
             </div>
 
             <div className='btn-group'>
-              {shouldShow(ARMY.arbalesterVI, arbalesterVI) && (
+              {shouldShow(ARMY.arbalesterVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1950,7 +1809,7 @@ export const ArmyList = () => {
                   arbalester VI
                 </button>
               )}
-              {shouldShow(ARMY.sphynxVI, sphynxVI) && (
+              {shouldShow(ARMY.sphynxVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1960,7 +1819,7 @@ export const ArmyList = () => {
                   sphynx VI
                 </button>
               )}
-              {shouldShow(ARMY.knightVI, knightVI) && (
+              {shouldShow(ARMY.knightVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1973,7 +1832,7 @@ export const ArmyList = () => {
             </div>
 
             <div className='btn-group'>
-              {shouldShow(ARMY.trailseekerVI, trailseekerVI) && (
+              {shouldShow(ARMY.trailseekerVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1983,7 +1842,7 @@ export const ArmyList = () => {
                   trailseeker VI
                 </button>
               )}
-              {shouldShow(ARMY.rhinoRiderVI, rhinoRiderVI) && (
+              {shouldShow(ARMY.rhinoRiderVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -1994,7 +1853,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.boneGolemVI, boneGolemVI) && (
+              {shouldShow(ARMY.boneGolemVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2004,7 +1863,7 @@ export const ArmyList = () => {
                   boneGolemVI
                 </button>
               )}
-              {shouldShow(ARMY.sheduVI, sheduVI) && (
+              {shouldShow(ARMY.sheduVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2017,7 +1876,7 @@ export const ArmyList = () => {
             </div>
 
             <div className='btn-group'>
-              {shouldShow(ARMY.entVI, entVI) && (
+              {shouldShow(ARMY.entVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2027,7 +1886,7 @@ export const ArmyList = () => {
                   ent VI
                 </button>
               )}
-              {shouldShow(ARMY.abominationVI, abominationVI) && (
+              {shouldShow(ARMY.abominationVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2037,7 +1896,7 @@ export const ArmyList = () => {
                   abomination VI
                 </button>
               )}
-              {shouldShow(ARMY.archidemonVI, archidemonVI) && (
+              {shouldShow(ARMY.archidemonVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2048,7 +1907,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.lightningLordVII, lightningLordVII) && (
+              {shouldShow(ARMY.lightningLordVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2059,7 +1918,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.cursedDragonVII, cursedDragonVII) && (
+              {shouldShow(ARMY.cursedDragonVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2070,7 +1929,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.seaLordVII, seaLordVII) && (
+              {shouldShow(ARMY.seaLordVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2081,7 +1940,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.sandwormVII, sandwormVII) && (
+              {shouldShow(ARMY.sandwormVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2091,7 +1950,7 @@ export const ArmyList = () => {
                   sandwormVII
                 </button>
               )}
-              {shouldShow(ARMY.lifeDragonVII, lifeDragonVII) && (
+              {shouldShow(ARMY.lifeDragonVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2101,7 +1960,7 @@ export const ArmyList = () => {
                   lifeDragonVII
                 </button>
               )}
-              {shouldShow(ARMY.goldenDragonVII, goldenDragonVII) && (
+              {shouldShow(ARMY.goldenDragonVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2112,7 +1971,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.overlordVII, overlordVII) && (
+              {shouldShow(ARMY.overlordVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2123,7 +1982,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.fireLordVII, fireLordVII) && (
+              {shouldShow(ARMY.fireLordVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2133,7 +1992,7 @@ export const ArmyList = () => {
                   fireLordVII
                 </button>
               )}
-              {shouldShow(ARMY.jungleKingVII, jungleKingVII) && (
+              {shouldShow(ARMY.jungleKingVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2143,7 +2002,7 @@ export const ArmyList = () => {
                   jungleKingVII
                 </button>
               )}
-              {shouldShow(ARMY.epicMonsterHunterVII, epicMonsterHunterVII) && (
+              {shouldShow(ARMY.epicMonsterHunterVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2154,7 +2013,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.wyvernII, wyvernII) && (
+              {shouldShow(ARMY.wyvernII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2165,7 +2024,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.arielII, arielII) && (
+              {shouldShow(ARMY.arielII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2176,7 +2035,7 @@ export const ArmyList = () => {
                 </button>
               )}
 
-              {shouldShow(ARMY.jagoII, jagoII) && (
+              {shouldShow(ARMY.jagoII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2186,7 +2045,7 @@ export const ArmyList = () => {
                   jagoII
                 </button>
               )}
-              {shouldShow(ARMY.eternalCannoneerII, eternalCannoneerII) && (
+              {shouldShow(ARMY.eternalCannoneerII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2196,7 +2055,7 @@ export const ArmyList = () => {
                   eternalCannoneerII
                 </button>
               )}
-              {shouldShow(ARMY.epicMonsterHunterII, epicMonsterHunterII) && (
+              {shouldShow(ARMY.epicMonsterHunterII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2206,7 +2065,7 @@ export const ArmyList = () => {
                   epicMonsterHunterII
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) && (
+              {shouldShow(ARMY.SwordmanS1) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2216,7 +2075,7 @@ export const ArmyList = () => {
                   warregalII
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) && (
+              {shouldShow(ARMY.SwordmanS1) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2226,11 +2085,11 @@ export const ArmyList = () => {
                   demonicSalamanderII
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) &&
-                ARMY.slavicWarriorII.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(slavicWarriorII.category) ||
-                  filterGroups.includes(slavicWarriorII.group)) &&
-                !selectedStacks.includes(ARMY.slavicWarriorII) && (
+              {shouldShow(ARMY.SwordmanS1) &&
+                ARMY.slavicWarriorII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.slavicWarriorII.category) ||
+                  filterGroups.includes(ARMY.slavicWarriorII.group)) &&
+                !selectedStacks.includes(ARMY.slavicWarriorII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
@@ -2241,11 +2100,11 @@ export const ArmyList = () => {
                   </button>
                 )}
 
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) &&
-                ARMY.wardenII.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(wardenII.category) ||
-                  filterGroups.includes(wardenII.group)) &&
-                !selectedStacks.includes(ARMY.wardenII) && (
+              {shouldShow(ARMY.SwordmanS1) &&
+                ARMY.wardenII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.wardenII.category) ||
+                  filterGroups.includes(ARMY.wardenII.group)) &&
+                !selectedStacks.includes(ARMY.wardenII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
@@ -2255,11 +2114,11 @@ export const ArmyList = () => {
                     wardenII
                   </button>
                 )}
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) &&
-                ARMY.highlanderII.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(highlanderII.category) ||
-                  filterGroups.includes(highlanderII.group)) &&
-                !selectedStacks.includes(ARMY.highlanderII) && (
+              {shouldShow(ARMY.SwordmanS1) &&
+                ARMY.highlanderII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.highlanderII.category) ||
+                  filterGroups.includes(ARMY.highlanderII.group)) &&
+                !selectedStacks.includes(ARMY.highlanderII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
@@ -2269,11 +2128,11 @@ export const ArmyList = () => {
                     highlanderII
                   </button>
                 )}
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) &&
-                ARMY.galloperII.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(galloperII.category) ||
-                  filterGroups.includes(galloperII.group)) &&
-                !selectedStacks.includes(ARMY.galloperII) && (
+              {shouldShow(ARMY.SwordmanS1) &&
+                ARMY.galloperII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.galloperII.category) ||
+                  filterGroups.includes(ARMY.galloperII.group)) &&
+                !selectedStacks.includes(ARMY.galloperII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
@@ -2283,11 +2142,11 @@ export const ArmyList = () => {
                     galloperII
                   </button>
                 )}
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) &&
-                ARMY.quicksandII.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(quicksandII.category) ||
-                  filterGroups.includes(quicksandII.group)) &&
-                !selectedStacks.includes(ARMY.quicksandII) && (
+              {shouldShow(ARMY.SwordmanS1) &&
+                ARMY.quicksandII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.quicksandII.category) ||
+                  filterGroups.includes(ARMY.quicksandII.group)) &&
+                !selectedStacks.includes(ARMY.quicksandII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
@@ -2298,11 +2157,11 @@ export const ArmyList = () => {
                   </button>
                 )}
 
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) &&
-                ARMY.scarfaceII.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(scarfaceII.category) ||
-                  filterGroups.includes(scarfaceII.group)) &&
-                !selectedStacks.includes(ARMY.scarfaceII) && (
+              {shouldShow(ARMY.SwordmanS1) &&
+                ARMY.scarfaceII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.scarfaceII.category) ||
+                  filterGroups.includes(ARMY.scarfaceII.group)) &&
+                !selectedStacks.includes(ARMY.scarfaceII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
@@ -2312,11 +2171,11 @@ export const ArmyList = () => {
                     scarfaceII
                   </button>
                 )}
-              {shouldShow(ARMY.SwordmanS1, SwordmanS1) &&
-                ARMY.pounderII.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(pounderII.category) ||
-                  filterGroups.includes(pounderII.group)) &&
-                !selectedStacks.includes(ARMY.pounderII) && (
+              {shouldShow(ARMY.SwordmanS1) &&
+                ARMY.pounderII.name.toLowerCase().includes(search.toLowerCase()) &&
+                (filterTypes.includes(ARMY.pounderII.category) ||
+                  filterGroups.includes(ARMY.pounderII.group)) &&
+                !selectedStacks.includes(ARMY.pounderII.name) && (
                   <button
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
