@@ -1297,13 +1297,17 @@ second REMAINS second
                   strength, the downside is you will have less room for your next troops, because
                   the max strength of your other troops available would be reduced
                 </p>
-                <p className='bg-green-800 w-fit'>[army (all troops) max strength___________]</p>
+                <p className='bg-green-800 w-fit'>
+                  [army (all troops) max strength_________________________________________]
+                </p>
                 <p className='bg-blue-800 w-fit'>
                   [first troop]<span className='bg-orange-800 text-white'>[gap 50%______]</span>
-                  [second troop]
+                  [second troop]<span className='bg-orange-800 text-white'>[gap 50%______]</span>
+                  [third troop]
                 </p>
                 <p className='bg-fuchsia-800 w-fit'>
                   [first troop]<span className='bg-orange-800 text-white'>[gap 10%__]</span>[second
+                  troop____]<span className='bg-orange-800 text-white'>[gap 10%__]</span>[third
                   troop____]
                 </p>
               </div>

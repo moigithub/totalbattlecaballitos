@@ -424,7 +424,7 @@ export const ArmyList = () => {
   return (
     <aside
       id='sidebar-multi-level-sidebar'
-      className='fixed top-[56px] left-0 z-40 w-64 h-[calc(100vh-56px)] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
+      className='fixed top-[56px] left-0 z-10 w-64 h-[calc(100vh-56px)] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
       aria-label='Sidebar'
     >
       <section className='px-4 py-4   bg-gray-50 dark:bg-gray-800'>

@@ -57,7 +57,7 @@ export const Card = ({ stack }: { stack: Stack }) => {
         {...listeners}
       >
         <div className='drag-handler '></div>
-        <p className='text-sm w-max z-30 text-green-200 tracking-widest font-extrabold origin-bottom-left rotate-90'>
+        <p className='text-sm w-max z-1 text-green-200 tracking-widest font-extrabold origin-bottom-left rotate-90'>
           ⮜ Drag ⮞
         </p>
       </div>

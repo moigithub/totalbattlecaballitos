@@ -110,8 +110,8 @@ export const CitadelData = ({ type }: { type: string }) => {
           <td></td>
         </tr>
         <tr>
-          <td colSpan={6}>
-            Selected strengths:{' '}
+          <td colSpan={7}>
+            Selected damage:{' '}
             {selected
               .map(str => {
                 return str

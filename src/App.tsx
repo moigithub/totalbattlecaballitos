@@ -1,6 +1,7 @@
 import { Outlet, NavLink } from 'react-router-dom'
 
 import './App.css'
+import { Disclaimer } from './disclaimer'
 
 function App() {
   return (
@@ -59,6 +60,8 @@ function App() {
       </nav>
 
       <Outlet />
+
+      <Disclaimer />
     </>
   )
 }
