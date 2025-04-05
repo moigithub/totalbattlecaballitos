@@ -194,27 +194,31 @@ export const GameCombatInfo = () => {
       </ul>
 
       <h2 className='mt-8 font-bold text-4xl text-green-700'>Some strategies used on citadels</h2>
-      <ul>
-        <li>To AVOID centaurus kill your catapults</li>
+      <ul className='list-disc list-inside'>
+        <li className='mt-4 text-red-700'>TO prevent centaurs from killing your catapults</li>
         <div className='ml-5'>
           <p>
-            SEND some units with vsMounted feature bonus to kill centaur, like vultures or griffins,
-            make sure the total strength of those units is not higher than the centaurus total
-            health, and position it (stack order) before centaur hit your catapult
+            <span className='text-pink-600 font-bold'>SEND</span> some units with vsMounted feature
+            bonus to kill centaur, like vultures or griffins, make sure the total strength of those
+            units is not higher than the centaurus total health, and position it (stack order)
+            before centaur hit your catapult, -- by targeting centaurs before they hit you, you
+            altering the attack order, by reducing their numbers, so if a few survive, they will not
+            have enough strength to damage you
           </p>
           <img src='./killCentaurStrategy.jpg' alt='kill centaur before it hit our catapults' />
         </div>
 
         <li>
-          ADD a ranged unit with HUGE health (like canoner), so it can survive centaur attack,
-          centaurs have a 50% feature bonus against ranged unit, so they will "prefer" to attack
-          your canoner instead your catapults
+          <span className='text-pink-600 font-bold'>ADD</span> a ranged unit with HUGE health (like
+          canoner), so it can survive centaur attack, -- centaurs have a 50% feature bonus against
+          ranged unit, so they will "prefer" to attack your canoner instead your catapults
         </li>
 
         <li>
-          REDUCE your catapults health, and use as many catapults stack needed to compensate your
-          previous damage, having lower health than centaur damage, centaur will skip your catapults
-          and find another target where it can do more damage,
+          <span className='text-pink-600 font-bold'>REDUCE</span> your catapults stack health, by
+          lowering the amount you sending, and use as many catapults stack needed to compensate your
+          previous damage, -- having lower health than centaur damage, centaur will skip your
+          catapults and find another target where it can do more damage,
         </li>
       </ul>
     </div>
