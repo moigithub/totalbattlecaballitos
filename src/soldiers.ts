@@ -1502,23 +1502,6 @@ const bullRiderV: MercUnit = unitBuilder<MercUnit>({
   level: 'V'
 })
 //------------------------------------
-const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
-  id: 'epicMonsterHunterVI',
-  clasification: 'merc',
-  name: 'epicMonsterHunterVI',
-  BASEHP: 6090,
-  BASESTR: 2030,
-  AUTHORITY: 1,
-  INITIATIVE: 10,
-  vsRangedPercent: 329,
-  vsSiegePercent: 273,
-  vsEpicPercent: 609,
-  troop: 'merc',
-  category: 'epic',
-  race: 'human',
-  group: 'guardsman',
-  level: 'VI'
-})
 
 const chariotVI: MercUnit = unitBuilder<MercUnit>({
   id: 'chariotVI',
@@ -1970,6 +1953,25 @@ const warregalII: MercUnit = unitBuilder<MercUnit>({
   group: '',
   level: 'II'
 })
+
+const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'epicMonsterHunterVI',
+  clasification: 'merc',
+  name: 'epicMonsterHunterVI',
+  BASEHP: 6090,
+  BASESTR: 2030,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsRangedPercent: 329,
+  vsSiegePercent: 273,
+  vsEpicPercent: 609,
+  troop: 'merc',
+  category: '', //
+  race: 'human',
+  group: 'guardsman',
+  level: 'VI'
+})
+
 const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
   id: 'epicMonsterHunterVII',
   clasification: 'merc',
@@ -1980,7 +1982,7 @@ const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
   INITIATIVE: 10,
   vsEpicPercent: 934,
   troop: 'merc',
-  category: 'epic',
+  category: '',
   race: 'human',
   group: 'guardsman',
   level: 'VII'
@@ -1995,7 +1997,7 @@ const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
   INITIATIVE: 10,
   vsEpicPercent: 1000,
   troop: 'merc',
-  category: 'epic',
+  category: '',
   race: 'human',
   group: 'guardsman',
   level: 'II'

@@ -1,5 +1,5 @@
 import { useStackStore } from './stackStore'
-import { BasicUnit, MonsterUnit, Stack, Unit } from './types'
+import { BasicUnit, Stack, Unit } from './types'
 import './armyList.css'
 import { useState } from 'react'
 import { ARMY } from './soldiers'
@@ -381,7 +381,11 @@ export const ArmyList = () => {
     const unitname = unit.name
 
     if (filterTypes.length > 0) {
-      show = filterTypes.includes(unit.category) // melee, ranged, mounted, scout, flying
+      if (unit.category === '') {
+        show = true
+      } else {
+        show = filterTypes.includes(unit.category) // melee, ranged, mounted, scout, flying
+      }
     }
 
     if (!unitname.toLowerCase().includes(search.toLowerCase())) {

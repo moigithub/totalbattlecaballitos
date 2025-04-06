@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'flowbite-react'
+import { Button, Modal, ModalBody, ModalHeader } from 'flowbite-react'
 import { useRef, useState } from 'react'
 
 export const Disclaimer = () => {
@@ -63,7 +63,7 @@ export const Disclaimer = () => {
             className='w-full my-2 relative flex items-center justify-center rounded-lg text-center font-medium focus:outline-none focus:ring-4 h-10 px-5 text-sm text-white hover:bg-pink-800 focus:ring-pink-300 dark:bg-pink-600 dark:hover:bg-pink-700 dark:focus:ring-pink-800  bg-pink-700'
             onClick={() => {
               setOpenModal(false)
-              window.location.replace('https://www.google.com')
+              window.location.replace('https://www.google.com/search?q=cookies+and+candies')
             }}
           >
             I love my cookies and candies, and don't like vegetables
