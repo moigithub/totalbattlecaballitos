@@ -383,15 +383,17 @@ export const Citadels = () => {
             onChange={changeStrBonus}
           />
         </div>
-        <div className='group'>
-          <label>HP bonus </label>
-          <input
-            type='number'
-            className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            value={HPBonus}
-            onChange={changeHPBonus}
-          />
-        </div>
+        {useStackHealthLimit && (
+          <div className='group'>
+            <label>HP bonus </label>
+            <input
+              type='number'
+              className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              value={HPBonus}
+              onChange={changeHPBonus}
+            />
+          </div>
+        )}
 
         <br />
         <div className='group'>
@@ -438,7 +440,7 @@ export const Citadels = () => {
               <th>cat lvl</th>
               <th>amount</th>
               <th>damage</th>
-              <th>health</th>
+              {useStackHealthLimit && <th>health</th>}
             </tr>
           </thead>
           <tbody>
@@ -447,7 +449,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>10. Ariel</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl10}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl10 * cata10.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl10 * cata10.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl10 * cata10.hp)}</td>
+                )}
               </tr>
             )}
             {catasResult.lvl9 > 0 && (
@@ -455,7 +459,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>9. Josephine 2</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl9}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl9 * cata9.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl9 * cata9.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl9 * cata9.hp)}</td>
+                )}
               </tr>
             )}
             {catasResult.lvl8 > 0 && (
@@ -463,7 +469,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>8. Josephine 1</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl8}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl8 * cata8.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl8 * cata8.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl8 * cata8.hp)}</td>
+                )}
               </tr>
             )}
 
@@ -472,7 +480,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>7. Ballistae VII</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl7}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl7 * cata7.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl7 * cata7.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl7 * cata7.hp)}</td>
+                )}
               </tr>
             )}
 
@@ -481,7 +491,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>6. Ballistae VI</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl6}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl6 * cata6.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl6 * cata6.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl6 * cata6.hp)}</td>
+                )}
               </tr>
             )}
 
@@ -490,7 +502,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>5. Cata 5</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl5}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl5 * cata5.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl5 * cata5.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl5 * cata5.hp)}</td>
+                )}
               </tr>
             )}
 
@@ -499,7 +513,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>4</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl4}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl4 * cata4.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl4 * cata4.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl4 * cata4.hp)}</td>
+                )}
               </tr>
             )}
 
@@ -508,7 +524,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>3</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl3}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl3 * cata3.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl3 * cata3.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl3 * cata3.hp)}</td>
+                )}
               </tr>
             )}
 
@@ -517,7 +535,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>2</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl2}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl2 * cata2.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl2 * cata2.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl2 * cata2.hp)}</td>
+                )}
               </tr>
             )}
 
@@ -526,7 +546,9 @@ export const Citadels = () => {
                 <td className='px-1 py-0.5'>1</td>
                 <td className='px-1 py-0.5'>{catasResult.lvl1}</td>
                 <td className='px-1 py-0.5'>{Math.round(catasResult.lvl1 * cata1.str)}</td>
-                <td className='px-1 py-0.5'>{Math.round(catasResult.lvl1 * cata1.hp)}</td>
+                {useStackHealthLimit && (
+                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl1 * cata1.hp)}</td>
+                )}
               </tr>
             )}
 
@@ -534,7 +556,7 @@ export const Citadels = () => {
               <td className='px-1 py-0.5'> </td>
               <td className='px-1 py-0.5'>total dmg</td>
               <td className='px-1 py-0.5'>{totalDmg.toLocaleString()}</td>
-              <td className='px-1 py-0.5'></td>
+              {useStackHealthLimit && <td className='px-1 py-0.5'></td>}
             </tr>
           </tbody>
         </table>
