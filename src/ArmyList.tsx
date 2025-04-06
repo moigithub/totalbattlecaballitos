@@ -270,7 +270,7 @@ export const ArmyList = () => {
       unitType = ARMY.battleBoarIII
     } else if (type === 'emeraldDragonIII') {
       unitType = ARMY.emeraldDragonIII
-    } else if (type === 'stoneGargoleIII') {
+    } else if (type === 'stoneGargoyleIII') {
       unitType = ARMY.stoneGargoyleIII
     } else if (type === 'icePhoenixIV') {
       unitType = ARMY.icePhoenixIV
@@ -284,7 +284,7 @@ export const ArmyList = () => {
       unitType = ARMY.firePhoenixI
     } else if (type === 'firePhoenixII') {
       unitType = ARMY.firePhoenixII
-    } else if (type === 'gorgonMedusa') {
+    } else if (type === 'gorgonMedusaIV') {
       unitType = ARMY.gorgonMedusaIV
     } else if (type === 'fearsomeManticoraV') {
       unitType = ARMY.fearsomeManticoraV
@@ -1450,120 +1450,88 @@ export const ArmyList = () => {
           <div className='monsters'>
             <p className='group-title'>Monsters</p>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.waterElementalIII) &&
-                ARMY.waterElementalIII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.waterElementalIII.category) ||
-                  filterGroups.includes(ARMY.waterElementalIII.group)) &&
-                !selectedStacks.includes(ARMY.waterElementalIII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('waterElementalIII')
-                    }}
-                  >
-                    Water Elemental III
-                  </button>
-                )}
-              {shouldShowMonster(ARMY.battleBoarIII) &&
-                ARMY.battleBoarIII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.battleBoarIII.category) ||
-                  filterGroups.includes(ARMY.battleBoarIII.group)) &&
-                !selectedStacks.includes(ARMY.battleBoarIII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('battleBoarIII')
-                    }}
-                  >
-                    Battle Boar III
-                  </button>
-                )}
-              {shouldShowMonster(ARMY.emeraldDragonIII) &&
-                ARMY.emeraldDragonIII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.emeraldDragonIII.category) ||
-                  filterGroups.includes(ARMY.emeraldDragonIII.group)) &&
-                !selectedStacks.includes(ARMY.emeraldDragonIII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('emeraldDragonIII')
-                    }}
-                  >
-                    Emerald Dragon III
-                  </button>
-                )}
-              {shouldShowMonster(ARMY.stoneGargoyleIII) &&
-                ARMY.stoneGargoyleIII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.stoneGargoyleIII.category) ||
-                  filterGroups.includes(ARMY.stoneGargoyleIII.group)) &&
-                !selectedStacks.includes(ARMY.stoneGargoyleIII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('stoneGargoleIII')
-                    }}
-                  >
-                    Stone Gargole III
-                  </button>
-                )}
+              {shouldShowMonster(ARMY.waterElementalIII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('waterElementalIII')
+                  }}
+                >
+                  Water Elemental III
+                </button>
+              )}
+              {shouldShowMonster(ARMY.battleBoarIII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('battleBoarIII')
+                  }}
+                >
+                  Battle Boar III
+                </button>
+              )}
+              {shouldShowMonster(ARMY.emeraldDragonIII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('emeraldDragonIII')
+                  }}
+                >
+                  Emerald Dragon III
+                </button>
+              )}
+              {shouldShowMonster(ARMY.stoneGargoyleIII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('stoneGargoyleIII')
+                  }}
+                >
+                  Stone Gargole III
+                </button>
+              )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.icePhoenixIV) &&
-                ARMY.icePhoenixIV.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.icePhoenixIV.category) ||
-                  filterGroups.includes(ARMY.icePhoenixIV.group)) &&
-                !selectedStacks.includes(ARMY.icePhoenixIV.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('icePhoenixIV')
-                    }}
-                  >
-                    ice Phoenix IV
-                  </button>
-                )}
-              {shouldShowMonster(ARMY.gorgonMedusaIV) &&
-                ARMY.gorgonMedusaIV.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.gorgonMedusaIV.category) ||
-                  filterGroups.includes(ARMY.gorgonMedusaIV.group)) &&
-                !selectedStacks.includes(ARMY.gorgonMedusaIV.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('gorgonMedusa')
-                    }}
-                  >
-                    gorgon Medusa IV
-                  </button>
-                )}
-              {shouldShowMonster(ARMY.magicDragonIV) &&
-                ARMY.magicDragonIV.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.magicDragonIV.category) ||
-                  filterGroups.includes(ARMY.magicDragonIV.group)) &&
-                !selectedStacks.includes(ARMY.magicDragonIV.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('magicDragonIV')
-                    }}
-                  >
-                    magic Dragon IV
-                  </button>
-                )}
-              {shouldShowMonster(ARMY.manyArmedGuardianIV) &&
-                ARMY.manyArmedGuardianIV.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.manyArmedGuardianIV.category) ||
-                  filterGroups.includes(ARMY.manyArmedGuardianIV.group)) &&
-                !selectedStacks.includes(ARMY.manyArmedGuardianIV.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('manyArmedGuardianIV')
-                    }}
-                  >
-                    many-Armed Guardian IV
-                  </button>
-                )}
+              {shouldShowMonster(ARMY.icePhoenixIV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('icePhoenixIV')
+                  }}
+                >
+                  ice Phoenix IV
+                </button>
+              )}
+              {shouldShowMonster(ARMY.gorgonMedusaIV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('gorgonMedusaIV')
+                  }}
+                >
+                  gorgon Medusa IV
+                </button>
+              )}
+              {shouldShowMonster(ARMY.magicDragonIV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('magicDragonIV')
+                  }}
+                >
+                  magic Dragon IV
+                </button>
+              )}
+              {shouldShowMonster(ARMY.manyArmedGuardianIV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('manyArmedGuardianIV')
+                  }}
+                >
+                  many-Armed Guardian IV
+                </button>
+              )}
             </div>
             <div className='btn-group'>
               {shouldShowMonster(ARMY.flamingCentaurV) && (
@@ -2070,7 +2038,7 @@ export const ArmyList = () => {
                   epicMonsterHunterII
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS1) && (
+              {shouldShow(ARMY.warregalII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2080,7 +2048,7 @@ export const ArmyList = () => {
                   warregalII
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS1) && (
+              {shouldShow(ARMY.demonicSalamanderII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2090,106 +2058,78 @@ export const ArmyList = () => {
                   demonicSalamanderII
                 </button>
               )}
-              {shouldShow(ARMY.SwordmanS1) &&
-                ARMY.slavicWarriorII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.slavicWarriorII.category) ||
-                  filterGroups.includes(ARMY.slavicWarriorII.group)) &&
-                !selectedStacks.includes(ARMY.slavicWarriorII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('slavicWarriorII')
-                    }}
-                  >
-                    slavicWarriorII
-                  </button>
-                )}
+              {shouldShow(ARMY.slavicWarriorII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('slavicWarriorII')
+                  }}
+                >
+                  slavicWarriorII
+                </button>
+              )}
 
-              {shouldShow(ARMY.SwordmanS1) &&
-                ARMY.wardenII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.wardenII.category) ||
-                  filterGroups.includes(ARMY.wardenII.group)) &&
-                !selectedStacks.includes(ARMY.wardenII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('wardenII')
-                    }}
-                  >
-                    wardenII
-                  </button>
-                )}
-              {shouldShow(ARMY.SwordmanS1) &&
-                ARMY.highlanderII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.highlanderII.category) ||
-                  filterGroups.includes(ARMY.highlanderII.group)) &&
-                !selectedStacks.includes(ARMY.highlanderII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('highlanderII')
-                    }}
-                  >
-                    highlanderII
-                  </button>
-                )}
-              {shouldShow(ARMY.SwordmanS1) &&
-                ARMY.galloperII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.galloperII.category) ||
-                  filterGroups.includes(ARMY.galloperII.group)) &&
-                !selectedStacks.includes(ARMY.galloperII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('galloperII')
-                    }}
-                  >
-                    galloperII
-                  </button>
-                )}
-              {shouldShow(ARMY.SwordmanS1) &&
-                ARMY.quicksandII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.quicksandII.category) ||
-                  filterGroups.includes(ARMY.quicksandII.group)) &&
-                !selectedStacks.includes(ARMY.quicksandII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('quicksandII')
-                    }}
-                  >
-                    quicksandII
-                  </button>
-                )}
+              {shouldShow(ARMY.wardenII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('wardenII')
+                  }}
+                >
+                  wardenII
+                </button>
+              )}
+              {shouldShow(ARMY.highlanderII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('highlanderII')
+                  }}
+                >
+                  highlanderII
+                </button>
+              )}
+              {shouldShow(ARMY.galloperII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('galloperII')
+                  }}
+                >
+                  galloperII
+                </button>
+              )}
+              {shouldShow(ARMY.quicksandII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('quicksandII')
+                  }}
+                >
+                  quicksandII
+                </button>
+              )}
 
-              {shouldShow(ARMY.SwordmanS1) &&
-                ARMY.scarfaceII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.scarfaceII.category) ||
-                  filterGroups.includes(ARMY.scarfaceII.group)) &&
-                !selectedStacks.includes(ARMY.scarfaceII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('scarfaceII')
-                    }}
-                  >
-                    scarfaceII
-                  </button>
-                )}
-              {shouldShow(ARMY.SwordmanS1) &&
-                ARMY.pounderII.name.toLowerCase().includes(search.toLowerCase()) &&
-                (filterTypes.includes(ARMY.pounderII.category) ||
-                  filterGroups.includes(ARMY.pounderII.group)) &&
-                !selectedStacks.includes(ARMY.pounderII.name) && (
-                  <button
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops('pounderII')
-                    }}
-                  >
-                    pounderII
-                  </button>
-                )}
+              {shouldShow(ARMY.scarfaceII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('scarfaceII')
+                  }}
+                >
+                  scarfaceII
+                </button>
+              )}
+              {shouldShow(ARMY.pounderII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('pounderII')
+                  }}
+                >
+                  pounderII
+                </button>
+              )}
             </div>
           </div>
         </div>
