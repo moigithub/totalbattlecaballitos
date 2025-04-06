@@ -44,6 +44,7 @@ import {
   prepareArmyData
 } from './helpers'
 import { citadele10, FightStack } from './citadelData.ts'
+import { Tips } from '../tips'
 export interface Result {
   status: number
   msg: string
@@ -1296,28 +1297,7 @@ second REMAINS second
                   />
                 </div>
               </div>
-              <div>
-                <p>whats a gap?</p>
-                <p>
-                  its a space between troops strength, in case a strength percent changes to avoid
-                  loosing the stack order and its calculated based on the first troop stack
-                  strength, the downside is you will have less room for your next troops, because
-                  the max strength of your other troops available would be reduced
-                </p>
-                <p className='bg-green-800 w-fit'>
-                  [army (all troops) max strength_________________________________________]
-                </p>
-                <p className='bg-blue-800 w-fit'>
-                  [first troop]<span className='bg-orange-800 text-white'>[gap 50%______]</span>
-                  [second troop]<span className='bg-orange-800 text-white'>[gap 50%______]</span>
-                  [third troop]
-                </p>
-                <p className='bg-fuchsia-800 w-fit'>
-                  [first troop]<span className='bg-orange-800 text-white'>[gap 10%__]</span>[second
-                  troop____]<span className='bg-orange-800 text-white'>[gap 10%__]</span>[third
-                  troop____]
-                </p>
-              </div>
+              <Tips />
               <div className='btn-group'>
                 <button
                   className='inline-flex text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
