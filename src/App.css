@@ -162,14 +162,19 @@ table th {
     'handle units       atk               atk            unitLimit   reset'
     'handle units       basic             hpBonus        strLimit    config'
     'handle units       healthstrength    strBonus       hpLimit     .'
-    'handle leadership  otherStrength    otherStrength   otherStrength .';
+    'handle leadership  otherStrength     otherStrength  otherStrength .'
+    'handle .           gapSlider         gapSlider      .                .           .';
+
   gap: 8px;
   min-width: 600px;
   width: 100%;
-  border: 1px solid grey;
   margin: 10px 0;
 }
 
+.stack-gap{
+  grid-area: gapSlider;
+
+}
 .stack-units {
   grid-area: units;
 }
@@ -486,7 +491,9 @@ table th {
       'handle units      name            name           hpBonus          action      delete'
       'handle units      atk            atk             strBonus         unitLimit   reset'
       'handle units      basic          basic           otherStrength    strLimit    config'
-      'handle leadership healthstrength healthstrength  otherStrength    hpLimit     .';
+      'handle leadership healthstrength healthstrength  otherStrength    hpLimit     .'
+      'handle .         gapSlider       gapSlider       .                .           .';
+
 
     .stack-name {
       font-size: 1.2rem;

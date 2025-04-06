@@ -150,6 +150,7 @@ export interface Stack {
   leadership: number
   authority: number
   dominance: number
+  gapPercent: number
   unit: Unit
   hpBonus: number
   strBonus: number

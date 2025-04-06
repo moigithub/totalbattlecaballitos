@@ -36,6 +36,7 @@ interface StackStore {
   // getStack: (id: string) => Stack | null
   resetAllStacks: () => void
 
+  setGapPercent: (id: string, value: number) => void
   setHpBonus: (id: string, value: number) => void
   setStrBonus: (id: string, value: number) => void
   toggleUseUnitLimit: (id: string) => void
@@ -287,6 +288,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     //TODO: generate id for each stack
     set(() => ({ army: data }))
   },
+
   addStack: (data: Stack) => {
     set(state => ({ army: [...state.army, data] }))
   },
@@ -351,7 +353,19 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   recalculatePosition: () => {
     set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
   },
-
+  setGapPercent: (id: string, value: number) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return {
+            ...stack,
+            gapPercent: value
+          }
+        }
+        return stack
+      })
+    }))
+  },
   setHpBonus: (id: string, value: number) => {
     set(state => ({
       army: state.army.map(stack => {
@@ -773,9 +787,9 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
 
     // const bonus = get().bonus
     // const totalHPPerUnit = getHPWithBonus(stack.unit, bonus)
-    const totalHPPerUnit =
+    const totalSTRPerUnit =
       stack.strBonus > 0 ? stack.unit.BASESTR * (1 + stack.strBonus / 100) : stack.unit.BASESTR
-    return totalHPPerUnit * stack.unitsAmount
+    return totalSTRPerUnit * stack.unitsAmount
   },
   getStackHealth: (id: string) => {
     // const stack = get().army.find(army => army.position === position)

@@ -336,6 +336,7 @@ export const ArmyList = () => {
       leadership: 0, //RiderG1.LEADERSHIP,
       authority: 0,
       dominance: 0,
+      gapPercent: 100,
       unit: unitType as Unit,
       id: unitType.id,
       unitKey: unitType.id, // key for ARMY object

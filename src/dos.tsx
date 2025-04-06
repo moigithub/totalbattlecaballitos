@@ -83,6 +83,7 @@ function Dos() {
 
   const [cardType, setCardType] = useState('card') // card , smallcard
   const [gapPercent, setGapPercent] = useState(10) // card , smallcard
+  const [gapStrength, setGapStrength] = useState(0)
 
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
@@ -443,10 +444,12 @@ second REMAINS second
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
-            let groupStrength = sacrificeGroupStrength - gapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
+            const finalGapStrength = (gapStrength * ARMY[i - 1].gapPercent) / 100
+
+            let groupStrength = sacrificeGroupStrength - finalGapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
               const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength - gapStrength
+              groupStrength = previousGroupStrength - finalGapStrength
             }
 
             // console.log(
@@ -559,10 +562,11 @@ second REMAINS second
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
-            let groupStrength = sacrificeGroupStrength - gapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
+            const finalGapStrength = (gapStrength * ARMY[i - 1].gapPercent) / 100
+            let groupStrength = sacrificeGroupStrength - finalGapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
               const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength - gapStrength
+              groupStrength = previousGroupStrength - finalGapStrength
             }
 
             if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
@@ -665,10 +669,11 @@ second REMAINS second
             const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
             const newStackStrength = totalSTRPerUnit * unitsCount
 
-            let groupStrength = sacrificeGroupStrength - gapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
+            const finalGapStrength = (gapStrength * ARMY[i - 1].gapPercent) / 100
+            let groupStrength = sacrificeGroupStrength - finalGapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
             if (addUnitMode === 'previousStackStatsLimit') {
               const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength - gapStrength
+              groupStrength = previousGroupStrength - finalGapStrength
             }
 
             if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
@@ -780,6 +785,8 @@ second REMAINS second
 
     // update UI
     setArmy(ARMY)
+
+    setGapStrength((getStackStrength(ARMY, 0) * gapPercent) / 100)
 
     /**********************************************
      * basado en vitalidad
@@ -1332,11 +1339,38 @@ second REMAINS second
             <div className='stack-list'>
               <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
                 <SortableContext items={army}>
-                  {army.map(stack => {
+                  {army.map((stack, i, arr) => {
                     if (cardType === 'smallcard') {
                       return <SmallCard stack={stack} key={stack.id} />
                     } else {
-                      return <Card stack={stack} key={stack.id} />
+                      if (i > 0) {
+                        const stackBonus = stack.strBonus > 0 ? 1 + stack.strBonus / 100 : 1
+                        const stackStr = stack.unit.BASESTR * stackBonus * stack.unitsAmount
+
+                        const prevStack = arr[i - 1]
+                        const prevStackBonus =
+                          prevStack.strBonus > 0 ? 1 + prevStack.strBonus / 100 : 1
+                        const prevStackStr =
+                          prevStack.unit.BASESTR * prevStackBonus * prevStack.unitsAmount
+
+                        return (
+                          <Card
+                            stack={stack}
+                            key={stack.id}
+                            gapValue={gapStrength}
+                            overflow={stackStr > prevStackStr}
+                          />
+                        )
+                      } else {
+                        return (
+                          <Card
+                            stack={stack}
+                            key={stack.id}
+                            gapValue={gapStrength}
+                            overflow={false}
+                          />
+                        )
+                      }
                     }
                   })}
                 </SortableContext>

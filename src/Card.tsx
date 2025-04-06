@@ -4,8 +4,17 @@ import { CSS } from '@dnd-kit/utilities'
 import { useStackStore } from './stackStore'
 import { Stack } from './types'
 import { whoCanIAttack } from './utils'
+import { cn } from './utils'
 
-export const Card = ({ stack }: { stack: Stack }) => {
+export const Card = ({
+  stack,
+  gapValue,
+  overflow
+}: {
+  stack: Stack
+  gapValue: number
+  overflow: boolean
+}) => {
   // const bonus = useStackStore(state => state.bonus)
   // const getArmyLeadership = useStackStore(state => state.getArmyLeadership)
   // const updateMinSetup = useStackStore(state => state.updateMinSetup)
@@ -29,10 +38,12 @@ export const Card = ({ stack }: { stack: Stack }) => {
   const getStackStrength = useStackStore(state => state.getStackStrength)
   const getStackAllStrength = useStackStore(state => state.getStackAllStrength)
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stack.id })
+  const setGapPercent = useStackStore(state => state.setGapPercent)
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition
+    transition,
+    marginBottom: `${stack.gapPercent / 5}px`
   }
 
   const unitHealth = stack.unit.BASEHP * (1 + stack.hpBonus / 100)
@@ -50,7 +61,11 @@ export const Card = ({ stack }: { stack: Stack }) => {
   const strBonusOptions = stackAllStrength.map(data => data.type)
 
   return (
-    <div className='stack-card' ref={setNodeRef} style={style}>
+    <div
+      className={cn('stack-card', overflow ? 'border-red-600 border-3' : 'border border-gray-500 ')}
+      ref={setNodeRef}
+      style={style}
+    >
       <div
         className='handle w-full h-full mr-1 cursor-pointer select-none touch-none relative'
         {...attributes}
@@ -260,6 +275,30 @@ export const Card = ({ stack }: { stack: Stack }) => {
         </span>
       </div>
       {/* <span className='stack-id tiny'>(id.{stack.id})</span> */}
+
+      <div className='stack-gap relative mb-6'>
+        <label htmlFor='labels-range-input' className='sr-only'>
+          Gap %
+        </label>
+        <input
+          id='labels-range-input'
+          className='w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
+          type='range'
+          value={stack.gapPercent}
+          min='0'
+          max='100'
+          onChange={e => {
+            setGapPercent(stack.id!, parseInt(e.target.value))
+          }}
+        />
+        <span className='text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6'>
+          No gap
+        </span>
+
+        <span className='text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6'>
+          Max ({gapValue})
+        </span>
+      </div>
     </div>
   )
 }

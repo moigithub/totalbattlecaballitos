@@ -1,3 +1,6 @@
+import { ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
 import { EnemyUnit } from './monsters'
 import { MercUnit, Unit } from './types'
 
@@ -52,4 +55,9 @@ export const getStrWithExtraBonus = (
   const bonusSTR = (unit.BASESTR * (extraPercent + strBonus)) / 100
   const totalSTRPerUnit = unit.BASESTR + bonusSTR
   return totalSTRPerUnit
+}
+
+//---------------------------
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs))
 }
