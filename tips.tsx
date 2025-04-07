@@ -23,7 +23,7 @@ export const Tips = () => {
   return (
     <div className='w-full p-4 bg-gray-800 flex flex-col items-start'>
       <button
-        className='bg-purple-700 text-white px-1 py-2 rounded-lg mt-4 self-end'
+        className='bg-purple-700 text-white px-1 py-0.5 rounded-lg self-end'
         onClick={() => setWichTip(wichTip => (wichTip + 1) % (myMax + 1))}
       >
         Next tip
