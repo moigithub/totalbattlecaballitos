@@ -22,9 +22,7 @@ interface Specialist extends UnitStats {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface Mercs extends UnitStats {
-  epic: BasicStats
-}
+interface Mercs extends UnitStats {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface Monster extends UnitStats {}
@@ -40,15 +38,6 @@ export interface Bonus {
   // [key: string]: Guardsman | Specialist | Engineer | Monster
 }
 
-export type TroopType =
-  | 'monster'
-  | 'archer'
-  | 'spearman'
-  | 'rider'
-  | 'spy'
-  | 'swordsman'
-  | 'catapult'
-
 export type Category =
   | 'mounted'
   | 'ranged'
@@ -57,14 +46,15 @@ export type Category =
   | 'flying'
   // | 'fortification'
   | 'siege'
+  | '' //mercenaries dont have
 
-export type Group = 'guardsman' | 'specialist' | 'engineer' | 'monster'
-
-export type Race = 'human' | 'beast' | 'elemental' | 'dragon' | 'giant'
+export type Group = 'mercs' | 'guardsman' | 'specialist' | 'engineer' | 'monster'
+export type SubGroup = '' | 'beast' | 'elemental' | 'dragon' | 'giant'
+export type Clasification = 'merc' | 'army' | 'monster'
 
 export interface BasicUnit {
   id: string
-  clasification: string
+  clasification: Clasification // army,merc,monster (para saber si es leadership,authority,dominance)
   name: string
   BASEHP: number
   BASESTR: number
@@ -85,10 +75,10 @@ export interface BasicUnit {
   vsEpicPercent: number
   vsElementalPercent: number
   vsDragonPercent: number
-  troop: string
-  category: string // melee, ranged,mounted,flying,| epic|scout|siege
-  race: string // 'human' | 'beast'| monster
-  group: string // 'guardsman' specialist engineer| 'elemental' | 'dragon' | 'beast' | 'giant'
+  // troop: string // creo q lo voy a borrar
+  category: Category // melee, ranged,mounted,flying,| scout|siege
+  group: Group // 'guardsman' specialist engineer| 'elemental' | 'dragon' | 'beast' | 'giant'
+  subGroup: SubGroup
   level: string
 }
 
@@ -133,7 +123,8 @@ export interface MonsterUnit extends BasicUnit {
   DOMINANCE: number
   AUTHORITY: 0
   LEADERSHIP: 0
-  group: 'elemental' | 'dragon' | 'beast' | 'giant'
+  group: 'monster'
+  subgroup: 'elemental' | 'dragon' | 'beast' | 'giant'
   race: 'monster'
   clasification: 'monster'
   category: keyof Monster

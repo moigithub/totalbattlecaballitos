@@ -135,88 +135,6 @@ function Dos() {
     }
   }
 
-  // const calculateUnitsMobKill = (monster: EnemyUnit, unit: Unit): number => {
-  //   const monsterHealth = monster.BASEHP
-  //   let soldierStrength = unit.BASESTR
-
-  //   // mounted vs ranged
-  //   const stats = getStats(unit, bonus)
-
-  //   const otherBonus = stats?.str ?? 0
-
-  //   if (unit.category === 'mounted') {
-  //     if (monster.category === 'ranged') {
-  //       const strBonus = ((otherBonus + unit.vsRangedPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     } else if (monster.category === 'siege') {
-  //       const strBonus = ((otherBonus + unit.vsSiegePercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     }
-  //   } else if (unit.category === 'ranged') {
-  //     if (monster.category === 'flying') {
-  //       const strBonus = ((otherBonus + unit.vsFlyingPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     } else if (monster.category === 'melee') {
-  //       const strBonus = ((otherBonus + unit.vsMeleePercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     }
-  //   } else if (unit.category === 'melee') {
-  //     if (monster.category === 'mounted') {
-  //       const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     } else if (monster.race === 'beast') {
-  //       const strBonus = ((otherBonus + unit.vsBeastPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     }
-  //   } else if (unit.category === 'flying') {
-  //     if (monster.category === 'mounted') {
-  //       const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     } else if (monster.race === 'giant') {
-  //       const strBonus = ((otherBonus + unit.vsGiantPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     }
-  //   }
-
-  //   if (unit.group === 'elemental') {
-  //     if (monster.category === 'flying') {
-  //       const strBonus = ((otherBonus + unit.vsFlyingPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     } else if (monster.category === 'melee') {
-  //       const strBonus = ((otherBonus + unit.vsGiantPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     }
-  //   } else if (unit.group === 'giant') {
-  //     if (monster.category === 'melee') {
-  //       const strBonus = ((otherBonus + unit.vsMeleePercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     } else if (monster.race === 'beast') {
-  //       const strBonus = ((otherBonus + unit.vsBeastPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     }
-  //   } else if (unit.group === 'dragon') {
-  //     if (monster.category === 'mounted') {
-  //       const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     } else if (monster.race === 'giant') {
-  //       const strBonus = ((otherBonus + unit.vsGiantPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     }
-  //   } else if (unit.group === 'beast') {
-  //     if (monster.category === 'mounted') {
-  //       const strBonus = ((otherBonus + unit.vsMountedPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     } else if (monster.category === 'ranged') {
-  //       const strBonus = ((otherBonus + unit.vsRangedPercent) * unit.BASESTR) / 100
-  //       soldierStrength = unit.BASESTR + strBonus
-  //     }
-  //   }
-
-  //   console.log('MINSETUP', { monsterHealth, soldierStrength, unit, monster })
-  //   // retorna el num de soldados minimo que se necesita para matar un monstruo
-  //   return Math.ceil(monsterHealth / soldierStrength)
-  // }
-
   const calcSTR = () => {
     //https://www.youtube.com/watch?app=desktop&v=8rdVjHNRXn0
     // according to youtube video, the squad with highest strength attack first
@@ -844,8 +762,8 @@ second REMAINS second
       if (
         army[i].unit.category !== 'mounted' &&
         army[i].unit.category !== 'melee' &&
-        army[i].unit.group !== 'dragon' &&
-        army[i].unit.group !== 'elemental'
+        army[i].unit.subGroup !== 'dragon' &&
+        army[i].unit.subGroup !== 'elemental'
       ) {
         checkResult.push({ status: 1, msg: `Stack ${i} : troop type GOOD!` })
       } else {
@@ -865,7 +783,7 @@ second REMAINS second
       enemyFirstStackStrength =
         enemyFirstStackStrength * (1 + citadele10.stacks[0].unit.vsMountedPercent / 100)
     }
-    if (army[0].unit.group === 'elemental') {
+    if (army[0].unit.subGroup === 'elemental') {
       enemyFirstStackStrength =
         enemyFirstStackStrength * (1 + citadele10.stacks[0].unit.vsElementalPercent / 100)
     }
@@ -888,7 +806,7 @@ second REMAINS second
       enemySecondStackStrength =
         enemySecondStackStrength * (1 + citadele10.stacks[1].unit.vsMeleePercent / 100)
     }
-    if (army[0].unit.group === 'dragon') {
+    if (army[0].unit.subGroup === 'dragon') {
       enemySecondStackStrength =
         enemySecondStackStrength * (1 + citadele10.stacks[1].unit.vsDragonPercent / 100)
     }

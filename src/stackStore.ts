@@ -2,7 +2,7 @@ import { create, StateCreator } from 'zustand'
 import { MobStack } from './monsters'
 import { devtools, persist } from 'zustand/middleware'
 import { BasicStats, Bonus, Stack, Unit } from './types'
-import { getStrWithExtraBonus, whoCanIAttack } from './utils'
+// import { getStrWithExtraBonus, whoCanIAttack } from './utils'
 import { hashStorage } from '@/hashStore'
 import { createDebouncedJSONStorage } from 'zustand-debounce'
 import { getStrengthWithBonus } from './helpers'
@@ -60,7 +60,7 @@ interface StackStore {
   removeUnits: (id: string, amount: number) => void
 
   // fixStackUnits: (id: string, maxHealth: number) => void
-  calcWhichMobIDoMostDmg: (id: string) => MobStack
+  // calcWhichMobIDoMostDmg: (id: string) => MobStack
   getStackStrength: (id: string) => number
   getStackAllStrength: (id: string) => [] | { type: string; percent: number; str: number }[]
   getStackHealth: (id: string) => number
@@ -93,49 +93,6 @@ interface StackStore {
   setGiantMeleeBonus: (bonus: BasicStats) => void
   setGiantMountedBonus: (bonus: BasicStats) => void
   setGiantFlyingBonus: (bonus: BasicStats) => void
-}
-
-export const getStats = (unit: Unit, bonus: Bonus) => {
-  // let stats: BasicStats = { str: 0, hp: 0 }
-  let stats: BasicStats = { str: 0, hp: 0 } //bonus[unit.group] [unit.category]
-
-  if (unit.group === 'guardsman' && unit.race === 'human' && unit.clasification === 'merc') {
-    stats = bonus.guardsman[unit.category]
-  } else if (unit.group === 'guardsman' && unit.race === 'human' && unit.clasification === 'army') {
-    stats = bonus.guardsman[unit.category]
-  } else if (unit.group === 'specialist' && unit.race === 'human') {
-    stats = bonus.specialist[unit.category]
-  } else if (unit.group === 'engineer' && unit.race === 'human') {
-    stats = bonus.engineer[unit.category]
-  } else if (unit.race === 'monster' && unit.group === 'elemental') {
-    stats = bonus.elemental[unit.category]
-  } else if (unit.race === 'monster' && unit.group === 'dragon') {
-    stats = bonus.dragon[unit.category]
-  } else if (unit.race === 'monster' && unit.group === 'beast') {
-    stats = bonus.beast[unit.category]
-  } else if (unit.race === 'monster' && unit.group === 'giant') {
-    stats = bonus.giant[unit.category]
-  }
-
-  return stats
-}
-
-export const getHPWithBonus = (unit: Unit, bonus: Bonus) => {
-  const stats = getStats(unit, bonus)
-  const bonusHP = stats?.hp ?? 0
-  const bonusHPPercent = (unit.BASEHP * bonusHP) / 100
-  const totalHPPerUnit = unit.BASEHP + bonusHPPercent
-
-  return totalHPPerUnit
-}
-
-export const getSTRWithBonus = (unit: Unit, bonus: Bonus) => {
-  const stats = getStats(unit, bonus)
-  const bonusSTR = stats?.str ?? 0
-  const bonusSTRPercent = (unit.BASESTR * bonusSTR) / 100
-  const totalHPPerUnit = unit.BASESTR + bonusSTRPercent
-
-  return totalHPPerUnit
 }
 
 const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> = (set, get) => ({
@@ -558,219 +515,6 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     }))
   },
 
-  // fixStackUnits: (id: string, maxHealth: number) => {
-  //   set(state => ({
-  //     army: state.army.map(stack => {
-  //       if (stack.id === id) {
-  //         // reduce the units amount, so the total stack health is lower than maxHealth
-  //         let stackUnits = stack.units
-
-  //         const totalHPPerUnit = getHPWithBonus(stack.unit, state.bonus)
-  //         let stackHealth = totalHPPerUnit * stackUnits
-  //         while (stackHealth >= maxHealth && stackUnits > 0) {
-  //           stackUnits = stackUnits - 1
-  //           stackHealth = totalHPPerUnit * stackUnits
-  //         }
-  //         return { ...stack, units: stackUnits }
-  //       } else return stack
-  //     })
-  //   }))
-  // },
-  calcWhichMobIDoMostDmg: (id: string) => {
-    /* calc the strength vs all the posibles monsters it can attack
-    ie: melee can attack beast and mounted
-
-    which can have the highest damage possible
-    ie.
-    dmgVsBeast = stackStr + vsBeastPercentBonus *units
-    dmgVsMounted = stackStr + vsMountedPercentBonus *units
-    if (dmgVsBeast > dmgVsMounted) mobToAttack = beast
-    else mobToAttack = mounted
-
-    BUT... if the target mob health is lower then your damage it should switch to the mob
-    where you can do most dmg
-
-    if beastStackTotalHealth < dmgVsBeast and dmgVsMounted>= mountedStackTotalHealth
-      mobToattack = mounted
-    */
-    const stack = get().army.find(army => army.id === id)
-    const bonus = get().bonus
-    const mobArmy = get().mobArmy
-    const mobListToAttack = []
-
-    if (stack) {
-      const stackUnits = stack.unitsAmount
-      const unit = stack.unit
-      const targets = whoCanIAttack(unit)
-
-      const stats = getStats(unit, bonus)
-
-      const strBonus = stats?.str ?? 0
-
-      // siege,fortification and human not gonna do it,
-      // events like doomsday, etc dont have them
-
-      if (targets.includes('Ranged')) {
-        // mounted vs ranged and siege
-        // check if mobstack have some riders
-        const monster = mobArmy.find(mobStack => mobStack.unit.category === 'ranged')
-
-        if (monster) {
-          const percent = stack.unit.vsRangedPercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-      if (targets.includes('Mounted')) {
-        const monster = mobArmy.find(mobStack => mobStack.unit.category === 'mounted')
-        if (monster) {
-          const percent = stack.unit.vsMountedPercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-
-      if (targets.includes('Flying')) {
-        /* ranged vs melee and flying  */
-        const monster = mobArmy.find(mobStack => mobStack.unit.category === 'flying')
-
-        if (monster) {
-          const percent = stack.unit.vsFlyingPercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-
-      if (targets.includes('Melee')) {
-        const monster = mobArmy.find(mobStack => mobStack.unit.category === 'melee')
-
-        if (monster) {
-          const percent = stack.unit.vsMeleePercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-
-      if (targets.includes('Beast')) {
-        const monster = mobArmy.find(mobStack => mobStack.unit.race === 'beast')
-        if (monster) {
-          const percent = stack.unit.vsBeastPercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-
-      if (targets.includes('Giant')) {
-        const monster = mobArmy.find(mobStack => mobStack.unit.race === 'giant')
-        if (monster) {
-          const percent = stack.unit.vsGiantPercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-
-      if (targets.includes('Elemental')) {
-        const monster = mobArmy.find(mobStack => mobStack.unit.race === 'elemental')
-        if (monster) {
-          const percent = stack.unit.vsElementalPercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-
-      if (targets.includes('Dragon')) {
-        const monster = mobArmy.find(mobStack => mobStack.unit.race === 'dragon')
-        if (monster) {
-          const percent = stack.unit.vsDragonPercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-
-      if (targets.includes('Epic')) {
-        const monster = mobArmy.find(mobStack => mobStack.unit.group === 'epic')
-        if (monster) {
-          const percent = stack.unit.vsEpicPercent
-          const damage = getStrWithExtraBonus(unit, strBonus, percent) * stackUnits
-
-          const stackHealth = monster.unit.BASEHP * monster.units
-          mobListToAttack.push({
-            monsterToAttack: monster,
-            damage,
-            stackHealth,
-            hpLeft: stackHealth - damage
-          })
-        }
-      }
-    }
-
-    // having a monsterListtoAttack (array)
-    // check a quien le hago mas daño, y si su hp disponible, es menor que el daño
-
-    // filtrar/quitar los negativos
-    // ordenar a lista de menor a mayor
-    // retornar el primero de la lista
-    const mob = mobListToAttack
-      .filter(mobStack => mobStack.hpLeft >= 0)
-      .sort((a, b) => a.hpLeft - b.hpLeft) //ascending
-
-    // si hay algun mob que le quede hp, para tomar el dmg
-    if (mob.length > 0) {
-      return mob[0].monsterToAttack
-    } else {
-      //sino retornar el primero
-      return mobListToAttack[0].monsterToAttack
-    }
-  },
   getStackAllStrength: (id: string) => {
     // return a list of the stack strength with bonus
     const stack = get().army.find(army => army.id === id)
