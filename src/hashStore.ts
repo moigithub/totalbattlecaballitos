@@ -4,6 +4,7 @@ export const hashStorage: StateStorage = {
   getItem: (key): string => {
     const searchParams = new URLSearchParams(location.hash.slice(1))
     const value = searchParams.get(key)
+
     // Helper function to decode the hash
     return decodeHash(String(value))
   },
@@ -13,6 +14,9 @@ export const hashStorage: StateStorage = {
     const encodedValue = encodeHash(newValue)
     searchParams.set(key, encodedValue)
     location.hash = searchParams.toString()
+
+    // also save it on localstorage
+    localStorage.setItem('tbcalc', decodeURIComponent(searchParams.toString()))
   },
   removeItem: (key): void => {
     const searchParams = new URLSearchParams(location.hash.slice(1))

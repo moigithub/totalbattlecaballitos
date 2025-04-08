@@ -2,8 +2,49 @@ import { Outlet, NavLink } from 'react-router-dom'
 
 import './App.css'
 import { Disclaimer } from './disclaimer'
+import { useEffect } from 'react'
+import { decodeHash } from './hashStore'
+import { useStackStore } from './stackStore'
+import { ARMY } from './soldiers'
+import { Stack, Unit } from './types'
 
 function App() {
+  const setArmy = useStackStore(state => state.setArmy)
+  const setLeadership = useStackStore(state => state.setLeadership)
+  const setAuthority = useStackStore(state => state.setAuthority)
+  const setDominance = useStackStore(state => state.setDominance)
+
+  useEffect(() => {
+    const locaHash = location.hash
+    if (locaHash === '') {
+      //check if we have anything on localstorage
+      const storedValue = localStorage.getItem('tbcalc')
+      if (storedValue) {
+        //replace the current hash with the stored value
+        //location.hash = storedValue
+        const searchParams = new URLSearchParams(storedValue)
+        const value = searchParams.get('stacks')
+
+        // Helper function to decode the hash
+        const data = decodeHash(String(value))
+        const parsed = JSON.parse(data)
+        // console.log('parsed', parsed)
+        setArmy(
+          (parsed.state.army as Stack[]).map(stack => {
+            const unit = ARMY[stack.unitKey as string] as Unit
+            return {
+              ...stack,
+              unit
+            }
+          })
+        )
+        setLeadership(parsed.state.leadership)
+        setAuthority(parsed.state.authority)
+        setDominance(parsed.state.dominance)
+      }
+    }
+  }, [])
+
   return (
     <>
       <nav className='bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600'>

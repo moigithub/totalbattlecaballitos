@@ -77,18 +77,8 @@ table th {
 
 .config-container {
   grid-area: config;
-  display: flex;
-  flex-wrap: wrap;
-
-  column-gap: 2rem;
 }
 
-.configbar {
-  margin: 0;
-  .card {
-    margin-left: 1rem;
-  }
-}
 
 /* .stack-army {
   grid-area: content;
@@ -358,37 +348,6 @@ table th {
 
 /* ----------------- */
 
-.mob-container {
-  grid-area: content;
-
-  width: 100%;
-  height: 100%;
-  margin-top: 1rem;
-  overflow-y: auto;
-
-  .mob-army-stack {
-    padding: 1rem;
-    border: 1px solid green;
-    margin: 8px 0;
-
-    .name {
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    .units {
-      color: brown;
-    }
-
-    .hp {
-      color: gray;
-    }
-  }
-}
-.bonus-container {
-  grid-area: content;
-  overflow-y: auto;
-}
 
 /* ----------------- */
 .btn-group {
@@ -396,15 +355,6 @@ table th {
   flex-wrap: wrap;
 }
 
-.gobtn {
-  margin: auto;
-  background-color: darkblue;
-  color: white;
-  font-weight: bold;
-  flex-grow: 1;
-  height: 40px;
-  cursor: pointer;
-}
 
 .btn-clear-army {
   background-color: purple;
@@ -517,9 +467,7 @@ table th {
     display: block;
   }
 
-  .gobtn {
-    height: 48px;
-  }
+
 }
 
 .vsMounted,
