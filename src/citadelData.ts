@@ -1,9 +1,14 @@
-interface ObjProps {
+import { Category, Group, SubGroup } from './types'
+
+export interface ObjProps {
   name: string
-  category: string // melee, beast,ranged, elemental, etc
+  category: Category // melee, ranged,mounted,flying,| scout|siege
+  group: Group // 'guardsman' specialist engineer mercs
+  subGroup: SubGroup //'elemental' | 'dragon' | 'beast' | 'giant'
   BASESTR: number
   BASEHP: number
   strBonus?: number
+  hpBonus?: number
   multiplier: number // para las catapultas que tienen x 20
   vsRangedPercent: number
   vsSiegePercent: number
@@ -27,9 +32,9 @@ export interface FightStack {
 }
 
 export interface Citadel {
-  walls: {
-    hp: number
-  }
+  // walls: {
+  //   hp: number
+  // }
   stacks: FightStack[]
 }
 
@@ -37,6 +42,8 @@ const objBuilder = (props: Partial<ObjProps>): ObjProps => {
   return {
     name: 'name',
     category: '',
+    group: 'enemy',
+    subGroup: '',
     BASESTR: 0,
     BASEHP: 0,
     multiplier: 1,
@@ -60,7 +67,8 @@ const objectDB: Record<string, ObjProps> = {}
 
 objectDB.bearV = objBuilder({
   name: 'Bear V',
-  category: 'beast, melee',
+  category: 'melee',
+  subGroup: 'beast',
   BASESTR: 22000,
   BASEHP: 66000,
   vsMountedPercent: 70,
@@ -117,7 +125,8 @@ objectDB.dwarf = objBuilder({
 
 objectDB.entVI = objBuilder({
   name: 'Ent VI',
-  category: 'elemental, melee',
+  category: 'melee',
+  subGroup: 'elemental',
   BASESTR: 73000,
   BASEHP: 219000,
   vsRangedPercent: 55,
@@ -125,7 +134,8 @@ objectDB.entVI = objBuilder({
 })
 objectDB.lifeDragonVII = objBuilder({
   name: 'Life dragon VII',
-  category: 'dragon, flying',
+  category: 'flying',
+  subGroup: 'dragon',
   BASESTR: 240000,
   BASEHP: 720000,
   vsMountedPercent: 60,
@@ -133,7 +143,8 @@ objectDB.lifeDragonVII = objBuilder({
 })
 objectDB.cursedDragonVII = objBuilder({
   name: 'Cursed dragon VII',
-  category: 'dragon, flying',
+  category: 'flying',
+  subGroup: 'dragon',
   BASESTR: 320000,
   BASEHP: 960000,
   vsMountedPercent: 50,
@@ -141,7 +152,8 @@ objectDB.cursedDragonVII = objBuilder({
 })
 objectDB.giantZombieV = objBuilder({
   name: 'Giant zombie V',
-  category: 'giant, melee',
+  category: 'melee',
+  subGroup: 'giant',
   BASESTR: 33000,
   BASEHP: 99000,
   vsMountedPercent: 70,
@@ -163,14 +175,16 @@ objectDB.bullRiderV = objBuilder({
 })
 objectDB.wereWolfII = objBuilder({
   name: 'WereWolf II',
-  category: 'beast, melee',
+  category: 'melee',
+  subGroup: 'beast',
   BASESTR: 360,
   BASEHP: 1080,
   vsMountedPercent: 65
 })
 objectDB.cursedDendroidVI = objBuilder({
   name: 'Cursed dendroid VI',
-  category: 'elemental, melee',
+  category: 'melee',
+  subGroup: 'elemental',
   BASESTR: 110000,
   BASEHP: 330000,
   vsRangedPercent: 55,
@@ -186,8 +200,8 @@ objectDB.walls = objBuilder({
   vsMountedPercent: 100
 })
 export const citadele10: Citadel = {
-  walls: { hp: 90 * 30_000 },
   stacks: [
+    { unit: objectDB.walls, unitsAmount: 90, damage: 0, turn: 0 },
     {
       unit: objectDB.bearV,
       unitsAmount: 9,
@@ -222,8 +236,10 @@ export const citadele10: Citadel = {
 }
 
 export const citadele15: Citadel = {
-  walls: { hp: 700 * 30_000 },
+  // walls: { hp: 700 * 30_000 },
   stacks: [
+    { unit: objectDB.walls, unitsAmount: 700, damage: 0, turn: 0 },
+
     {
       unit: objectDB.entVI,
       unitsAmount: 21,
@@ -258,8 +274,9 @@ export const citadele15: Citadel = {
 }
 
 export const citadele20: Citadel = {
-  walls: { hp: 3650 * 30_000 },
+  // walls: { hp: 3650 * 30_000 },
   stacks: [
+    { unit: objectDB.walls, unitsAmount: 3650, damage: 0, turn: 0 },
     {
       unit: objectDB.lifeDragonVII,
       unitsAmount: 41,
@@ -293,8 +310,9 @@ export const citadele20: Citadel = {
   ]
 }
 export const citadele25: Citadel = {
-  walls: { hp: 31900 * 30_000 },
+  // walls: { hp: 31900 * 30_000 },
   stacks: [
+    { unit: objectDB.walls, unitsAmount: 31900, damage: 0, turn: 0 },
     {
       unit: objectDB.lifeDragonVII,
       unitsAmount: 480,
@@ -329,8 +347,9 @@ export const citadele25: Citadel = {
 }
 
 export const citadele30: Citadel = {
-  walls: { hp: 135000 * 30_000 },
+  // walls: { hp: 135000 * 30_000 },
   stacks: [
+    { unit: objectDB.walls, unitsAmount: 135000, damage: 0, turn: 0 },
     {
       unit: objectDB.lifeDragonVII,
       unitsAmount: 2300,
@@ -365,8 +384,9 @@ export const citadele30: Citadel = {
 }
 
 export const citadelc20: Citadel = {
-  walls: { hp: 9200 * 30_000 },
+  // walls: { hp: 9200 * 30_000 },
   stacks: [
+    { unit: objectDB.walls, unitsAmount: 9200, damage: 0, turn: 0 },
     {
       unit: objectDB.cursedDragonVII,
       unitsAmount: 10,
@@ -400,8 +420,9 @@ export const citadelc20: Citadel = {
   ]
 }
 export const citadelc25: Citadel = {
-  walls: { hp: 77500 * 30_000 },
+  // walls: { hp: 77500 * 30_000 },
   stacks: [
+    { unit: objectDB.walls, unitsAmount: 77500, damage: 0, turn: 0 },
     {
       unit: objectDB.cursedDragonVII,
       unitsAmount: 120,

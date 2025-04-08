@@ -1998,7 +1998,7 @@ const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
   // troop: 'merc',
   category: '', // //
   // race: 'human',
-  group: 'guardsman',
+  group: 'mercs',
   level: '6'
 })
 
@@ -2014,7 +2014,7 @@ const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
   // troop: 'merc',
   category: '', //
   // race: 'human',
-  group: 'guardsman',
+  group: 'mercs',
   level: '7'
 })
 const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
@@ -2029,7 +2029,7 @@ const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
   // troop: 'merc',
   category: '', //
   // race: 'human',
-  group: 'guardsman',
+  group: 'mercs',
   level: '9'
 })
 

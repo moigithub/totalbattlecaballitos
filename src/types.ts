@@ -44,11 +44,11 @@ export type Category =
   | 'melee'
   | 'scout'
   | 'flying'
-  // | 'fortification'
+  | 'fortification'
   | 'siege'
   | '' //mercenaries dont have
 
-export type Group = 'mercs' | 'guardsman' | 'specialist' | 'engineer' | 'monster'
+export type Group = 'enemy' | 'mercs' | 'guardsman' | 'specialist' | 'engineer' | 'monster'
 export type SubGroup = '' | 'beast' | 'elemental' | 'dragon' | 'giant'
 export type Clasification = 'merc' | 'army' | 'monster'
 
@@ -77,8 +77,8 @@ export interface BasicUnit {
   vsDragonPercent: number
   // troop: string // creo q lo voy a borrar
   category: Category // melee, ranged,mounted,flying,| scout|siege
-  group: Group // 'guardsman' specialist engineer| 'elemental' | 'dragon' | 'beast' | 'giant'
-  subGroup: SubGroup
+  group: Group // 'guardsman' specialist engineer mercs
+  subGroup: SubGroup //'elemental' | 'dragon' | 'beast' | 'giant'
   level: string
 }
 

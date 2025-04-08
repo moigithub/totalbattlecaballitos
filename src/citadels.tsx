@@ -167,10 +167,16 @@ export const Citadels = () => {
     let acumDmg = 0
     // console.log('selectedCatapultLevel', selectedCatapultLevel)
 
+    const walls = citadel.stacks.filter(stack => stack.unit.category === 'fortification')
+    let wallsHealth = 0
+    if (walls.length > 0) {
+      wallsHealth = walls[0].unit.BASEHP * walls[0].unitsAmount
+    }
+
     if (selectedCatapultLevel >= 10) {
       //arielII merc
 
-      while (acumDmg + cata10count * cata10.str <= citadel.walls.hp) {
+      while (acumDmg + cata10count * cata10.str <= wallsHealth) {
         cata10count++
         if (useStackHealthLimit && (cata10count + 1) * cata10.hp >= cataMaxHealth) {
           break
@@ -185,7 +191,8 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 9) {
       //add many cat5 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata9count * cata9.str <= citadel.walls.hp) {
+
+      while (acumDmg + cata9count * cata9.str <= wallsHealth) {
         cata9count++
         if (useStackHealthLimit && (cata9count + 1) * cata9.hp >= cataMaxHealth) {
           break
@@ -200,7 +207,8 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 8) {
       //add many cat5 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata8count * cata8.str <= citadel.walls.hp) {
+
+      while (acumDmg + cata8count * cata8.str <= wallsHealth) {
         cata8count++
         if (useStackHealthLimit && (cata8count + 1) * cata8.hp >= cataMaxHealth) {
           break
@@ -215,7 +223,8 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 7) {
       //add many cat5 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata7count * cata7.str <= citadel.walls.hp) {
+
+      while (acumDmg + cata7count * cata7.str <= wallsHealth) {
         cata7count++
         if (useStackHealthLimit && (cata7count + 1) * cata7.hp >= cataMaxHealth) {
           break
@@ -230,7 +239,7 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 6) {
       //add many cat5 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata6count * cata6.str <= citadel.walls.hp) {
+      while (acumDmg + cata6count * cata6.str <= wallsHealth) {
         cata6count++
         if (useStackHealthLimit && (cata6count + 1) * cata6.hp >= cataMaxHealth) {
           break
@@ -245,7 +254,7 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 5) {
       //add many cat5 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata5count * cata5.str <= citadel.walls.hp) {
+      while (acumDmg + cata5count * cata5.str <= wallsHealth) {
         cata5count++
         if (useStackHealthLimit && (cata5count + 1) * cata5.hp >= cataMaxHealth) {
           break
@@ -260,7 +269,7 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 4) {
       //add many cat4 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata4count * cata4.str <= citadel.walls.hp) {
+      while (acumDmg + cata4count * cata4.str <= wallsHealth) {
         cata4count++
         if (useStackHealthLimit && (cata4count + 1) * cata4.hp >= cataMaxHealth) {
           break
@@ -274,7 +283,7 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 3) {
       //add many cat3 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata3count * cata3.str <= citadel.walls.hp) {
+      while (acumDmg + cata3count * cata3.str <= wallsHealth) {
         cata3count++
         if (useStackHealthLimit && (cata3count + 1) * cata3.hp >= cataMaxHealth) {
           break
@@ -286,7 +295,7 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 2) {
       //add many cat2 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata2count * cata2.str <= citadel.walls.hp) {
+      while (acumDmg + cata2count * cata2.str <= wallsHealth) {
         cata2count++
         if (useStackHealthLimit && (cata2count + 1) * cata2.hp >= cataMaxHealth) {
           break
@@ -298,7 +307,7 @@ export const Citadels = () => {
     if (selectedCatapultLevel >= 1) {
       //add many cat1 until cata dmg >= walls.hp
       // and cata.stack.hp <= centaur.dmg
-      while (acumDmg + cata1count * cata1.str <= citadel.walls.hp) {
+      while (acumDmg + cata1count * cata1.str <= wallsHealth) {
         cata1count++
         if (useStackHealthLimit && (cata1count + 1) * cata1.hp >= cataMaxHealth) {
           break
@@ -335,6 +344,13 @@ export const Citadels = () => {
     catasResult.lvl2 * cata2.str +
     catasResult.lvl1 * cata1.str
   // console.log('walls hp', citadel.walls.hp.toLocaleString())
+
+  const walls = citadel.stacks.filter(stack => stack.unit.category === 'fortification')
+  let wallsHealth = 0
+  if (walls.length > 0) {
+    wallsHealth = walls[0].unit.BASEHP * walls[0].unitsAmount
+  }
+
   return (
     <div className='p-2 pt-[56px]'>
       <form className='max-w-xs '>
@@ -562,9 +578,9 @@ export const Citadels = () => {
         </table>
 
         <h2 className='text-lg font-bold'>
-          Citadel walls health {citadel.walls.hp.toLocaleString().replace(/,/g, '_')}
+          Citadel walls health {wallsHealth.toLocaleString().replace(/,/g, '_')}
         </h2>
-        {totalDmg < citadel.walls.hp && (
+        {totalDmg < wallsHealth && (
           <p style={{ color: 'red' }}>not enough catas to kill the walls</p>
         )}
       </div>
