@@ -1199,7 +1199,10 @@ ignora lo que continua abajo de esta linea:
           {selectedTarget === 'citadelc20' && <CitadelData type='c20' />}
           {selectedTarget === 'citadelc25' && <CitadelData type='c25' />}
 
-          <button className='bg-indigo-500 text-md font-bold text-white' onClick={verifyCitadel}>
+          <button
+            className='px-1 py-0.5 bg-indigo-500 text-md font-bold text-white'
+            onClick={verifyCitadel}
+          >
             krap Zimulation
           </button>
         </div>
@@ -1326,11 +1329,10 @@ ignora lo que continua abajo de esta linea:
               if (data.msg === '') {
                 return (
                   <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                    <span className='font-bold text-emerald-600'>{data.attacker}</span>
-                    attacked <span className='font-bold text-emerald-600'>{data.defender}</span>,
-                    dealing <span className='font-bold text-emerald-600'>{data.damageAmount}</span>{' '}
-                    damage, killing{' '}
-                    <span className='font-bold text-emerald-600'>{data.killedUnits}</span> units`
+                    <span className='font-bold text-emerald-600'>{data.attacker}</span> attacked{' '}
+                    <span className='font-bold text-emerald-600'>{data.defender}</span>, dealing{' '}
+                    <span className='font-bold text-blue-600'>{data.damageAmount}</span> damage,
+                    killing <span className='font-bold text-red-600'>{data.killedUnits}</span> units
                   </li>
                 )
               } else {
