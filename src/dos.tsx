@@ -28,26 +28,51 @@ import { CitadelData } from './citadel.tsx'
 import {
   addArmyUnits,
   fight,
-  // findStrongestTarget,
-  // findTargetOfTypeWithHealth,
-  // findTargetOfTypeWithHeath,
-  // findTargetWithHealth,
-  // getStackDamage,
   getArmyAuthority,
   getArmyDominance,
   getArmyLeadership,
   getStackHealth,
   getStackStrength,
   getStrengthWithBonus,
-  getStrongestTroopAlive,
-  haveTroopsAlive,
   prepareArmyData
 } from './helpers'
-import { citadele10, FightStack } from './citadelData.ts'
+import {
+  Citadel,
+  citadelc20,
+  citadelc25,
+  citadele10,
+  citadele15,
+  citadele20,
+  citadele25,
+  citadele30
+} from './citadelData.ts'
 import { Tips } from '../tips'
 export interface Result {
   status: number
   msg: string
+  attacker: string
+  defender: string
+  killedUnits: number
+  damageAmount: number
+}
+
+export const addReportData = (
+  checkResult: Result[],
+  status: number,
+  msg: string,
+  attacker: string = '',
+  defender: string = '',
+  killedUnits: number = 0,
+  damageAmount: number = 0
+) => {
+  checkResult.push({
+    status,
+    msg,
+    attacker,
+    defender,
+    killedUnits,
+    damageAmount
+  })
 }
 
 function Dos() {
@@ -78,13 +103,16 @@ function Dos() {
   // const getArmyAuthority = useStackStore(state => state.getArmyAuthority)
   // const getArmyDominance = useStackStore(state => state.getArmyDominance)
 
+  const [citadel, setCitadel] = useState<Citadel>(citadele10)
+
   const [selectedTarget, setSelectedTarget] = useState('citadele10')
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
-  const [report, setReport] = useState<{ status: number; msg: string }[]>([])
+  const [report, setReport] = useState<Result[]>([])
 
   const [cardType, setCardType] = useState('card') // card , smallcard
   const [gapPercent, setGapPercent] = useState(10) // card , smallcard
   const [gapStrength, setGapStrength] = useState(0)
+  const [jsonExport, setJsonExport] = useState<string>('')
 
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
@@ -111,6 +139,32 @@ function Dos() {
   // )
 
   useEffect(() => useStackStore.subscribe(state => (armyRef.current = state.army)), [])
+
+  useEffect(() => {
+    let selectedCitadel = citadele10
+    if (selectedTarget === 'citadele10') {
+      selectedCitadel = citadele10
+    }
+    if (selectedTarget === 'citadele15') {
+      selectedCitadel = citadele15
+    }
+    if (selectedTarget === 'citadele20') {
+      selectedCitadel = citadele20
+    }
+    if (selectedTarget === 'citadele25') {
+      selectedCitadel = citadele25
+    }
+    if (selectedTarget === 'citadele30') {
+      selectedCitadel = citadele30
+    }
+    if (selectedTarget === 'citadelc20') {
+      selectedCitadel = citadelc20
+    }
+    if (selectedTarget === 'citadelc25') {
+      selectedCitadel = citadelc25
+    }
+    setCitadel(selectedCitadel)
+  }, [selectedTarget])
 
   const changeMobTarget = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedTarget(e.target.value)
@@ -716,307 +770,280 @@ second REMAINS second
      */
   }
 
-  const verifyCitadele10 = () => {
-    // console.log('verifying citadele10')
+  const verifyCitadel = () => {
+    // console.log('verifying citadele20')
     const checkResult: Result[] = []
     // let troopsTypes: boolean = false
-    let firstEnemyKilled: boolean = false
-    let secondEnemyKilled: boolean = false
-    let thirdEnemyKilled: boolean = false
-    let fourthEnemyKilled: boolean = false
-    // let fifthEnemyKilled: boolean = false
-
-    let firstStackDied: boolean = false
-    let secondStackDied: boolean = false
-    let thirdStackDied: boolean = false
-    let fourthStackDied: boolean = false
-    // let fifthStackDied: boolean = false
-
-    const myFirstStackUnitHealth = 1 * army[0].unit.BASEHP * (1 + army[0].hpBonus / 100)
-    let enemyFirstStackStrength =
-      citadele10.stacks[0].unitsAmount * citadele10.stacks[0].unit.BASESTR
-    let enemySecondStackStrength =
-      citadele10.stacks[1].unitsAmount * citadele10.stacks[1].unit.BASESTR
-    let enemyThirdStackStrength =
-      citadele10.stacks[2].unitsAmount * citadele10.stacks[2].unit.BASESTR
-    let enemyFourthStackStrength =
-      citadele10.stacks[3].unitsAmount * citadele10.stacks[3].unit.BASESTR
-    let enemyFifthStackStrength =
-      citadele10.stacks[4].unitsAmount * citadele10.stacks[4].unit.BASESTR
-
-    const enemyFirstStackHealth =
-      citadele10.stacks[0].unitsAmount * citadele10.stacks[0].unit.BASEHP
-    const enemySecondStackHealth =
-      citadele10.stacks[1].unitsAmount * citadele10.stacks[1].unit.BASEHP
-    const enemyThirdStackHealth =
-      citadele10.stacks[2].unitsAmount * citadele10.stacks[2].unit.BASEHP
-    const enemyFourthStackHealth =
-      citadele10.stacks[3].unitsAmount * citadele10.stacks[3].unit.BASEHP
-    const enemyFifthStackHealth =
-      citadele10.stacks[4].unitsAmount * citadele10.stacks[4].unit.BASEHP
-
-    // check all stack type should NOT be mounted,dragon,melee,elemental
-    checkResult.push({ status: 0, msg: '=== Checking troop types ===' })
-
-    for (let i = 0; i < army.length; i++) {
-      if (
-        army[i].unit.category !== 'mounted' &&
-        army[i].unit.category !== 'melee' &&
-        army[i].unit.subGroup !== 'dragon' &&
-        army[i].unit.subGroup !== 'elemental'
-      ) {
-        checkResult.push({ status: 1, msg: `Stack ${i} : troop type GOOD!` })
-      } else {
-        checkResult.push({
-          status: 2,
-          msg: `Stack ${i} : will get extra damage =( ...because its troop type`
-        })
-      }
-    }
-
-    //===============================================================
-    checkResult.push({ status: 0, msg: '=== Checking meatshield/tank capability ===' })
-    let totalDamage: number = 0
-    //first hit will be against bear who have bonus against mounted, elemental
-    // and will get aditional damage
-    if (army[0].unit.category === 'mounted') {
-      enemyFirstStackStrength =
-        enemyFirstStackStrength * (1 + citadele10.stacks[0].unit.vsMountedPercent / 100)
-    }
-    if (army[0].unit.subGroup === 'elemental') {
-      enemyFirstStackStrength =
-        enemyFirstStackStrength * (1 + citadele10.stacks[0].unit.vsElementalPercent / 100)
-    }
-
-    totalDamage = totalDamage + enemyFirstStackStrength
-    // first stack, each unit must have health(+bonus) higher than the enemy first stack strength+bonus
-    if (myFirstStackUnitHealth > totalDamage) {
-      checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy first attack' })
-    } else {
-      checkResult.push({
-        status: 2,
-        msg: 'first stack might die on enemy first attack, add more health'
-      })
-      firstStackDied = true
-    }
-
-    // check if first stack,can tank enemy 2nd stack attack
-    // vs Pegaso Rider IV who havebonus against melee,dragon
-    if (army[0].unit.category === 'melee') {
-      enemySecondStackStrength =
-        enemySecondStackStrength * (1 + citadele10.stacks[1].unit.vsMeleePercent / 100)
-    }
-    if (army[0].unit.subGroup === 'dragon') {
-      enemySecondStackStrength =
-        enemySecondStackStrength * (1 + citadele10.stacks[1].unit.vsDragonPercent / 100)
-    }
-
-    // first stack, each unit must have health(+bonus) higher than the enemy 2nd stack strength+bonus
-    if (!firstStackDied) {
-      totalDamage = totalDamage + enemySecondStackStrength
-
-      if (myFirstStackUnitHealth > totalDamage) {
-        checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy second attack' })
-      } else {
-        checkResult.push({
-          status: 2,
-          msg: 'first stack might die on enemy second attack, if enemy is not killed first, add more health'
-        })
-        secondStackDied = true
-      }
-
-      // check if first stack,can tank enemy 3rd stack attack
-      // vs Elf archer I who havebonus against melee
-      if (army[0].unit.category === 'melee') {
-        enemyThirdStackStrength =
-          enemyThirdStackStrength * (1 + citadele10.stacks[2].unit.vsMeleePercent / 100)
-      }
-
-      if (!secondStackDied) {
-        totalDamage = totalDamage + enemyThirdStackStrength
-        // first stack, each unit must have health(+bonus) higher than the enemy 3rd stack strength+bonus
-        if (myFirstStackUnitHealth > totalDamage) {
-          checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy third attack' })
-        } else {
-          checkResult.push({
-            status: 2,
-            msg: 'first stack might die on enemy third attack, if enemy is not killed first, add more health'
-          })
-          thirdStackDied = true
-        }
-
-        // check if first stack,can tank enemy 4th stack attack
-        // vs Druid II who havebonus against melee
-        if (army[0].unit.category === 'melee') {
-          enemyFourthStackStrength =
-            enemyFourthStackStrength * (1 + citadele10.stacks[3].unit.vsMeleePercent / 100)
-        }
-
-        if (!thirdStackDied) {
-          totalDamage = totalDamage + enemyFourthStackStrength
-          // first stack, each unit must have health(+bonus) higher than the enemy 4th stack strength+bonus
-          if (myFirstStackUnitHealth > totalDamage) {
-            checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy fourth attack' })
-          } else {
-            checkResult.push({
-              status: 2,
-              msg: 'first stack might die on enemy fourth attack, if enemy is not killed first, add more health'
-            })
-            fourthStackDied = true
-          }
-
-          // check if first stack,can tank enemy 5th stack attack
-          // vs Dwarf who havebonus against mount
-          if (army[0].unit.category === 'mounted') {
-            enemyFifthStackStrength =
-              enemyFifthStackStrength * (1 + citadele10.stacks[4].unit.vsMountedPercent / 100)
-          }
-
-          if (!fourthStackDied) {
-            totalDamage = totalDamage + enemyFifthStackStrength
-            // first stack, each unit must have health(+bonus) higher than the enemy 5th stack strength+bonus
-            if (myFirstStackUnitHealth > totalDamage) {
-              checkResult.push({ status: 1, msg: 'first stack can tank/absorb enemy fifth attack' })
-              checkResult.push({ status: 4, msg: 'WHOA!, EXCELENT MEATSHIELD!!' })
-            } else {
-              checkResult.push({
-                status: 2,
-                msg: 'first stack might die on enemy fifth attack, if enemy is not killed first, add more health'
-              })
-            }
-          }
-        }
-      }
-    }
-    //===============================================================
-    checkResult.push({ status: 0, msg: '=== Checking first stack strength ===' })
-
-    // first stack, should be powerful enough to kill enemy first stack
-    const myFirstStackStrength =
-      army[0].unitsAmount * army[0].unit.BASESTR * (1 + army[0].strBonus / 100)
-
-    // if (!firstStackDied) {
-    if (myFirstStackStrength >= enemyFirstStackHealth) {
-      checkResult.push({ status: 1, msg: 'first stack can kill enemy first stack' })
-      firstEnemyKilled = true
-    } else {
-      checkResult.push({
-        status: 2,
-        msg: 'first stack is not strong enough to kill first enemy, ADD MORE UNITS!'
-      })
-      firstEnemyKilled = false
-    }
-
-    if (firstEnemyKilled) {
-      if (myFirstStackStrength >= enemySecondStackHealth) {
-        checkResult.push({ status: 1, msg: 'first stack can kill enemy second stack' })
-        secondEnemyKilled = true
-      } else {
-        checkResult.push({
-          status: 2,
-          msg: 'first stack is not strong enough to kill second enemy, ADD MORE UNITS!'
-        })
-        secondEnemyKilled = false
-      }
-
-      if (secondEnemyKilled) {
-        if (myFirstStackStrength >= enemyThirdStackHealth) {
-          checkResult.push({ status: 1, msg: 'first stack can kill enemy third stack' })
-          thirdEnemyKilled = true
-        } else {
-          checkResult.push({
-            status: 2,
-            msg: 'first stack is not strong enough to kill third enemy, ADD MORE UNITS!'
-          })
-          thirdEnemyKilled = false
-        }
-
-        if (thirdEnemyKilled) {
-          if (myFirstStackStrength >= enemyFourthStackHealth) {
-            checkResult.push({ status: 1, msg: 'first stack can kill enemy fourth stack' })
-            fourthEnemyKilled = true
-          } else {
-            checkResult.push({
-              status: 2,
-              msg: 'first stack is not strong enough to kill fourth enemy, ADD MORE UNITS!'
-            })
-            fourthEnemyKilled = false
-          }
-
-          if (fourthEnemyKilled) {
-            if (myFirstStackStrength >= enemyFifthStackHealth) {
-              checkResult.push({ status: 1, msg: 'first stack can kill enemy fifth stack' })
-              checkResult.push({ status: 4, msg: 'WHOA!, EXCELENT KILLER!!' })
-              // fifthEnemyKilled = true
-            } else {
-              checkResult.push({
-                status: 2,
-                msg: 'first stack is not strong enough to kill fifth enemy, ADD MORE UNITS!'
-              })
-              // fifthEnemyKilled = false
-            }
-          }
-        }
-      }
-      // }
-    }
 
     // ***********************************
     // simulation
 
     // BOTH sides my army, citadel already ordered based on stack strength, so no need to do anything
     // INFO: I DO first attack
-    checkResult.push({ status: 0, msg: 'simulation i attack first' })
+    addReportData(checkResult, 0, 'simulation i attack first')
 
     // prepare army units for fighting, format data to have same structure as citadel
     const myArmy = prepareArmyData(army)
-    const citadel = structuredClone(citadele10.stacks)
 
-    let attacker: FightStack | null = myArmy[0] // single stack
-    let defender: FightStack[] | null = citadel // array of stacks
-    // check both sides have troops alive
-    let loopProtect = 20
-    let turn = 0
-    const stacksCount = myArmy.length + citadel.length
-    let tmpCounter = 1
-    while (haveTroopsAlive(myArmy) && haveTroopsAlive(citadel)) {
-      // get strongest troop alive who didnt fight yet
-      attacker = getStrongestTroopAlive(myArmy, turn)
-      if (attacker) {
-        defender = citadel
+    const citadelWithoutWalls = citadel.stacks.filter(
+      stack => stack.unit.category !== 'fortification'
+    )
 
-        // console.log('attacker', attacker, 'defender', defender)
-        // console.log('fight')
-        fight(attacker, defender, checkResult)
-        tmpCounter++
-      }
+    const citadelClone = structuredClone(citadelWithoutWalls)
 
-      attacker = getStrongestTroopAlive(citadel, turn)
-      if (attacker) {
-        defender = myArmy
+    // citadel.forEach((stack, i) => {
+    //   stack.unitsAmount = citadele20.stacks[i].unitsAmount
+    // })
 
-        // console.log('attacker', attacker, 'defender', defender)
-        // console.log('fight')
-        fight(attacker, defender, checkResult)
-        tmpCounter++
-      }
+    // las tropas ya estan ordenadas del mas fuerte al mas debil, no hay q hacer nada
 
-      if (tmpCounter >= stacksCount) {
-        turn++
-        tmpCounter = 1
-      }
-
-      loopProtect--
-      if (loopProtect < 1) {
-        console.log('loop protection')
-        break
-      }
-    }
+    const fightResult = fight(myArmy, citadelClone)
+    checkResult.push(...fightResult)
 
     // console.log('citadel after hit', citadel)
 
     setReport(checkResult)
-    // console.log(' citadele10 result', checkResult)
+    // console.log(' citadele20 result', checkResult)
+  }
+
+  const generateData = () => {
+    const citadelData = citadel.stacks.map(stack => ({
+      unitId: stack.unit.name,
+      baseStr: stack.unit.BASESTR,
+      baseHp: stack.unit.BASEHP,
+      unitsAmount: stack.unitsAmount,
+      category: stack.unit.category,
+      vsMeleePercent: stack.unit.vsMeleePercent,
+      vsRangedPercent: stack.unit.vsRangedPercent,
+      vsMountedPercent: stack.unit.vsMountedPercent,
+      vsFlyingPercent: stack.unit.vsFlyingPercent,
+      vsBeastPercent: stack.unit.vsBeastPercent,
+      vsGiantPercent: stack.unit.vsGiantPercent,
+      vsElementalPercent: stack.unit.vsElementalPercent,
+      vsDragonPercent: stack.unit.vsDragonPercent,
+      vsSiegePercent: stack.unit.vsSiegePercent
+    }))
+
+    const data =
+      /**
+     row format
+     unitId,basestr,basehp,bonusStr,bonusHP,category,group+subgroup,unitsAmount,vsMelee%,vsETC%
+     */
+      armyRef.current.map(stack => ({
+        unitId: stack.unitKey,
+        baseStr: stack.unit.BASESTR,
+        baseHp: stack.unit.BASEHP,
+        bonusStr: stack.strBonus,
+        bonusHp: stack.hpBonus,
+        category: stack.unit.category,
+        group: stack.unit.group,
+        subgroup: stack.unit.subGroup,
+        unitsAmount: stack.unitsAmount,
+        vsMeleePercent: stack.unit.vsMeleePercent,
+        vsRangedPercent: stack.unit.vsRangedPercent,
+        vsMountedPercent: stack.unit.vsMountedPercent,
+        vsFlyingPercent: stack.unit.vsFlyingPercent,
+        vsBeastPercent: stack.unit.vsBeastPercent,
+        vsGiantPercent: stack.unit.vsGiantPercent,
+        vsElementalPercent: stack.unit.vsElementalPercent,
+        vsDragonPercent: stack.unit.vsDragonPercent,
+        vsSiegePercent: stack.unit.vsSiegePercent
+      }))
+
+    const citadelJsonData = JSON.stringify(citadelData)
+
+    const jsondata = JSON.stringify(data)
+    const myUnits = armyRef.current.map(stack => stack.unit.name).join(', ')
+    const citadelUnits = citadel.stacks.map(stack => stack.unit.name)
+    const report = `
+    formulas:
+    to calculate total strength (#totalStrength):totalStrength= baseStr*(1+bonusStr/100)*unitsAmount
+
+  to calculate total health  (#totalHealth): totalHealth=baseHp*(1+bonusHp/100)*unitsAmount
+
+  to calculate efective damage, we use a feature bonus (#featureBonus): vsMeleePercent,
+vsRangedPercent,
+vsMountedPercent,
+vsFlyingPercent,
+vsBeastPercent,
+vsGiantPercent,
+vsElementalPercent,
+vsDragonPercent,
+vsSiegePercent
+and the following formula  (#efectiveDamage):
+
+efectiveDamage = min(
+    baseStr * (1 + (bonusStr + featureBonus)/100) * unitsAmount,
+    totalHealth_enemy  # Límite máximo: vida actual del objetivo
+)
+
+    to calculate total damage: (
+    citadel JSON data (#enemy): ${citadelJsonData}
+    player JSON data (#player):${jsondata}
+
+    #enemy dont have bonusStr or bonusHp
+    the formula to calculate totalStrength for #enemy would be
+    totalStrength= baseStr*unitsAmount
+
+    the formula to calculate totalHealth for #enemy would be
+    totalHealth=baseHp*unitsAmount
+
+    some of the combat rules are the following (#combatRulesToConfirm):
+    1. stack order is determined by the strongest stack y se recalcula cada ciclo basado en el totalStrength actualizado.
+    2. el objetivo se selecciona priorizando el mayor daño efectivo posible, pero con las siguientes condiciones:
+
+    a. El oponente debe coincidir con el tipo del bono de ataque (ej: vsMontado → atacar unidades montadas).
+    b. si existe mas de un objetivo que coincida con el tipo de bono, se priorizara al objetivo que nos pueda hacer el mayor daño efectivo posible, en otras palabras que tenga mayor capacidad de contraataque.
+    c. si el oponente es del mismo tipo que el bono de ataque, pero su vida total disponible es menor que la fuerza total que dispone, entonces se buscara otro objetivo
+
+
+    d. Si el objetivo cumple el tipo de bono y su vida es mayor que la fuerza del atacante, se procedera al ataque,
+    calculando el daño efectivo,
+    y si el daño efectivo es mayor a la vida disponible del enemigo  se eliminara al enemigo,
+    el excedente no se acumula ni se transfiere. Se descarta totalmente.
+
+
+    si el daño efectivo es menor a la vida disponible del enemigo, se acumulara el daño para el siguiente ataque
+    e. si no se encuentra un objetivo de ataque, que su categoria sea del mismo tipo que el bono de ataque, entonces se atacara al oponente mas fuerte que aun este con vida
+    f. si se ataca a un objetivo que no cumple el tipo de bono, el daño total sera igual a la fuerza total del atacante
+    g. Si existen múltiples objetivos válidos que cumplen con el tipo de bono de ataque y tienen vida suficiente, se priorizará aquel que represente la mayor amenaza potencial futura. Esta amenaza se calculará como:
+
+        Amenaza = totalStrength_enemigo × (1 + bono_enemigo_vs_tu_categoría/100)
+
+        Donde:
+
+    totalStrength_enemigo: Fuerza total del objetivo enemigo.
+    bono_enemigo_vs_tu_categoría: Bono de daño del enemigo contra la categoría de la unidad atacante.
+
+
+
+    7. El daño acumulativo aplica solo si el objetivo sobrevive al ataque inicial, que se sumara al daño inicial.
+
+
+    8. el turno de ataque es alternado entre los dos enemigos.
+    9. si alguno de los dos enemigos tiene mayor numero de tropas, las tropas restantes que aun no han atacado atacaran al final
+    10. todo esto se repetira hasta que solo quede uno con vida
+
+
+    we want to obtain the combat rules to confirm if the combat rules we know are correct or get corrected if needed  from the following battle report: (#battleReport)
+
+
+
+- ArcherG5 ataca a LifeDragon haciendo un total de 29520000 de daño, mas 5463980 de daño adicional, eliminando a 41 unidades
+- Ent ataca a heavyArbalesterVI haciendo un total de 12446500 de daño, mas 4416500 de daño adicional, eliminando a 447 unidades
+- SpearmanG5 ataca a Ent haciendo un total de 24090000 de daño, eliminando a 110 unidades
+- Centaur ataca a ArcherG5 haciendo un total de 9750000 de daño, mas 3250000 de daño adicional, eliminando a 633 unidades
+- RiderG5 ataca a Centaur haciendo un total de 19500000 de daño, eliminando a 2500 unidades
+- Bear ataca a RiderG5 haciendo un total de 8602000 de daño, mas 3542000 de daño adicional
+- battleGriffinV ataca a Bear haciendo un total de 15180000 de daño, eliminando a 230 unidades
+- Druid ataca a SpearmanG5 haciendo un total de 4050000 de daño, mas 810000 de daño adicional, , eliminando a 263 unidades
+- heavyArbalesterVI ataca a Druid haciendo un total de 9720000 de daño, eliminando a 3600 unidades
+
+
+utiliza el español, para hacer el analisis y las respuestas
+
+
+----
+ignora lo que continua abajo de esta linea:
+    ${myUnits}
+    ------
+    ${citadelUnits}
+    `
+
+    const report2 = `
+
+1. Stack and Army Structure:
+
+Stack: A group of units of the same category.
+Army: A collection of stacks. Each player and enemy initializes an army consisting of one or more stacks. Each player and enemy has one army.
+
+
+to add some context, we have the following data:
+    citadel JSON data (#enemy): ${citadelJsonData}
+    player JSON data (#player):${jsondata}
+
+and the following game rules (#gameRules):
+   1. Selección de objetivo:
+- Atacas al enemigo que mejor se adapte a tu bono de ataque (vsMelee, vsRanged, etc.).
+- Si múltiples enemigos coinciden, eliges al que pueda hacerte más daño.
+- Si el enemigo tiene poca vida, buscas otro objetivo.
+- Threat Calculation: The target is selected based on the stack's total strength and the attacker's bonus against the target's category.
+- Target Stack: The stack with the highest threat is selected as the target.
+
+2. Daño efectivo:
+- El daño se limita a la vida actual del enemigo.
+- Si el daño supera la vida del enemigo, el excedente no se acumula.
+- damage is calculated based on the stack strength and bonuses
+- Damage Application: Damage is applied to the entire stack, reducing the number of units based on the damage dealt.
+- Fórmula de daño efectivo:
+efectiveDamage = min(
+    baseStr * (1 + (bonusStr + featureBonus)/100) * unitsAmount,
+    totalHealth_enemy
+)
+
+3. Daño acumulado:
+- Si el enemigo sobrevive, el daño adicional se suma en el próximo ataque.
+
+4. Turnos alternados:
+- Stacks Take Turns: Stacks attack one at a time, alternating between player and enemy.
+- Alternating Turns: Each stack from the player and enemy takes turns attacking.
+- Remaining Stacks: any stacks that haven't attacked yet, will attack at the end of the round.
+
+5. Priorización de amenaza:
+- Si múltiples enemigos son vulnerables a tu ataque, eliges al que represente mayor amenaza futura.
+- Fórmula de amenaza:
+Amenaza = totalStrength_enemigo × (1 + bonus_enemigo_vs_tu_categoría/100)
+
+6. Ataque sin bono:
+- Si atacas sin coincidir con el tipo de bono, el daño es igual a tu fuerza total.
+- Fórmula de fuerza total:
+totalStrength = baseStr * (1 + bonusStr/100) * unitsAmount
+
+
+8. Vida total:
+- Fórmula de vida total:
+totalHealth = baseHp * (1 + bonusHp/100) * unitsAmount
+
+9. Fuerza total enemigo:
+- Fórmula de fuerza total para enemigos (sin bonus):
+totalStrength = baseStr * unitsAmount
+
+10. Vida total enemigo:
+- Fórmula de vida total para enemigos (sin bonus):
+totalHealth = baseHp * unitsAmount
+
+11. Victory Conditions:
+- Elimination: The combat ends when one side has no remaining units in any of its stacks.
+- Winner Declaration: The side with remaining units is declared the winner.
+
+
+we want to obtain the combat rules to confirm if the combat rules we know are correct or get corrected if needed  from the following battle report: (#battleReport)
+
+- ArcherG5 ataca a LifeDragon haciendo un total de 29520000 de daño, mas 5463980 de daño adicional, eliminando a 41 unidades
+- Ent ataca a heavyArbalesterVI haciendo un total de 12446500 de daño, mas 4416500 de daño adicional, eliminando a 447 unidades
+- SpearmanG5 ataca a Ent haciendo un total de 24090000 de daño, eliminando a 110 unidades
+- Centaur ataca a ArcherG5 haciendo un total de 9750000 de daño, mas 3250000 de daño adicional, eliminando a 633 unidades
+- RiderG5 ataca a Centaur haciendo un total de 19500000 de daño, eliminando a 2500 unidades
+- Bear ataca a RiderG5 haciendo un total de 8602000 de daño, mas 3542000 de daño adicional
+- battleGriffinV ataca a Bear haciendo un total de 15180000 de daño, eliminando a 230 unidades
+- Druid ataca a SpearmanG5 haciendo un total de 4050000 de daño, mas 810000 de daño adicional, , eliminando a 263 unidades
+- heavyArbalesterVI ataca a Druid haciendo un total de 9720000 de daño, eliminando a 3600 unidades
+
+
+utiliza el español, para hacer el analisis y las respuestas
+
+
+----
+ignora lo que continua abajo de esta linea:
+    ${myUnits}
+    ------
+    ${citadelUnits}
+    `
+    setJsonExport(report2)
+    alert('asdfasfasd')
+    console.log('report promp', jsonExport)
+    console.log('report promp', report)
+    navigator.clipboard.writeText(report2)
   }
 
   const handleDrag = (event: DragEndEvent) => {
@@ -1035,8 +1062,8 @@ second REMAINS second
 
       <nav className='pt-[57px] sm:ml-64 flex'>
         <div className='px-3 py-3 lg:px-5 lg:pl-3'>
-          <div className='config-container'>
-            <div className='configbar'>
+          <div className='config-container flex flex-wrap gap-8'>
+            <div className=''>
               <div>
                 <label>Leadership </label>
                 <input
@@ -1068,7 +1095,7 @@ second REMAINS second
                 />
               </div>
             </div>
-            <div className='configbar'>
+            <div className=''>
               <div className='group  hidden lg:block'>
                 <label>Target </label>
                 <select
@@ -1086,7 +1113,7 @@ second REMAINS second
                 </select>
               </div>
 
-              <div>
+              <div className='mt-5'>
                 <label>Sacrifice strength limit</label>
                 <input
                   type='radio'
@@ -1126,7 +1153,7 @@ second REMAINS second
               Show Army
             </button>
 
-            <div className='configbar'>
+            <div className='mt-5'>
               <div>
                 <label>Card</label>
                 <input
@@ -1153,6 +1180,14 @@ second REMAINS second
               </div>
             </div>
           </div>
+          <div className='mt-5'>
+            <button
+              className='px-2 py-0.5 bg-red-600 text-gray-100 rounded-2xl'
+              onClick={generateData}
+            >
+              craptest
+            </button>
+          </div>
         </div>
 
         <div className='hidden lg:block'>
@@ -1164,14 +1199,9 @@ second REMAINS second
           {selectedTarget === 'citadelc20' && <CitadelData type='c20' />}
           {selectedTarget === 'citadelc25' && <CitadelData type='c25' />}
 
-          {selectedTarget === 'citadele10' && (
-            <button
-              className='bg-indigo-500 text-md font-bold text-white'
-              onClick={verifyCitadele10}
-            >
-              Verify
-            </button>
-          )}
+          <button className='bg-indigo-500 text-md font-bold text-white' onClick={verifyCitadel}>
+            krap Zimulation
+          </button>
         </div>
       </nav>
 
@@ -1286,18 +1316,39 @@ second REMAINS second
               if (data.status == 2) {
                 color = 'text-red-700'
               }
+              if (data.status == 3) {
+                color = 'text-gray-200'
+              }
               if (data.status == 4) {
                 color = 'text-yellow-300'
               }
-              return (
-                <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                  {data.msg}
-                </li>
-              )
+
+              if (data.msg === '') {
+                return (
+                  <li key={`rpt${i}`} className={`text-sm ${color}`}>
+                    <span className='font-bold text-emerald-600'>{data.attacker}</span>
+                    attacked <span className='font-bold text-emerald-600'>{data.defender}</span>,
+                    dealing <span className='font-bold text-emerald-600'>{data.damageAmount}</span>{' '}
+                    damage, killing{' '}
+                    <span className='font-bold text-emerald-600'>{data.killedUnits}</span> units`
+                  </li>
+                )
+              } else {
+                return (
+                  <li key={`rpt${i}`} className={`text-sm ${color}`}>
+                    {data.msg}
+                  </li>
+                )
+              }
             })}
           </div>
         )}
       </div>
+
+      {/* <div className='p-4 border-2 border-gray-300'>
+        <h3 className='text-lg font-bold mt-2'>ARMY json data</h3>
+        <p className='text-sm text-gray-500 w-full'>{jsonExport}</p>
+      </div> */}
     </>
   )
 }
