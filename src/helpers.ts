@@ -739,7 +739,7 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
 
   while (haveTroopsAlive(attacker) && haveTroopsAlive(defender)) {
     console.log(`\nCiclo ${cycle}:`)
-    addReportData(checkResult, 1, `Ciclo ${cycle}:`)
+    addReportData(checkResult, 1, `LAP ${cycle}:`, 'title')
 
     const attackedStacks = new Set<FightStack>() // Rastrear stacks que ya han atacado
     let allStacksAttacked = false // Indica si todos los stacks han atacado en este ciclo
@@ -779,10 +779,11 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
           3,
           '',
           // `${isPlayerTurn ? 'Player' : 'Enemy'} Turn `,
-          stack.id + ':' + stack.unit.name,
-          targetStack.id + ':' + targetStack.unit.name,
+          /*stack.id + ':' +*/ stack.unit.name,
+          /*targetStack.id + ':' +*/ targetStack.unit.name,
           unitsKilled,
-          damage
+          damage,
+          'item'
         )
 
         attackedStacks.add(stack) // Marcar el stack como atacado
@@ -815,7 +816,7 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
 
   const winner = haveTroopsAlive(attacker) ? 'Player' : 'Enemy'
   console.log(`\n¡La batalla ha terminado! El ganador es el bando ${winner}.`)
-  addReportData(checkResult, 4, 'WINNER: ' + winner)
+  addReportData(checkResult, 4, 'WINNER: ' + winner, 'title')
 
   return checkResult
 }

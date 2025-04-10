@@ -101,6 +101,12 @@ export const GameCombatInfo = () => {
                   picked as target
                 </p>
                 <p>
+                  IF the enemy have more than 2 melee units, example :entVI(vsRanged 55%) and
+                  abominationVI (vsRanged 60%) both with health more than 5500, then it will pick
+                  abominationVI as target, because abominationVI has 60% damage vsRanged, IF it
+                  counter attack/attack back it will do more damage
+                </p>
+                <p>
                   IF the enemy do not have any flying and have a troop of type melee, with health of
                   5501, then it will be picked as target
                 </p>
