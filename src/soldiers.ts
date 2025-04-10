@@ -886,10 +886,10 @@ const CatapultE2 = catapultBuilder('CatapultE2', 'CatapultE2', 2700, 450, 98, '2
 const CatapultE3 = catapultBuilder('CatapultE3', 'CatapultE3', 4860, 810, 146, '3')
 const CatapultE4 = catapultBuilder('CatapultE4', 'CatapultE4', 8750, 1460, 219, '4')
 const CatapultE5 = catapultBuilder('CatapultE5', 'CatapultE5', 15800, 2630, 329, '5')
-const CatapultE6 = catapultBuilder('CatapultE6', 'CatapultE6', 28400, 4730, 494, '6')
-const CatapultE7 = catapultBuilder('CatapultE7', 'CatapultE7', 51000, 8500, 740, '7')
-const CatapultE8 = catapultBuilder('CatapultE8', 'CatapultE8', 91800, 15310, 1111, '8')
-const CatapultE9 = catapultBuilder('CatapultE9', 'CatapultE9', 165300, 27550, 1667, '9')
+const CatapultE6 = catapultBuilder('CatapultE6', 'E6 Ballistae I', 28400, 4730, 494, '6')
+const CatapultE7 = catapultBuilder('CatapultE7', 'E7 Ballistae II', 51000, 8500, 740, '7')
+const CatapultE8 = catapultBuilder('CatapultE8', 'E8 Josephine I', 91800, 15310, 1111, '8')
+const CatapultE9 = catapultBuilder('CatapultE9', 'E9 Josephine II', 165300, 27550, 1667, '9')
 
 //------------------------
 

@@ -12,7 +12,8 @@ import {
 } from './citadelData'
 
 export const CitadelData = ({ type }: { type: string }) => {
-  const [selected, setSelected] = useState<string[]>([])
+  const [selectedStr, setSelectedStr] = useState<string[]>([])
+  const [selectedHp, setSelectedHp] = useState<string[]>([])
 
   let target: Citadel = citadele10
   switch (type) {
@@ -39,13 +40,22 @@ export const CitadelData = ({ type }: { type: string }) => {
       break
   }
 
-  const markTroop = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const markStrTroop = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      if (!selected.includes(e.target.value)) {
-        setSelected([...selected, e.target.value])
+      if (!selectedStr.includes(e.target.value)) {
+        setSelectedStr([...selectedStr, e.target.value])
       }
     } else {
-      setSelected(selected.filter(troop => troop !== e.target.value))
+      setSelectedStr(selectedStr.filter(troop => troop !== e.target.value))
+    }
+  }
+  const markHpTroop = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      if (!selectedHp.includes(e.target.value)) {
+        setSelectedHp([...selectedHp, e.target.value])
+      }
+    } else {
+      setSelectedHp(selectedHp.filter(troop => troop !== e.target.value))
     }
   }
 
@@ -57,8 +67,9 @@ export const CitadelData = ({ type }: { type: string }) => {
           <th>Type</th>
           <th>Amount</th>
           <th>Total health</th>
+          <th>+Hp</th>
           <th>Regular Damage</th>
-          <th>+</th>
+          <th>+Str</th>
           <th>Dmg + bonus</th>
         </tr>
       </thead>
@@ -79,6 +90,9 @@ export const CitadelData = ({ type }: { type: string }) => {
               >
                 {totalHealth.toLocaleString().replace(/,/g, '_')}
               </td>
+              <td>
+                <input type='checkbox' value={totalHealth.toString()} onChange={markHpTroop} />
+              </td>
               {/* total health  */}
               <td
                 className='px-1 py-0.5  text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
@@ -89,8 +103,9 @@ export const CitadelData = ({ type }: { type: string }) => {
                 {totalStrength.toLocaleString().replace(/,/g, '_')}
               </td>
               {/* total strength  */}
+
               <td>
-                <input type='checkbox' value={totalStrength.toString()} onChange={markTroop} />
+                <input type='checkbox' value={totalStrength.toString()} onChange={markStrTroop} />
               </td>
               <td className='px-1 py-0.5'>{getTroopBadges(stack)}</td>
             </tr>
@@ -99,8 +114,14 @@ export const CitadelData = ({ type }: { type: string }) => {
         <tr>
           <td></td>
           <td></td>
+          <td className='px-1 py-0.5'>Total</td>
+          <td className='px-1 py-0.5'>
+            {target.stacks
+              .reduce((dmg, stack) => dmg + stack.unitsAmount * stack.unit.BASEHP, 0)
+              .toLocaleString()
+              .replace(/,/g, '_')}
+          </td>
           <td></td>
-          <td className='px-1 py-0.5'>Total Dmg</td>
           <td className='px-1 py-0.5'>
             {target.stacks
               .reduce((dmg, stack) => dmg + stack.unitsAmount * stack.unit.BASESTR, 0)
@@ -110,16 +131,31 @@ export const CitadelData = ({ type }: { type: string }) => {
           <td></td>
         </tr>
         <tr>
-          <td colSpan={7}>
+          <td colSpan={8}>
             Selected damage:{' '}
-            {selected
+            {selectedStr
               .map(str => {
                 return str
               })
               .join(' + ')}
             {` = `}
-            {selected
+            {selectedStr
               .reduce((total, str) => total + parseInt(str), 0)
+              .toLocaleString()
+              .replace(/,/g, '_')}
+          </td>
+        </tr>
+        <tr>
+          <td colSpan={8}>
+            Selected Health:{' '}
+            {selectedHp
+              .map(Hp => {
+                return Hp
+              })
+              .join(' + ')}
+            {` = `}
+            {selectedHp
+              .reduce((total, Hp) => total + parseInt(Hp), 0)
               .toLocaleString()
               .replace(/,/g, '_')}
           </td>
