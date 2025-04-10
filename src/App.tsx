@@ -1,7 +1,7 @@
 import { Outlet, NavLink } from 'react-router-dom'
 
 import './App.css'
-import { Disclaimer } from './disclaimer'
+// import { Disclaimer } from './disclaimer'
 import { useEffect } from 'react'
 import { decodeHash } from './hashStore'
 import { useStackStore } from './stackStore'
