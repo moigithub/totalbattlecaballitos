@@ -332,10 +332,7 @@ export const prepareArmyData = (army: Stack[]): FightStack[] => {
       },
       id: stack.id,
       unitsAmount: stack.unitsAmount,
-      stackHealth: 0,
-      damage: 0,
-      turn: 0,
-      hasAttacked: false
+      accumulatedDamage: 0
     }
   })
 }
@@ -409,7 +406,6 @@ export const selectTarget = (
  if no target found, get the strongest stack as fallback
  */
 
-  let bestTarget: FightStack | null = null
   let maxThreat = 0
   // console.log('selectTarget', structuredClone(attackingStack), structuredClone(enemyStacks))
   if (enemyStacks.length === 0) return null
@@ -418,20 +414,39 @@ export const selectTarget = (
   const enemyIHaveFeatureBonusAgainst = stacksAlive.filter(
     stack => getBonusByCategory(attackingStack, stack.unit.category) > 0
   )
-  // console.log('the enemies i have feature bonus against', enemyIHaveFeatureBonusAgainst)
-  if (enemyIHaveFeatureBonusAgainst.length === 0) return getStrongestStack(stacksAlive)
+  console.log(
+    'selectTarget: the enemies i have feature bonus against',
+    attackingStack.unit.name,
+    JSON.stringify(enemyIHaveFeatureBonusAgainst)
+  )
+  if (enemyIHaveFeatureBonusAgainst.length === 0) {
+    console.log('selectTarget: no feature bonus found, get strongest stack')
+    return getStrongestStack(stacksAlive)
+  }
 
   const bonusStr = attackingStack.unit.strBonus || 0
   // const totalStrength =
   //   attackingStack.unitsAmount * attackingStack.unit.BASESTR * (1 + bonusStr / 100)
 
   const totalStrength = calcStackStrengthWithBonus(attackingStack, bonusStr)
+  console.log('selectTarget: attacker strength', attackingStack.unit.name, totalStrength)
 
   const enemiesWithEnoughHealth = enemyIHaveFeatureBonusAgainst.filter(
-    stack => calcStackHealthWithBonus(stack, stack.unit.hpBonus || 0) >= totalStrength
+    // need to substract accumulated damage from health to get actual health
+    stack =>
+      calcStackHealthWithBonus(stack, stack.unit.hpBonus || 0) - stack.accumulatedDamage >=
+      totalStrength
   )
-  // console.log('the enemies i have feature bonus against and enough health', enemiesWithEnoughHealth)
-  if (enemiesWithEnoughHealth.length === 0) return getStrongestStack(stacksAlive)
+  console.log(
+    'selectTarget: the enemies i have feature bonus against and enough health',
+    attackingStack.unit.name,
+    enemiesWithEnoughHealth
+  )
+  if (enemiesWithEnoughHealth.length === 0) {
+    console.log('selectTarget: no feature bonus found, get strongest stack')
+
+    return getStrongestStack(stacksAlive)
+  }
 
   // enemies who its counter attack is highest
   enemiesWithEnoughHealth.forEach(counterAtkStack => {
@@ -461,11 +476,31 @@ export const selectTarget = (
 
     if (threat > maxThreat) {
       maxThreat = threat
-      bestTarget = counterAtkStack
     }
     // console.log('selectTarget: threat', threat, maxThreat, bestTarget?.unit.name)
   })
 
+  // if have multiples with highest threat, get the one with the highest health
+  const enemiesWithHighestThreat = enemiesWithEnoughHealth.filter(stack => {
+    const bonus = stack.unit.strBonus || 0
+    const vsCategoryBonus = getBonusByCategory(stack, attackingStack.unit.category)
+    const threat = calcStackStrengthWithBonus(stack, bonus + vsCategoryBonus)
+    return threat === maxThreat
+  })
+
+  console.log(
+    'selectTarget: the enemies with highest threat',
+    attackingStack.unit.name,
+    enemiesWithHighestThreat
+  )
+
+  const bestTarget: FightStack = enemiesWithHighestThreat.reduce((a, b) => {
+    const aHealth = calcStackHealthWithBonus(a, a.unit.hpBonus || 0) - a.accumulatedDamage
+    const bHealth = calcStackHealthWithBonus(b, b.unit.hpBonus || 0) - b.accumulatedDamage
+    return aHealth > bHealth ? a : b
+  }, enemiesWithHighestThreat[0])
+
+  console.log('selectTarget: the best target', attackingStack.unit.name, enemiesWithHighestThreat)
   return bestTarget
 }
 
@@ -480,19 +515,24 @@ export const calculateEffectiveDamage = (
   const totalStrength = calcStackStrengthWithBonus(attackingStack, bonusStr + featureBonus)
   const totalHealth =
     defendingStack.unitsAmount *
-    defendingStack.unit.BASEHP *
-    (1 + (defendingStack.unit.strBonus || 0) / 100)
+      defendingStack.unit.BASEHP *
+      (1 + (defendingStack.unit.hpBonus || 0) / 100) -
+    defendingStack.accumulatedDamage
 
-  // console.log(
-  //   'calculateEffectiveDamage: attackingStack',
-  //   attackingStack,
-  //   'defendingStack',
-  //   defendingStack,
-  //   'totalStrength',
-  //   totalStrength,
-  //   'totalHealth',
-  //   totalHealth
-  // )
+  console.log(
+    'calculateEffectiveDamage: attackingStack',
+    attackingStack,
+    'defendingStack',
+    defendingStack,
+    'bonusStr',
+    bonusStr,
+    'feature bonus',
+    featureBonus,
+    'totalStrength',
+    totalStrength,
+    'totalHealth',
+    totalHealth
+  )
   // if health is less than strength, discard extra damage
   return Math.min(totalStrength, totalHealth)
 }
@@ -503,16 +543,32 @@ export const applyDamage = (
   damage: number
 ): number => {
   // Calculate units to remove from the defending stack
-  // console.log('damage', attackingStack, defendingStack, damage)
+  // console.log('damage', attackingStack, JSON.stringify(defendingStack), damage)
 
   const unitHealth = defendingStack.unit.BASEHP * (1 + (defendingStack.unit.hpBonus || 0) / 100)
-  const unitsToRemove = Math.floor(damage / unitHealth)
 
+  // Add damage to accumulated damage
+  defendingStack.accumulatedDamage += damage
+
+  // Calculate units to remove based on accumulated damage
+  const unitsToRemove = Math.floor(defendingStack.accumulatedDamage / unitHealth)
   defendingStack.unitsAmount = Math.max(0, defendingStack.unitsAmount - unitsToRemove)
 
+  // Reduce accumulated damage by the health of the units killed
+  defendingStack.accumulatedDamage -= unitsToRemove * unitHealth
+  console.log(
+    'applydamage ',
+    unitHealth,
+    'acumulatedDamage',
+    defendingStack.accumulatedDamage,
+    'damage',
+    damage,
+    'unitsToRemove',
+    unitsToRemove
+  )
   console.log(
     'damage',
-    `${attackingStack.unit.name} attacked ${defendingStack.unit.name}, dealing ${damage} damage, killing ${unitsToRemove} units`
+    `${attackingStack.id}:${attackingStack.unit.name} attacked ${defendingStack.id}:${defendingStack.unit.name} , dealing ${damage} damage, killing ${unitsToRemove} units`
   )
   return unitsToRemove
 }
@@ -723,8 +779,8 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
           3,
           '',
           // `${isPlayerTurn ? 'Player' : 'Enemy'} Turn `,
-          stack.unit.name,
-          targetStack.unit.name,
+          stack.id + ':' + stack.unit.name,
+          targetStack.id + ':' + targetStack.unit.name,
           unitsKilled,
           damage
         )
