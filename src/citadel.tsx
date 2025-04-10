@@ -10,6 +10,7 @@ import {
   citadele25,
   citadele30
 } from './citadelData'
+import { lvl17HeroicElfSquad } from './monsters'
 
 export const CitadelData = ({ type }: { type: string }) => {
   const [selectedStr, setSelectedStr] = useState<string[]>([])
@@ -38,6 +39,8 @@ export const CitadelData = ({ type }: { type: string }) => {
     case 'c25':
       target = citadelc25
       break
+    case 'lvl17HeroicElfSquad':
+      target = lvl17HeroicElfSquad
   }
 
   const markStrTroop = (e: React.ChangeEvent<HTMLInputElement>) => {

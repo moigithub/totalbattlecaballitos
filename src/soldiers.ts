@@ -73,6 +73,7 @@ const riderBuilder = (
     level
   })
 }
+const errorUnit = riderBuilder('error', 'error', 0, 0, 0, 0, '0')
 const RiderG1 = riderBuilder('RiderG1', 'RiderG1', 300, 100, 65, 54, '1')
 const RiderG2 = riderBuilder('RiderG2', 'RiderG2', 540, 180, 98, 81, '2')
 const RiderG3 = riderBuilder('RiderG3', 'RiderG3', 960, 320, 146, 122, '3')
@@ -912,7 +913,7 @@ const waterElementalIII = unitBuilder<MonsterUnit>({
   level: '3'
 })
 const icePhoenixIV = unitBuilder<MonsterUnit>({
-  id: 'icePhoenix',
+  id: 'icePhoenixIV',
   clasification: 'monster',
   name: 'icePhoenixIV', //'iceFenix',
   BASESTR: 17000,
@@ -2171,6 +2172,7 @@ export interface Army {
   [key: string]: BasicUnit
 }
 export const ARMY: Army = {
+  errorUnit,
   RiderG1,
   RiderG2,
   RiderG3,

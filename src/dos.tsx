@@ -47,6 +47,7 @@ import {
   citadele30
 } from './citadelData.ts'
 import { Tips } from './tips.tsx'
+import { lvl17HeroicElfSquad } from './monsters.ts'
 export interface Result {
   status: number
   msg: string
@@ -113,6 +114,7 @@ function Dos() {
   const [gapPercent, setGapPercent] = useState(10) // card , smallcard
   const [gapStrength, setGapStrength] = useState(0)
   const [jsonExport, setJsonExport] = useState<string>('')
+  const [loading, setLoading] = useState(false)
 
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
@@ -163,6 +165,11 @@ function Dos() {
     if (selectedTarget === 'citadelc25') {
       selectedCitadel = citadelc25
     }
+    if (selectedTarget === 'lvl17HeroicElfSquad') {
+      console.log('select target lvl17heroic', lvl17HeroicElfSquad)
+      selectedCitadel = lvl17HeroicElfSquad
+    }
+
     setCitadel(selectedCitadel)
   }, [selectedTarget])
 
@@ -190,6 +197,7 @@ function Dos() {
   }
 
   const calcSTR = () => {
+    setLoading(true)
     //https://www.youtube.com/watch?app=desktop&v=8rdVjHNRXn0
     // according to youtube video, the squad with highest strength attack first
     // its not based on health, as other people said
@@ -761,13 +769,9 @@ second REMAINS second
 
     setGapStrength((getStackStrength(ARMY, 0) * gapPercent) / 100)
 
-    /**********************************************
-     * basado en vitalidad
-     * =======================
-     *  la primera posicion, siempre sera el sacrificio
-     * el sacrificio siempre incrementa de 1 en 1 sus unidades
-     *
-     */
+    setTimeout(() => {
+      setLoading(false)
+    }, 300)
   }
 
   const verifyCitadel = () => {
@@ -1110,6 +1114,7 @@ ignora lo que continua abajo de esta linea:
                   <option value='citadele30'>Elf Citadel lvl 30</option>
                   <option value='citadelc20'>Cursed Citadel lvl 20</option>
                   <option value='citadelc25'>Cursed Citadel lvl 25</option>
+                  <option value='lvl17HeroicElfSquad'>lvl 17 Heroic Elf Squad</option>
                 </select>
               </div>
 
@@ -1198,6 +1203,7 @@ ignora lo que continua abajo de esta linea:
           {selectedTarget === 'citadele30' && <CitadelData type='e30' />}
           {selectedTarget === 'citadelc20' && <CitadelData type='c20' />}
           {selectedTarget === 'citadelc25' && <CitadelData type='c25' />}
+          {selectedTarget === 'lvl17HeroicElfSquad' && <div>lvl17 Heroic Elf Squad</div>}
 
           <button
             className='px-1 py-0.5 bg-indigo-500 text-md font-bold text-white'
@@ -1251,10 +1257,11 @@ ignora lo que continua abajo de esta linea:
               <Tips />
               <div className='btn-group'>
                 <button
-                  className='inline-flex text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+                  className='inline-flex text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed'
                   onClick={calcSTR}
+                  disabled={loading}
                 >
-                  CALCULATE
+                  {loading ? '.....thinking' : 'CALCULATE'}
                 </button>
                 <button
                   className='inline-flex cursor-pointer focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300    text-lg px-3.5 py-0.5 me-2  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
@@ -1329,7 +1336,10 @@ ignora lo que continua abajo de esta linea:
               if (data.msg === '') {
                 return (
                   <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                    <span className='font-bold text-emerald-600'>{data.attacker}</span> attacked{' '}
+                    <span className='font-bold text-yellow-300'>{i + 1}</span>
+                    <span className='font-bold text-emerald-600'>
+                      {data.attacker}
+                    </span> attacked{' '}
                     <span className='font-bold text-emerald-600'>{data.defender}</span>, dealing{' '}
                     <span className='font-bold text-blue-600'>{data.damageAmount}</span> damage,
                     killing <span className='font-bold text-red-600'>{data.killedUnits}</span> units
@@ -1338,7 +1348,8 @@ ignora lo que continua abajo de esta linea:
               } else {
                 return (
                   <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                    {data.msg}
+                    <span className='font-bold text-yellow-300'>{i + 1}</span>
+                    <span>{data.msg}</span>
                   </li>
                 )
               }
