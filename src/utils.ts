@@ -1,10 +1,10 @@
 import { ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
-import { EnemyUnit } from './monsters'
+// import { EnemyUnit } from './monsters'
 import { MercUnit, Unit } from './types'
 
-export const whoCanIAttack = (unit: EnemyUnit | Unit | MercUnit): string[] => {
+export const whoCanIAttack = (unit: /*EnemyUnit |*/ Unit | MercUnit): string[] => {
   const target = []
 
   if (unit.vsRangedPercent > 0) {

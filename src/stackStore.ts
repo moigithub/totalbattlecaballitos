@@ -1,5 +1,5 @@
 import { create, StateCreator } from 'zustand'
-import { MobStack } from './monsters'
+// import { MobStack } from './monsters'
 import { devtools, persist } from 'zustand/middleware'
 import { BasicStats, Bonus, Stack, Unit } from './types'
 // import { getStrWithExtraBonus, whoCanIAttack } from './utils'
@@ -13,7 +13,7 @@ interface StackStore {
   authority: number
   dominance: number
   army: Stack[]
-  mobArmy: MobStack[]
+  // mobArmy: MobStack[]
   bonus: Bonus
   // {
   //   archer: { G1: { str: number; hp: number } }
@@ -26,7 +26,7 @@ interface StackStore {
   setLeadership: (value: number) => void
   setAuthority: (value: number) => void
   setDominance: (value: number) => void
-  setMobArmy: (data: MobStack[]) => void
+  // setMobArmy: (data: MobStack[]) => void
   setArmy: (data: Stack[]) => void
   // getArmyStrength: () => number
   // getArmyHealth: () => number
@@ -99,7 +99,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   leadership: 10000,
   authority: 10000,
   dominance: 10000,
-  mobArmy: [],
+  // mobArmy: [],
   army: [],
   bonus: {
     guardsman: {
@@ -237,10 +237,10 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   setDominance: value => {
     set(() => ({ dominance: value }))
   },
-  setMobArmy: (data: MobStack[]) => {
-    //TODO: generate id for each stack
-    set(() => ({ mobArmy: data }))
-  },
+  // setMobArmy: (data: MobStack[]) => {
+  //   //TODO: generate id for each stack
+  //   set(() => ({ mobArmy: data }))
+  // },
   setArmy: (data: Stack[]) => {
     //TODO: generate id for each stack
     set(() => ({ army: data }))
@@ -746,7 +746,7 @@ export const useStackStore = create<StackStore>()(
             const unit = ARMY[stack.unitKey as string] as Unit
             return {
               ...stack,
-              unit
+              unit: unit || ARMY.errorUnit
             }
           })
         }
