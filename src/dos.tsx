@@ -46,7 +46,7 @@ import {
   citadele25,
   citadele30
 } from './citadelData.ts'
-import { Tips } from '../tips'
+import { Tips } from './tips.tsx'
 export interface Result {
   status: number
   msg: string
