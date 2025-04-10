@@ -12,15 +12,12 @@ import {
 
 import { LargeCitadel } from './citadel'
 import { ARMY } from './soldiers'
+import { useCitadelStore } from './citadelStore'
 
 export const Citadels = () => {
   const [selectedCitadel, setSelectedCitadel] = useState('e15')
   const [citadel, setCitadel] = useState(citadele15)
   const [selectedCatapultLevel, setSelectedCatapultLevel] = useState(7)
-  const [StrBonus, setStrBonus] = useState(134.8)
-  const [HPBonus, setHPBonus] = useState(126.8)
-  const [cataMaxHealth, setCataMaxHealth] = useState(904800)
-  const [useStackHealthLimit, setUseStackHealthLimit] = useState(false)
   const [catasResult, setCatasResult] = useState({
     lvl10: 0, // ariel (merc)
     lvl9: 0, // josephine
@@ -33,84 +30,91 @@ export const Citadels = () => {
     lvl2: 0,
     lvl1: 0
   })
+  const setCitadelStrBonus = useCitadelStore(state => state.setCitadelStrBonus)
+  const setCitadelHpBonus = useCitadelStore(state => state.setCitadelHpBonus)
+  const setCitadelCataMaxHealth = useCitadelStore(state => state.setCitadelCataMaxHealth)
+  const toggleCitadelStackHealthLimit = useCitadelStore(
+    state => state.toggleCitadelStackHealthLimit
+  )
+  const { strBonus, hpBonus, cataMaxHealth, useStackHealthLimit } = useCitadelStore()
 
   const cata1 = {
-    hp: ARMY.CatapultE1.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE1.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE1.BASESTR *
       ARMY.CatapultE1.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE1.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE1.vsFortificationsPercent) / 100)
   }
   const cata2 = {
-    hp: ARMY.CatapultE2.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE2.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE2.BASESTR *
       ARMY.CatapultE2.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE2.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE2.vsFortificationsPercent) / 100)
   }
   const cata3 = {
-    hp: ARMY.CatapultE3.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE3.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE3.BASESTR *
       ARMY.CatapultE3.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE3.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE3.vsFortificationsPercent) / 100)
   }
   const cata4 = {
-    hp: ARMY.CatapultE4.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE4.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE4.BASESTR *
       ARMY.CatapultE4.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE4.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE4.vsFortificationsPercent) / 100)
   }
   const cata5 = {
-    hp: ARMY.CatapultE5.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE5.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE5.BASESTR *
       ARMY.CatapultE5.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE5.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE5.vsFortificationsPercent) / 100)
   }
   const cata6 = {
-    hp: ARMY.CatapultE6.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE6.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE6.BASESTR *
       ARMY.CatapultE6.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE6.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE6.vsFortificationsPercent) / 100)
   }
   const cata7 = {
-    hp: ARMY.CatapultE7.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE7.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE7.BASESTR *
       ARMY.CatapultE7.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE7.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE7.vsFortificationsPercent) / 100)
   }
   const cata8 = {
-    hp: ARMY.CatapultE8.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE8.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE8.BASESTR *
       ARMY.CatapultE8.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE8.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE8.vsFortificationsPercent) / 100)
   }
   const cata9 = {
-    hp: ARMY.CatapultE9.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.CatapultE9.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.CatapultE9.BASESTR *
       ARMY.CatapultE9.multiplier *
-      (1 + (StrBonus + ARMY.CatapultE9.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.CatapultE9.vsFortificationsPercent) / 100)
   }
   const cata10 = {
-    hp: ARMY.arielII.BASEHP * (1 + HPBonus / 100),
+    hp: ARMY.arielII.BASEHP * (1 + hpBonus / 100),
     str:
       ARMY.arielII.BASESTR *
       ARMY.arielII.multiplier *
-      (1 + (StrBonus + ARMY.arielII.vsFortificationsPercent) / 100)
+      (1 + (strBonus + ARMY.arielII.vsFortificationsPercent) / 100)
   }
 
   const changeStrBonus = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStrBonus(parseFloat(e.target.value))
+    setCitadelStrBonus(parseFloat(e.target.value))
   }
 
   const changeHPBonus = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHPBonus(parseFloat(e.target.value))
+    setCitadelHpBonus(parseFloat(e.target.value))
   }
 
   const changeCatapultLevel = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -395,7 +399,7 @@ export const Citadels = () => {
           <input
             type='number'
             className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            value={StrBonus}
+            value={strBonus}
             onChange={changeStrBonus}
           />
         </div>
@@ -405,7 +409,7 @@ export const Citadels = () => {
             <input
               type='number'
               className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              value={HPBonus}
+              value={hpBonus}
               onChange={changeHPBonus}
             />
           </div>
@@ -418,7 +422,7 @@ export const Citadels = () => {
             type='checkbox'
             checked={useStackHealthLimit}
             onChange={() => {
-              setUseStackHealthLimit(!useStackHealthLimit)
+              toggleCitadelStackHealthLimit()
             }}
           />
 
@@ -427,7 +431,7 @@ export const Citadels = () => {
             className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
             value={cataMaxHealth}
             onChange={e => {
-              setCataMaxHealth(parseInt(e.target.value))
+              setCitadelCataMaxHealth(parseInt(e.target.value))
             }}
           />
         </div>
