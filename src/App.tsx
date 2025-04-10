@@ -18,6 +18,7 @@ function App() {
     const locaHash = location.hash
     if (locaHash === '') {
       //check if we have anything on localstorage
+      console.log('loading from localstorage')
       const storedValue = localStorage.getItem('tbcalc')
       if (storedValue) {
         //replace the current hash with the stored value
@@ -34,7 +35,7 @@ function App() {
             const unit = ARMY[stack.unitKey as string] as Unit
             return {
               ...stack,
-              unit
+              unit: unit || ARMY.errorUnit
             }
           })
         )
@@ -102,7 +103,7 @@ function App() {
 
       <Outlet />
 
-      <Disclaimer />
+      {/* <Disclaimer /> */}
     </>
   )
 }
