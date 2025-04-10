@@ -304,25 +304,6 @@ export const getStrengthWithBonus = (stack: Stack) => {
   return stackStrength
 }
 
-// export const findTargetOfTypeWithHealth = (
-//   defender: FightStack[],
-//   type: string,
-//   damage: number
-// ) => {
-//   return defender.find(stack => {
-//     const stackHealth = stack.unit.BASEHP * stack.unitsAmount
-//     // console.log('findTargetOfTypeWithHealth', type, stackHealth, '>', damage)
-//     return stack.unit.category.includes(type) && stackHealth >= damage
-//   })
-// }
-
-// export const findTargetWithHealth = (defender: FightStack[], damage: number) => {
-//   return defender.find(stack => {
-//     const stackHealth = stack.unit.BASEHP * stack.unitsAmount
-//     return stackHealth >= damage
-//   })
-// }
-
 export const prepareArmyData = (army: Stack[]): FightStack[] => {
   return army.map(stack => {
     return {
@@ -349,115 +330,19 @@ export const prepareArmyData = (army: Stack[]): FightStack[] => {
         vsElementalPercent: stack.unit.vsElementalPercent,
         vsDragonPercent: stack.unit.vsDragonPercent
       },
+      id: stack.id,
       unitsAmount: stack.unitsAmount,
       stackHealth: 0,
       damage: 0,
-      turn: 0
+      turn: 0,
+      hasAttacked: false
     }
   })
 }
 
-export const haveTroopsAlive = (army: FightStack[]) => {
+export const haveTroopsAlive = (army: FightStack[]): boolean => {
   return army.some(stack => stack.unitsAmount > 0)
 }
-
-// export const getStrongestTroopAlive = (army: FightStack[], turn: number) => {
-//   // console.log('getStrongestTroopAlive', army)
-//   const armyAlive = army.filter(stack => stack.unitsAmount > 0 && stack.turn === turn)
-//   if (!armyAlive.length) return null
-//   return armyAlive.reduce(
-//     (a, b) => (a.unitsAmount * a.unit.BASESTR > b.unitsAmount * b.unit.BASESTR ? a : b),
-//     armyAlive[0]
-//   )
-// }
-
-// export const fight = (attacker: FightStack, defender: FightStack[], checkResult: Result[]) => {
-//   // check what kind of str featured bonus i have, and calculate damage
-//   const myDamage = getStackDamage(attacker)
-//   // console.log('damages i can do', myDamage)
-
-//   let iHitSomething = false
-//   let dmgCount = 0
-
-//   while (!iHitSomething && dmgCount < myDamage.length) {
-//     // console.log('searching for troop type', myDamage[dmgCount].type, defender)
-//     const target = findTargetOfTypeWithHealth(
-//       defender,
-//       myDamage[dmgCount].type,
-//       myDamage[dmgCount].damage
-//     )
-//     if (target /* found */) {
-//       const unitsKilled = Math.trunc(myDamage[dmgCount].damage / target.unit.BASEHP)
-//       checkResult.push({
-//         status: 1,
-//         msg:
-//           `${attacker.unit.name} attack ${target.unit.name}` +
-//           ` by ${myDamage[dmgCount].damage} featured damage,` +
-//           ` killing ${unitsKilled}`
-//       })
-//       // console.log('target found stage1', target)
-//       attacker.turn++
-//       target.damage += myDamage[dmgCount].damage
-//       target.unitsAmount -= unitsKilled
-//       iHitSomething = true
-
-//       break
-//     }
-
-//     dmgCount++
-//   }
-
-//   // if damage is lower than available health
-//   if (!iHitSomething) {
-//     // console.log('killing first troop stage2', 'attacker', attacker)
-//     // regular damage
-//     const damage = Math.trunc(
-//       attacker.unitsAmount * attacker.unit.BASESTR * (1 + (attacker.unit?.strBonus ?? 0) / 100)
-//     )
-//     const target = findTargetWithHealth(defender, damage)
-//     if (target /* found */) {
-//       const unitsKilled = Math.trunc(damage / target.unit.BASEHP)
-
-//       checkResult.push({
-//         status: 1,
-//         msg:
-//           `${attacker.unit.name} attack ${target.unit.name}` +
-//           ` by ${damage},` +
-//           ` killing ${unitsKilled}`
-//       })
-//       // console.log('target found stage2', target)
-
-//       attacker.turn++
-//       target.damage += damage
-//       target.unitsAmount -= unitsKilled
-//       iHitSomething = true
-//     }
-//   }
-
-//   // if damage is higher than available health
-//   if (!iHitSomething) {
-//     // console.log('killing first troop stage3')
-//     // regular damage
-//     const target = findTargetWithHealth(defender, 1)
-//     if (target /* found */) {
-//       const targetHealth = target.unit.BASEHP * target.unitsAmount - target.damage
-//       const unitsKilled = target.unitsAmount
-//       checkResult.push({
-//         status: 1,
-//         msg:
-//           `${attacker.unit.name} attack ${target.unit.name}` +
-//           ` by ${targetHealth},` +
-//           ` killing ${unitsKilled}`
-//       })
-//       // console.log('target found stage3', target)
-
-//       attacker.turn++
-//       target.damage += targetHealth
-//       target.unitsAmount = 0
-//       iHitSomething = true
-//     }
-//   }
-// }
 
 export const getBonusByCategory = (stack: FightStack, category: string): number => {
   const categoryMap: { [key: string]: keyof ObjProps } = {
@@ -488,9 +373,17 @@ const calcStrengthWithBonus = (stack: FightStack, bonuses: number): number => {
 const calcStackStrengthWithBonus = (stack: FightStack, bonuses: number): number => {
   return stack.unitsAmount * calcStrengthWithBonus(stack, bonuses)
 }
+const calcHealthWithBonus = (stack: FightStack, bonuses: number): number => {
+  return stack.unit.BASEHP * (1 + bonuses / 100)
+}
+const calcStackHealthWithBonus = (stack: FightStack, bonuses: number): number => {
+  return stack.unitsAmount * calcHealthWithBonus(stack, bonuses)
+}
 
-const getStrongestStack = (stacks: FightStack[]): FightStack =>
-  stacks.reduce((a, b) => {
+const getStrongestStack = (stacks: FightStack[]): FightStack | null => {
+  if (stacks.length === 0) return null
+
+  return stacks.reduce((a, b) => {
     const featBonus = 0 // getBonusByCategory(b, b.unit.category)
     const bonus = b.unit.strBonus || 0
 
@@ -499,6 +392,7 @@ const getStrongestStack = (stacks: FightStack[]): FightStack =>
       ? a
       : b
   })
+}
 
 export const selectTarget = (
   attackingStack: FightStack,
@@ -533,14 +427,8 @@ export const selectTarget = (
 
   const totalStrength = calcStackStrengthWithBonus(attackingStack, bonusStr)
 
-  // const enemiesWithEnoughHealth = enemyIHaveFeatureBonusAgainst.filter(
-  //   stack =>
-  //     stack.unitsAmount * stack.unit.BASEHP * (1 + (stack.unit.strBonus || 0) / 100) >=
-  //     totalStrength
-  // )
-
   const enemiesWithEnoughHealth = enemyIHaveFeatureBonusAgainst.filter(
-    stack => calcStackStrengthWithBonus(stack, stack.unit.strBonus || 0) >= totalStrength
+    stack => calcStackHealthWithBonus(stack, stack.unit.hpBonus || 0) >= totalStrength
   )
   // console.log('the enemies i have feature bonus against and enough health', enemiesWithEnoughHealth)
   if (enemiesWithEnoughHealth.length === 0) return getStrongestStack(stacksAlive)
@@ -629,7 +517,8 @@ export const applyDamage = (
   return unitsToRemove
 }
 
-export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] => {
+/*
+export const fight2 = (attacker: FightStack[], defender: FightStack[]): Result[] => {
   const checkResult: Result[] = []
   let loopProtect = 20
   // console.log('fight', attacker, defender)
@@ -639,6 +528,10 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
   const enemyQueue: FightStack[] = defender.filter(stack => stack.unitsAmount > 0)
 
   while (haveTroopsAlive(attacker) && haveTroopsAlive(defender)) {
+    // Resetear estado de ataque para todos los stacks vivos
+    // attacker.forEach(stack => stack.unitsAmount > 0 && (stack.hasAttacked = false))
+    // defender.forEach(stack => stack.unitsAmount > 0 && (stack.hasAttacked = false))
+
     // Process player's turn
     let playerStack: FightStack | undefined
     while (playerQueue.length > 0) {
@@ -647,11 +540,13 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
       playerStack = undefined // Skip dead stacks
     }
 
+    // if (playerStack && !playerStack.hasAttacked) {
     if (playerStack) {
       const targetStack = selectTarget(playerStack, enemyQueue)
       if (targetStack) {
         const damage = calculateEffectiveDamage(playerStack, targetStack)
         const unitsKilled = applyDamage(playerStack, targetStack, damage)
+        // playerStack.hasAttacked = true
 
         addReportData(
           checkResult,
@@ -684,11 +579,13 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
       enemyStack = undefined // Skip dead stacks
     }
 
+    // if (enemyStack && !enemyStack.hasAttacked) {
     if (enemyStack) {
       const targetStack = selectTarget(enemyStack, playerQueue)
       if (targetStack) {
         const damage = calculateEffectiveDamage(enemyStack, targetStack)
         const unitsKilled = applyDamage(enemyStack, targetStack, damage)
+        // enemyStack.hasAttacked = true
 
         addReportData(
           checkResult,
@@ -719,5 +616,150 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
       break
     }
   }
+  return checkResult
+}
+*/
+
+//----------------------
+// combat system
+
+// Finalizar el turno actual
+const endTurn = (isPlayerTurn: boolean): boolean => {
+  return !isPlayerTurn // Alternar entre Player y Enemy
+}
+
+// Obtener el siguiente turno
+const getNextTurn = (
+  isPlayerTurn: boolean,
+  playerStacks: FightStack[],
+  enemyStacks: FightStack[],
+  currentPlayerIndex: number,
+  currentEnemyIndex: number,
+  attackedStacks: Set<FightStack> // Añadir este parámetro
+): { stack: FightStack | null; newPlayerIndex: number; newEnemyIndex: number } => {
+  const stacks = isPlayerTurn ? playerStacks : enemyStacks
+  const currentIndex = isPlayerTurn ? currentPlayerIndex : currentEnemyIndex
+
+  // Buscar el siguiente stack con vida que no haya atacado
+  for (let i = currentIndex; i < stacks.length; i++) {
+    if (stacks[i].unitsAmount > 0 && !attackedStacks.has(stacks[i])) {
+      return {
+        stack: stacks[i],
+        newPlayerIndex: isPlayerTurn ? i : currentPlayerIndex,
+        newEnemyIndex: isPlayerTurn ? currentEnemyIndex : i
+      }
+    }
+  }
+
+  // Si no se encuentra, reiniciar la búsqueda desde el principio
+  for (let i = 0; i < currentIndex; i++) {
+    if (stacks[i].unitsAmount > 0 && !attackedStacks.has(stacks[i])) {
+      return {
+        stack: stacks[i],
+        newPlayerIndex: isPlayerTurn ? i : currentPlayerIndex,
+        newEnemyIndex: isPlayerTurn ? currentEnemyIndex : i
+      }
+    }
+  }
+
+  // Si no hay stacks vivos disponibles o todos ya han atacado
+  return {
+    stack: null,
+    newPlayerIndex: currentPlayerIndex,
+    newEnemyIndex: currentEnemyIndex
+  }
+}
+
+export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] => {
+  const checkResult: Result[] = []
+  const playerStacks: FightStack[] = attacker
+  const enemyStacks: FightStack[] = defender
+  let currentPlayerIndex: number = 0
+  let currentEnemyIndex: number = 0
+  let isPlayerTurn: boolean = true // Alternar entre Player y Enemy
+
+  let cycle = 1
+  let outerLoopProtect = 200
+
+  while (haveTroopsAlive(attacker) && haveTroopsAlive(defender)) {
+    console.log(`\nCiclo ${cycle}:`)
+    addReportData(checkResult, 1, `Ciclo ${cycle}:`)
+
+    const attackedStacks = new Set<FightStack>() // Rastrear stacks que ya han atacado
+    let allStacksAttacked = false // Indica si todos los stacks han atacado en este ciclo
+
+    let innerLoopProtect = 200
+    let innerCycle = 1
+    while (!allStacksAttacked) {
+      const { stack, newPlayerIndex, newEnemyIndex } = getNextTurn(
+        isPlayerTurn,
+        playerStacks,
+        enemyStacks,
+        currentPlayerIndex,
+        currentEnemyIndex,
+        attackedStacks // Pasar el conjunto de stacks que ya han atacado
+      )
+
+      // Actualizar índices
+      currentPlayerIndex = newPlayerIndex
+      currentEnemyIndex = newEnemyIndex
+
+      // Si no hay stacks vivos disponibles, salir del bucle
+      if (!stack) {
+        allStacksAttacked = true
+        break
+      }
+      console.log('inner cycle', innerCycle, 'stack', stack)
+
+      // Procesar el stack si está vivo y no ha atacado en este ciclo
+      const targetStack = selectTarget(stack, isPlayerTurn ? defender : attacker)
+      console.log('inner cycle', innerCycle, 'targetStack', targetStack)
+      if (targetStack) {
+        const damage = calculateEffectiveDamage(stack, targetStack)
+        const unitsKilled = applyDamage(stack, targetStack, damage)
+
+        addReportData(
+          checkResult,
+          3,
+          '',
+          // `${isPlayerTurn ? 'Player' : 'Enemy'} Turn `,
+          stack.unit.name,
+          targetStack.unit.name,
+          unitsKilled,
+          damage
+        )
+
+        attackedStacks.add(stack) // Marcar el stack como atacado
+      }
+
+      // Verificar si todos los stacks han atacado en este ciclo
+      const totalStacks = playerStacks.length + enemyStacks.length
+      if (attackedStacks.size >= totalStacks) {
+        allStacksAttacked = true // Todos los stacks han atacado
+      }
+
+      // Alternar turno
+      isPlayerTurn = endTurn(isPlayerTurn)
+
+      if (innerLoopProtect-- <= 0) {
+        console.log('innerLoopProtect')
+        break
+      }
+
+      innerCycle++
+    }
+
+    cycle++
+
+    if (outerLoopProtect-- <= 0) {
+      console.log('outerLoopProtect')
+      break
+    }
+  }
+
+  const winner = haveTroopsAlive(attacker) ? 'Player' : 'Enemy'
+  console.log(`\n¡La batalla ha terminado! El ganador es el bando ${winner}.`)
+  addReportData(checkResult, 4, 'WINNER: ' + winner)
+
   return checkResult
 }
