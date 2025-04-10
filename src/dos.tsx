@@ -55,6 +55,7 @@ export interface Result {
   defender: string
   killedUnits: number
   damageAmount: number
+  reportType: string
 }
 
 export const addReportData = (
@@ -64,7 +65,8 @@ export const addReportData = (
   attacker: string = '',
   defender: string = '',
   killedUnits: number = 0,
-  damageAmount: number = 0
+  damageAmount: number = 0,
+  reportType: string = ''
 ) => {
   checkResult.push({
     status,
@@ -72,7 +74,8 @@ export const addReportData = (
     attacker,
     defender,
     killedUnits,
-    damageAmount
+    damageAmount,
+    reportType
   })
 }
 
@@ -1060,6 +1063,8 @@ ignora lo que continua abajo de esta linea:
     }
   }
 
+  let counter = 0 // lines enumeration visual only
+
   return (
     <>
       <ArmyList />
@@ -1333,22 +1338,25 @@ ignora lo que continua abajo de esta linea:
                 color = 'text-yellow-300'
               }
 
+              if (data.reportType === 'item') {
+                counter++
+              }
               if (data.msg === '') {
                 return (
                   <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                    <span className='font-bold text-yellow-300'>{i + 1}</span>
-                    <span className='font-bold text-emerald-600'>
-                      {data.attacker}
-                    </span> attacked{' '}
+                    {data.reportType === 'item' && (
+                      <span className='font-bold text-yellow-300 mr-2'>{counter}: </span>
+                    )}
+                    <span className='font-bold text-emerald-600'>{data.attacker}</span> attacked{' '}
                     <span className='font-bold text-emerald-600'>{data.defender}</span>, dealing{' '}
-                    <span className='font-bold text-blue-600'>{data.damageAmount}</span> damage,
-                    killing <span className='font-bold text-red-600'>{data.killedUnits}</span> units
+                    <span className='font-bold text-blue-600'>{data.damageAmount.toFixed(0)}</span>{' '}
+                    damage, killing{' '}
+                    <span className='font-bold text-red-600'>{data.killedUnits}</span> units
                   </li>
                 )
               } else {
                 return (
                   <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                    <span className='font-bold text-yellow-300'>{i + 1}</span>
                     <span>{data.msg}</span>
                   </li>
                 )

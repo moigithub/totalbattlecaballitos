@@ -433,7 +433,7 @@ export const ArmyList = () => {
 
   const shouldShow = (type: string) => (unit: BasicUnit) => {
     let show = true
-    const unitname = unit.name
+    const unitname = unit.name.toLowerCase()
 
     if (filterTypes.length > 0) {
       if (unit.category === '') {
@@ -492,7 +492,7 @@ export const ArmyList = () => {
     return show
   }
 
-  const selectedStacks = army.map(stack => stack.unit.name)
+  const selectedStacks = army.map(stack => stack.unit.name.toLowerCase())
   // console.log('selected army', selectedStacks)
 
   // console.log('selected filter types', filterTypes)
