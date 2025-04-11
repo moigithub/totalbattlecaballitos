@@ -55,7 +55,8 @@ export type Clasification = 'merc' | 'army' | 'monster'
 export interface BasicUnit {
   id: string
   clasification: Clasification // army,merc,monster (para saber si es leadership,authority,dominance)
-  name: string
+  name: string // name in english
+  nameEs: string // name in spanish
   BASEHP: number
   BASESTR: number
   LEADERSHIP: number
