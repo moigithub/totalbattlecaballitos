@@ -510,9 +510,14 @@ export const calculateEffectiveDamage = (
 ): number => {
   const bonusStr = attackingStack.unit.strBonus || 0
   const featureBonus = getBonusByCategory(attackingStack, defendingStack.unit.category) || 0
+  const featureBonus2 = getBonusByCategory(attackingStack, defendingStack.unit.subGroup) || 0
+
   // const totalStrength =
   //   attackingStack.unitsAmount * attackingStack.unit.BASESTR * (1 + (bonusStr + featureBonus) / 100)
-  const totalStrength = calcStackStrengthWithBonus(attackingStack, bonusStr + featureBonus)
+  const totalStrength = calcStackStrengthWithBonus(
+    attackingStack,
+    bonusStr + featureBonus + featureBonus2
+  )
   const totalHealth =
     defendingStack.unitsAmount *
       defendingStack.unit.BASEHP *
@@ -760,33 +765,30 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
       currentPlayerIndex = newPlayerIndex
       currentEnemyIndex = newEnemyIndex
 
-      // Si no hay stacks vivos disponibles, salir del bucle
-      if (!stack) {
-        allStacksAttacked = true
-        break
-      }
       console.log('inner cycle', innerCycle, 'stack', stack)
 
-      // Procesar el stack si está vivo y no ha atacado en este ciclo
-      const targetStack = selectTarget(stack, isPlayerTurn ? defender : attacker)
-      console.log('inner cycle', innerCycle, 'targetStack', targetStack)
-      if (targetStack) {
-        const damage = calculateEffectiveDamage(stack, targetStack)
-        const unitsKilled = applyDamage(stack, targetStack, damage)
+      if (stack) {
+        // Procesar el stack si está vivo y no ha atacado en este ciclo
+        const targetStack = selectTarget(stack, isPlayerTurn ? defender : attacker)
+        console.log('inner cycle', innerCycle, 'targetStack', targetStack)
+        if (targetStack) {
+          const damage = calculateEffectiveDamage(stack, targetStack)
+          const unitsKilled = applyDamage(stack, targetStack, damage)
 
-        addReportData(
-          checkResult,
-          3,
-          '',
-          // `${isPlayerTurn ? 'Player' : 'Enemy'} Turn `,
-          /*stack.id + ':' +*/ stack.unit.name,
-          /*targetStack.id + ':' +*/ targetStack.unit.name,
-          unitsKilled,
-          damage,
-          'item'
-        )
+          addReportData(
+            checkResult,
+            3,
+            '',
+            // `${isPlayerTurn ? 'Player' : 'Enemy'} Turn `,
+            /*stack.id + ':' +*/ stack.unit.name,
+            /*targetStack.id + ':' +*/ targetStack.unit.name,
+            unitsKilled,
+            damage,
+            'item'
+          )
 
-        attackedStacks.add(stack) // Marcar el stack como atacado
+          attackedStacks.add(stack) // Marcar el stack como atacado
+        }
       }
 
       // Verificar si todos los stacks han atacado en este ciclo
@@ -795,6 +797,11 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
         allStacksAttacked = true // Todos los stacks han atacado
       }
 
+      //  // Si no hay stacks vivos disponibles, salir del bucle
+      //  if (!stack) {
+      //   allStacksAttacked = true
+      //   break
+      // }
       // Alternar turno
       isPlayerTurn = endTurn(isPlayerTurn)
 
