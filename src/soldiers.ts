@@ -2050,7 +2050,7 @@ const slavicWarriorII: MercUnit = unitBuilder<MercUnit>({
   id: 'slavicWarriorII',
   clasification: 'merc',
   name: 'slavicWarriorII',
-  nameEs: 'slavicWarriorII',
+  nameEs: 'guerrero eslavo II',
   BASEHP: 33000,
   BASESTR: 11000,
   AUTHORITY: 1,
@@ -2065,7 +2065,7 @@ const pounderII: MercUnit = unitBuilder<MercUnit>({
   id: 'pounderII',
   clasification: 'merc',
   name: 'pounderII',
-  nameEs: 'pounderII',
+  nameEs: 'artillero II',
   BASEHP: 33000,
   BASESTR: 11000,
   AUTHORITY: 1,
@@ -2080,7 +2080,7 @@ const highlanderII: MercUnit = unitBuilder<MercUnit>({
   id: 'highlanderII',
   clasification: 'merc',
   name: 'highlanderII',
-  nameEs: 'highlanderII',
+  nameEs: 'montañes II',
   BASEHP: 33000,
   BASESTR: 11000,
   AUTHORITY: 1,
@@ -2105,11 +2105,24 @@ const wardenII: MercUnit = unitBuilder<MercUnit>({
   group: 'mercs', // 'elves',
   level: '9'
 })
+const graceII: MercUnit = unitBuilder<MercUnit>({
+  id: 'graceII',
+  clasification: 'merc',
+  name: 'graceII',
+  nameEs: 'graceII',
+  BASEHP: 16530,
+  BASESTR: 5510,
+  AUTHORITY: 5,
+  INITIATIVE: 10,
+  category: 'scout',
+  group: 'mercs',
+  level: '9'
+})
 const galloperII: MercUnit = unitBuilder<MercUnit>({
   id: 'galloperII',
   clasification: 'merc',
   name: 'galloperII',
-  nameEs: 'galloperII',
+  nameEs: 'bucaneiro II',
   BASEHP: 66000,
   BASESTR: 22000,
   AUTHORITY: 2,
@@ -2124,7 +2137,7 @@ const quicksandII: MercUnit = unitBuilder<MercUnit>({
   id: 'quicksandII',
   clasification: 'merc',
   name: 'quicksandII',
-  nameEs: 'quicksandII',
+  nameEs: 'beduino II',
   BASEHP: 66000,
   BASESTR: 22000,
   AUTHORITY: 2,
@@ -2313,5 +2326,6 @@ export const ARMY: Army = {
   wardenII,
   galloperII,
   quicksandII,
-  scarfaceII
+  scarfaceII,
+  graceII
 }

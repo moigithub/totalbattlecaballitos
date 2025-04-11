@@ -40,7 +40,8 @@ export const MercList = () => {
     ARMY.galloperII,
     ARMY.quicksandII,
     ARMY.scarfaceII,
-    ARMY.pounderII
+    ARMY.pounderII,
+    ARMY.graceII
   ]
 
   mercList.sort((a, b) => a.BASEHP - b.BASEHP)

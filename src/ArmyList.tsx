@@ -310,6 +310,8 @@ export const ArmyList = () => {
       unitType = ARMY.scarfaceII
     } else if (type === 'pounderII') {
       unitType = ARMY.pounderII
+    } else if (type === 'graceII') {
+      unitType = ARMY.graceII
     }
 
     // MONSTERS ------------------------------
@@ -497,8 +499,10 @@ export const ArmyList = () => {
 
     if (
       show &&
-      (!unit.name.toLowerCase().includes(search.toLowerCase()) ||
-        !unit.nameEs.toLowerCase().includes(search.toLowerCase()))
+      !(
+        unit.name.toLowerCase().includes(search.toLowerCase()) ||
+        unit.nameEs.toLowerCase().includes(search.toLowerCase())
+      )
     ) {
       show = false
     }
@@ -528,8 +532,10 @@ export const ArmyList = () => {
 
     if (
       show &&
-      (!unit.name.toLowerCase().includes(search.toLowerCase()) ||
-        !unit.nameEs.toLowerCase().includes(search.toLowerCase()))
+      !(
+        unit.name.toLowerCase().includes(search.toLowerCase()) ||
+        unit.nameEs.toLowerCase().includes(search.toLowerCase())
+      )
     ) {
       show = false
     }
@@ -2697,6 +2703,16 @@ export const ArmyList = () => {
                   }}
                 >
                   pounderII
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.graceII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('graceII')
+                  }}
+                >
+                  graceII
                 </button>
               )}
             </div>
