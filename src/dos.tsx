@@ -1276,6 +1276,22 @@ ignora lo que continua abajo de esta linea:
                 >
                   Clear
                 </button>
+                <button
+                  className='inline-flex cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
+                  onClick={() => {
+                    setArmy(
+                      armyRef.current.toSorted((a, b) => {
+                        // sort based on unit total health descending
+                        return (
+                          b.unit.BASEHP * (1 + b.hpBonus / 100) -
+                          a.unit.BASEHP * (1 + a.hpBonus / 100)
+                        )
+                      })
+                    )
+                  }}
+                >
+                  dont touch me
+                </button>
               </div>
             </div>
 
