@@ -3,10 +3,30 @@ import { BasicUnit, Stack, Unit } from './types'
 import './armyList.css'
 import { useEffect, useState } from 'react'
 import { ARMY } from './soldiers'
+import { whoCanIAttack } from './utils'
 // import { useState } from 'react'
 
 export const ArmyList = () => {
   const [search, setSearch] = useState('')
+  const [filterVsTypes, setFilterVsTypes] = useState<string[]>(() => {
+    // getting stored value
+    const saved = localStorage.getItem('filterVsTypes')
+    return saved
+      ? JSON.parse(saved)
+      : [
+          'Melee',
+          'Ranged',
+          'Flying',
+          'Mounted',
+          'Siege',
+          'Fortifications',
+          'Dragon',
+          'Elemental',
+          'Giant',
+          'Beast' //human,epic
+        ]
+  })
+
   const [filterTypes, setFilterTypes] = useState<string[]>(() => {
     // getting stored value
     const saved = localStorage.getItem('filterTypes')
@@ -392,6 +412,15 @@ export const ArmyList = () => {
       setFilterTypes(filterTypes.filter(troop => troop !== e.target.value))
     }
   }
+  const markVsTypes = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      if (!filterVsTypes.includes(e.target.value)) {
+        setFilterVsTypes([...filterVsTypes, e.target.value])
+      }
+    } else {
+      setFilterVsTypes(filterVsTypes.filter(troop => troop !== e.target.value))
+    }
+  }
   const markGroups = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       if (!filterGroups.includes(e.target.value)) {
@@ -433,7 +462,6 @@ export const ArmyList = () => {
 
   const shouldShow = (type: string) => (unit: BasicUnit) => {
     let show = true
-    const unitname = unit.name.toLowerCase()
 
     if (filterTypes.length > 0) {
       if (unit.category === '') {
@@ -461,10 +489,20 @@ export const ArmyList = () => {
       //
     }
 
-    if (show && !unitname.toLowerCase().includes(search.toLowerCase())) {
+    const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
+    console.log('army filterfeatbonus', featBonus, filterVsTypes)
+    if (show && featBonus.length > 0 && !filterVsTypes.some(vsType => featBonus.includes(vsType))) {
       show = false
     }
-    if (show && selectedStacks.includes(unitname)) {
+
+    if (
+      show &&
+      (!unit.name.toLowerCase().includes(search.toLowerCase()) ||
+        !unit.nameEs.toLowerCase().includes(search.toLowerCase()))
+    ) {
+      show = false
+    }
+    if (show && selectedStacks.includes(unit.name.toLowerCase())) {
       show = false
     }
     return show
@@ -472,7 +510,6 @@ export const ArmyList = () => {
 
   const shouldShowMonster = (unit: BasicUnit) => {
     let show = true
-    const unitname = unit.name.toLowerCase()
 
     if (filterTypes.length === 0) {
       show = filterGroups.includes(unit.subGroup) //dragon, elemental, beast, giant
@@ -483,10 +520,20 @@ export const ArmyList = () => {
     if (show && !filterMonsterLevels.includes(unit.level)) {
       show = false
     }
-    if (show && !unitname.toLowerCase().includes(search.toLowerCase())) {
+
+    const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
+    if (show && featBonus.length > 0 && !filterVsTypes.some(vsType => featBonus.includes(vsType))) {
       show = false
     }
-    if (show && selectedStacks.includes(unitname)) {
+
+    if (
+      show &&
+      (!unit.name.toLowerCase().includes(search.toLowerCase()) ||
+        !unit.nameEs.toLowerCase().includes(search.toLowerCase()))
+    ) {
+      show = false
+    }
+    if (show && selectedStacks.includes(unit.name.toLowerCase())) {
       show = false
     }
     return show
@@ -640,6 +687,133 @@ export const ArmyList = () => {
                 value={'giant'}
                 checked={filterGroups.includes('giant')}
                 onChange={markGroups}
+              />
+            </label>
+          </div>
+        </div>
+        <div className='flex flex-wrap p-0.5 w-full border border-b-emerald-400 my-2'>
+          <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+            by Target Bonus/Feat.damage
+          </p>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsMelee
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Melee'}
+                checked={filterVsTypes.includes('Melee')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsRanged
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Ranged'}
+                checked={filterVsTypes.includes('Ranged')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsFlying
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Flying'}
+                checked={filterVsTypes.includes('Flying')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsMounted
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Mounted'}
+                checked={filterVsTypes.includes('Mounted')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsSiege
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Siege'}
+                checked={filterVsTypes.includes('Siege')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsFortification
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Fortifications'}
+                checked={filterVsTypes.includes('Fortifications')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsDragon
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Dragon'}
+                checked={filterVsTypes.includes('Dragon')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsElemental
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Elemental'}
+                checked={filterVsTypes.includes('Elemental')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsBeast
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Beast'}
+                checked={filterVsTypes.includes('Beast')}
+                onChange={markVsTypes}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              vsGiant
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'Giant'}
+                checked={filterVsTypes.includes('Giant')}
+                onChange={markVsTypes}
               />
             </label>
           </div>
@@ -968,7 +1142,7 @@ export const ArmyList = () => {
         <h2 className='header-title'>Army</h2>
         <div className='army-list'>
           <div className='guardsmen'>
-            <p className='group-title'>Spearman</p>
+            <p className='group-title'>Spearman/Lanceros</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.SpearmanG1) && (
                 <button
@@ -1028,7 +1202,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>Archer</p>
+            <p className='group-title'>Archer/Arqueros</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.ArcherG1) && (
                 <button
@@ -1088,7 +1262,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>Rider</p>
+            <p className='group-title'>Rider/Jinetes</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.RiderG1) && (
                 <button
@@ -1148,7 +1322,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>battle Griffin</p>
+            <p className='group-title'>battle Griffin/Grifo de batalla</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.battleGriffinV) && (
                 <button
@@ -1186,7 +1360,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>Heavy arbalester</p>
+            <p className='group-title'>Heavy arbalester/Arbalestero pesado</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.heavyArbalesterVI) && (
                 <button
@@ -1213,7 +1387,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>Heavy Halberdier</p>
+            <p className='group-title'>Heavy Halberdier/Alabardero pesado</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.heavyHalberdierVI) && (
                 <button
@@ -1240,7 +1414,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>Mounted Knight</p>
+            <p className='group-title'>Mounted Knight/Caballero montado</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.mountedKnightVI) && (
                 <button
@@ -1267,7 +1441,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>Purifier</p>
+            <p className='group-title'>Purifier/Purificador</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.purifierI) && (
                 <button
@@ -1294,7 +1468,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>Punisher</p>
+            <p className='group-title'>Punisher/Castigador</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.punisherI) && (
                 <button
@@ -1321,7 +1495,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='guardsmen'>
-            <p className='group-title'>Smiter</p>
+            <p className='group-title'>Smiter/Aplastador</p>
             <div className='btn-group'>
               {shouldShow('guards')(ARMY.smiterI) && (
                 <button
@@ -1375,7 +1549,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>Swordsman</p>
+            <p className='group-title'>Swordsman/Espadachin</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.SwordmanS1) && (
                 <button
@@ -1431,7 +1605,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>Spy</p>
+            <p className='group-title'>Spy/Espia</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.SpyS1) && (
                 <button
@@ -1457,7 +1631,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>deadshot</p>
+            <p className='group-title'>deadshot/ballestero elite</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.deadshotV) && (
                 <button
@@ -1493,7 +1667,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>lionRider</p>
+            <p className='group-title'>lionRider/Jinete leon</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.lionRiderV) && (
                 <button
@@ -1529,7 +1703,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>vultures</p>
+            <p className='group-title'>vultures/Buitres</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.vulturesV) && (
                 <button
@@ -1565,7 +1739,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>heavy Knight</p>
+            <p className='group-title'>heavy Knight/caballero pesado</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.heavyKnightVI) && (
                 <button
@@ -1591,7 +1765,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>swift Jaeger</p>
+            <p className='group-title'>swift Jaeger/cazador rapido</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.swiftJaegerVI) && (
                 <button
@@ -1617,7 +1791,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>legitimist</p>
+            <p className='group-title'>legitimist/legitimista</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.legitimistI) && (
                 <button
@@ -1643,7 +1817,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>duelist</p>
+            <p className='group-title'>duelist/duelista</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.duelistI) && (
                 <button
@@ -1669,7 +1843,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>whitemane</p>
+            <p className='group-title'>whitemane/manto blanco</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.whitemaneI) && (
                 <button
@@ -1695,7 +1869,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>royal Lion</p>
+            <p className='group-title'>royal Lion/leon real</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.royalLionI) && (
                 <button
@@ -1721,7 +1895,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='specialists'>
-            <p className='group-title'>panoptic</p>
+            <p className='group-title'>panoptic/omnividente</p>
             <div className='btn-group'>
               {shouldShow('specialists')(ARMY.panopticI) && (
                 <button
@@ -1747,7 +1921,7 @@ export const ArmyList = () => {
           </div>
 
           <div className='engineer'>
-            <p className='group-title'>Catapult</p>
+            <p className='group-title'>Catapult/catapulta</p>
             <div className='btn-group'>
               {shouldShow('engineers')(ARMY.CatapultE1) && (
                 <button
