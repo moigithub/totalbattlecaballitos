@@ -225,6 +225,7 @@ export const GameCombatInfo = () => {
           lowering the amount you sending, and use as many catapults stack needed to compensate your
           previous damage, -- having lower health than centaur damage, centaur will skip your
           catapults and find another target where it can do more damage,
+          <img src='./layerCats.jpg' alt='layer catapults' />
         </li>
       </ul>
     </div>
