@@ -787,6 +787,7 @@ second REMAINS second
 
     // BOTH sides my army, citadel already ordered based on stack strength, so no need to do anything
     // INFO: I DO first attack
+    addReportData(checkResult, 2, 'DOUBLE DAMAGE IS NOT CONSIDERED')
     addReportData(checkResult, 0, 'simulation i attack first')
 
     // prepare army units for fighting, format data to have same structure as citadel

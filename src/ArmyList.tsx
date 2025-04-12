@@ -492,7 +492,7 @@ export const ArmyList = () => {
     }
 
     const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
-    console.log('army filterfeatbonus', featBonus, filterVsTypes)
+    // console.log('army filterfeatbonus', featBonus, filterVsTypes)
     if (show && featBonus.length > 0 && !filterVsTypes.some(vsType => featBonus.includes(vsType))) {
       show = false
     }
