@@ -1,4 +1,3 @@
-import { get } from 'http'
 import { FightStack, ObjProps } from './citadelData'
 import { addReportData, Result } from './dos'
 // import { Result } from './dos'
