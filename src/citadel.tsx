@@ -169,6 +169,27 @@ export const CitadelData = ({ type }: { type: string }) => {
 }
 
 export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
+  const [selectedStr, setSelectedStr] = useState<string[]>([])
+  const [selectedHp, setSelectedHp] = useState<string[]>([])
+
+  const markStrTroop = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      if (!selectedStr.includes(e.target.value)) {
+        setSelectedStr([...selectedStr, e.target.value])
+      }
+    } else {
+      setSelectedStr(selectedStr.filter(troop => troop !== e.target.value))
+    }
+  }
+  const markHpTroop = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      if (!selectedHp.includes(e.target.value)) {
+        setSelectedHp([...selectedHp, e.target.value])
+      }
+    } else {
+      setSelectedHp(selectedHp.filter(troop => troop !== e.target.value))
+    }
+  }
   return (
     <table>
       <thead>
@@ -179,7 +200,9 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
           <th>Base strength</th>
           <th>Base health</th>
           <th>Total health</th>
+          <th></th>
           <th>Regular Damage</th>
+          <th></th>
           <th>Dmg + bonus</th>
         </tr>
       </thead>
@@ -204,7 +227,11 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
                 }}
               >
                 {totalHealth.toLocaleString().replace(/,/g, '_')}
-              </td>{' '}
+              </td>
+              <td>
+                <input type='checkbox' value={totalHealth.toString()} onChange={markHpTroop} />
+              </td>
+
               {/* total health  */}
               <td
                 className='px-1 py-0.5 text-gray-300  cursor-pointer hover:text-lime-400 hover:font-bold'
@@ -214,11 +241,44 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
               >
                 {totalStrength.toLocaleString().replace(/,/g, '_')}
               </td>
+              <td>
+                <input type='checkbox' value={totalStrength.toString()} onChange={markStrTroop} />
+              </td>
               {/* total strength  */}
               <td className='px-1 py-0.5'>{getTroopBadges(stack)}</td>
             </tr>
           )
         })}
+        <tr>
+          <td colSpan={10}>
+            Selected damage:{' '}
+            {selectedStr
+              .map(str => {
+                return str
+              })
+              .join(' + ')}
+            {` = `}
+            {selectedStr
+              .reduce((total, str) => total + parseInt(str), 0)
+              .toLocaleString()
+              .replace(/,/g, '_')}
+          </td>
+        </tr>
+        <tr>
+          <td colSpan={10}>
+            Selected Health:{' '}
+            {selectedHp
+              .map(Hp => {
+                return Hp
+              })
+              .join(' + ')}
+            {` = `}
+            {selectedHp
+              .reduce((total, Hp) => total + parseInt(Hp), 0)
+              .toLocaleString()
+              .replace(/,/g, '_')}
+          </td>
+        </tr>
       </tbody>
     </table>
   )

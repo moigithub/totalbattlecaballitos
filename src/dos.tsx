@@ -1119,7 +1119,7 @@ ignora lo que continua abajo de esta linea:
                   <option value='citadele30'>Elf Citadel lvl 30</option>
                   <option value='citadelc20'>Cursed Citadel lvl 20</option>
                   <option value='citadelc25'>Cursed Citadel lvl 25</option>
-                  <option value='lvl17HeroicElfSquad'>lvl 17 Heroic Elf Squad</option>
+                  {/* <option value='lvl17HeroicElfSquad'>lvl 17 Heroic Elf Squad</option> */}
                 </select>
               </div>
 
