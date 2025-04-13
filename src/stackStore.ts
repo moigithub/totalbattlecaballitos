@@ -1,17 +1,20 @@
 import { create, StateCreator } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import { Stack, Unit } from './types'
+import { Stack } from './types'
 import { hashStorage } from '@/hashStore'
 import { createDebouncedJSONStorage } from 'zustand-debounce'
 import { getStrengthWithBonus } from './helpers'
-import { ARMY } from './soldiers'
+import { prepareExportData, prepareImportData } from './utils'
 
-interface StackStore {
+export interface StackStoreBasic {
   leadership: number
   authority: number
   dominance: number
+  gapBasePercent: number
   army: Stack[]
+}
 
+interface StackStore extends StackStoreBasic {
   setLeadership: (value: number) => void
   setAuthority: (value: number) => void
   setDominance: (value: number) => void
@@ -20,6 +23,7 @@ interface StackStore {
   removeStack: (id: string) => void
   resetStack: (id: string) => void
   resetAllStacks: () => void
+  setGapBasePercent: (value: number) => void
   setGapPercent: (id: string, value: number) => void
   setHpBonus: (id: string, value: number) => void
   setStrBonus: (id: string, value: number) => void
@@ -31,19 +35,20 @@ interface StackStore {
   toggleUseHpLimit: (id: string) => void
   setStackHpLimit: (id: string, value: number) => void
   recalculatePosition: () => void
-  updateMinSetup: (id: string, minSetup: number) => void
+  // updateMinSetup: (id: string, minSetup: number) => void
   addUnits: (id: string, amount: number) => void
   removeUnits: (id: string, amount: number) => void
   getStackStrength: (id: string) => number
   getStackAllStrength: (id: string) => [] | { type: string; percent: number; str: number }[]
   getStackHealth: (id: string) => number
-  toggleLockMin: (id: string) => void
+  // toggleLockMin: (id: string) => void
 }
 
 const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> = (set, get) => ({
   leadership: 10000,
   authority: 10000,
   dominance: 10000,
+  gapBasePercent: 10,
   army: [],
 
   setLeadership: value => {
@@ -95,21 +100,24 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
-  updateMinSetup: (id: string, minSetup: number) => {
-    set(state => ({
-      army: state.army.map(stack => {
-        if (stack.id === id) {
-          return {
-            ...stack,
-            minSetup
-          }
-        }
-        return stack
-      })
-    }))
-  },
+  // updateMinSetup: (id: string, minSetup: number) => {
+  //   set(state => ({
+  //     army: state.army.map(stack => {
+  //       if (stack.id === id) {
+  //         return {
+  //           ...stack,
+  //           minSetup
+  //         }
+  //       }
+  //       return stack
+  //     })
+  //   }))
+  // },
   recalculatePosition: () => {
     set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
+  },
+  setGapBasePercent: value => {
+    set(() => ({ gapBasePercent: value }))
   },
   setGapPercent: (id: string, value: number) => {
     set(state => ({
@@ -320,16 +328,16 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     const totalHPPerUnit =
       stack.hpBonus > 0 ? stack.unit.BASEHP * (1 + stack.hpBonus / 100) : stack.unit.BASEHP
     return totalHPPerUnit * stack.unitsAmount
-  },
-  toggleLockMin: (id: string) => {
-    set(state => ({
-      army: state.army.map(stack => {
-        if (stack.id === id) {
-          return { ...stack, lockMinSetup: !stack.lockMinSetup }
-        } else return stack
-      })
-    }))
   }
+  // toggleLockMin: (id: string) => {
+  //   set(state => ({
+  //     army: state.army.map(stack => {
+  //       if (stack.id === id) {
+  //         return { ...stack, lockMinSetup: !stack.lockMinSetup }
+  //       } else return stack
+  //     })
+  //   }))
+  // }
 })
 
 export const useStackStore = create<StackStore>()(
@@ -343,32 +351,15 @@ export const useStackStore = create<StackStore>()(
         // Other options can be specified here
       }),
       partialize: s => {
-        return {
-          leadership: s.leadership,
-          authority: s.authority,
-          dominance: s.dominance,
-          army: s.army.map(({ unit, ...stack }) => {
-            return { ...stack, unitKey: unit.id }
-          })
-          // mobArmy:s.mobArmy,
-          // bonus:s.bonus,
-        }
+        return prepareExportData(s)
       },
       merge: (persistedState, currentState): StackStore => {
         // console.log('persistedState', persistedState)
         // console.log('currentstate', currentState)
-        // console.log('ARMY', ARMY)
-        const state: StackStore = persistedState as StackStore
+
         const newState = {
           ...currentState,
-          ...state,
-          army: state.army.map(stack => {
-            const unit = ARMY[stack.unitKey as string] as Unit
-            return {
-              ...stack,
-              unit: unit || ARMY.errorUnit
-            }
-          })
+          ...prepareImportData(persistedState as StackStoreBasic)
         }
 
         // console.log('newstate', newState)

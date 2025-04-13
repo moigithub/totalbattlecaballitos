@@ -234,8 +234,12 @@ export const ArmyList = () => {
     }
 
     // MERCENARIES ------------------------------
-    else if (type === 'mercEpicMonsterHunter') {
+    else if (type === 'epicMonsterHunterVI') {
       unitType = ARMY.epicMonsterHunterVI
+    } else if (type === 'epicMonsterHunterVII') {
+      unitType = ARMY.epicMonsterHunterVII
+    } else if (type === 'epicMonsterHunterII') {
+      unitType = ARMY.epicMonsterHunterII
     } else if (type === 'chariotVI') {
       unitType = ARMY.chariotVI
     } else if (type === 'deathChariotVI') {
@@ -280,8 +284,6 @@ export const ArmyList = () => {
       unitType = ARMY.fireLordVII
     } else if (type === 'jungleKingVII') {
       unitType = ARMY.jungleKingVII
-    } else if (type === 'epicMonsterHunterVII') {
-      unitType = ARMY.epicMonsterHunterVII
     } else if (type === 'wyvernII') {
       unitType = ARMY.wyvernII
     } else if (type === 'arielII') {
@@ -290,8 +292,6 @@ export const ArmyList = () => {
       unitType = ARMY.warregalII
     } else if (type === 'demonicSalamanderII') {
       unitType = ARMY.demonicSalamanderII
-    } else if (type === 'epicMonsterHunterII') {
-      unitType = ARMY.epicMonsterHunterII
     } else if (type === 'jagoII') {
       unitType = ARMY.jagoII
     } else if (type === 'eternalCannoneerII') {
@@ -389,8 +389,8 @@ export const ArmyList = () => {
       id: unitType.id,
       unitKey: unitType.id, // key for ARMY object
       unitsAmount: 0, //unitsNeededToKill1Mob
-      minSetup: 0,
-      lockMinSetup: true,
+      // minSetup: 0,
+      // lockMinSetup: true,
       limit: 0,
       strBonus: 0,
       hpBonus: 0,
@@ -473,6 +473,12 @@ export const ArmyList = () => {
       }
     }
 
+    const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
+
+    if (show && featBonus.length > 0 && !filterVsTypes.some(vsType => featBonus.includes(vsType))) {
+      show = false
+    }
+
     if (type === 'guards') {
       if (show && !filterGuardLevels.includes(unit.level)) {
         show = false
@@ -489,16 +495,15 @@ export const ArmyList = () => {
       //
     } else if (type === 'mercenaries') {
       //
-    }
-
-    const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
-    // console.log('army filterfeatbonus', featBonus, filterVsTypes)
-    if (show && featBonus.length > 0 && !filterVsTypes.some(vsType => featBonus.includes(vsType))) {
-      show = false
+      // always show epics
+      if (featBonus.includes('Epic')) {
+        show = true
+      }
     }
 
     if (
       show &&
+      search.trim() !== '' &&
       !(
         unit.name.toLowerCase().includes(search.toLowerCase()) ||
         unit.nameEs.toLowerCase().includes(search.toLowerCase())
@@ -532,6 +537,7 @@ export const ArmyList = () => {
 
     if (
       show &&
+      search.trim() !== '' &&
       !(
         unit.name.toLowerCase().includes(search.toLowerCase()) ||
         unit.nameEs.toLowerCase().includes(search.toLowerCase())
@@ -2308,10 +2314,30 @@ export const ArmyList = () => {
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('mercEpicMonsterHunter')
+                    addTroops('epicMonsterHunterVI')
                   }}
                 >
                   Epic Monster Hunter VI
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.epicMonsterHunterVII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('epicMonsterHunterVII')
+                  }}
+                >
+                  Epic Monster Hunter VII
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.epicMonsterHunterII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('epicMonsterHunterII')
+                  }}
+                >
+                  Epic Monster Hunter II
                 </button>
               )}
               {shouldShow('mercenaries')(ARMY.chariotVI) && (
@@ -2550,16 +2576,6 @@ export const ArmyList = () => {
                   jungleKingVII
                 </button>
               )}
-              {shouldShow('mercenaries')(ARMY.epicMonsterHunterVII) && (
-                <button
-                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                  onClick={() => {
-                    addTroops('epicMonsterHunterVII')
-                  }}
-                >
-                  epicMonsterHunterVII
-                </button>
-              )}
 
               {shouldShow('mercenaries')(ARMY.wyvernII) && (
                 <button
@@ -2603,16 +2619,7 @@ export const ArmyList = () => {
                   eternalCannoneerII
                 </button>
               )}
-              {shouldShow('mercenaries')(ARMY.epicMonsterHunterII) && (
-                <button
-                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                  onClick={() => {
-                    addTroops('epicMonsterHunterII')
-                  }}
-                >
-                  epicMonsterHunterII
-                </button>
-              )}
+
               {shouldShow('mercenaries')(ARMY.warregalII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'

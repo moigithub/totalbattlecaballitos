@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, ChangeEvent } from 'react'
 
 import './App.css'
 // import { useGuardsStore } from './guardStore'
@@ -48,6 +48,8 @@ import {
 } from './citadelData.ts'
 import { Tips } from './tips.tsx'
 import { lvl17HeroicElfSquad } from './monsters.ts'
+import { decodeAndLoadArmySetup, prepareExportData } from './utils.ts'
+import { encodeHash } from './hashStore.ts'
 export interface Result {
   status: number
   msg: string
@@ -83,12 +85,13 @@ function Dos() {
   const leadership = useStackStore(state => state.leadership)
   const authority = useStackStore(state => state.authority)
   const dominance = useStackStore(state => state.dominance)
+  const gapBasePercent = useStackStore(state => state.gapBasePercent)
 
   const setLeadership = useStackStore(state => state.setLeadership)
   const setAuthority = useStackStore(state => state.setAuthority)
   const setDominance = useStackStore(state => state.setDominance)
   const resetAllStacks = useStackStore(state => state.resetAllStacks)
-  // const addUnits = useStackStore(state => state.addUnits)
+  const setGapBasePercent = useStackStore(state => state.setGapBasePercent)
   // const updateMinSetup = useStackStore(state => state.updateMinSetup)
 
   const armyRef = useRef(useStackStore.getState().army)
@@ -114,9 +117,10 @@ function Dos() {
   const [report, setReport] = useState<Result[]>([])
 
   const [cardType, setCardType] = useState('card') // card , smallcard
-  const [gapPercent, setGapPercent] = useState(10) // card , smallcard
+  // const [gapPercent, setGapPercent] = useState(10) // card , smallcard
   const [gapStrength, setGapStrength] = useState(0)
   const [jsonExport, setJsonExport] = useState<string>('')
+  const [presetArmy, setPresetArmy] = useState<string>('')
   const [loading, setLoading] = useState(false)
 
   // const sensors = useSensor(PointerSensor, {
@@ -379,7 +383,7 @@ second REMAINS second
       // console.log('sacrifice strength', sacrificeGroupStrength)
 
       // calculate gap for next stacks
-      gapStrength = (sacrificeGroupStrength * gapPercent) / 100
+      gapStrength = (sacrificeGroupStrength * gapBasePercent) / 100
 
       // const monsterStack = getMobTarget(stack.unit)
       // const unitsNeededToKill1Mob = calculateUnitsMobKill(monsterStack.unit, stack.unit)
@@ -770,7 +774,7 @@ second REMAINS second
     // update UI
     setArmy(ARMY)
 
-    setGapStrength((getStackStrength(ARMY, 0) * gapPercent) / 100)
+    setGapStrength((getStackStrength(ARMY, 0) * gapBasePercent) / 100)
 
     setTimeout(() => {
       setLoading(false)
@@ -1064,7 +1068,62 @@ ignora lo que continua abajo de esta linea:
     }
   }
 
+  const saveData = () => {
+    const data = prepareExportData(useStackStore.getState())
+    const a = document.createElement('a')
+    // console.log('save data prepared', data)
+    const json = encodeHash(JSON.stringify(data))
+    const blob = new Blob([json], { type: 'octet/stream' })
+    const url = window.URL.createObjectURL(blob)
+    a.href = url
+    a.download = 'army.txt'
+    a.click()
+    window.URL.revokeObjectURL(url)
+  }
+
+  const readFile = (event: ChangeEvent<HTMLInputElement>) => {
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      const reader = new FileReader()
+
+      if (event.target.files && event.target.files[0]) {
+        reader.onload = function (e) {
+          const output = e.target?.result
+          // console.log('file content', String(output))
+          if (output) {
+            decodeAndLoadArmySetup(String(output))
+          }
+        } //end onload()
+        reader.readAsText(event.target.files[0])
+      } //end if html5 filelist support
+    } else {
+      alert('The File APIs are not fully supported by your browser. Fallback required.')
+    }
+  }
+
+  const loadPresetArmy = (event: ChangeEvent<HTMLSelectElement>) => {
+    setPresetArmy(event.target.value)
+    const cursed25 =
+      'eyJsZWFkZXJzaGlwIjoxNTAwMDAsImF1dGhvcml0eSI6MTAwMDAsImRvbWluYW5jZSI6MTAwMDAsImFybXkiOlt7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjoyNjQsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJibGFja0RyYWdvblZJSSIsInVuaXRLZXkiOiJibGFja0RyYWdvblZJSSIsInVuaXRzQW1vdW50Ijo2LCJtaW5TZXR1cCI6MCwibG9ja01pblNldHVwIjp0cnVlLCJsaW1pdCI6MCwic3RyQm9udXMiOjI0MjMuNSwiaHBCb251cyI6MjE3OC44LCJ1bml0TGltaXQiOjYsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MTAwMCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJ2dWx0dXJlc1ZJSSIsInVuaXRLZXkiOiJ2dWx0dXJlc1ZJSSIsInVuaXRzQW1vdW50IjoxMDAwLCJtaW5TZXR1cCI6MCwibG9ja01pblNldHVwIjp0cnVlLCJsaW1pdCI6MCwic3RyQm9udXMiOjE4NjMsImhwQm9udXMiOjE1OTguMywidW5pdExpbWl0IjoxMDAwLCJ1c2VVbml0TGltaXQiOnRydWUsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjoxMDgsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJmaXJlUGhvZW5peEkiLCJ1bml0S2V5IjoiZmlyZVBob2VuaXhJIiwidW5pdHNBbW91bnQiOjIsIm1pblNldHVwIjowLCJsb2NrTWluU2V0dXAiOnRydWUsImxpbWl0IjowLCJzdHJCb251cyI6MjQyMy41LCJocEJvbnVzIjoyMTc4LjgsInVuaXRMaW1pdCI6MiwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjo1MjAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiY29yYXhJIiwidW5pdEtleSI6ImNvcmF4SSIsInVuaXRzQW1vdW50IjoyNiwibWluU2V0dXAiOjAsImxvY2tNaW5TZXR1cCI6dHJ1ZSwibGltaXQiOjAsInN0ckJvbnVzIjoxODYzLCJocEJvbnVzIjoxNTk4LjMsInVuaXRMaW1pdCI6MjYsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjI3MCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6IndpbmRMb3JkVklJIiwidW5pdEtleSI6IndpbmRMb3JkVklJIiwidW5pdHNBbW91bnQiOjYsIm1pblNldHVwIjowLCJsb2NrTWluU2V0dXAiOnRydWUsImxpbWl0IjowLCJzdHJCb251cyI6MTU1Ni41LCJocEJvbnVzIjoxNTEyLCJ1bml0TGltaXQiOjYsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MTUwMCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJ2dWx0dXJlc1ZJIiwidW5pdEtleSI6InZ1bHR1cmVzVkkiLCJ1bml0c0Ftb3VudCI6MTUwMCwibWluU2V0dXAiOjAsImxvY2tNaW5TZXR1cCI6dHJ1ZSwibGltaXQiOjAsInN0ckJvbnVzIjoxODYzLCJocEJvbnVzIjoxNTk4LCJ1bml0TGltaXQiOjE1MDAsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MjgwMDAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiQ2F0YXB1bHRFMyIsInVuaXRLZXkiOiJDYXRhcHVsdEUzIiwidW5pdHNBbW91bnQiOjI4MDAsIm1pblNldHVwIjowLCJsb2NrTWluU2V0dXAiOnRydWUsImxpbWl0IjowLCJzdHJCb251cyI6OTk2LCJocEJvbnVzIjoyNzIsInVuaXRMaW1pdCI6MjgwMCwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjoxNTUwMCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJDYXRhcHVsdEU0IiwidW5pdEtleSI6IkNhdGFwdWx0RTQiLCJ1bml0c0Ftb3VudCI6MTU1MCwibWluU2V0dXAiOjAsImxvY2tNaW5TZXR1cCI6dHJ1ZSwibGltaXQiOjAsInN0ckJvbnVzIjo5OTYsImhwQm9udXMiOjI3Mi4zLCJ1bml0TGltaXQiOjE1NTAsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6ODYwMCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJDYXRhcHVsdEU1IiwidW5pdEtleSI6IkNhdGFwdWx0RTUiLCJ1bml0c0Ftb3VudCI6ODYwLCJtaW5TZXR1cCI6MCwibG9ja01pblNldHVwIjp0cnVlLCJsaW1pdCI6MCwic3RyQm9udXMiOjk5NiwiaHBCb251cyI6MjcyLjMsInVuaXRMaW1pdCI6ODYwLCJ1c2VVbml0TGltaXQiOnRydWUsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjQ0MDAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiQ2F0YXB1bHRFNiIsInVuaXRLZXkiOiJDYXRhcHVsdEU2IiwidW5pdHNBbW91bnQiOjQ0MCwibWluU2V0dXAiOjAsImxvY2tNaW5TZXR1cCI6dHJ1ZSwibGltaXQiOjAsInN0ckJvbnVzIjo5OTYsImhwQm9udXMiOjI3Mi4zLCJ1bml0TGltaXQiOjQ0MCwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjowLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6NTIsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJ0cmlja3N0ZXJJIiwidW5pdEtleSI6InRyaWNrc3RlckkiLCJ1bml0c0Ftb3VudCI6MSwibWluU2V0dXAiOjAsImxvY2tNaW5TZXR1cCI6dHJ1ZSwibGltaXQiOjAsInN0ckJvbnVzIjoyMTUzLjUsImhwQm9udXMiOjIwNDguOCwidW5pdExpbWl0IjoxLCJ1c2VVbml0TGltaXQiOnRydWUsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjo0MywiZ2FwUGVyY2VudCI6MTAwLCJpZCI6ImRlc3RydWN0aXZlQ29sb3NzdXNWSUkiLCJ1bml0S2V5IjoiZGVzdHJ1Y3RpdmVDb2xvc3N1c1ZJSSIsInVuaXRzQW1vdW50IjoxLCJtaW5TZXR1cCI6MCwibG9ja01pblNldHVwIjp0cnVlLCJsaW1pdCI6MCwic3RyQm9udXMiOjIxNTMuNSwiaHBCb251cyI6MjA0OC44LCJ1bml0TGltaXQiOjEsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9XX0='
+    const elf20G7M7 =
+      'eyJsZWFkZXJzaGlwIjoxNTAwMDAsImF1dGhvcml0eSI6MTAwMDAsImRvbWluYW5jZSI6MTAwMDAsImFybXkiOlt7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjoxMzIsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJibGFja0RyYWdvblZJSSIsInVuaXRLZXkiOiJibGFja0RyYWdvblZJSSIsInVuaXRzQW1vdW50IjozLCJsaW1pdCI6MCwic3RyQm9udXMiOjI0NDIsImhwQm9udXMiOjE3MzMsInVuaXRMaW1pdCI6MywidXNlVW5pdExpbWl0Ijp0cnVlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjowLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6Mjg2LCJnYXBQZXJjZW50IjoxMDAsImlkIjoiZmVhcnNvbWVNYW50aWNvcmFWIiwidW5pdEtleSI6ImZlYXJzb21lTWFudGljb3JhViIsInVuaXRzQW1vdW50IjoxMywibGltaXQiOjAsInN0ckJvbnVzIjoyMjczLCJocEJvbnVzIjoxNzMyLCJ1bml0TGltaXQiOjEzLCJ1c2VVbml0TGltaXQiOnRydWUsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjM5OSwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJ2dWx0dXJlc1ZJSSIsInVuaXRLZXkiOiJ2dWx0dXJlc1ZJSSIsInVuaXRzQW1vdW50IjozOTksImxpbWl0IjowLCJzdHJCb251cyI6MTg1NiwiaHBCb251cyI6MTIzNCwidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjozNDAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiYmF0dGxlR3JpZmZpblZJSSIsInVuaXRLZXkiOiJiYXR0bGVHcmlmZmluVklJIiwidW5pdHNBbW91bnQiOjE3LCJsaW1pdCI6MCwic3RyQm9udXMiOjIwMTQuNSwiaHBCb251cyI6MTQ0MSwidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjowLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MTcwLCJnYXBQZXJjZW50IjoxNywiaWQiOiJqdW5nbGVEZXN0cm95ZXJWSSIsInVuaXRLZXkiOiJqdW5nbGVEZXN0cm95ZXJWSSIsInVuaXRzQW1vdW50Ijo1LCJsaW1pdCI6MCwic3RyQm9udXMiOjE1MTIsImhwQm9udXMiOjEwMzEsInVuaXRMaW1pdCI6NSwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjo1MDAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiYmF0dGxlR3JpZmZpblZJIiwidW5pdEtleSI6ImJhdHRsZUdyaWZmaW5WSSIsInVuaXRzQW1vdW50IjoyNSwibGltaXQiOjAsInN0ckJvbnVzIjoyMDE0LjUsImhwQm9udXMiOjE0NDEsInVuaXRMaW1pdCI6MCwidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6NDExLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6ImhlYXZ5SGFsYmVyZGllclZJSSIsInVuaXRLZXkiOiJoZWF2eUhhbGJlcmRpZXJWSUkiLCJ1bml0c0Ftb3VudCI6NDExLCJsaW1pdCI6MCwic3RyQm9udXMiOjEyMDMuNSwiaHBCb251cyI6NzIwLCJ1bml0TGltaXQiOjQ1MCwidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjQ1LCJnYXBQZXJjZW50IjoxMDAsImlkIjoid2luZExvcmRWSUkiLCJ1bml0S2V5Ijoid2luZExvcmRWSUkiLCJ1bml0c0Ftb3VudCI6MSwibGltaXQiOjAsInN0ckJvbnVzIjoxNDgxLCJocEJvbnVzIjoxMDMxLCJ1bml0TGltaXQiOjEsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6NDUwLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MCwiaWQiOiJDYXRhcHVsdEU2IiwidW5pdEtleSI6IkNhdGFwdWx0RTYiLCJ1bml0c0Ftb3VudCI6NDUsImxpbWl0IjowLCJzdHJCb251cyI6NzY1LCJocEJvbnVzIjozNzgsInVuaXRMaW1pdCI6NDUsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOnRydWUsInN0ckxpbWl0Ijo2NTAwMDAwLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjo4MDAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjowLCJpZCI6IkNhdGFwdWx0RTUiLCJ1bml0S2V5IjoiQ2F0YXB1bHRFNSIsInVuaXRzQW1vdW50Ijo4MCwibGltaXQiOjAsInN0ckJvbnVzIjo3NjUsImhwQm9udXMiOjM3OCwidW5pdExpbWl0IjoyMDAsInVzZVVuaXRMaW1pdCI6ZmFsc2UsInVzZVN0ckxpbWl0Ijp0cnVlLCJzdHJMaW1pdCI6NjUwMDAwMCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MTQ0MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjAsImlkIjoiQ2F0YXB1bHRFNCIsInVuaXRLZXkiOiJDYXRhcHVsdEU0IiwidW5pdHNBbW91bnQiOjE0NCwibGltaXQiOjAsInN0ckJvbnVzIjo3NjUsImhwQm9udXMiOjM3OCwidW5pdExpbWl0IjoxNDAsInVzZVVuaXRMaW1pdCI6ZmFsc2UsInVzZVN0ckxpbWl0Ijp0cnVlLCJzdHJMaW1pdCI6NjUwMDAwMCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9XX0='
+
+    switch (event.target.value) {
+      case 'cursed25':
+        decodeAndLoadArmySetup(cursed25)
+        break
+      case 'elf20G7M7':
+        decodeAndLoadArmySetup(elf20G7M7)
+        break
+      case 'noob':
+        alert('not enough minerals')
+        alert('IF you like this idea, send me your BR to include it in the next version @moogumuro')
+        break
+    }
+  }
+
   let counter = 0 // lines enumeration visual only
+
+  const hashArmyData = encodeHash(JSON.stringify(prepareExportData(useStackStore.getState())))
 
   return (
     <>
@@ -1224,7 +1283,7 @@ ignora lo que continua abajo de esta linea:
         <div className='p-4 border-2 '>
           <div className='stack-container'>
             <div className='sticky  top-[57px]'>
-              <div className='flex  items-baseline'>
+              <div className='flex items-center  '>
                 <table className='skill-info'>
                   <thead>
                     <tr>
@@ -1242,7 +1301,7 @@ ignora lo que continua abajo de esta linea:
                   </tbody>
                 </table>
 
-                <div className='ml-5 flex'>
+                <div className='ml-5 flex items-center'>
                   <label
                     htmlFor='gap'
                     title='is a space between troops strength, in case a strength percent changes to avoid loosing the stack order and its calculated based on the first troop stack strength'
@@ -1255,11 +1314,75 @@ ignora lo que continua abajo de esta linea:
                     type='number'
                     min={0}
                     max={100}
-                    value={gapPercent}
-                    onChange={e => setGapPercent(parseInt(e.target.value))}
+                    value={gapBasePercent}
+                    onChange={e => setGapBasePercent(parseInt(e.target.value))}
                   />
                 </div>
+
+                <div className='ml-5 flex    '>
+                  <label className=' text-center rounded-lg items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-1 py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed'>
+                    <span>Import army setup</span>
+                    <input type='file' className='hidden w-' onChange={readFile} />
+                  </label>
+
+                  <button
+                    className='ml-2  rounded-lg text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-1 py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed'
+                    onClick={saveData}
+                  >
+                    Export army
+                  </button>
+
+                  <div className='ml-10 w-[200px] flex items-center'>
+                    <label>Preset</label>
+                    <select
+                      className='ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                      onChange={loadPresetArmy}
+                      value={presetArmy}
+                    >
+                      <option value='' disabled>
+                        Select preset
+                      </option>
+
+                      <option value='cursed25' className='bg-green-800'>
+                        Citadel Cursed 25
+                      </option>
+                      <option value='noob'>Citadel Cursed 20</option>
+                      <option value='dash' disabled>
+                        ------------------
+                      </option>
+                      <option value='noob'>Citadel Elf 10 G1</option>
+                      <option value='noob'>Citadel Elf 10 G2</option>
+                      <option value='noob'>Citadel Elf 10 G3</option>
+                      <option value='noob'>Citadel Elf 10 G4,M3</option>
+                      <option value='noob'>Citadel Elf 10 G5,M5,Mercs</option>
+                      <option value='dash' disabled>
+                        ------------------
+                      </option>
+                      <option value='noob'>Citadel Elf 15 G4,M3,Mercs</option>
+                      <option value='noob'>Citadel Elf 15 G5,M4,Mercs</option>
+                      <option value='dash' disabled>
+                        ------------------
+                      </option>
+
+                      <option value='elf20G7M7' className='bg-green-800'>
+                        Citadel Elf 20 G7,M7
+                      </option>
+                      <option value='noob'>Citadel Elf 20 G5,M6,S6</option>
+                      <option value='noob'>Citadel Elf 25 G5,M6,S6,Mercs</option>
+                      <option value='noob'>Citadel Elf 25 G5,M6,S6,Mercs</option>
+                      <option value='noob'>Citadel Elf 30 G9,M9,S9,Mercs</option>
+                    </select>
+                  </div>
+                </div>
               </div>
+              <p
+                className='max-w-[800px] overflow-hidden text-[2px]'
+                onClick={() => {
+                  navigator.clipboard.writeText(hashArmyData)
+                }}
+              >
+                {hashArmyData}
+              </p>
               <Tips />
               <div className='btn-group'>
                 <button
@@ -1273,6 +1396,7 @@ ignora lo que continua abajo de esta linea:
                   className='inline-flex cursor-pointer focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300    text-lg px-3.5 py-0.5 me-2  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
                   onClick={() => {
                     setArmy([])
+                    setPresetArmy('')
                   }}
                 >
                   Clear
@@ -1339,46 +1463,50 @@ ignora lo que continua abajo de esta linea:
           </div>
         </div>
         {report.length > 0 && (
-          <div className='mt-4 p-4 border-2'>
-            {report.map((data, i) => {
-              let color = 'text-green-700'
-              if (data.status == 0) {
-                color = 'text-blue-700'
-              }
-              if (data.status == 2) {
-                color = 'text-red-700'
-              }
-              if (data.status == 3) {
-                color = 'text-gray-200'
-              }
-              if (data.status == 4) {
-                color = 'text-yellow-300'
-              }
+          <div className='relative '>
+            <div className='mt-4 p-4 border-2  sticky top-[164px]  w-fit'>
+              {report.map((data, i) => {
+                let color = 'text-green-700'
+                if (data.status == 0) {
+                  color = 'text-blue-700'
+                }
+                if (data.status == 2) {
+                  color = 'text-red-700'
+                }
+                if (data.status == 3) {
+                  color = 'text-gray-200'
+                }
+                if (data.status == 4) {
+                  color = 'text-yellow-300'
+                }
 
-              if (data.reportType === 'item') {
-                counter++
-              }
-              if (data.msg === '') {
-                return (
-                  <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                    {data.reportType === 'item' && (
-                      <span className='font-bold text-yellow-300 mr-2'>{counter}: </span>
-                    )}
-                    <span className='font-bold text-emerald-600'>{data.attacker}</span> attacked{' '}
-                    <span className='font-bold text-emerald-600'>{data.defender}</span>, dealing{' '}
-                    <span className='font-bold text-blue-600'>{data.damageAmount.toFixed(0)}</span>{' '}
-                    damage, killing{' '}
-                    <span className='font-bold text-red-600'>{data.killedUnits}</span> units
-                  </li>
-                )
-              } else {
-                return (
-                  <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                    <span>{data.msg}</span>
-                  </li>
-                )
-              }
-            })}
+                if (data.reportType === 'item') {
+                  counter++
+                }
+                if (data.msg === '') {
+                  return (
+                    <li key={`rpt${i}`} className={`text-sm ${color}`}>
+                      {data.reportType === 'item' && (
+                        <span className='font-bold text-yellow-300 mr-2'>{counter}: </span>
+                      )}
+                      <span className='font-bold text-emerald-600'>{data.attacker}</span> attacked{' '}
+                      <span className='font-bold text-emerald-600'>{data.defender}</span>, dealing{' '}
+                      <span className='font-bold text-blue-600'>
+                        {data.damageAmount.toFixed(0)}
+                      </span>{' '}
+                      damage, killing{' '}
+                      <span className='font-bold text-red-600'>{data.killedUnits}</span> units
+                    </li>
+                  )
+                } else {
+                  return (
+                    <li key={`rpt${i}`} className={`text-sm ${color}`}>
+                      <span>{data.msg}</span>
+                    </li>
+                  )
+                }
+              })}
+            </div>
           </div>
         )}
       </div>

@@ -16,7 +16,7 @@ export const hashStorage: StateStorage = {
     location.hash = searchParams.toString()
 
     // also save it on localstorage
-    localStorage.setItem('tbcalc', decodeURIComponent(searchParams.toString()))
+    localStorage.setItem('tbarmy', encodedValue)
   },
   removeItem: (key): void => {
     const searchParams = new URLSearchParams(location.hash.slice(1))

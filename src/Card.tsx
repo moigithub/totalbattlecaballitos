@@ -168,10 +168,9 @@ export const Card = ({
               onChange={e => {
                 setStrLimitType(stack.id!, e.target.value)
               }}
+              value={stack.strLimitType}
             >
-              <option value='' selected>
-                Stack Str
-              </option>
+              <option value=''>Stack Str</option>
               {strBonusOptions.map(option => (
                 <option key={option} value={option}>
                   {option}

@@ -154,7 +154,7 @@ export interface Stack {
   useHpLimit: boolean
   HpLimit: number
   unitsAmount: number
-  minSetup: number // used to calculate how many units are needed to kill one monster
-  lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount
+  // minSetup: number // used to calculate how many units are needed to kill one monster
+  // lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount
   limit: number // max unit value
 }
