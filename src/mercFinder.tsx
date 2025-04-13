@@ -46,7 +46,7 @@ export const MercFinder = () => {
       <br />
       <p>5. go to your game, and capture a mercenary exchange image</p>
       <p>make sure you have zoom at 25%</p>
-      <p>and it do NOT contain part of grass or any other tile color, ONLY mercenary</p>
+      <p>and it do NOT contain part of grass, sand or any other tile color, ONLY mercenary</p>
       <p>or you can download the following image, right click "save image as"</p>
       <img className='p-5 w-[150px] ' src='./mercenary.bmp' alt='mercenary icon' />
 
@@ -70,11 +70,19 @@ export const MercFinder = () => {
       <br />
       <div className='bg-red-600 text-gray-200 rounded-lg p-4 my-4'>
         <p>or download from the following links, at your own risk</p>
+        <p>NO clickable links are provided, you need to copy/paste</p>
         <p>python script: https://tinyurl.com/findermercex</p>
         <br />
         <p>alternative if you play on windows:</p>
         <p>executable program: https://tinyurl.com/imgFindTB</p>
       </div>
+
+      <br />
+      <div className='bg-green-600 text-gray-200 rounded-lg p-4 my-4'>
+        <p>finally... if you dont understand anything, you can ask chatgpt/deepseek AI :)</p>
+        <p>happy hunting!</p>
+      </div>
+      <br />
     </div>
   )
 }
