@@ -1,15 +1,15 @@
 export const GameCombatInfo = () => {
   return (
-    <div className='p-4 pt-[56px] text-white'>
+    <div className='p-5 pt-[56px] text-gray-100'>
       <hr />
       <h1 className='text-5xl font-bold text-green-700 '>Combat system &amp; tips</h1>
-      <ul className='list-disc list-inside text-gray-500'>
-        <li>
+      <ul className='list-disc list-inside'>
+        <li className='mt-2'>
           <span className='text-lime-700'>Stack order</span> is based on{' '}
           <span className='text-lime-700'>stack strength</span> + bonus (no feature bonus)
         </li>
 
-        <li>
+        <li className='mt-2'>
           <span className='text-lime-700'>calculating stack strength</span>
           <div className='ml-8'>
             <p className='text-blue-500'>example:</p>
@@ -26,14 +26,20 @@ export const GameCombatInfo = () => {
             <p className='text-blue-500'>totalStackStrength = 100 * 50 * (1 + 10 / 100) = 5500</p>
           </div>
         </li>
-        <li>
+        <li className='mt-2'>
           <span className='text-lime-700'>The stack with highest strength attack first</span>
         </li>
-        <li>
+        <li className='mt-2'>
+          <span className='text-lime-700'>
+            My strongest stack vs the enemy stack that can do the most{' '}
+            <span className='text-purple-600'>efective damage</span> to me
+          </span>
+        </li>
+        <li className='mt-2'>
           The <span className='text-purple-600'>efective damage</span> done to the enemy is
           calculated using the feature bonus
         </li>
-        <li>
+        <li className='mt-2'>
           <span className='text-lime-700'>Calculating efective damage</span>
           <div className='ml-8'>
             <p>Most of the troops units in general (monsters, army, etc) have a feature bonus</p>
@@ -80,7 +86,7 @@ export const GameCombatInfo = () => {
             </p>
           </div>
         </li>
-        <li>
+        <li className='mt-2'>
           <span className='text-lime-700'>
             Picking a target, is based on the greatest possible damage
           </span>
@@ -118,12 +124,13 @@ export const GameCombatInfo = () => {
                   IF the enemy DO NOT have any melee or flying units, it will pick the strongest
                   troop alive
                 </p>
+                <img src='/selectTarget.jpg' alt='target selection flow diagram' />
               </div>
               <br />
             </ul>
           </div>
         </li>
-        <li>
+        <li className='mt-2'>
           <span className='text-lime-700'>Damaged applied</span>
           <div className='ml-8'>
             <p>once target is picked, then the efective damage will be calculated</p>
@@ -138,7 +145,7 @@ export const GameCombatInfo = () => {
             <p>max damage applied = 8500</p>
           </div>
         </li>
-        <li>
+        <li className='mt-2'>
           <span className='text-lime-700'>
             Calculating number of units needed to kill the enemy stack
           </span>
@@ -188,12 +195,12 @@ export const GameCombatInfo = () => {
             </p>
           </div>
         </li>
-        <li>all damage received is accumulated</li>
-        <li>
+        <li className='mt-2'>all damage received is accumulated</li>
+        <li className='mt-2'>
           Is better to avoid sending units with featured attack bonus type, to avoid extra losses,
           IF your unit is not healthy enough to survive the attack
         </li>
-        <li>
+        <li className='mt-2'>
           to dodge an attack, the defender stack health, must be lower than the attacker damage
           (+bonus, without feature bonus), so it picks another target
         </li>
@@ -214,13 +221,13 @@ export const GameCombatInfo = () => {
           <img src='./killCentaurStrategy.jpg' alt='kill centaur before it hit our catapults' />
         </div>
 
-        <li>
+        <li className='mt-2'>
           <span className='text-pink-600 font-bold'>ADD</span> a ranged unit with HUGE health (like
           canoner), so it can survive centaur attack, -- centaurs have a 50% feature bonus against
           ranged unit, so they will "prefer" to attack your canoner instead your catapults
         </li>
 
-        <li>
+        <li className='mt-2'>
           <span className='text-pink-600 font-bold'>REDUCE</span> your catapults stack health, by
           lowering the amount you sending, and use as many catapults stack needed to compensate your
           previous damage, -- having lower health than centaur damage, centaur will skip your
