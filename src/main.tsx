@@ -11,6 +11,7 @@ import { Info } from './info.tsx'
 import { MercList } from './mercList.tsx'
 import { Citadels } from './citadels.tsx'
 import { GameCombatInfo } from './gameCombatInfo.tsx'
+import { MercFinder } from './mercFinder.tsx'
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: 'game-combat',
         element: <GameCombatInfo />
+      },
+      {
+        path: 'merc-finder',
+        element: <MercFinder />
       }
     ]
   }
