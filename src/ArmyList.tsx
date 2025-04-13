@@ -1754,7 +1754,7 @@ export const ArmyList = () => {
                     addTroops('heavyKnightVI')
                   }}
                 >
-                  HK5
+                  HK6
                 </button>
               )}
               {shouldShow('specialists')(ARMY.heavyKnightVII) && (
@@ -1764,7 +1764,7 @@ export const ArmyList = () => {
                     addTroops('heavyKnightVII')
                   }}
                 >
-                  HK6
+                  HK7
                 </button>
               )}
             </div>
@@ -1780,7 +1780,7 @@ export const ArmyList = () => {
                     addTroops('swiftJaegerVI')
                   }}
                 >
-                  SJ5
+                  SJ6
                 </button>
               )}
               {shouldShow('specialists')(ARMY.swiftJaegerVII) && (
@@ -1790,7 +1790,7 @@ export const ArmyList = () => {
                     addTroops('swiftJaegerVII')
                   }}
                 >
-                  SJ6
+                  SJ7
                 </button>
               )}
             </div>

@@ -1,7 +1,8 @@
 export const Info = () => {
   return (
-    <div className='info'>
-      <h2>Tutorial - check the image below</h2>
+    <div className='p-5 pt-[56px]'>
+      <h2 className='text-3xl font-bold'>Tutorial - check the image below</h2>
+      <p className='mb-2'>some old info</p>
       <ol>
         <li>load all bonus/vip/etc</li>
         <li>use the last battle report if you have</li>

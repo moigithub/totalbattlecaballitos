@@ -726,8 +726,8 @@ const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
 const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
   id: 'heavyHalberdierVII',
   clasification: 'army',
-  name: 'alabardero pesado VII',
-  nameEs: 'heavyHalberdierVII',
+  name: 'heavyHalberdierVII',
+  nameEs: 'alabardero pesado VII',
   BASESTR: 1700,
   BASEHP: 5100,
   LEADERSHIP: 1,
