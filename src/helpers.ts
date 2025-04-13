@@ -369,7 +369,7 @@ const calcStrengthWithBonus = (stack: FightStack, bonuses: number): number => {
   return stack.unit.BASESTR * (1 + bonuses / 100)
 }
 const calcStackStrengthWithBonus = (stack: FightStack, bonuses: number): number => {
-  // console.log('calcStackStrengthWithBonus', stack, bonuses)
+  // console.log('calcStackStrengthWithBonus', stack, stack.unitsAmount, bonuses)
   return stack.unitsAmount * calcStrengthWithBonus(stack, bonuses)
 }
 const calcHealthWithBonus = (stack: FightStack, bonuses: number): number => {
@@ -417,17 +417,6 @@ const getBiggestThreat = (attackingStack: FightStack, stacks: FightStack[]): Fig
   })
 
   return bestTarget
-
-  // // if have multiples with highest threat, get the one with the highest health
-  // const enemiesWithHighestThreat = stacks.filter(stack => {
-  //   const bonus = stack.unit.strBonus || 0
-  //   const vsCategoryBonus = getBonusByCategory(stack, attackingStack.unit.category)
-  //   const vsCategory2Bonus = getBonusByCategory(stack, attackingStack.unit.subGroup)
-  //   const threat = calcStackStrengthWithBonus(stack, bonus + vsCategoryBonus + vsCategory2Bonus)
-  //   return threat === maxThreat
-  // })
-
-  // return enemiesWithHighestThreat
 }
 
 const getEnemiesWithEnoughHealth = (attackingStack: FightStack, enemies: FightStack[]) => {
@@ -448,156 +437,242 @@ const getEnemiesWithEnoughHealth = (attackingStack: FightStack, enemies: FightSt
   return enemiesWithEnoughHealth
 }
 
+const getEnemiesWithFeatureBonus = (
+  attackingStack: FightStack,
+  enemies: FightStack[]
+): FightStack[] => {
+  return enemies.filter(
+    stack =>
+      getBonusByCategory(attackingStack, stack.unit.category) > 0 ||
+      getBonusByCategory(attackingStack, stack.unit.subGroup) > 0
+  )
+}
+
+const logAliveEnemies = (aliveEnemies: FightStack[]) => {
+  console.log('Alive enemies:')
+  console.table(
+    aliveEnemies.map(s => ({
+      name: s.unit.name,
+      units: s.unitsAmount,
+      categ: s.unit.category,
+      subgroup: s.unit.subGroup
+    }))
+  )
+}
+
+const logAttackerDetails = (attackingStack: FightStack) => {
+  console.log(
+    'Attacker:',
+    attackingStack.unit.name,
+    'can attack:',
+    whoCanIAttack(attackingStack.unit as BasicUnit).join(', ')
+  )
+}
+
+const logEnemiesWithFeatureBonus = (enemiesWithFeatureBonus: FightStack[]) => {
+  console.log('Enemies with feature bonus:')
+  console.table(
+    enemiesWithFeatureBonus.map(s => ({
+      name: s.unit.name,
+      type: s.unit.category,
+      subgroup: s.unit.subGroup,
+      bonus: whoCanIAttack(s.unit as BasicUnit).join(', ')
+    }))
+  )
+}
+
+const logEnemiesWithEnoughHealth = (
+  attackingStack: FightStack,
+  enemiesWithEnoughHealth: FightStack[]
+) => {
+  console.log('Enemies with enough health:')
+  console.table(
+    enemiesWithEnoughHealth.map(s => ({
+      name: s.unit.name,
+      type: s.unit.category,
+      subgroup: s.unit.subGroup,
+      bonus: whoCanIAttack(s.unit as BasicUnit).join(', '),
+      threat: calcStackStrengthWithBonus(
+        s,
+        getBonusByCategory(s, attackingStack.unit.category) +
+          getBonusByCategory(s, attackingStack.unit.subGroup) +
+          (s.unit?.strBonus ?? 0)
+      )
+    }))
+  )
+}
+
+// export const selectTarget = (
+//   attackingStack: FightStack,
+//   enemyStacks: FightStack[],
+//   attackedStacks: Set<FightStack>
+// ): FightStack | null => {
+//   // console.log('selectTarget', structuredClone(attackingStack), structuredClone(enemyStacks))
+//   if (enemyStacks.length === 0) return null
+
+//   const enemyStacksAlive: FightStack[] = enemyStacks.filter(stack => stack.unitsAmount > 0)
+
+//   if (enemyStacksAlive.length > 0) {
+//     console.log('alive enemies')
+//     console.table(
+//       enemyStacksAlive.map(s => ({
+//         name: s.unit.name,
+//         units: s.unitsAmount,
+//         categ: s.unit.category,
+//         subgroup: s.unit.subGroup
+//       }))
+//     )
+
+//     console.log(
+//       'selectTarget: ',
+//       attackingStack.unit.name,
+//       'i have feat bonus vs',
+//       whoCanIAttack(attackingStack.unit as BasicUnit),
+//       'can attack'
+//     )
+
+//     const enemyIHaveFeatureBonusAgainst = enemyStacksAlive.filter(
+//       stack =>
+//         getBonusByCategory(attackingStack, stack.unit.category) > 0 ||
+//         getBonusByCategory(attackingStack, stack.unit.subGroup) > 0
+//     )
+
+//     if (enemyIHaveFeatureBonusAgainst.length > 0) {
+//       console.table(
+//         enemyIHaveFeatureBonusAgainst.map(s => ({
+//           name: s.unit.name,
+//           type: s.unit.category,
+//           subgroup: s.unit.subGroup,
+//           bonus: whoCanIAttack(s.unit as BasicUnit).join(', ')
+//         }))
+//       )
+
+//       const enemiesWithEnoughHealth = getEnemiesWithEnoughHealth(
+//         attackingStack,
+//         enemyIHaveFeatureBonusAgainst
+//       )
+//       if (enemiesWithEnoughHealth.length > 0) {
+//         console.table(
+//           enemiesWithEnoughHealth.map(s => ({
+//             name: s.unit.name,
+//             type: s.unit.category,
+//             subgroup: s.unit.subGroup,
+//             bonus: whoCanIAttack(s.unit as BasicUnit).join(', '),
+//             threat: calcStackStrengthWithBonus(
+//               s,
+//               getBonusByCategory(s, attackingStack.unit.category) +
+//                 getBonusByCategory(s, attackingStack.unit.subGroup) +
+//                 (s.unit?.strBonus ?? 0)
+//             )
+//           }))
+//         )
+
+//         const enemiesNotAttackedYetWithEnoughHealth = enemiesWithEnoughHealth.filter(
+//           s => !attackedStacks.has(s)
+//         )
+
+//         // get biggest threat among stacks with enough health
+
+//         //prioritizing not attacked yet
+//         const enemiesWithHighestThreat = getBiggestThreat(
+//           attackingStack,
+//           enemiesNotAttackedYetWithEnoughHealth
+//         )
+
+//         if (enemiesWithHighestThreat) {
+//           console.log(
+//             'selectTarget: alive, feat.bonus. enough health, not attacked yet, max threat',
+//             enemiesWithHighestThreat
+//           )
+//           return enemiesWithHighestThreat
+//         } else {
+//           const enemiesWithHighestThreat = getBiggestThreat(attackingStack, enemiesWithEnoughHealth)
+//           console.log(
+//             'selectTarget: alive, feat.bonus. enough health, max threat',
+//             enemiesWithHighestThreat
+//           )
+
+//           return enemiesWithHighestThreat
+
+//           // return getStrongestStack(enemyStacksAlive)
+//         }
+//       } else {
+//         console.log('NO enemies with enough health')
+//         // get biggest threat among stacks with feat. bonus
+//         const enemiesWithHighestThreat = getBiggestThreat(
+//           attackingStack,
+//           enemyStacksAlive //its not from enemyIHaveFeatureBonusAgainst
+//         )
+
+//         if (enemiesWithHighestThreat) {
+//           console.log('selectTarget: alive, NO feat.bonus. max threat', enemiesWithHighestThreat)
+//           return enemiesWithHighestThreat
+//         } else {
+//           console.log('selectTarget: no feature bonus found, get strongest stack')
+//           console.log('NO DEBERIA PASAR')
+//           return getStrongestStack(enemyStacksAlive)
+//         }
+//       }
+//     } else {
+//       console.log('NO enemies with feat.bonus')
+//       // get biggest threat among stacks alive enemies
+//       const enemiesWithHighestThreat = getBiggestThreat(attackingStack, enemyStacksAlive)
+
+//       if (enemiesWithHighestThreat) {
+//         console.log('selectTarget: alive, max threat', enemiesWithHighestThreat)
+//         return enemiesWithHighestThreat
+//       } else {
+//         console.log('selectTarget: no feature bonus found, get strongest stack')
+//         console.log('NO DEBERIA PASAR')
+//         return getStrongestStack(enemyStacksAlive)
+//       }
+//     }
+//   } else {
+//     console.log('no alive enemies')
+//     return null
+//   }
+// }
+
 export const selectTarget = (
   attackingStack: FightStack,
   enemyStacks: FightStack[],
   attackedStacks: Set<FightStack>
 ): FightStack | null => {
-  /**
- rules to select target:
-
- -- prioritize the feature bonus --
- 1. if i have a feature bonus against the enemy stack's category, otherwise return strongest stack
- 2. if the enemy stack health is higher than my stack strength, otherwise return strongest stack
- 3. if have multiple stacks that match 1 and 2, get the stack with the highest threat
-
- if no target found, get the strongest stack as fallback
- */
-
-  /**nuevo estrategia de combate 12/4/25
-   * prioritize biggest threat, or maybe immediate biggest threat
-   * ejemplo: manticora vs griffin contra unicorn rider
-   * la manticora tiene mas fuerza (bono vsFlying y vsGiant)
-   * el grifin tiene (bono vsMounted y vsFortification)
-   * la manticora ya uso su turno para atacar
-   * entonces el mayor threat es el griffin
-   * , mostrar una tabla de mayor threat, para confirmar la teoria
-   */
-
-  // console.log('selectTarget', structuredClone(attackingStack), structuredClone(enemyStacks))
   if (enemyStacks.length === 0) return null
 
-  const enemyStacksAlive: FightStack[] = enemyStacks.filter(stack => stack.unitsAmount > 0)
+  const aliveEnemies = enemyStacks.filter(stack => stack.unitsAmount > 0)
+  if (aliveEnemies.length === 0) return null
 
-  if (enemyStacksAlive.length > 0) {
-    console.log('alive enemies')
-    console.table(
-      enemyStacksAlive.map(s => ({
-        name: s.unit.name,
-        units: s.unitsAmount,
-        categ: s.unit.category,
-        subgroup: s.unit.subGroup
-      }))
+  logAliveEnemies(aliveEnemies)
+  logAttackerDetails(attackingStack)
+
+  const enemiesWithFeatureBonus = getEnemiesWithFeatureBonus(attackingStack, aliveEnemies)
+  if (enemiesWithFeatureBonus.length > 0) {
+    logEnemiesWithFeatureBonus(enemiesWithFeatureBonus)
+
+    const enemiesWithEnoughHealth = getEnemiesWithEnoughHealth(
+      attackingStack,
+      enemiesWithFeatureBonus
     )
+    if (enemiesWithEnoughHealth.length > 0) {
+      logEnemiesWithEnoughHealth(attackingStack, enemiesWithEnoughHealth)
 
-    console.log(
-      'selectTarget: ',
-      attackingStack.unit.name,
-      'i have feat bonus vs',
-      whoCanIAttack(attackingStack.unit as BasicUnit),
-      'can attack'
-    )
-
-    const enemyIHaveFeatureBonusAgainst = enemyStacksAlive.filter(
-      stack =>
-        getBonusByCategory(attackingStack, stack.unit.category) > 0 ||
-        getBonusByCategory(attackingStack, stack.unit.subGroup) > 0
-    )
-
-    if (enemyIHaveFeatureBonusAgainst.length > 0) {
-      console.table(
-        enemyIHaveFeatureBonusAgainst.map(s => ({
-          name: s.unit.name,
-          type: s.unit.category,
-          subgroup: s.unit.subGroup,
-          bonus: whoCanIAttack(s.unit as BasicUnit).join(', ')
-        }))
-      )
-
-      const enemiesWithEnoughHealth = getEnemiesWithEnoughHealth(
-        attackingStack,
-        enemyIHaveFeatureBonusAgainst
-      )
-      if (enemiesWithEnoughHealth.length > 0) {
-        console.table(
-          enemiesWithEnoughHealth.map(s => ({
-            name: s.unit.name,
-            type: s.unit.category,
-            subgroup: s.unit.subGroup,
-            bonus: whoCanIAttack(s.unit as BasicUnit).join(', '),
-            threat: calcStackStrengthWithBonus(
-              s,
-              getBonusByCategory(s, attackingStack.unit.category) +
-                getBonusByCategory(s, attackingStack.unit.subGroup) +
-                (s.unit?.strBonus ?? 0)
-            )
-          }))
-        )
-
-        const enemiesNotAttackedYetWithEnoughHealth = enemiesWithEnoughHealth.filter(
-          s => !attackedStacks.has(s)
-        )
-
-        // get biggest threat among stacks with enough health
-
-        //prioritizing not attacked yet
-        const enemiesWithHighestThreat = getBiggestThreat(
-          attackingStack,
-          enemiesNotAttackedYetWithEnoughHealth
-        )
-
-        if (enemiesWithHighestThreat) {
-          console.log(
-            'selectTarget: alive, feat.bonus. enough health, not attacked yet, max threat',
-            enemiesWithHighestThreat
-          )
-          return enemiesWithHighestThreat
-        } else {
-          const enemiesWithHighestThreat = getBiggestThreat(attackingStack, enemiesWithEnoughHealth)
-          console.log(
-            'selectTarget: alive, feat.bonus. enough health, max threat',
-            enemiesWithHighestThreat
-          )
-
-          return enemiesWithHighestThreat
-
-          // return getStrongestStack(enemyStacksAlive)
-        }
-      } else {
-        console.log('NO enemies with enough health')
-        // get biggest threat among stacks with feat. bonus
-        const enemiesWithHighestThreat = getBiggestThreat(
-          attackingStack,
-          enemyStacksAlive //its not from enemyIHaveFeatureBonusAgainst
-        )
-
-        if (enemiesWithHighestThreat) {
-          console.log('selectTarget: alive, NO feat.bonus. max threat', enemiesWithHighestThreat)
-          return enemiesWithHighestThreat
-        } else {
-          console.log('selectTarget: no feature bonus found, get strongest stack')
-          console.log('NO DEBERIA PASAR')
-          return getStrongestStack(enemyStacksAlive)
-        }
-      }
-    } else {
-      console.log('NO enemies with feat.bonus')
-      // get biggest threat among stacks alive enemies
-      const enemiesWithHighestThreat = getBiggestThreat(attackingStack, enemyStacksAlive)
-
-      if (enemiesWithHighestThreat) {
-        console.log('selectTarget: alive, max threat', enemiesWithHighestThreat)
-        return enemiesWithHighestThreat
-      } else {
-        console.log('selectTarget: no feature bonus found, get strongest stack')
-        console.log('NO DEBERIA PASAR')
-        return getStrongestStack(enemyStacksAlive)
-      }
+      const enemiesNotAttackedYet = enemiesWithEnoughHealth.filter(s => !attackedStacks.has(s))
+      const target =
+        getBiggestThreat(attackingStack, enemiesNotAttackedYet) ||
+        getBiggestThreat(attackingStack, enemiesWithEnoughHealth)
+      return target
     }
-  } else {
-    console.log('no alive enemies')
-    return null
   }
+  const threat1 = getBiggestThreat(attackingStack, aliveEnemies)
+  console.log('biggestthreat from alive enemies', structuredClone(threat1))
+
+  const strongest = getStrongestStack(aliveEnemies)
+  console.log('strongest from alive enemies', structuredClone(strongest))
+
+  const target = threat1 || strongest
+
+  return target
 }
 
 export const calculateEffectiveDamage = (
@@ -685,109 +760,6 @@ export const applyDamage = (
   return unitsToRemove
 }
 
-/*
-export const fight2 = (attacker: FightStack[], defender: FightStack[]): Result[] => {
-  const checkResult: Result[] = []
-  let loopProtect = 20
-  // console.log('fight', attacker, defender)
-
-  // Initialize separate queues for player and enemy
-  const playerQueue: FightStack[] = attacker.filter(stack => stack.unitsAmount > 0)
-  const enemyQueue: FightStack[] = defender.filter(stack => stack.unitsAmount > 0)
-
-  while (haveTroopsAlive(attacker) && haveTroopsAlive(defender)) {
-    // Resetear estado de ataque para todos los stacks vivos
-    // attacker.forEach(stack => stack.unitsAmount > 0 && (stack.hasAttacked = false))
-    // defender.forEach(stack => stack.unitsAmount > 0 && (stack.hasAttacked = false))
-
-    // Process player's turn
-    let playerStack: FightStack | undefined
-    while (playerQueue.length > 0) {
-      playerStack = playerQueue.shift()! // Dequeue the next player stack
-      if (playerStack.unitsAmount > 0) break // Exit if the stack is alive
-      playerStack = undefined // Skip dead stacks
-    }
-
-    // if (playerStack && !playerStack.hasAttacked) {
-    if (playerStack) {
-      const targetStack = selectTarget(playerStack, enemyQueue)
-      if (targetStack) {
-        const damage = calculateEffectiveDamage(playerStack, targetStack)
-        const unitsKilled = applyDamage(playerStack, targetStack, damage)
-        // playerStack.hasAttacked = true
-
-        addReportData(
-          checkResult,
-          3,
-          '',
-          playerStack.unit.name,
-          targetStack.unit.name,
-          unitsKilled,
-          damage
-        )
-
-        // Check if targetStack is dead
-        if (targetStack.unitsAmount <= 0) {
-          // Remove the dead stack from the enemy queue
-          enemyQueue.splice(enemyQueue.indexOf(targetStack), 1)
-        }
-      }
-
-      // Re-enqueue the player stack if it's still alive
-      if (playerStack.unitsAmount > 0) {
-        playerQueue.push(playerStack)
-      }
-    }
-
-    // Process enemy's turn
-    let enemyStack: FightStack | undefined
-    while (enemyQueue.length > 0) {
-      enemyStack = enemyQueue.shift()! // Dequeue the next enemy stack
-      if (enemyStack.unitsAmount > 0) break // Exit if the stack is alive
-      enemyStack = undefined // Skip dead stacks
-    }
-
-    // if (enemyStack && !enemyStack.hasAttacked) {
-    if (enemyStack) {
-      const targetStack = selectTarget(enemyStack, playerQueue)
-      if (targetStack) {
-        const damage = calculateEffectiveDamage(enemyStack, targetStack)
-        const unitsKilled = applyDamage(enemyStack, targetStack, damage)
-        // enemyStack.hasAttacked = true
-
-        addReportData(
-          checkResult,
-          3,
-          '',
-          enemyStack.unit.name,
-          targetStack.unit.name,
-          unitsKilled,
-          damage
-        )
-
-        // Check if targetStack is dead
-        if (targetStack.unitsAmount <= 0) {
-          // Remove the dead stack from the player queue
-          playerQueue.splice(playerQueue.indexOf(targetStack), 1)
-        }
-      }
-
-      // Re-enqueue the enemy stack if it's still alive
-      if (enemyStack.unitsAmount > 0) {
-        enemyQueue.push(enemyStack)
-      }
-    }
-
-    loopProtect--
-    if (loopProtect < 1) {
-      console.log('loop protection')
-      break
-    }
-  }
-  return checkResult
-}
-*/
-
 //----------------------
 // combat system
 
@@ -802,20 +774,9 @@ const getNextTurn = (
   isPlayerTurn: boolean,
   playerStacks: FightStack[],
   enemyStacks: FightStack[],
-  currentPlayerIndex: number,
-  currentEnemyIndex: number,
   attackedStacks: Set<FightStack> // Añadir este parámetro
-): { stack: FightStack | null; newPlayerIndex: number; newEnemyIndex: number } => {
+): FightStack | null => {
   const stacks = isPlayerTurn ? playerStacks : enemyStacks
-  // const currentIndex = isPlayerTurn ? currentPlayerIndex : currentEnemyIndex
-
-  // TODO: MY Strongest vs your strongest
-  /**
-   * filter alive stacks
-   *
-   * filter stacks which have no attack yet
-   * find the strongest stack
-   */
 
   const aliveStacks = stacks.filter(stack => stack.unitsAmount > 0)
   const unattackedStacks = aliveStacks.filter(stack => !attackedStacks.has(stack))
@@ -823,49 +784,18 @@ const getNextTurn = (
   const strongestStack = getStrongestStack(unattackedStacks)
 
   if (strongestStack) {
-    return {
-      stack: strongestStack,
-      newPlayerIndex: 0, //isPlayerTurn ? i : currentPlayerIndex,
-      newEnemyIndex: 0 //isPlayerTurn ? currentEnemyIndex : i
-    }
+    return strongestStack
   }
-
-  // Buscar el siguiente stack con vida que no haya atacado
-  // for (let i = currentIndex; i < stacks.length; i++) {
-  //   if (stacks[i].unitsAmount > 0 && !attackedStacks.has(stacks[i])) {
-  //     return {
-  //       stack: stacks[i],
-  //       newPlayerIndex: isPlayerTurn ? i : currentPlayerIndex,
-  //       newEnemyIndex: isPlayerTurn ? currentEnemyIndex : i
-  //     }
-  //   }
-  // }
-
-  // Si no se encuentra, reiniciar la búsqueda desde el principio
-  // for (let i = 0; i < currentIndex; i++) {
-  //   if (stacks[i].unitsAmount > 0 && !attackedStacks.has(stacks[i])) {
-  //     return {
-  //       stack: stacks[i],
-  //       newPlayerIndex: isPlayerTurn ? i : currentPlayerIndex,
-  //       newEnemyIndex: isPlayerTurn ? currentEnemyIndex : i
-  //     }
-  //   }
-  // }
 
   // Si no hay stacks vivos disponibles o todos ya han atacado
-  return {
-    stack: null,
-    newPlayerIndex: currentPlayerIndex,
-    newEnemyIndex: currentEnemyIndex
-  }
+  return null
 }
 
 export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] => {
   const checkResult: Result[] = []
   const playerStacks: FightStack[] = attacker
   const enemyStacks: FightStack[] = defender
-  let currentPlayerIndex: number = 0
-  let currentEnemyIndex: number = 0
+
   let isPlayerTurn: boolean = true // Alternar entre Player y Enemy
 
   let cycle = 1
@@ -881,18 +811,13 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
     let innerLoopProtect = 200
     let innerCycle = 1
     while (!allStacksAttacked) {
-      const { stack, newPlayerIndex, newEnemyIndex } = getNextTurn(
+      const stack = getNextTurn(
         isPlayerTurn,
         playerStacks,
         enemyStacks,
-        currentPlayerIndex,
-        currentEnemyIndex,
         attackedStacks // Pasar el conjunto de stacks que ya han atacado
       )
 
-      // Actualizar índices
-      currentPlayerIndex = newPlayerIndex
-      currentEnemyIndex = newEnemyIndex
       console.log('===============================================')
       console.log(
         'inner cycle',
