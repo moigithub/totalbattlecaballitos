@@ -360,7 +360,7 @@ second REMAINS second
             // por lo tanto, este "daño efectivo" debe ser mayor o igual a la vida
             // por lo que debo agregar 1 unidad extra a la cuenta de tropas
             // y se debe usar > en lugar de >=
-            if (stackStrength + unitStrength > ARMY[0].strLimit) {
+            if (stackStrength + unitStrength + unitStrength > ARMY[0].strLimit) {
               canIAddToFirstStack = false
             }
           }
@@ -484,7 +484,7 @@ second REMAINS second
                   const stackStrength = strLimitValue.str
                   const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
+                  if (stackStrength + unitStrength + unitStrength > ARMY[i].strLimit) {
                     break
                   }
                 }
@@ -590,7 +590,7 @@ second REMAINS second
                   const stackStrength = strLimitValue.str
                   const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
+                  if (stackStrength + unitStrength + unitStrength > ARMY[i].strLimit) {
                     break
                   }
                 }
@@ -697,7 +697,7 @@ second REMAINS second
                   const stackStrength = strLimitValue.str
                   const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
+                  if (stackStrength + unitStrength + unitStrength > ARMY[i].strLimit) {
                     break
                   }
                 }
