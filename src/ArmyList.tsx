@@ -264,8 +264,8 @@ export const ArmyList = () => {
       unitType = ARMY.abominationVI
     } else if (type === 'entVI') {
       unitType = ARMY.entVI
-    } else if (type === 'archidemonVI') {
-      unitType = ARMY.archidemonVI
+    } else if (type === 'archdemonVI') {
+      unitType = ARMY.archdemonVI
     } else if (type === 'lightningLordVII') {
       unitType = ARMY.lightningLordVII
     } else if (type === 'cursedDragonVII') {
@@ -367,6 +367,36 @@ export const ArmyList = () => {
       unitType = ARMY.devastatorI
     } else if (type === 'manyArmedGuardianIV') {
       unitType = ARMY.manyArmedGuardianIV
+    } else if (type === 'pathFinderVI') {
+      unitType = ARMY.pathFinderVI
+    } else if (type === 'swiftMarksmanV') {
+      unitType = ARMY.swiftMarksmanV
+    } else if (type === 'scorpionV') {
+      unitType = ARMY.scorpionV
+    } else if (type === 'gargoyleV') {
+      unitType = ARMY.gargoyleV
+    } else if (type === 'trebuchetVI') {
+      unitType = ARMY.trebuchetVI
+    } else if (type === 'bearV') {
+      unitType = ARMY.bearV
+    } else if (type === 'unicornRiderV') {
+      unitType = ARMY.unicornRiderV
+    } else if (type === 'bullRiderV') {
+      unitType = ARMY.bullRiderV
+    } else if (type === 'giantZombieV') {
+      unitType = ARMY.giantZombieV
+    } else if (type === 'palintoneVII') {
+      unitType = ARMY.palintoneVII
+    } else if (type === 'scorpionRiderV') {
+      unitType = ARMY.scorpionRiderV
+    } else if (type === 'ifritV') {
+      unitType = ARMY.ifritV
+    } else if (type === 'cyclopsV') {
+      unitType = ARMY.cyclopsV
+    } else if (type === 'firewormRiderV') {
+      unitType = ARMY.firewormRiderV
+    } else if (type === 'cursedDendroidVI') {
+      unitType = ARMY.cursedDendroidVI
     }
 
     if (!unitType) {
@@ -463,6 +493,8 @@ export const ArmyList = () => {
   }
 
   const shouldShow = (type: string) => (unit: BasicUnit) => {
+    // if (!unit) return false
+
     let show = true
 
     if (filterTypes.length > 0) {
@@ -518,6 +550,8 @@ export const ArmyList = () => {
   }
 
   const shouldShowMonster = (unit: BasicUnit) => {
+    if (!unit) return false
+
     let show = true
 
     if (filterTypes.length === 0) {
@@ -2310,34 +2344,125 @@ export const ArmyList = () => {
           <div className='mercs'>
             <p className='group-title'>Mercs</p>
             <div className='btn-group'>
-              {shouldShow('mercenaries')(ARMY.epicMonsterHunterVI) && (
+              {shouldShow('mercenaries')(ARMY.scorpionRiderV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('epicMonsterHunterVI')
+                    addTroops('scorpionRiderV')
                   }}
                 >
-                  Epic Monster Hunter VI
+                  scorpionRiderV
                 </button>
               )}
-              {shouldShow('mercenaries')(ARMY.epicMonsterHunterVII) && (
+              {shouldShow('mercenaries')(ARMY.ifritV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('epicMonsterHunterVII')
+                    addTroops('ifritV')
                   }}
                 >
-                  Epic Monster Hunter VII
+                  ifritV
                 </button>
               )}
-              {shouldShow('mercenaries')(ARMY.epicMonsterHunterII) && (
+              {shouldShow('mercenaries')(ARMY.cyclopsV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('epicMonsterHunterII')
+                    addTroops('cyclopsV')
                   }}
                 >
-                  Epic Monster Hunter II
+                  cyclopsV
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.firewormRiderV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('firewormRiderV')
+                  }}
+                >
+                  firewormRiderV
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.swiftMarksmanV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('swiftMarksmanV')
+                  }}
+                >
+                  swiftMarksmanV
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.scorpionV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('scorpionV')
+                  }}
+                >
+                  scorpionV
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.gargoyleV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('gargoyleV')
+                  }}
+                >
+                  gargoyleV
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.bearV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('bearV')
+                  }}
+                >
+                  bearV
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.unicornRiderV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('unicornRiderV')
+                  }}
+                >
+                  unicornRiderV
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.bullRiderV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('bullRiderV')
+                  }}
+                >
+                  bullRiderV
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.giantZombieV) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('giantZombieV')
+                  }}
+                >
+                  giantZombieV
+                </button>
+              )}
+
+              {shouldShow('mercenaries')(ARMY.trebuchetVI) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('trebuchetVI')
+                  }}
+                >
+                  trebuchetVI
                 </button>
               )}
               {shouldShow('mercenaries')(ARMY.chariotVI) && (
@@ -2470,14 +2595,58 @@ export const ArmyList = () => {
                   abomination VI
                 </button>
               )}
-              {shouldShow('mercenaries')(ARMY.archidemonVI) && (
+              {shouldShow('mercenaries')(ARMY.archdemonVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
-                    addTroops('archidemonVI')
+                    addTroops('archdemonVI')
                   }}
                 >
-                  archidemon VI
+                  archdemon VI
+                </button>
+              )}
+
+              {shouldShow('mercenaries')(ARMY.pathFinderVI) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('pathFinderVI')
+                  }}
+                >
+                  pathFinderVI
+                </button>
+              )}
+
+              {shouldShow('mercenaries')(ARMY.palintoneVII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('palintoneVII')
+                  }}
+                >
+                  palintoneVII
+                </button>
+              )}
+
+              {shouldShow('mercenaries')(ARMY.cursedDendroidVI) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('cursedDendroidVI')
+                  }}
+                >
+                  cursedDendroidVI
+                </button>
+              )}
+
+              {shouldShow('mercenaries')(ARMY.epicMonsterHunterVI) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('epicMonsterHunterVI')
+                  }}
+                >
+                  Epic Monster Hunter VI
                 </button>
               )}
 
@@ -2574,6 +2743,27 @@ export const ArmyList = () => {
                   }}
                 >
                   jungleKingVII
+                </button>
+              )}
+
+              {shouldShow('mercenaries')(ARMY.epicMonsterHunterVII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('epicMonsterHunterVII')
+                  }}
+                >
+                  Epic Monster Hunter VII
+                </button>
+              )}
+              {shouldShow('mercenaries')(ARMY.epicMonsterHunterII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('epicMonsterHunterII')
+                  }}
+                >
+                  Epic Monster Hunter II
                 </button>
               )}
 

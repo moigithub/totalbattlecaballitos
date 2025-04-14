@@ -11,7 +11,7 @@ function App() {
     if (locaHash === '') {
       //check if we have anything on localstorage
       console.log('loading from localstorage')
-      const storedValue = localStorage.getItem('tbarmy')
+      const storedValue = localStorage.getItem('tbstacks')
       if (storedValue) {
         // Helper function to decode the hash
         decodeAndLoadArmySetup(storedValue)
