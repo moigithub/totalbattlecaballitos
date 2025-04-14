@@ -352,7 +352,12 @@ second REMAINS second
           )
           if (strLimitValue) {
             const stackStrength = strLimitValue.str
-            const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+            // const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+
+            // fix: 14/4/25
+            // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
+            // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
+
             // en strLimit se pone la vida del enemigo
             // para que calcule la cantidad maxima de tropas a enviar
             // en el calculo del strLimit se usa el feature bonus: ejm. vsMelee
@@ -360,7 +365,7 @@ second REMAINS second
             // por lo tanto, este "daño efectivo" debe ser mayor o igual a la vida
             // por lo que debo agregar 1 unidad extra a la cuenta de tropas
             // y se debe usar > en lugar de >=
-            if (stackStrength + unitStrength + unitStrength > ARMY[0].strLimit) {
+            if (stackStrength > ARMY[0].strLimit) {
               canIAddToFirstStack = false
             }
           }
@@ -482,9 +487,13 @@ second REMAINS second
                 )
                 if (strLimitValue) {
                   const stackStrength = strLimitValue.str
-                  const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+                  // const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength + unitStrength > ARMY[i].strLimit) {
+                  // fix: 14/4/25
+                  // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
+                  // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
+
+                  if (stackStrength > ARMY[i].strLimit) {
                     break
                   }
                 }
@@ -588,9 +597,13 @@ second REMAINS second
                 )
                 if (strLimitValue) {
                   const stackStrength = strLimitValue.str
-                  const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+                  // const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength + unitStrength > ARMY[i].strLimit) {
+                  // fix: 14/4/25
+                  // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
+                  // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
+
+                  if (stackStrength > ARMY[i].strLimit) {
                     break
                   }
                 }
@@ -695,9 +708,13 @@ second REMAINS second
                 )
                 if (strLimitValue) {
                   const stackStrength = strLimitValue.str
-                  const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
+                  // const unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
 
-                  if (stackStrength + unitStrength + unitStrength > ARMY[i].strLimit) {
+                  // fix: 14/4/25
+                  // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
+                  // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
+
+                  if (stackStrength > ARMY[i].strLimit) {
                     break
                   }
                 }
