@@ -4,7 +4,12 @@ import { whoCanIAttack } from './utils'
 export const MercList = () => {
   const mercList = [
     ARMY.epicMonsterHunterVI,
+    ARMY.swiftMarksmanV,
     ARMY.chariotVI,
+    ARMY.pathFinderVI,
+    ARMY.trebuchetVI,
+    ARMY.cursedDendroidVI,
+    ARMY.scorpionV,
     ARMY.deathChariotVI,
     ARMY.legionaryVI,
     ARMY.arbalesterVI,
@@ -16,8 +21,9 @@ export const MercList = () => {
     ARMY.sheduVI,
     ARMY.entVI,
     ARMY.abominationVI,
-    ARMY.archidemonVI,
+    ARMY.archdemonVI,
     ARMY.lightningLordVII,
+    ARMY.palintoneVII,
     ARMY.cursedDragonVII,
     ARMY.seaLordVII,
     ARMY.sandwormVII,
@@ -63,6 +69,7 @@ export const MercList = () => {
         </thead>
         <tbody>
           {mercList.map((merc, i) => {
+            const categories = [merc.category, merc.subGroup].filter(Boolean).join(', ')
             return (
               <tr key={`merc${i}`}>
                 {/* <td>
@@ -70,7 +77,7 @@ export const MercList = () => {
                 </td> */}
                 <td>{i + 1}</td>
                 <td>{merc.name}</td>
-                <td>{merc.category}</td>
+                <td>{categories}</td>
                 <td>{whoCanIAttack(merc).join(', ')}</td>
                 <td>{merc.BASEHP}</td>
                 <td>{merc.BASESTR}</td>

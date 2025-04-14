@@ -1424,11 +1424,9 @@ const scorpionRiderV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'jinete escorpion V',
   BASEHP: 111000,
   BASESTR: 37000,
-  AUTHORITY: 71,
+  AUTHORITY: 36,
   INITIATIVE: 10,
   vsRangedPercent: 40,
-  vsSiegePercent: 0,
-  vsEpicPercent: 0,
   category: 'mounted',
   group: 'mercs',
   level: '5'
@@ -1441,7 +1439,7 @@ const cyclopsV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'ciclope V',
   BASEHP: 135000,
   BASESTR: 45000,
-  AUTHORITY: 85,
+  AUTHORITY: 43,
   INITIATIVE: 10,
   vsFortificationsPercent: 100,
   vsBeastPercent: 40,
@@ -1459,12 +1457,13 @@ const gargoyleV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'gargola V',
   BASEHP: 57000,
   BASESTR: 19000,
-  AUTHORITY: 37,
+  AUTHORITY: 19,
   INITIATIVE: 10,
   vsMountedPercent: 70,
   vsElementalPercent: 45,
   category: 'flying',
   group: 'mercs', //'undead',
+  subGroup: 'beast',
   level: '5'
 })
 
@@ -1475,11 +1474,12 @@ const bearV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'oso V',
   BASEHP: 66000,
   BASESTR: 22000,
-  AUTHORITY: 41,
+  AUTHORITY: 21,
   INITIATIVE: 10,
   vsMountedPercent: 70,
   vsElementalPercent: 50,
   category: 'melee',
+  subGroup: 'beast',
   group: 'mercs', //'elf',
   level: '5'
 })
@@ -1491,15 +1491,31 @@ const ifritV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'ifrit V',
   BASEHP: 132000,
   BASESTR: 44000,
-  AUTHORITY: 83,
+  AUTHORITY: 42,
   INITIATIVE: 10,
   vsMeleePercent: 70,
   vsDragonPercent: 40,
   category: 'flying',
-  group: 'mercs', // 'elemental',
+  group: 'mercs', //
+  subGroup: 'elemental',
   level: '5'
 })
-
+const swiftMarksmanV: MercUnit = unitBuilder<MercUnit>({
+  id: 'swiftMarksmanV',
+  clasification: 'merc',
+  name: 'swiftMarksman',
+  nameEs: 'swiftMarksman',
+  BASEHP: 3150,
+  BASESTR: 1050,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  vsFlyingPercent: 339,
+  vsMeleePercent: 263,
+  category: 'ranged',
+  group: 'mercs',
+  subGroup: '',
+  level: '5'
+})
 const giantZombieV: MercUnit = unitBuilder<MercUnit>({
   id: 'giantZombieV',
   clasification: 'merc',
@@ -1507,12 +1523,13 @@ const giantZombieV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'Zombi gigante V',
   BASEHP: 99000,
   BASESTR: 33000,
-  AUTHORITY: 63,
+  AUTHORITY: 32,
   INITIATIVE: 10,
   vsMountedPercent: 70,
   vsBeastPercent: 45,
   category: 'melee',
   group: 'mercs', // 'cursed',
+  subGroup: 'giant',
   level: '5'
 })
 
@@ -1523,11 +1540,12 @@ const firewormRiderV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'jinete gusano V',
   BASEHP: 150000,
   BASESTR: 50000,
-  AUTHORITY: 96,
+  AUTHORITY: 48,
   INITIATIVE: 10,
   vsRangedPercent: 55,
   category: 'mounted',
-  group: 'mercs', // '',
+  group: 'mercs',
+  // subGroup :'',
   level: '5'
 })
 
@@ -1538,7 +1556,7 @@ const unicornRiderV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'jinete unicornio V',
   BASEHP: 81000,
   BASESTR: 27000,
-  AUTHORITY: 96,
+  AUTHORITY: 26,
   INITIATIVE: 10,
   vsRangedPercent: 65,
   category: 'mounted',
@@ -1553,7 +1571,7 @@ const bullRiderV: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'jinete toro V',
   BASEHP: 87000,
   BASESTR: 29000,
-  AUTHORITY: 56,
+  AUTHORITY: 28,
   INITIATIVE: 10,
   vsRangedPercent: 55,
   category: 'mounted',
@@ -1569,7 +1587,7 @@ const chariotVI: MercUnit = unitBuilder<MercUnit>({
   nameEs: 'carruaje VI',
   BASEHP: 11400,
   BASESTR: 3800,
-  AUTHORITY: 71,
+  AUTHORITY: 2,
   INITIATIVE: 10,
   vsRangedPercent: 493,
   vsSiegePercent: 410,
@@ -1689,19 +1707,21 @@ const deathChariotVI: MercUnit = unitBuilder<MercUnit>({
   group: 'mercs', //
   level: '6'
 })
+
 const sheduVI: MercUnit = unitBuilder<MercUnit>({
   id: 'sheduVI',
   clasification: 'merc',
   name: 'sheduVI',
   nameEs: 'sheduVI',
-  BASEHP: 56700,
-  BASESTR: 18900,
-  AUTHORITY: 10,
+  BASEHP: 226800,
+  BASESTR: 75600,
+  AUTHORITY: 40,
   INITIATIVE: 10,
   vsFortificationsPercent: 156,
   vsHumanPercent: 105,
   vsMountedPercent: 296,
   category: 'flying',
+  subGroup: 'beast',
   group: 'mercs', //
   level: '6'
 })
@@ -1718,6 +1738,7 @@ const entVI: MercUnit = unitBuilder<MercUnit>({
   vsDragonPercent: 45,
   vsRangedPercent: 55,
   category: 'melee',
+  subGroup: 'elemental',
   group: 'mercs', //
   level: '6'
 })
@@ -1733,6 +1754,7 @@ const abominationVI: MercUnit = unitBuilder<MercUnit>({
   vsElementalPercent: 50,
   vsRangedPercent: 60,
   category: 'melee',
+  subGroup: 'beast',
   group: 'mercs', //
   level: '6'
 })
@@ -1751,11 +1773,11 @@ const boneGolemVI: MercUnit = unitBuilder<MercUnit>({
   level: '6'
 })
 
-const archidemonVI: MercUnit = unitBuilder<MercUnit>({
-  id: 'archidemonVI',
+const archdemonVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'archdemonVI',
   clasification: 'merc',
-  name: 'archidemonVI',
-  nameEs: 'archidemonVI',
+  name: 'archdemonVI',
+  nameEs: 'archdemonVI',
   BASEHP: 540000,
   BASESTR: 180000,
   AUTHORITY: 95,
@@ -1763,7 +1785,38 @@ const archidemonVI: MercUnit = unitBuilder<MercUnit>({
   vsBeastPercent: 40,
   vsMountedPercent: 60,
   category: 'melee',
+  subGroup: 'giant',
   group: 'mercs', //'demon',
+  level: '6'
+})
+const pathFinderVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'pathFinderVI',
+  clasification: 'merc',
+  name: 'pathFinderVI',
+  nameEs: 'pathFinderVI',
+  BASEHP: 2800,
+  BASESTR: 940,
+  AUTHORITY: 5,
+  INITIATIVE: 10,
+  category: 'scout',
+  group: 'mercs',
+  level: '6'
+})
+
+const cursedDendroidVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'cursedDendroidVI',
+  clasification: 'merc',
+  name: 'cursedDendroidVI',
+  nameEs: 'dendroid maldito VI',
+  BASEHP: 330000,
+  BASESTR: 110000,
+  AUTHORITY: 57,
+  INITIATIVE: 10,
+  vsDragonPercent: 50,
+  vsRangedPercent: 65,
+  category: 'melee',
+  subGroup: 'elemental',
+  group: 'mercs',
   level: '6'
 })
 
@@ -1779,6 +1832,7 @@ const lightningLordVII: MercUnit = unitBuilder<MercUnit>({
   vsBeastPercent: 729,
   vsMeleePercent: 570,
   category: 'ranged',
+  subGroup: 'giant',
   group: 'mercs', //
   level: '7'
 })
@@ -1795,6 +1849,7 @@ const cursedDragonVII: MercUnit = unitBuilder<MercUnit>({
   vsGiantPercent: 50,
   vsMountedPercent: 50,
   category: 'flying',
+  subGroup: 'dragon',
   group: 'mercs', //'cursed',
   level: '7'
 })
@@ -1811,6 +1866,7 @@ const seaLordVII: MercUnit = unitBuilder<MercUnit>({
   vsDragonPercent: 547,
   vsRangedPercent: 752,
   category: 'mounted',
+  subGroup: 'elemental',
   group: 'mercs', //
   level: '7'
 })
@@ -1827,6 +1883,7 @@ const sandwormVII: MercUnit = unitBuilder<MercUnit>({
   vsDragonPercent: 50,
   vsMountedPercent: 75,
   category: 'melee',
+  subGroup: 'elemental',
   group: 'mercs', //'barbarian',
   level: '7'
 })
@@ -1843,7 +1900,8 @@ const lifeDragonVII: MercUnit = unitBuilder<MercUnit>({
   vsGiantPercent: 50,
   vsMountedPercent: 60,
   category: 'flying',
-  group: 'mercs', //'elf',
+  group: 'mercs',
+  subGroup: 'dragon',
   level: '7'
 })
 
@@ -1859,6 +1917,7 @@ const goldenDragonVII: MercUnit = unitBuilder<MercUnit>({
   vsGiantPercent: 365,
   vsMountedPercent: 934,
   category: 'flying',
+  subGroup: 'dragon',
   group: 'mercs', //
   level: '7'
 })
@@ -1874,7 +1933,8 @@ const overlordVII: MercUnit = unitBuilder<MercUnit>({
   vsBeastPercent: 50,
   vsMeleePercent: 60,
   category: 'ranged',
-  group: 'mercs', // 'undead',
+  group: 'mercs',
+  subGroup: 'giant',
   level: '7'
 })
 
@@ -1890,6 +1950,7 @@ const fireLordVII: MercUnit = unitBuilder<MercUnit>({
   vsDragonPercent: 45,
   vsMeleePercent: 80,
   category: 'ranged',
+  subGroup: 'elemental',
   group: 'mercs', //'demon',
   level: '7'
 })
@@ -1905,6 +1966,7 @@ const jungleKingVII: MercUnit = unitBuilder<MercUnit>({
   vsElementalPercent: 911,
   vsMountedPercent: 387,
   category: 'melee',
+  subGroup: 'beast',
   group: 'mercs', //
   level: '7'
 })
@@ -1923,7 +1985,51 @@ const wyvernII: MercUnit = unitBuilder<MercUnit>({
   group: 'mercs', //
   level: '9'
 })
-
+const palintoneVII: MercUnit = unitBuilder<MercUnit>({
+  id: 'palintoneVII',
+  clasification: 'merc',
+  name: 'palintoneVII',
+  nameEs: 'palintoneVII',
+  BASEHP: 102000,
+  BASESTR: 17000,
+  AUTHORITY: 10,
+  INITIATIVE: 10,
+  multiplier: 20,
+  vsFortificationsPercent: 740,
+  category: 'siege',
+  group: 'mercs', //
+  level: '7'
+})
+const trebuchetVI: MercUnit = unitBuilder<MercUnit>({
+  id: 'trebuchetVI',
+  clasification: 'merc',
+  name: 'trebuchetVI',
+  nameEs: 'trebuchetVI',
+  BASEHP: 57000,
+  BASESTR: 9500,
+  AUTHORITY: 10,
+  INITIATIVE: 10,
+  multiplier: 20,
+  vsFortificationsPercent: 494,
+  category: 'siege',
+  group: 'mercs', //
+  level: '6'
+})
+const scorpionV: MercUnit = unitBuilder<MercUnit>({
+  id: 'scorpionV',
+  clasification: 'merc',
+  name: 'scorpionV',
+  nameEs: 'scorpionV',
+  BASEHP: 32000,
+  BASESTR: 5250,
+  AUTHORITY: 10,
+  INITIATIVE: 10,
+  multiplier: 20,
+  vsFortificationsPercent: 329,
+  category: 'siege',
+  group: 'mercs', //
+  level: '5'
+})
 const arielII: MercUnit = unitBuilder<MercUnit>({
   id: 'arielII',
   clasification: 'merc',
@@ -1982,6 +2088,7 @@ const warregalII: MercUnit = unitBuilder<MercUnit>({
   vsMountedPercent: 1999,
   vsFortificationsPercent: 1051,
   category: 'flying',
+  subGroup: 'beast',
   group: 'mercs', //
   level: '9'
 })
@@ -2163,14 +2270,7 @@ const scarfaceII: MercUnit = unitBuilder<MercUnit>({
   group: 'mercs', // 'specialist',
   level: '9'
 })
-/*
-trebuchetVI
-deathchariot
-archdemon
 
-
-
-*/
 export interface Army {
   [key: string]: BasicUnit
 }
@@ -2285,7 +2385,9 @@ export const ARMY: Army = {
   gargoyleV,
   bearV,
   ifritV,
+  swiftMarksmanV,
   giantZombieV,
+  scorpionV,
   firewormRiderV,
   unicornRiderV,
   bullRiderV,
@@ -2302,8 +2404,12 @@ export const ARMY: Army = {
   entVI,
   abominationVI,
   boneGolemVI,
-  archidemonVI,
+  archdemonVI,
+  pathFinderVI,
+  trebuchetVI,
+  cursedDendroidVI,
   lightningLordVII,
+  palintoneVII,
   cursedDragonVII,
   seaLordVII,
   sandwormVII,

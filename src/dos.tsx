@@ -1071,7 +1071,7 @@ ignora lo que continua abajo de esta linea:
   const saveData = () => {
     const data = prepareExportData(useStackStore.getState())
     const a = document.createElement('a')
-    // console.log('save data prepared', data)
+    console.log('save data prepared', data)
     const json = encodeHash(JSON.stringify(data))
     const blob = new Blob([json], { type: 'octet/stream' })
     const url = window.URL.createObjectURL(blob)
@@ -1088,7 +1088,7 @@ ignora lo que continua abajo de esta linea:
       if (event.target.files && event.target.files[0]) {
         reader.onload = function (e) {
           const output = e.target?.result
-          // console.log('file content', String(output))
+          console.log('file content', String(output))
           if (output) {
             decodeAndLoadArmySetup(String(output))
           }
