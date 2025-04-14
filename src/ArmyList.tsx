@@ -526,7 +526,13 @@ export const ArmyList = () => {
     } else if (type === 'engineers') {
       //
     } else if (type === 'mercenaries') {
-      //
+      if (filterTypes.length === 0) {
+        show = filterGroups.includes(unit.subGroup) //dragon, elemental, beast, giant
+      } else {
+        // combine both, so we get dragon:melee dragon:flying dragon:mounted etc
+        show = filterGroups.includes(unit.subGroup) && filterTypes.includes(unit.category) //dragon, elemental, beast, giant
+      }
+
       // always show epics
       if (featBonus.includes('Epic')) {
         show = true
