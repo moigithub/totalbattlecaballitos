@@ -28,6 +28,7 @@ export interface FightStack {
   id: string
   unit: ObjProps
   unitsAmount: number
+  originalUnitsAmount: number
   accumulatedDamage: number
 }
 
@@ -202,48 +203,89 @@ objectDB.walls = objBuilder({
 })
 export const citadele10: Citadel = {
   stacks: [
-    { id: '0', unit: objectDB.walls, unitsAmount: 90, accumulatedDamage: 0 },
-    { id: '1', unit: objectDB.bearV, unitsAmount: 9, accumulatedDamage: 0 },
+    {
+      id: '0',
+      unit: objectDB.walls,
+      unitsAmount: 90,
+      originalUnitsAmount: 90,
+      accumulatedDamage: 0
+    },
+    { id: '1', unit: objectDB.bearV, unitsAmount: 9, originalUnitsAmount: 9, accumulatedDamage: 0 },
     {
       id: '2',
       unit: objectDB.pegasoRiderIV,
       unitsAmount: 19,
+      originalUnitsAmount: 19,
       accumulatedDamage: 0
     },
     {
       id: '3',
       unit: objectDB.elfArcherI,
       unitsAmount: 1200,
+      originalUnitsAmount: 1200,
       accumulatedDamage: 0
     },
-    { id: '4', unit: objectDB.druidII, unitsAmount: 100, accumulatedDamage: 0 },
-    { id: '5', unit: objectDB.dwarf, unitsAmount: 2200, accumulatedDamage: 0 }
+    {
+      id: '4',
+      unit: objectDB.druidII,
+      unitsAmount: 100,
+      originalUnitsAmount: 100,
+      accumulatedDamage: 0
+    },
+    {
+      id: '5',
+      unit: objectDB.dwarf,
+      unitsAmount: 2200,
+      originalUnitsAmount: 2200,
+      accumulatedDamage: 0
+    }
   ]
 }
 
 export const citadele15: Citadel = {
   // walls: { hp: 700 * 30_000 },
   stacks: [
-    { id: '0', unit: objectDB.walls, unitsAmount: 700, accumulatedDamage: 0 },
+    {
+      id: '0',
+      unit: objectDB.walls,
+      unitsAmount: 700,
+      originalUnitsAmount: 700,
+      accumulatedDamage: 0
+    },
 
-    { id: '1', unit: objectDB.entVI, unitsAmount: 21, accumulatedDamage: 0 },
+    {
+      id: '1',
+      unit: objectDB.entVI,
+      unitsAmount: 21,
+      originalUnitsAmount: 21,
+      accumulatedDamage: 0
+    },
     {
       id: '2',
       unit: objectDB.unicornRiderV,
       unitsAmount: 47,
+      originalUnitsAmount: 47,
       accumulatedDamage: 0
     },
-    { id: '3', unit: objectDB.druidII, unitsAmount: 1100, accumulatedDamage: 0 },
+    {
+      id: '3',
+      unit: objectDB.druidII,
+      unitsAmount: 1100,
+      originalUnitsAmount: 1100,
+      accumulatedDamage: 0
+    },
     {
       id: '4',
       unit: objectDB.centaurIII,
       unitsAmount: 290,
+      originalUnitsAmount: 290,
       accumulatedDamage: 0
     },
     {
       id: '5',
       unit: objectDB.elfArcherI,
       unitsAmount: 5000,
+      originalUnitsAmount: 5000,
       accumulatedDamage: 0
     }
   ]
@@ -252,12 +294,19 @@ export const citadele15: Citadel = {
 export const citadele20: Citadel = {
   // walls: { hp: 3650 * 30_000 },
   stacks: [
-    { id: '0', unit: objectDB.walls, unitsAmount: 3650, accumulatedDamage: 0 },
+    {
+      id: '0',
+      unit: objectDB.walls,
+      unitsAmount: 3650,
+      originalUnitsAmount: 3650,
+      accumulatedDamage: 0
+    },
     {
       id: '1',
 
       unit: objectDB.lifeDragonVII,
       unitsAmount: 41,
+      originalUnitsAmount: 41,
       accumulatedDamage: 0
     },
     {
@@ -265,6 +314,7 @@ export const citadele20: Citadel = {
 
       unit: objectDB.entVI,
       unitsAmount: 110,
+      originalUnitsAmount: 110,
       accumulatedDamage: 0
     },
     {
@@ -272,6 +322,7 @@ export const citadele20: Citadel = {
 
       unit: objectDB.centaurIII,
       unitsAmount: 2500,
+      originalUnitsAmount: 2500,
       accumulatedDamage: 0
     },
     {
@@ -279,6 +330,7 @@ export const citadele20: Citadel = {
 
       unit: objectDB.bearV,
       unitsAmount: 230,
+      originalUnitsAmount: 230,
       accumulatedDamage: 0
     },
     {
@@ -286,6 +338,7 @@ export const citadele20: Citadel = {
 
       unit: objectDB.druidII,
       unitsAmount: 3600,
+      originalUnitsAmount: 3600,
       accumulatedDamage: 0
     }
   ]
@@ -293,35 +346,46 @@ export const citadele20: Citadel = {
 export const citadele25: Citadel = {
   // walls: { hp: 31900 * 30_000 },
   stacks: [
-    { id: '0', unit: objectDB.walls, unitsAmount: 31900, accumulatedDamage: 0 },
+    {
+      id: '0',
+      unit: objectDB.walls,
+      unitsAmount: 31900,
+      originalUnitsAmount: 31900,
+      accumulatedDamage: 0
+    },
     {
       id: '1',
       unit: objectDB.lifeDragonVII,
       unitsAmount: 480,
+      originalUnitsAmount: 480,
       accumulatedDamage: 0
     },
     {
       id: '2',
       unit: objectDB.entVI,
       unitsAmount: 880,
+      originalUnitsAmount: 880,
       accumulatedDamage: 0
     },
     {
       id: '3',
       unit: objectDB.bearV,
       unitsAmount: 2400,
+      originalUnitsAmount: 2400,
       accumulatedDamage: 0
     },
     {
       id: '4',
       unit: objectDB.pegasoRiderIV,
       unitsAmount: 4300,
+      originalUnitsAmount: 4300,
       accumulatedDamage: 0
     },
     {
       id: '5',
       unit: objectDB.centaurIII,
       unitsAmount: 10000,
+      originalUnitsAmount: 10000,
       accumulatedDamage: 0
     }
   ]
@@ -330,35 +394,46 @@ export const citadele25: Citadel = {
 export const citadele30: Citadel = {
   // walls: { hp: 135000 * 30_000 },
   stacks: [
-    { id: '0', unit: objectDB.walls, unitsAmount: 135000, accumulatedDamage: 0 },
+    {
+      id: '0',
+      unit: objectDB.walls,
+      unitsAmount: 135000,
+      originalUnitsAmount: 135000,
+      accumulatedDamage: 0
+    },
     {
       id: '1',
       unit: objectDB.lifeDragonVII,
       unitsAmount: 2300,
+      originalUnitsAmount: 2300,
       accumulatedDamage: 0
     },
     {
       id: '2',
       unit: objectDB.entVI,
       unitsAmount: 4300,
+      originalUnitsAmount: 4300,
       accumulatedDamage: 0
     },
     {
       id: '3',
       unit: objectDB.bearV,
       unitsAmount: 12000,
+      originalUnitsAmount: 12000,
       accumulatedDamage: 0
     },
     {
       id: '4',
       unit: objectDB.pegasoRiderIV,
       unitsAmount: 21000,
+      originalUnitsAmount: 21000,
       accumulatedDamage: 0
     },
     {
       id: '5',
       unit: objectDB.centaurIII,
       unitsAmount: 49000,
+      originalUnitsAmount: 49000,
       accumulatedDamage: 0
     }
   ]
@@ -367,35 +442,46 @@ export const citadele30: Citadel = {
 export const citadelc20: Citadel = {
   // walls: { hp: 9200 * 30_000 },
   stacks: [
-    { id: '0', unit: objectDB.walls, unitsAmount: 9200, accumulatedDamage: 0 },
+    {
+      id: '0',
+      unit: objectDB.walls,
+      unitsAmount: 9200,
+      originalUnitsAmount: 9200,
+      accumulatedDamage: 0
+    },
     {
       id: '1',
       unit: objectDB.cursedDragonVII,
       unitsAmount: 10,
+      originalUnitsAmount: 10,
       accumulatedDamage: 0
     },
     {
       id: '2',
       unit: objectDB.giantZombieV,
       unitsAmount: 80,
+      originalUnitsAmount: 80,
       accumulatedDamage: 0
     },
     {
       id: '3',
       unit: objectDB.deathRiderIII,
       unitsAmount: 650,
+      originalUnitsAmount: 650,
       accumulatedDamage: 0
     },
     {
       id: '4',
       unit: objectDB.bullRiderV,
       unitsAmount: 54,
+      originalUnitsAmount: 54,
       accumulatedDamage: 0
     },
     {
       id: '5',
       unit: objectDB.wereWolfII,
       unitsAmount: 2900,
+      originalUnitsAmount: 2900,
       accumulatedDamage: 0
     }
   ]
@@ -403,35 +489,46 @@ export const citadelc20: Citadel = {
 export const citadelc25: Citadel = {
   // walls: { hp: 77500 * 30_000 },
   stacks: [
-    { id: '0', unit: objectDB.walls, unitsAmount: 77500, accumulatedDamage: 0 },
+    {
+      id: '0',
+      unit: objectDB.walls,
+      unitsAmount: 77500,
+      originalUnitsAmount: 77500,
+      accumulatedDamage: 0
+    },
     {
       id: '1',
       unit: objectDB.cursedDragonVII,
       unitsAmount: 120,
+      originalUnitsAmount: 120,
       accumulatedDamage: 0
     },
     {
       id: '2',
       unit: objectDB.cursedDendroidVI,
       unitsAmount: 205,
+      originalUnitsAmount: 205,
       accumulatedDamage: 0
     },
     {
       id: '3',
       unit: objectDB.giantZombieV,
       unitsAmount: 540,
+      originalUnitsAmount: 540,
       accumulatedDamage: 0
     },
     {
       id: '4',
       unit: objectDB.bullRiderV,
       unitsAmount: 400,
+      originalUnitsAmount: 400,
       accumulatedDamage: 0
     },
     {
       id: '5',
       unit: objectDB.deathRiderIII,
       unitsAmount: 2750,
+      originalUnitsAmount: 2750,
       accumulatedDamage: 0
     }
   ]

@@ -1,5 +1,5 @@
 import { FightStack, ObjProps } from './citadelData'
-import { addReportData, Result } from './dos'
+import { addReportData, DataResult } from './dos'
 // import { Result } from './dos'
 import { BasicUnit, Stack } from './types'
 import { whoCanIAttack } from './utils'
@@ -333,6 +333,7 @@ export const prepareArmyData = (army: Stack[]): FightStack[] => {
       },
       id: stack.id,
       unitsAmount: stack.unitsAmount,
+      originalUnitsAmount: stack.unitsAmount,
       accumulatedDamage: 0
     }
   })
@@ -791,8 +792,8 @@ const getNextTurn = (
   return null
 }
 
-export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] => {
-  const checkResult: Result[] = []
+export const fight = (attacker: FightStack[], defender: FightStack[]): DataResult[][] => {
+  const checkResult: DataResult[][] = []
   const playerStacks: FightStack[] = attacker
   const enemyStacks: FightStack[] = defender
 
@@ -800,10 +801,11 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
 
   let cycle = 1
   let outerLoopProtect = 200
+  let lineCounter = 1
 
   while (haveTroopsAlive(attacker) && haveTroopsAlive(defender)) {
     console.log(`\nCiclo ${cycle}:`)
-    addReportData(checkResult, 1, `LAP ${cycle}:`, 'title')
+    addReportData(checkResult, [{ color: 'red', msg: `LAP ${cycle}:` }])
 
     const attackedStacks = new Set<FightStack>() // Rastrear stacks que ya han atacado
     let allStacksAttacked = false // Indica si todos los stacks han atacado en este ciclo
@@ -836,17 +838,17 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
           const damage = calculateEffectiveDamage(stack, targetStack)
           const unitsKilled = applyDamage(stack, targetStack, damage)
 
-          addReportData(
-            checkResult,
-            3,
-            '',
-            // `${isPlayerTurn ? 'Player' : 'Enemy'} Turn `,
-            /*stack.id + ':' +*/ stack.unit.name,
-            /*targetStack.id + ':' +*/ targetStack.unit.name,
-            unitsKilled,
-            damage,
-            'item'
-          )
+          addReportData(checkResult, [
+            { color: 'yellow', msg: `${lineCounter++}: ` },
+            { color: 'green', msg: stack.unit.name + ' ' },
+            { color: 'white', msg: 'attacked ' },
+            { color: 'green', msg: targetStack.unit.name + ' ' },
+            { color: 'white', msg: 'dealing ' },
+            { color: 'blue', msg: `${damage.toFixed(0)} ` },
+            { color: 'white', msg: 'killing ' },
+            { color: 'red', msg: `${unitsKilled} ` },
+            { color: 'white', msg: 'units ' }
+          ])
 
           attackedStacks.add(stack) // Marcar el stack como atacado
         }
@@ -888,9 +890,47 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): Result[] 
     }
   }
 
-  const winner = haveTroopsAlive(attacker) ? 'Player' : 'Enemy'
+  const winner = haveTroopsAlive(attacker) ? 'ATTACKER' : 'DEFENDER'
   console.log(`\n¡La batalla ha terminado! El ganador es el bando ${winner}.`)
-  addReportData(checkResult, 4, 'WINNER: ' + winner, 'title')
+  addReportData(checkResult, [
+    { color: 'yellow', msg: 'WINNER: ' },
+    { color: 'purple', msg: winner }
+  ])
+
+  // create fight resume report
+  addReportData(checkResult, [{ color: 'purple', msg: '-------------------------------' }])
+  addReportData(checkResult, [{ color: 'purple', msg: 'SUMMARY' }])
+  addReportData(checkResult, [{ color: 'purple', msg: '-------------------------------' }])
+
+  let looseCount = 0
+  if (winner === 'ATTACKER') {
+    attacker.forEach(unit => {
+      if (unit.originalUnitsAmount !== unit.unitsAmount) {
+        looseCount++
+        addReportData(checkResult, [
+          { color: 'blue', msg: unit.unit.name },
+          { color: 'white', msg: 'lost' },
+          { color: 'red', msg: `${unit.originalUnitsAmount - unit.unitsAmount}` },
+          { color: 'white', msg: 'units' }
+        ])
+      }
+    })
+  } else {
+    defender.forEach(unit => {
+      if (unit.originalUnitsAmount !== unit.unitsAmount) {
+        looseCount++
+        addReportData(checkResult, [
+          { color: 'blue', msg: unit.unit.name },
+          { color: 'white', msg: 'lost' },
+          { color: 'red', msg: `${unit.originalUnitsAmount - unit.unitsAmount}` },
+          { color: 'white', msg: 'units' }
+        ])
+      }
+    })
+  }
+  if (looseCount === 0) {
+    addReportData(checkResult, [{ color: 'yellow', msg: 'NO loses' }])
+  }
 
   return checkResult
 }

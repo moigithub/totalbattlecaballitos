@@ -50,35 +50,14 @@ import { Tips } from './tips.tsx'
 import { lvl17HeroicElfSquad } from './monsters.ts'
 import { decodeAndLoadArmySetup, prepareExportData } from './utils.ts'
 import { encodeHash } from './hashStore.ts'
-export interface Result {
-  status: number
+
+export interface DataResult {
+  color: string
   msg: string
-  attacker: string
-  defender: string
-  killedUnits: number
-  damageAmount: number
-  reportType: string
 }
 
-export const addReportData = (
-  checkResult: Result[],
-  status: number,
-  msg: string,
-  attacker: string = '',
-  defender: string = '',
-  killedUnits: number = 0,
-  damageAmount: number = 0,
-  reportType: string = ''
-) => {
-  checkResult.push({
-    status,
-    msg,
-    attacker,
-    defender,
-    killedUnits,
-    damageAmount,
-    reportType
-  })
+export const addReportData = (checkResult: DataResult[][], column: DataResult[]) => {
+  checkResult.push(column)
 }
 
 function Dos() {
@@ -114,7 +93,7 @@ function Dos() {
 
   const [selectedTarget, setSelectedTarget] = useState('citadele10')
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
-  const [report, setReport] = useState<Result[]>([])
+  const [report, setReport] = useState<DataResult[][]>([])
 
   const [cardType, setCardType] = useState('card') // card , smallcard
   // const [gapPercent, setGapPercent] = useState(10) // card , smallcard
@@ -800,7 +779,7 @@ second REMAINS second
 
   const verifyCitadel = () => {
     // console.log('verifying citadele20')
-    const checkResult: Result[] = []
+    const checkResult: DataResult[][] = []
     // let troopsTypes: boolean = false
 
     // ***********************************
@@ -808,8 +787,10 @@ second REMAINS second
 
     // BOTH sides my army, citadel already ordered based on stack strength, so no need to do anything
     // INFO: I DO first attack
-    addReportData(checkResult, 2, 'DOUBLE DAMAGE IS NOT CONSIDERED')
-    addReportData(checkResult, 0, 'simulation i attack first')
+    addReportData(checkResult, [{ color: 'green', msg: 'DOUBLE DAMAGE IS NOT CONSIDERED' }])
+    addReportData(checkResult, [{ color: 'white', msg: 'I ATTACK FIRST' }])
+    addReportData(checkResult, [{ color: 'white', msg: 'ATTACKER: ME, DEFENDER: CITADEL' }])
+    addReportData(checkResult, [{ color: 'white', msg: '------------------' }])
 
     // prepare army units for fighting, format data to have same structure as citadel
     const myArmy = prepareArmyData(army)
@@ -820,15 +801,22 @@ second REMAINS second
 
     const citadelClone = structuredClone(citadelWithoutWalls)
 
-    // citadel.forEach((stack, i) => {
-    //   stack.unitsAmount = citadele20.stacks[i].unitsAmount
-    // })
+    let result = fight(myArmy, citadelClone)
+    checkResult.push(...result)
+    addReportData(checkResult, [{ color: 'white', msg: '------------------' }])
+    addReportData(checkResult, [{ color: 'white', msg: 'CITADEL ATTACK FIRST' }])
+    addReportData(checkResult, [{ color: 'white', msg: 'ATTACKER: CITADEL, DEFENDER: ME' }])
+    addReportData(checkResult, [{ color: 'white', msg: '------------------' }])
 
-    // las tropas ya estan ordenadas del mas fuerte al mas debil, no hay q hacer nada
+    const myArmy2 = prepareArmyData(army)
 
-    const fightResult = fight(myArmy, citadelClone)
-    checkResult.push(...fightResult)
+    const citadelWithoutWalls2 = citadel.stacks.filter(
+      stack => stack.unit.category !== 'fortification'
+    )
 
+    const citadelClone2 = structuredClone(citadelWithoutWalls2)
+    result = fight(citadelClone2, myArmy2)
+    checkResult.push(...result)
     // console.log('citadel after hit', citadel)
 
     setReport(checkResult)
@@ -1137,8 +1125,6 @@ ignora lo que continua abajo de esta linea:
         break
     }
   }
-
-  let counter = 0 // lines enumeration visual only
 
   const hashArmyData = encodeHash(JSON.stringify(prepareExportData(useStackStore.getState())))
 
@@ -1483,45 +1469,33 @@ ignora lo que continua abajo de esta linea:
           <div className='relative '>
             <div className='mt-4 p-4 border-2  sticky top-[164px]  w-fit'>
               {report.map((data, i) => {
-                let color = 'text-green-700'
-                if (data.status == 0) {
-                  color = 'text-blue-700'
-                }
-                if (data.status == 2) {
-                  color = 'text-red-700'
-                }
-                if (data.status == 3) {
-                  color = 'text-gray-200'
-                }
-                if (data.status == 4) {
-                  color = 'text-yellow-300'
-                }
-
-                if (data.reportType === 'item') {
-                  counter++
-                }
-                if (data.msg === '') {
-                  return (
-                    <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                      {data.reportType === 'item' && (
-                        <span className='font-bold text-yellow-300 mr-2'>{counter}: </span>
-                      )}
-                      <span className='font-bold text-emerald-600'>{data.attacker}</span> attacked{' '}
-                      <span className='font-bold text-emerald-600'>{data.defender}</span>, dealing{' '}
-                      <span className='font-bold text-blue-600'>
-                        {data.damageAmount.toFixed(0)}
-                      </span>{' '}
-                      damage, killing{' '}
-                      <span className='font-bold text-red-600'>{data.killedUnits}</span> units
-                    </li>
-                  )
-                } else {
-                  return (
-                    <li key={`rpt${i}`} className={`text-sm ${color}`}>
-                      <span>{data.msg}</span>
-                    </li>
-                  )
-                }
+                return (
+                  <li key={`rpt${i}`} className={'text-sm'}>
+                    {data.map((col, x) => {
+                      let color = 'text-green-400'
+                      if (col.color == 'blue') {
+                        color = 'text-blue-500'
+                      }
+                      if (col.color == 'white') {
+                        color = 'text-gray-200'
+                      }
+                      if (col.color == 'red') {
+                        color = 'text-red-500'
+                      }
+                      if (col.color == 'purple') {
+                        color = 'text-purple-200'
+                      }
+                      if (col.color == 'yellow') {
+                        color = 'text-yellow-300'
+                      }
+                      return (
+                        <span key={`col${x}`} className={`${color}`}>
+                          {col.msg}{' '}
+                        </span>
+                      )
+                    })}
+                  </li>
+                )
               })}
             </div>
           </div>

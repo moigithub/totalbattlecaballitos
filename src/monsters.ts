@@ -78,30 +78,35 @@ export const lvl17HeroicElfSquad: Citadel = {
       id: 'e1',
       unit: entVI,
       unitsAmount: 130,
+      originalUnitsAmount: 130,
       accumulatedDamage: 0
     },
     {
       id: 'e2',
       unit: entVI,
       unitsAmount: 130,
+      originalUnitsAmount: 130,
       accumulatedDamage: 0
     },
     {
       id: 'e3',
       unit: entVI,
       unitsAmount: 130,
+      originalUnitsAmount: 130,
       accumulatedDamage: 0
     },
     {
       id: 'e4',
       unit: entVI,
       unitsAmount: 130,
+      originalUnitsAmount: 130,
       accumulatedDamage: 0
     },
     {
       id: 'e5',
       unit: entVI,
       unitsAmount: 130,
+      originalUnitsAmount: 130,
       accumulatedDamage: 0
     },
 
@@ -109,30 +114,35 @@ export const lvl17HeroicElfSquad: Citadel = {
       id: 'ur1',
       unit: unicornRiderV,
       unitsAmount: 114,
+      originalUnitsAmount: 114,
       accumulatedDamage: 0
     },
     {
       id: 'ur2',
       unit: unicornRiderV,
       unitsAmount: 114,
+      originalUnitsAmount: 114,
       accumulatedDamage: 0
     },
     {
       id: 'ur3',
       unit: unicornRiderV,
       unitsAmount: 114,
+      originalUnitsAmount: 114,
       accumulatedDamage: 0
     },
     {
       id: 'ur4',
       unit: unicornRiderV,
       unitsAmount: 114,
+      originalUnitsAmount: 114,
       accumulatedDamage: 0
     },
     {
       id: 'ur5',
       unit: unicornRiderV,
       unitsAmount: 114,
+      originalUnitsAmount: 114,
       accumulatedDamage: 0
     },
 
@@ -140,60 +150,70 @@ export const lvl17HeroicElfSquad: Citadel = {
       id: 'pr1',
       unit: pegasusRiderIV,
       unitsAmount: 170,
+      originalUnitsAmount: 170,
       accumulatedDamage: 0
     },
     {
       id: 'pr2',
       unit: pegasusRiderIV,
       unitsAmount: 170,
+      originalUnitsAmount: 170,
       accumulatedDamage: 0
     },
     {
       id: 'pr3',
       unit: pegasusRiderIV,
       unitsAmount: 170,
+      originalUnitsAmount: 170,
       accumulatedDamage: 0
     },
     {
       id: 'pr4',
       unit: pegasusRiderIV,
       unitsAmount: 170,
+      originalUnitsAmount: 170,
       accumulatedDamage: 0
     },
     {
       id: 'pr5',
       unit: pegasusRiderIV,
       unitsAmount: 170,
+      originalUnitsAmount: 170,
       accumulatedDamage: 0
     },
     {
       id: 'd1',
       unit: druidII,
       unitsAmount: 1720,
+      originalUnitsAmount: 1720,
       accumulatedDamage: 0
     },
     {
       id: 'd2',
       unit: druidII,
       unitsAmount: 1720,
+      originalUnitsAmount: 1720,
       accumulatedDamage: 0
     },
     {
       id: 'd3',
       unit: druidII,
       unitsAmount: 1720,
+      originalUnitsAmount: 1720,
       accumulatedDamage: 0
     },
     {
       id: 'd4',
       unit: druidII,
       unitsAmount: 1720,
+      originalUnitsAmount: 1720,
       accumulatedDamage: 0
     },
     {
       id: 'd5',
       unit: druidII,
       unitsAmount: 1720,
+      originalUnitsAmount: 1720,
       accumulatedDamage: 0
     }
   ]
