@@ -335,11 +335,7 @@ table th {
 .stack-attack-info {
   grid-area: atk;
 
-  font-size: 0.7rem;
 
-  span {
-    color: green;
-  }
 }
 .stack-basic-info {
   grid-area: basic;

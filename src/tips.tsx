@@ -14,9 +14,10 @@ import { CombatSystemTip } from './tips/CombatSystem'
 import { ExtraTankTip } from './tips/extraTank'
 import { MoreHealthTip } from './tips/moreHealth'
 import { TargetCentaurTip } from './tips/TargetCentaur'
+import { AvoidAttackTip } from './tips/AvoidAttack'
 
 const myMin = 0
-const myMax = 14
+const myMax = 15
 
 export const Tips = () => {
   const [whichTip, setWichTip] = useState(() => {
@@ -46,6 +47,7 @@ export const Tips = () => {
       {whichTip === 12 && <ExtraTankTip />}
       {whichTip === 13 && <MoreHealthTip />}
       {whichTip === 14 && <TargetCentaurTip />}
+      {whichTip === 15 && <AvoidAttackTip />}
     </div>
   )
 }
