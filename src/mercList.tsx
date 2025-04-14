@@ -5,6 +5,16 @@ export const MercList = () => {
   const mercList = [
     ARMY.epicMonsterHunterVI,
     ARMY.swiftMarksmanV,
+    ARMY.gargoyleV,
+    ARMY.unicornRiderV,
+    ARMY.giantZombieV,
+    ARMY.bullRiderV,
+    ARMY.scorpionRiderV,
+    ARMY.ifritV,
+    ARMY.firewormRiderV,
+    ARMY.cyclopsV,
+
+    ARMY.bearV,
     ARMY.chariotVI,
     ARMY.pathFinderVI,
     ARMY.trebuchetVI,
@@ -72,9 +82,9 @@ export const MercList = () => {
             const categories = [merc.category, merc.subGroup].filter(Boolean).join(', ')
             return (
               <tr key={`merc${i}`}>
-                {/* <td>
+                <td>
                   <input type='checkbox' name='xx' id='' />
-                </td> */}
+                </td>
                 <td>{i + 1}</td>
                 <td>{merc.name}</td>
                 <td>{categories}</td>
@@ -91,65 +101,13 @@ export const MercList = () => {
   )
 }
 
-/**
- *
-T5 Swift Marksman
-T5 Epic Monster Hunter
-T5 Scorpion
+/*
+por revisar
 
-los stats son correctos pero el authority esta mal
-    T5 Unicorn Rider **
-    T5 Bull Rider**
-    T5 Gargoyle  ****
-    T5 Bear  ***
-    T5 Giant Zombie **
-    T5 Scorpion Rider  ***
-    T5 Cyclops ***
-    T5 Fireworm Rider **
-
-
-    T5 Ifrit ***
-    T6 Arbalester **
-    Trailseeker **
-    T6 Legionary ***
-    Knight **
-    T6 Chariot **
-    Rhino Rider **
-    T6 Sphinx **
-    Shedu **
-    T6 Death Chariots **
-    T6 Bone Golem **
-T6 Epic Monster Hunter
-T6 Pathfinder / Pionnier
-T6 Trebuchet
-T6 Ent
-T6 Cursed Dendroids
-    T6 Abomination **
-    T6 Archdemons **
-T7 Palintone
-T7 Epic Monster Hunter
-    T7 Jungle King**
-    T7 Sea Lord**
-    T7 Lighting Lord**
-    T7 Golden Dragon**
-    T7 Overlord**
-    T7 Life Dragon**
-    T7 Cursed Dragon**
-    T7 Sandworm**
-    T7 Fire Lord**
-    TII Highlander  **
-    / Scarface **
-    / Pounder **
-TII Grace
-    TII Quicksand / ***
-    Galloper ***
-    TII Wardens ***
-    TII Slavic Warrior **
-    TII Eternal Cannoneers **
-    TII Warregal **
-    TII Epic Monster Hunter **
-    TII Ariel **
-    Jago **
-    TII Demonic Salamanders**
-    TII Wyverns **
+epicmonsterhunter 6,7,9
+demonic salamander
+eternal canonner
+warden
+wyvern
+sphynx
 */

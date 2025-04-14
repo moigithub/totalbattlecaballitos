@@ -63,18 +63,26 @@ export const decodeAndLoadArmySetup = (data: string) => {
   const parsed = JSON.parse(decodedData)
   // console.log('decodeAndLoadArmySetup parsed', parsed)
   if (parsed) {
-    useStackStore.getState().setArmy(
-      (parsed.army as Stack[]).map(stack => {
-        const unit = ARMY[stack.unitKey as string] as Unit
-        return {
-          ...stack,
-          unit: unit || ARMY.errorUnit
-        }
-      })
-    )
-    useStackStore.getState().setLeadership(parsed.leadership)
-    useStackStore.getState().setAuthority(parsed.authority)
-    useStackStore.getState().setDominance(parsed.dominance)
+    if (parsed.army && parsed.army.length > 0) {
+      useStackStore.getState().setArmy(
+        (parsed.army as Stack[]).map(stack => {
+          const unit = ARMY[stack.unitKey as string] as Unit
+          return {
+            ...stack,
+            unit: unit || ARMY.errorUnit
+          }
+        })
+      )
+    }
+    if (parsed.leadership && parsed.leadership > 0) {
+      useStackStore.getState().setLeadership(parsed.leadership)
+    }
+    if (parsed.authority && parsed.authority > 0) {
+      useStackStore.getState().setAuthority(parsed.authority)
+    }
+    if (parsed.dominance && parsed.dominance > 0) {
+      useStackStore.getState().setDominance(parsed.dominance)
+    }
   }
   // Using state outside of a component
   // const paw = useStore.getState().paw // read value
