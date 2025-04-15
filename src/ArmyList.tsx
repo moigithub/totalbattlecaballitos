@@ -524,7 +524,7 @@ export const ArmyList = () => {
     let groupFilter = filterGroups.includes(unit.subGroup) //dragon, elemental, beast, giant
 
     const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
-    const vsTypeFilter = filterVsTypes.some(vsType => featBonus.includes(vsType))
+    let vsTypeFilter = filterVsTypes.some(vsType => featBonus.includes(vsType))
 
     const isNotSelectedFilter = !selectedStacks.includes(unit.name.toLowerCase())
     let levelFilter = true
@@ -541,9 +541,9 @@ export const ArmyList = () => {
       groupFilter = true // notienen dragon,beast,etc
     } else if (unit.group === 'mercs' && type === 'mercenaries') {
       // always show epics
-      // if (featBonus.includes('Epic')) {
-      //   show = true
-      // }
+      if (featBonus.includes('Epic')) {
+        vsTypeFilter = true // others type(subgroup)
+      }
     }
 
     const show =

@@ -2102,8 +2102,8 @@ const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
   BASESTR: 2030,
   AUTHORITY: 1,
   INITIATIVE: 10,
-  vsRangedPercent: 329,
-  vsSiegePercent: 273,
+  // vsRangedPercent: 329,
+  // vsSiegePercent: 273,
   vsEpicPercent: 609,
   category: '', // //
   group: 'mercs',
