@@ -2094,7 +2094,7 @@ const warregalII: MercUnit = unitBuilder<MercUnit>({
 })
 
 const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
-  id: '6epicMonsterHunterVI',
+  id: 'epicMonsterHunterVI',
   clasification: 'merc',
   name: 'epicMonsterHunterVI',
   nameEs: 'cazador monstruos epicos VI',
@@ -2111,7 +2111,7 @@ const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
 })
 
 const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
-  id: '7epicMonsterHunterVII',
+  id: 'epicMonsterHunterVII',
   clasification: 'merc',
   name: 'epicMonsterHunterVII',
   nameEs: 'cazador monstruos epicos VII',
@@ -2125,7 +2125,7 @@ const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
   level: '7'
 })
 const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
-  id: '9epicMonsterHunterII',
+  id: 'epicMonsterHunterII',
   clasification: 'merc',
   name: 'epicMonsterHunterII',
   nameEs: 'cazador monstruos epicos II',

@@ -67,6 +67,9 @@ export const decodeAndLoadArmySetup = (data: string) => {
       useStackStore.getState().setArmy(
         (parsed.army as Stack[]).map(stack => {
           const unit = ARMY[stack.unitKey as string] as Unit
+          if (!unit) {
+            console.log('decodeAndLoadArmySetup error unit', stack.unitKey, stack)
+          }
           return {
             ...stack,
             unit: unit || ARMY.errorUnit
@@ -105,6 +108,11 @@ export const prepareImportData = (data: StackStoreBasic) => {
     ...data,
     army: data.army.map(stack => {
       const unit = ARMY[stack.unitKey as string] as Unit
+
+      if (!unit) {
+        console.log('decodeAndLoadArmySetup error unit', stack.unitKey, stack)
+      }
+
       return {
         ...stack,
         unit: unit || ARMY.errorUnit
