@@ -15,9 +15,13 @@ import { ExtraTankTip } from './tips/extraTank'
 import { MoreHealthTip } from './tips/moreHealth'
 import { TargetCentaurTip } from './tips/TargetCentaur'
 import { AvoidAttackTip } from './tips/AvoidAttack'
+import { FirstStackAmountTip } from './tips/FirstStackAmount'
+import { CounterAttackTip } from './tips/turnBasedSystem'
+import { MoreStacksTip } from './tips/moreStacks'
+import { CentaurStrategiesTip } from './tips/strategiesVsCentaur'
 
 const myMin = 0
-const myMax = 15
+const myMax = 19
 
 export const Tips = () => {
   const [whichTip, setWichTip] = useState(() => {
@@ -48,6 +52,10 @@ export const Tips = () => {
       {whichTip === 13 && <MoreHealthTip />}
       {whichTip === 14 && <TargetCentaurTip />}
       {whichTip === 15 && <AvoidAttackTip />}
+      {whichTip === 16 && <FirstStackAmountTip />}
+      {whichTip === 17 && <CounterAttackTip />}
+      {whichTip === 18 && <MoreStacksTip />}
+      {whichTip === 19 && <CentaurStrategiesTip />}
     </div>
   )
 }

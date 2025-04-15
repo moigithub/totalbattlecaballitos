@@ -8,6 +8,8 @@ export const MoreHealthTip = () => {
         parece obvio pero muchos jugadores no saben y siguen cometiendo el mismo error --
         recomendacion.. aumenta mas vida, cambia capitanes, equipos, research, etc etc
       </p>
+      <p>Damage is based on numbers, higher amount of troops = more damage</p>
+      <p>Surviving is about individual health.. increasing more troops wont lower your loses</p>
     </div>
   )
 }
