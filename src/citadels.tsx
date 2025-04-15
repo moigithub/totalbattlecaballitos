@@ -13,6 +13,7 @@ import {
 import { LargeCitadel } from './citadel'
 import { ARMY } from './soldiers'
 import { useCitadelStore } from './citadelStore'
+import PageTitle from './pageTitle'
 
 export const Citadels = () => {
   const [selectedCitadel, setSelectedCitadel] = useState('e15')
@@ -356,358 +357,367 @@ export const Citadels = () => {
   }
 
   return (
-    <div className='p-5 pt-[56px]'>
-      <div className='flex mb-8'>
-        <form className='max-w-xs '>
-          <div className='group'>
-            <label>Citadel </label>
-            <select
-              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              value={selectedCitadel}
-              onChange={changeCitadel}
-            >
-              <option value='c25'>cursed 25</option>
-              <option value='c20'>cursed 20</option>
-              <option value='e30'>elf 30</option>
-              <option value='e25'>elf 25</option>
-              <option value='e20'>elf 20</option>
-              <option value='e15'>elf 15</option>
-              <option value='e10'>elf 10</option>
-            </select>
-          </div>
-          <div className='group'>
-            <label>Catapult level </label>
-            <select
-              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              value={selectedCatapultLevel}
-              onChange={changeCatapultLevel}
-            >
-              <option value='10'>10 Ariel</option>
-              <option value='9'>9 Josephine 2</option>
-              <option value='8'>8 Josephine 1</option>
-              <option value='7'>7 Ballistae VII</option>
-              <option value='6'>6 Ballistae VI</option>
-              <option value='5'>5 Catapult V</option>
-              <option value='4'>4 Catapult IV</option>
-              <option value='3'>3 Catapult III</option>
-              <option value='2'>2 Catapult II</option>
-              <option value='1'>1 Catapult I</option>
-            </select>
-          </div>
-
-          <div className='group'>
-            <label>STR bonus </label>
-            <input
-              type='number'
-              className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              value={strBonus}
-              onChange={changeStrBonus}
-            />
-          </div>
-          {useStackHealthLimit && (
+    <>
+      <PageTitle title='Citadels catas calc' />
+      <div className='p-5 pt-[56px]'>
+        <div className='flex mb-8'>
+          <form className='max-w-xs '>
             <div className='group'>
-              <label>HP bonus </label>
+              <label>Citadel </label>
+              <select
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                value={selectedCitadel}
+                onChange={changeCitadel}
+              >
+                <option value='c25'>cursed 25</option>
+                <option value='c20'>cursed 20</option>
+                <option value='e30'>elf 30</option>
+                <option value='e25'>elf 25</option>
+                <option value='e20'>elf 20</option>
+                <option value='e15'>elf 15</option>
+                <option value='e10'>elf 10</option>
+              </select>
+            </div>
+            <div className='group'>
+              <label>Catapult level </label>
+              <select
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                value={selectedCatapultLevel}
+                onChange={changeCatapultLevel}
+              >
+                <option value='10'>10 Ariel</option>
+                <option value='9'>9 Josephine 2</option>
+                <option value='8'>8 Josephine 1</option>
+                <option value='7'>7 Ballistae VII</option>
+                <option value='6'>6 Ballistae VI</option>
+                <option value='5'>5 Catapult V</option>
+                <option value='4'>4 Catapult IV</option>
+                <option value='3'>3 Catapult III</option>
+                <option value='2'>2 Catapult II</option>
+                <option value='1'>1 Catapult I</option>
+              </select>
+            </div>
+
+            <div className='group'>
+              <label>STR bonus </label>
               <input
                 type='number'
                 className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                value={hpBonus}
-                onChange={changeHPBonus}
+                value={strBonus}
+                onChange={changeStrBonus}
               />
             </div>
-          )}
+            {useStackHealthLimit && (
+              <div className='group'>
+                <label>HP bonus </label>
+                <input
+                  type='number'
+                  className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  value={hpBonus}
+                  onChange={changeHPBonus}
+                />
+              </div>
+            )}
 
-          <br />
-          <div className='group'>
-            <label>Use stack health limit </label>
-            <input
-              type='checkbox'
-              checked={useStackHealthLimit}
-              onChange={() => {
-                toggleCitadelStackHealthLimit()
-              }}
-            />
+            <br />
+            <div className='group'>
+              <label>Use stack health limit </label>
+              <input
+                type='checkbox'
+                checked={useStackHealthLimit}
+                onChange={() => {
+                  toggleCitadelStackHealthLimit()
+                }}
+              />
 
-            <input
-              type='number'
-              className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              value={cataMaxHealth}
-              onChange={e => {
-                setCitadelCataMaxHealth(parseInt(e.target.value))
-              }}
-            />
+              <input
+                type='number'
+                className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                value={cataMaxHealth}
+                onChange={e => {
+                  setCitadelCataMaxHealth(parseInt(e.target.value))
+                }}
+              />
+            </div>
+
+            <br />
+            <button
+              className='focus:outline-none font-extrabold text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300   rounded-lg text-xs px-10 py-2 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+              onClick={calc}
+              type='button'
+            >
+              CALC
+            </button>
+          </form>
+          <div className='ml-10'>
+            <table>
+              <thead>
+                <tr>
+                  <th>cat lvl</th>
+                  <th>amount</th>
+                  <th>damage</th>
+                  {useStackHealthLimit && <th>health</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {catasResult.lvl10 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>10. Ariel</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl10}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl10 * cata10.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl10 * cata10.hp)}</td>
+                    )}
+                  </tr>
+                )}
+                {catasResult.lvl9 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>9. Josephine 2</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl9}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl9 * cata9.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl9 * cata9.hp)}</td>
+                    )}
+                  </tr>
+                )}
+                {catasResult.lvl8 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>8. Josephine 1</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl8}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl8 * cata8.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl8 * cata8.hp)}</td>
+                    )}
+                  </tr>
+                )}
+
+                {catasResult.lvl7 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>7. Ballistae VII</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl7}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl7 * cata7.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl7 * cata7.hp)}</td>
+                    )}
+                  </tr>
+                )}
+
+                {catasResult.lvl6 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>6. Ballistae VI</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl6}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl6 * cata6.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl6 * cata6.hp)}</td>
+                    )}
+                  </tr>
+                )}
+
+                {catasResult.lvl5 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>5. Cata 5</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl5}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl5 * cata5.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl5 * cata5.hp)}</td>
+                    )}
+                  </tr>
+                )}
+
+                {catasResult.lvl4 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>4</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl4}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl4 * cata4.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl4 * cata4.hp)}</td>
+                    )}
+                  </tr>
+                )}
+
+                {catasResult.lvl3 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>3</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl3}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl3 * cata3.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl3 * cata3.hp)}</td>
+                    )}
+                  </tr>
+                )}
+
+                {catasResult.lvl2 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>2</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl2}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl2 * cata2.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl2 * cata2.hp)}</td>
+                    )}
+                  </tr>
+                )}
+
+                {catasResult.lvl1 > 0 && (
+                  <tr>
+                    <td className='px-1 py-0.5'>1</td>
+                    <td className='px-1 py-0.5'>{catasResult.lvl1}</td>
+                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl1 * cata1.str)}</td>
+                    {useStackHealthLimit && (
+                      <td className='px-1 py-0.5'>{Math.round(catasResult.lvl1 * cata1.hp)}</td>
+                    )}
+                  </tr>
+                )}
+
+                <tr>
+                  <td className='px-1 py-0.5'> </td>
+                  <td className='px-1 py-0.5'>total dmg</td>
+                  <td className='px-1 py-0.5'>{totalDmg.toLocaleString()}</td>
+                  {useStackHealthLimit && <td className='px-1 py-0.5'></td>}
+                </tr>
+              </tbody>
+            </table>
+
+            <h2 className='text-lg font-bold'>
+              Citadel walls health {wallsHealth.toLocaleString().replace(/,/g, '_')}
+            </h2>
+            {totalDmg < wallsHealth && (
+              <p style={{ color: 'red' }}>not enough catas to kill the walls</p>
+            )}
           </div>
-
-          <br />
-          <button
-            className='focus:outline-none font-extrabold text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300   rounded-lg text-xs px-10 py-2 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-            onClick={calc}
-            type='button'
-          >
-            CALC
-          </button>
-        </form>
-        <div className='ml-10'>
-          <table>
-            <thead>
-              <tr>
-                <th>cat lvl</th>
-                <th>amount</th>
-                <th>damage</th>
-                {useStackHealthLimit && <th>health</th>}
-              </tr>
-            </thead>
-            <tbody>
-              {catasResult.lvl10 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>10. Ariel</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl10}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl10 * cata10.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl10 * cata10.hp)}</td>
-                  )}
-                </tr>
-              )}
-              {catasResult.lvl9 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>9. Josephine 2</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl9}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl9 * cata9.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl9 * cata9.hp)}</td>
-                  )}
-                </tr>
-              )}
-              {catasResult.lvl8 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>8. Josephine 1</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl8}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl8 * cata8.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl8 * cata8.hp)}</td>
-                  )}
-                </tr>
-              )}
-
-              {catasResult.lvl7 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>7. Ballistae VII</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl7}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl7 * cata7.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl7 * cata7.hp)}</td>
-                  )}
-                </tr>
-              )}
-
-              {catasResult.lvl6 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>6. Ballistae VI</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl6}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl6 * cata6.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl6 * cata6.hp)}</td>
-                  )}
-                </tr>
-              )}
-
-              {catasResult.lvl5 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>5. Cata 5</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl5}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl5 * cata5.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl5 * cata5.hp)}</td>
-                  )}
-                </tr>
-              )}
-
-              {catasResult.lvl4 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>4</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl4}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl4 * cata4.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl4 * cata4.hp)}</td>
-                  )}
-                </tr>
-              )}
-
-              {catasResult.lvl3 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>3</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl3}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl3 * cata3.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl3 * cata3.hp)}</td>
-                  )}
-                </tr>
-              )}
-
-              {catasResult.lvl2 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>2</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl2}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl2 * cata2.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl2 * cata2.hp)}</td>
-                  )}
-                </tr>
-              )}
-
-              {catasResult.lvl1 > 0 && (
-                <tr>
-                  <td className='px-1 py-0.5'>1</td>
-                  <td className='px-1 py-0.5'>{catasResult.lvl1}</td>
-                  <td className='px-1 py-0.5'>{Math.round(catasResult.lvl1 * cata1.str)}</td>
-                  {useStackHealthLimit && (
-                    <td className='px-1 py-0.5'>{Math.round(catasResult.lvl1 * cata1.hp)}</td>
-                  )}
-                </tr>
-              )}
-
-              <tr>
-                <td className='px-1 py-0.5'> </td>
-                <td className='px-1 py-0.5'>total dmg</td>
-                <td className='px-1 py-0.5'>{totalDmg.toLocaleString()}</td>
-                {useStackHealthLimit && <td className='px-1 py-0.5'></td>}
-              </tr>
-            </tbody>
-          </table>
-
-          <h2 className='text-lg font-bold'>
-            Citadel walls health {wallsHealth.toLocaleString().replace(/,/g, '_')}
-          </h2>
-          {totalDmg < wallsHealth && (
-            <p style={{ color: 'red' }}>not enough catas to kill the walls</p>
-          )}
         </div>
+
+        <hr />
+
+        <h3 className='text-lg font-extrabold mt-4'>Citadel elf 10</h3>
+        <h2>
+          NO <span className='mountbadges'>mounted</span>,{' '}
+          <span className='dragonbadges'>dragon</span>, <span className='meleebadges'>melee</span>{' '}
+          or
+          <span className='elementalbadges'>elemental</span>
+          to avoid to have more losses, unless{' '}
+          <a className='text-sm text-blue-400' href='#rule-exception'>
+            you have huge health
+          </a>
+        </h2>
+
+        <LargeCitadel citadel={citadele10} />
+
+        <hr />
+
+        <h3 className='text-lg font-extrabold mt-4'>Citadel elf 15</h3>
+        <h2>
+          NO
+          <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>{' '}
+          or
+          <span className='dragonbadges'>dragon</span>
+          to avoid to have more losses, unless{' '}
+          <a className='text-sm text-blue-400' href='#rule-exception'>
+            you have huge health
+          </a>
+        </h2>
+        <LargeCitadel citadel={citadele15} />
+
+        <hr />
+
+        <h3 className='text-lg font-extrabold mt-4'>Citadel elf 20</h3>
+        <h2>
+          NO <span className='mountbadges'>mounted</span>,{' '}
+          <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
+          <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span>{' '}
+          or
+          <span className='elementalbadges'>elemental</span>
+          to avoid to have more losses, unless{' '}
+          <a className='text-sm text-blue-400' href='#rule-exception'>
+            you have huge health
+          </a>
+        </h2>
+        <LargeCitadel citadel={citadele20} />
+
+        <hr />
+
+        <h3 className='text-lg font-extrabold mt-4'>Citadel elf 25</h3>
+        <h2>
+          NO <span className='mountbadges'>mounted</span>,{' '}
+          <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
+          <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span>{' '}
+          or
+          <span className='elementalbadges'>elemental</span>
+          to avoid to have more losses, unless{' '}
+          <a className='text-sm text-blue-400' href='#rule-exception'>
+            you have huge health
+          </a>
+        </h2>
+        <LargeCitadel citadel={citadele25} />
+
+        <hr />
+
+        <h3 className='text-lg font-extrabold mt-4'>Citadel elf 30</h3>
+        <h2>
+          NO <span className='mountbadges'>mounted</span>,{' '}
+          <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
+          <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span>{' '}
+          or
+          <span className='elementalbadges'>elemental</span>
+          to avoid to have more losses, unless{' '}
+          <a className='text-sm text-blue-400' href='#rule-exception'>
+            you have huge health
+          </a>
+        </h2>
+        <LargeCitadel citadel={citadele30} />
+
+        <hr />
+        <br />
+
+        <h3 className='text-lg font-extrabold mt-4'>Citadel cursed 20</h3>
+        <h2>
+          NO <span className='mountbadges'>mounted</span>,{' '}
+          <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>{' '}
+          or
+          <span className='beastbadges'>beast</span>
+          to avoid to have more losses, unless{' '}
+          <a className='text-sm text-blue-400' href='#rule-exception'>
+            you have huge health
+          </a>
+        </h2>
+        <LargeCitadel citadel={citadelc20} />
+
+        <hr />
+
+        <h3 className='text-lg font-extrabold mt-4'>Citadel cursed 25</h3>
+        <h2>
+          NO <span className='mountbadges'>mounted</span>,{' '}
+          <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>,{' '}
+          <span className='dragonbadges'>dragon</span> or
+          <span className='beastbadges'>beast</span>
+          to avoid to have more losses, unless{' '}
+          <a className='text-sm text-blue-400' href='#rule-exception'>
+            you have huge health
+          </a>
+        </h2>
+        <LargeCitadel citadel={citadelc25} />
+
+        <br />
+        <hr />
+        <h4 id='rule-exception' className='text-lg text-red-700'>
+          Rule exception
+        </h4>
+        <ul className='list-disc list-inside text-gray-500'>
+          <li>
+            Each of your meatshield/tank units must have higher health than the damage generated by
+            the stack enemy
+          </li>
+        </ul>
+        <br />
+
+        <hr />
+        <h2 className='text-lg font-bold'>
+          Example calculating how many cat4 units needed to kill walls on citadel lvl 15
+        </h2>
+        <img src='./cataFormula.jpg' alt='calculate catapults units to kill walls' />
+
+        <h2 className='text-lg font-bold'>Tutorial to calculate catapults amount</h2>
+        <img src='./tutorialCataCalc.jpg' alt='tutorial to calculate catapults' />
       </div>
-
-      <hr />
-
-      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 10</h3>
-      <h2>
-        NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='dragonbadges'>dragon</span>, <span className='meleebadges'>melee</span> or
-        <span className='elementalbadges'>elemental</span>
-        to avoid to have more losses, unless{' '}
-        <a className='text-sm text-blue-400' href='#rule-exception'>
-          you have huge health
-        </a>
-      </h2>
-
-      <LargeCitadel citadel={citadele10} />
-
-      <hr />
-
-      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 15</h3>
-      <h2>
-        NO
-        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span> or
-        <span className='dragonbadges'>dragon</span>
-        to avoid to have more losses, unless{' '}
-        <a className='text-sm text-blue-400' href='#rule-exception'>
-          you have huge health
-        </a>
-      </h2>
-      <LargeCitadel citadel={citadele15} />
-
-      <hr />
-
-      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 20</h3>
-      <h2>
-        NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
-        <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
-        <span className='elementalbadges'>elemental</span>
-        to avoid to have more losses, unless{' '}
-        <a className='text-sm text-blue-400' href='#rule-exception'>
-          you have huge health
-        </a>
-      </h2>
-      <LargeCitadel citadel={citadele20} />
-
-      <hr />
-
-      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 25</h3>
-      <h2>
-        NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
-        <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
-        <span className='elementalbadges'>elemental</span>
-        to avoid to have more losses, unless{' '}
-        <a className='text-sm text-blue-400' href='#rule-exception'>
-          you have huge health
-        </a>
-      </h2>
-      <LargeCitadel citadel={citadele25} />
-
-      <hr />
-
-      <h3 className='text-lg font-extrabold mt-4'>Citadel elf 30</h3>
-      <h2>
-        NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='rangedbadges'>ranged</span>, <span className='meleebadges'>melee</span>,{' '}
-        <span className='giantbadges'>giant</span>, <span className='dragonbadges'>dragon</span> or
-        <span className='elementalbadges'>elemental</span>
-        to avoid to have more losses, unless{' '}
-        <a className='text-sm text-blue-400' href='#rule-exception'>
-          you have huge health
-        </a>
-      </h2>
-      <LargeCitadel citadel={citadele30} />
-
-      <hr />
-      <br />
-
-      <h3 className='text-lg font-extrabold mt-4'>Citadel cursed 20</h3>
-      <h2>
-        NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span> or
-        <span className='beastbadges'>beast</span>
-        to avoid to have more losses, unless{' '}
-        <a className='text-sm text-blue-400' href='#rule-exception'>
-          you have huge health
-        </a>
-      </h2>
-      <LargeCitadel citadel={citadelc20} />
-
-      <hr />
-
-      <h3 className='text-lg font-extrabold mt-4'>Citadel cursed 25</h3>
-      <h2>
-        NO <span className='mountbadges'>mounted</span>,{' '}
-        <span className='rangedbadges'>ranged</span>, <span className='giantbadges'>giant</span>,{' '}
-        <span className='dragonbadges'>dragon</span> or
-        <span className='beastbadges'>beast</span>
-        to avoid to have more losses, unless{' '}
-        <a className='text-sm text-blue-400' href='#rule-exception'>
-          you have huge health
-        </a>
-      </h2>
-      <LargeCitadel citadel={citadelc25} />
-
-      <br />
-      <hr />
-      <h4 id='rule-exception' className='text-lg text-red-700'>
-        Rule exception
-      </h4>
-      <ul className='list-disc list-inside text-gray-500'>
-        <li>
-          Each of your meatshield/tank units must have higher health than the damage generated by
-          the stack enemy
-        </li>
-      </ul>
-      <br />
-
-      <hr />
-      <h2 className='text-lg font-bold'>
-        Example calculating how many cat4 units needed to kill walls on citadel lvl 15
-      </h2>
-      <img src='./cataFormula.jpg' alt='calculate catapults units to kill walls' />
-
-      <h2 className='text-lg font-bold'>Tutorial to calculate catapults amount</h2>
-      <img src='./tutorialCataCalc.jpg' alt='tutorial to calculate catapults' />
-    </div>
+    </>
   )
 }

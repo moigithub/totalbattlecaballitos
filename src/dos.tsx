@@ -50,6 +50,7 @@ import { Tips } from './tips.tsx'
 import { lvl17HeroicElfSquad } from './monsters.ts'
 import { decodeAndLoadArmySetup, prepareExportData } from './utils.ts'
 import { encodeHash } from './hashStore.ts'
+import PageTitle from './pageTitle.tsx'
 
 export interface DataResult {
   color: string
@@ -1154,6 +1155,7 @@ ignora lo que continua abajo de esta linea:
 
   return (
     <>
+      <PageTitle title='Calc' />
       <ArmyList />
 
       <nav className='pt-[57px] sm:ml-64 flex'>

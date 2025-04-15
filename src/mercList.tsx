@@ -1,3 +1,4 @@
+import PageTitle from './pageTitle'
 import { ARMY } from './soldiers'
 import { whoCanIAttack } from './utils'
 
@@ -64,40 +65,43 @@ export const MercList = () => {
   mercList.sort((a, b) => a.BASEHP - b.BASEHP)
 
   return (
-    <div className='p-5 pt-[56px]'>
-      <h2 className='font-bold text-2xl mb-2'>Mercenaries</h2>
+    <>
+      <PageTitle title='Mercenaries' />
+      <div className='p-5 pt-[56px]'>
+        <h2 className='font-bold text-2xl mb-2'>Mercenaries</h2>
 
-      <table>
-        <thead>
-          <th></th>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Feat.bonus</th>
-          <th>Health</th>
-          <th>Strength</th>
-          <th>Authority</th>
-        </thead>
-        <tbody>
-          {mercList.map((merc, i) => {
-            const categories = [merc.category, merc.subGroup].filter(Boolean).join(', ')
-            return (
-              <tr key={`merc${i}`}>
-                <td>
-                  <input type='checkbox' name='xx' id='' />
-                </td>
-                <td>{i + 1}</td>
-                <td>{merc.name}</td>
-                <td>{categories}</td>
-                <td>{whoCanIAttack(merc).join(', ')}</td>
-                <td>{merc.BASEHP}</td>
-                <td>{merc.BASESTR}</td>
-                <td>{merc.AUTHORITY}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </div>
+        <table>
+          <thead>
+            <th></th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Feat.bonus</th>
+            <th>Health</th>
+            <th>Strength</th>
+            <th>Authority</th>
+          </thead>
+          <tbody>
+            {mercList.map((merc, i) => {
+              const categories = [merc.category, merc.subGroup].filter(Boolean).join(', ')
+              return (
+                <tr key={`merc${i}`}>
+                  <td>
+                    <input type='checkbox' name='xx' id='' />
+                  </td>
+                  <td>{i + 1}</td>
+                  <td>{merc.name}</td>
+                  <td>{categories}</td>
+                  <td>{whoCanIAttack(merc).join(', ')}</td>
+                  <td>{merc.BASEHP}</td>
+                  <td>{merc.BASESTR}</td>
+                  <td>{merc.AUTHORITY}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </>
   )
 }
 
