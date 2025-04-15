@@ -30,12 +30,14 @@ export const ArmyList = () => {
   const [filterTypes, setFilterTypes] = useState<string[]>(() => {
     // getting stored value
     const saved = localStorage.getItem('filterTypes')
-    return saved ? JSON.parse(saved) : ['melee', 'ranged', 'flying', 'mounted', 'siege', 'scout']
+    return saved
+      ? JSON.parse(saved)
+      : ['', 'melee', 'ranged', 'flying', 'mounted', 'siege', 'scout']
   })
   const [filterGroups, setFilterGroups] = useState<string[]>(() => {
     // getting stored value
     const saved = localStorage.getItem('filterGroups')
-    return saved ? JSON.parse(saved) : ['dragon', 'elemental', 'giant', 'beast']
+    return saved ? JSON.parse(saved) : ['', 'dragon', 'elemental', 'giant', 'beast']
   })
   const [filterGuardLevels, setFilterGuardLevels] = useState<string[]>(() => {
     // getting stored value
@@ -492,114 +494,70 @@ export const ArmyList = () => {
     }
   }
 
+  const resetFilters = () => {
+    setFilterTypes(['', 'melee', 'ranged', 'flying', 'mounted', 'siege', 'scout'])
+    setFilterVsTypes([
+      'Melee',
+      'Ranged',
+      'Flying',
+      'Mounted',
+      'Siege',
+      'Fortifications',
+      'Dragon',
+      'Elemental',
+      'Giant',
+      'Beast'
+    ]) // human, epic
+    setFilterGroups(['', 'dragon', 'elemental', 'giant', 'beast'])
+    setFilterGuardLevels(['1', '2', '3', '4', '5', '6', '7', '8', '9'])
+    setFilterSpecialistLevels(['1', '2', '3', '4', '5', '6', '7', '8', '9'])
+    setFilterMonsterLevels(['3', '4', '5', '6', '7', '8', '9'])
+  }
+
   const shouldShow = (type: string) => (unit: BasicUnit) => {
     // if (!unit) return false
 
-    let show = true
-
-    if (filterTypes.length > 0) {
-      if (unit.category === '') {
-        show = true
-      } else {
-        show = filterTypes.includes(unit.category) // melee, ranged, mounted, scout, flying
-      }
-    }
+    const searchFilter =
+      unit.name.toLowerCase().includes(search.toLowerCase()) ||
+      unit.nameEs.toLowerCase().includes(search.toLowerCase())
+    const typeFilter = filterTypes.includes(unit.category) // melee, ranged, mounted, scout, flying
+    let groupFilter = filterGroups.includes(unit.subGroup) //dragon, elemental, beast, giant
 
     const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
+    const vsTypeFilter = filterVsTypes.some(vsType => featBonus.includes(vsType))
 
-    if (show && featBonus.length > 0 && !filterVsTypes.some(vsType => featBonus.includes(vsType))) {
-      show = false
-    }
+    const isNotSelectedFilter = !selectedStacks.includes(unit.name.toLowerCase())
+    let levelFilter = true
 
-    if (type === 'guards') {
-      if (show && !filterGuardLevels.includes(unit.level)) {
-        show = false
-      }
-    } else if (type === 'specialists') {
-      if (show && !filterSpecialistLevels.includes(unit.level)) {
-        show = false
-      }
-    } else if (type === 'monsters') {
-      if (show && !filterMonsterLevels.includes(unit.level)) {
-        show = false
-      }
-    } else if (type === 'engineers') {
-      //
-    } else if (type === 'mercenaries') {
-      if (filterTypes.length === 0) {
-        show = filterGroups.includes(unit.subGroup) //dragon, elemental, beast, giant
-      } else {
-        // combine both, so we get dragon:melee dragon:flying dragon:mounted etc
-        show = filterGroups.includes(unit.subGroup) && filterTypes.includes(unit.category) //dragon, elemental, beast, giant
-      }
-
+    if (unit.group === 'guardsman' && type === 'guards') {
+      levelFilter = filterGuardLevels.includes(unit.level)
+      groupFilter = true // notienen dragon,beast,etc
+    } else if (unit.group === 'specialist' && type === 'specialists') {
+      levelFilter = filterSpecialistLevels.includes(unit.level)
+      groupFilter = true // tiene bestia (leon real), pero no lo voy a considerar
+    } else if (unit.group === 'monster' && type === 'monsters') {
+      levelFilter = filterMonsterLevels.includes(unit.level)
+    } else if (unit.group === 'engineer' && type === 'engineers') {
+      groupFilter = true // notienen dragon,beast,etc
+    } else if (unit.group === 'mercs' && type === 'mercenaries') {
       // always show epics
-      if (featBonus.includes('Epic')) {
-        show = true
-      }
+      // if (featBonus.includes('Epic')) {
+      //   show = true
+      // }
     }
 
-    if (
-      show &&
-      search.trim() !== '' &&
-      !(
-        unit.name.toLowerCase().includes(search.toLowerCase()) ||
-        unit.nameEs.toLowerCase().includes(search.toLowerCase())
-      )
-    ) {
-      show = false
-    }
-    if (show && selectedStacks.includes(unit.name.toLowerCase())) {
-      show = false
-    }
-    return show
-  }
-
-  const shouldShowMonster = (unit: BasicUnit) => {
-    if (!unit) return false
-
-    let show = true
-
-    if (filterTypes.length === 0) {
-      show = filterGroups.includes(unit.subGroup) //dragon, elemental, beast, giant
-    } else {
-      // combine both, so we get dragon:melee dragon:flying dragon:mounted etc
-      show = filterGroups.includes(unit.subGroup) && filterTypes.includes(unit.category) //dragon, elemental, beast, giant
-    }
-    if (show && !filterMonsterLevels.includes(unit.level)) {
-      show = false
-    }
-
-    const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
-    if (show && featBonus.length > 0 && !filterVsTypes.some(vsType => featBonus.includes(vsType))) {
-      show = false
-    }
-
-    if (
-      show &&
-      search.trim() !== '' &&
-      !(
-        unit.name.toLowerCase().includes(search.toLowerCase()) ||
-        unit.nameEs.toLowerCase().includes(search.toLowerCase())
-      )
-    ) {
-      show = false
-    }
-    if (show && selectedStacks.includes(unit.name.toLowerCase())) {
-      show = false
-    }
+    const show =
+      isNotSelectedFilter &&
+      searchFilter &&
+      levelFilter &&
+      typeFilter &&
+      groupFilter &&
+      vsTypeFilter
+    // if (show) console.log('graceII', filterGroups, unit)
     return show
   }
 
   const selectedStacks = army.map(stack => stack.unit.name.toLowerCase())
-  // console.log('selected army', selectedStacks)
-
-  // console.log('selected filter types', filterTypes)
-
-  // let collapseClass = 'army-container '
-  // if (collapsed) {
-  //   collapseClass = collapseClass + 'collapsed'
-  // }
 
   return (
     <aside
@@ -619,6 +577,13 @@ export const ArmyList = () => {
             onChange={e => setSearch(e.target.value)}
           />
         </div>
+        <button
+          className='w-full cursor-pointer my-1 px-1 py-0.5 text-sm bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+          type='button'
+          onClick={resetFilters}
+        >
+          Reset filters
+        </button>
         <div className='flex flex-wrap p-0.5 w-full border border-b-emerald-400 my-2'>
           <div className='mx-1'>
             <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
@@ -667,7 +632,7 @@ export const ArmyList = () => {
                 onChange={markTypes}
               />
             </label>
-          </div>{' '}
+          </div>
           <div className='mx-1'>
             <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
               Scout
@@ -688,6 +653,18 @@ export const ArmyList = () => {
                 type='checkbox'
                 value={'siege'}
                 checked={filterTypes.includes('siege')}
+                onChange={markTypes}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              Others
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={''}
+                checked={filterTypes.includes('')}
                 onChange={markTypes}
               />
             </label>
@@ -738,6 +715,18 @@ export const ArmyList = () => {
                 type='checkbox'
                 value={'giant'}
                 checked={filterGroups.includes('giant')}
+                onChange={markGroups}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+              Others
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={''}
+                checked={filterGroups.includes('')}
                 onChange={markGroups}
               />
             </label>
@@ -2071,7 +2060,7 @@ export const ArmyList = () => {
           <div className='monsters'>
             <p className='group-title'>Monsters</p>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.waterElementalIII) && (
+              {shouldShow('monsters')(ARMY.waterElementalIII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2081,7 +2070,7 @@ export const ArmyList = () => {
                   Water Elemental III
                 </button>
               )}
-              {shouldShowMonster(ARMY.battleBoarIII) && (
+              {shouldShow('monsters')(ARMY.battleBoarIII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2091,7 +2080,7 @@ export const ArmyList = () => {
                   Battle Boar III
                 </button>
               )}
-              {shouldShowMonster(ARMY.emeraldDragonIII) && (
+              {shouldShow('monsters')(ARMY.emeraldDragonIII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2101,7 +2090,7 @@ export const ArmyList = () => {
                   Emerald Dragon III
                 </button>
               )}
-              {shouldShowMonster(ARMY.stoneGargoyleIII) && (
+              {shouldShow('monsters')(ARMY.stoneGargoyleIII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2113,7 +2102,7 @@ export const ArmyList = () => {
               )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.icePhoenixIV) && (
+              {shouldShow('monsters')(ARMY.icePhoenixIV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2123,7 +2112,7 @@ export const ArmyList = () => {
                   ice Phoenix IV
                 </button>
               )}
-              {shouldShowMonster(ARMY.gorgonMedusaIV) && (
+              {shouldShow('monsters')(ARMY.gorgonMedusaIV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2133,7 +2122,7 @@ export const ArmyList = () => {
                   gorgon Medusa IV
                 </button>
               )}
-              {shouldShowMonster(ARMY.magicDragonIV) && (
+              {shouldShow('monsters')(ARMY.magicDragonIV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2143,7 +2132,7 @@ export const ArmyList = () => {
                   magic Dragon IV
                 </button>
               )}
-              {shouldShowMonster(ARMY.manyArmedGuardianIV) && (
+              {shouldShow('monsters')(ARMY.manyArmedGuardianIV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2155,7 +2144,7 @@ export const ArmyList = () => {
               )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.flamingCentaurV) && (
+              {shouldShow('monsters')(ARMY.flamingCentaurV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2165,7 +2154,7 @@ export const ArmyList = () => {
                   flaming Centaurus V
                 </button>
               )}
-              {shouldShowMonster(ARMY.fearsomeManticoraV) && (
+              {shouldShow('monsters')(ARMY.fearsomeManticoraV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2175,7 +2164,7 @@ export const ArmyList = () => {
                   fear Manticora V
                 </button>
               )}
-              {shouldShowMonster(ARMY.desertConquerV) && (
+              {shouldShow('monsters')(ARMY.desertConquerV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2185,7 +2174,7 @@ export const ArmyList = () => {
                   desert Vanquisher V
                 </button>
               )}
-              {shouldShowMonster(ARMY.EttinV) && (
+              {shouldShow('monsters')(ARMY.EttinV) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2197,7 +2186,7 @@ export const ArmyList = () => {
               )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.jungleDestroyerVI) && (
+              {shouldShow('monsters')(ARMY.jungleDestroyerVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2207,7 +2196,7 @@ export const ArmyList = () => {
                   jungle Destroyer VI
                 </button>
               )}
-              {shouldShowMonster(ARMY.crystalDragonVI) && (
+              {shouldShow('monsters')(ARMY.crystalDragonVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2217,7 +2206,7 @@ export const ArmyList = () => {
                   crystal Dragon VI
                 </button>
               )}
-              {shouldShowMonster(ARMY.trollRiderVI) && (
+              {shouldShow('monsters')(ARMY.trollRiderVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2227,7 +2216,7 @@ export const ArmyList = () => {
                   troll Rider VI
                 </button>
               )}
-              {shouldShowMonster(ARMY.rubiGolemVI) && (
+              {shouldShow('monsters')(ARMY.rubiGolemVI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2239,7 +2228,7 @@ export const ArmyList = () => {
               )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.windLordVII) && (
+              {shouldShow('monsters')(ARMY.windLordVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2249,7 +2238,7 @@ export const ArmyList = () => {
                   wind Lord VII
                 </button>
               )}
-              {shouldShowMonster(ARMY.ancientTerrorVII) && (
+              {shouldShow('monsters')(ARMY.ancientTerrorVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2259,7 +2248,7 @@ export const ArmyList = () => {
                   ancient Terror VII
                 </button>
               )}
-              {shouldShowMonster(ARMY.blackDragonVII) && (
+              {shouldShow('monsters')(ARMY.blackDragonVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2269,7 +2258,7 @@ export const ArmyList = () => {
                   black Dragon VII
                 </button>
               )}
-              {shouldShowMonster(ARMY.destructiveColossusVII) && (
+              {shouldShow('monsters')(ARMY.destructiveColossusVII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2281,7 +2270,7 @@ export const ArmyList = () => {
               )}
             </div>
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.firePhoenixI) && (
+              {shouldShow('monsters')(ARMY.firePhoenixI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2291,7 +2280,7 @@ export const ArmyList = () => {
                   fire Phoenix I
                 </button>
               )}
-              {shouldShowMonster(ARMY.tricksterI) && (
+              {shouldShow('monsters')(ARMY.tricksterI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2301,7 +2290,7 @@ export const ArmyList = () => {
                   trickster I
                 </button>
               )}
-              {shouldShowMonster(ARMY.devastatorI) && (
+              {shouldShow('monsters')(ARMY.devastatorI) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2314,7 +2303,7 @@ export const ArmyList = () => {
             </div>
 
             <div className='btn-group'>
-              {shouldShowMonster(ARMY.firePhoenixII) && (
+              {shouldShow('monsters')(ARMY.firePhoenixII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2324,7 +2313,7 @@ export const ArmyList = () => {
                   firePhoenix II
                 </button>
               )}
-              {shouldShowMonster(ARMY.tricksterII) && (
+              {shouldShow('monsters')(ARMY.tricksterII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
@@ -2334,7 +2323,7 @@ export const ArmyList = () => {
                   trickster II
                 </button>
               )}
-              {shouldShowMonster(ARMY.devastatorII) && (
+              {shouldShow('monsters')(ARMY.devastatorII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                   onClick={() => {
