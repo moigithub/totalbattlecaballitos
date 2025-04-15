@@ -125,7 +125,7 @@ export interface MonsterUnit extends BasicUnit {
   AUTHORITY: 0
   LEADERSHIP: 0
   group: 'monster'
-  subgroup: 'elemental' | 'dragon' | 'beast' | 'giant'
+  subGroup: 'elemental' | 'dragon' | 'beast' | 'giant'
   race: 'monster'
   clasification: 'monster'
   category: keyof Monster

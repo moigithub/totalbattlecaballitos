@@ -40,7 +40,7 @@ const unitBuilder = <T>(props: Partial<BasicUnit> & Pick<BasicUnit, 'id'>): T =>
     vsEpicPercent: 0,
     category: '',
     group: '',
-    subgroup: '',
+    subGroup: '',
     level: '1',
     ...props
   } as T

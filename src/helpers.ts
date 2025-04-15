@@ -456,7 +456,7 @@ const logAliveEnemies = (aliveEnemies: FightStack[]) => {
       name: s.unit.name,
       units: s.unitsAmount,
       categ: s.unit.category,
-      subgroup: s.unit.subGroup
+      subGroup: s.unit.subGroup
     }))
   )
 }
@@ -476,7 +476,7 @@ const logEnemiesWithFeatureBonus = (enemiesWithFeatureBonus: FightStack[]) => {
     enemiesWithFeatureBonus.map(s => ({
       name: s.unit.name,
       type: s.unit.category,
-      subgroup: s.unit.subGroup,
+      subGroup: s.unit.subGroup,
       bonus: whoCanIAttack(s.unit as BasicUnit).join(', ')
     }))
   )
@@ -491,7 +491,7 @@ const logEnemiesWithEnoughHealth = (
     enemiesWithEnoughHealth.map(s => ({
       name: s.unit.name,
       type: s.unit.category,
-      subgroup: s.unit.subGroup,
+      subGroup: s.unit.subGroup,
       bonus: whoCanIAttack(s.unit as BasicUnit).join(', '),
       threat: calcStackStrengthWithBonus(
         s,
@@ -502,137 +502,6 @@ const logEnemiesWithEnoughHealth = (
     }))
   )
 }
-
-// export const selectTarget = (
-//   attackingStack: FightStack,
-//   enemyStacks: FightStack[],
-//   attackedStacks: Set<FightStack>
-// ): FightStack | null => {
-//   // console.log('selectTarget', structuredClone(attackingStack), structuredClone(enemyStacks))
-//   if (enemyStacks.length === 0) return null
-
-//   const enemyStacksAlive: FightStack[] = enemyStacks.filter(stack => stack.unitsAmount > 0)
-
-//   if (enemyStacksAlive.length > 0) {
-//     console.log('alive enemies')
-//     console.table(
-//       enemyStacksAlive.map(s => ({
-//         name: s.unit.name,
-//         units: s.unitsAmount,
-//         categ: s.unit.category,
-//         subgroup: s.unit.subGroup
-//       }))
-//     )
-
-//     console.log(
-//       'selectTarget: ',
-//       attackingStack.unit.name,
-//       'i have feat bonus vs',
-//       whoCanIAttack(attackingStack.unit as BasicUnit),
-//       'can attack'
-//     )
-
-//     const enemyIHaveFeatureBonusAgainst = enemyStacksAlive.filter(
-//       stack =>
-//         getBonusByCategory(attackingStack, stack.unit.category) > 0 ||
-//         getBonusByCategory(attackingStack, stack.unit.subGroup) > 0
-//     )
-
-//     if (enemyIHaveFeatureBonusAgainst.length > 0) {
-//       console.table(
-//         enemyIHaveFeatureBonusAgainst.map(s => ({
-//           name: s.unit.name,
-//           type: s.unit.category,
-//           subgroup: s.unit.subGroup,
-//           bonus: whoCanIAttack(s.unit as BasicUnit).join(', ')
-//         }))
-//       )
-
-//       const enemiesWithEnoughHealth = getEnemiesWithEnoughHealth(
-//         attackingStack,
-//         enemyIHaveFeatureBonusAgainst
-//       )
-//       if (enemiesWithEnoughHealth.length > 0) {
-//         console.table(
-//           enemiesWithEnoughHealth.map(s => ({
-//             name: s.unit.name,
-//             type: s.unit.category,
-//             subgroup: s.unit.subGroup,
-//             bonus: whoCanIAttack(s.unit as BasicUnit).join(', '),
-//             threat: calcStackStrengthWithBonus(
-//               s,
-//               getBonusByCategory(s, attackingStack.unit.category) +
-//                 getBonusByCategory(s, attackingStack.unit.subGroup) +
-//                 (s.unit?.strBonus ?? 0)
-//             )
-//           }))
-//         )
-
-//         const enemiesNotAttackedYetWithEnoughHealth = enemiesWithEnoughHealth.filter(
-//           s => !attackedStacks.has(s)
-//         )
-
-//         // get biggest threat among stacks with enough health
-
-//         //prioritizing not attacked yet
-//         const enemiesWithHighestThreat = getBiggestThreat(
-//           attackingStack,
-//           enemiesNotAttackedYetWithEnoughHealth
-//         )
-
-//         if (enemiesWithHighestThreat) {
-//           console.log(
-//             'selectTarget: alive, feat.bonus. enough health, not attacked yet, max threat',
-//             enemiesWithHighestThreat
-//           )
-//           return enemiesWithHighestThreat
-//         } else {
-//           const enemiesWithHighestThreat = getBiggestThreat(attackingStack, enemiesWithEnoughHealth)
-//           console.log(
-//             'selectTarget: alive, feat.bonus. enough health, max threat',
-//             enemiesWithHighestThreat
-//           )
-
-//           return enemiesWithHighestThreat
-
-//           // return getStrongestStack(enemyStacksAlive)
-//         }
-//       } else {
-//         console.log('NO enemies with enough health')
-//         // get biggest threat among stacks with feat. bonus
-//         const enemiesWithHighestThreat = getBiggestThreat(
-//           attackingStack,
-//           enemyStacksAlive //its not from enemyIHaveFeatureBonusAgainst
-//         )
-
-//         if (enemiesWithHighestThreat) {
-//           console.log('selectTarget: alive, NO feat.bonus. max threat', enemiesWithHighestThreat)
-//           return enemiesWithHighestThreat
-//         } else {
-//           console.log('selectTarget: no feature bonus found, get strongest stack')
-//           console.log('NO DEBERIA PASAR')
-//           return getStrongestStack(enemyStacksAlive)
-//         }
-//       }
-//     } else {
-//       console.log('NO enemies with feat.bonus')
-//       // get biggest threat among stacks alive enemies
-//       const enemiesWithHighestThreat = getBiggestThreat(attackingStack, enemyStacksAlive)
-
-//       if (enemiesWithHighestThreat) {
-//         console.log('selectTarget: alive, max threat', enemiesWithHighestThreat)
-//         return enemiesWithHighestThreat
-//       } else {
-//         console.log('selectTarget: no feature bonus found, get strongest stack')
-//         console.log('NO DEBERIA PASAR')
-//         return getStrongestStack(enemyStacksAlive)
-//       }
-//     }
-//   } else {
-//     console.log('no alive enemies')
-//     return null
-//   }
-// }
 
 export const selectTarget = (
   attackingStack: FightStack,

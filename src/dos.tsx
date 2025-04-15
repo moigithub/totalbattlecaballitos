@@ -844,7 +844,7 @@ second REMAINS second
     const data =
       /**
      row format
-     unitId,basestr,basehp,bonusStr,bonusHP,category,group+subgroup,unitsAmount,vsMelee%,vsETC%
+     unitId,basestr,basehp,bonusStr,bonusHP,category,group+subGroup,unitsAmount,vsMelee%,vsETC%
      */
       armyRef.current.map(stack => ({
         unitId: stack.unitKey,
@@ -854,7 +854,7 @@ second REMAINS second
         bonusHp: stack.hpBonus,
         category: stack.unit.category,
         group: stack.unit.group,
-        subgroup: stack.unit.subGroup,
+        subGroup: stack.unit.subGroup,
         unitsAmount: stack.unitsAmount,
         vsMeleePercent: stack.unit.vsMeleePercent,
         vsRangedPercent: stack.unit.vsRangedPercent,
