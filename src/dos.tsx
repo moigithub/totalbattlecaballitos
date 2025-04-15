@@ -1309,7 +1309,7 @@ ignora lo que continua abajo de esta linea:
       </nav>
 
       <div className='pt-[57px] sm:ml-64 flex bg-gray-900'>
-        <div className='p-4 border-2 '>
+        <div className='p-4 border-2 max-w-[1200px]'>
           <div className='stack-container'>
             <div className='sticky  top-[57px]'>
               <div className='flex items-center  '>
