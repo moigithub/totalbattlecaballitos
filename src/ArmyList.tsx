@@ -494,8 +494,13 @@ export const ArmyList = () => {
     }
   }
 
-  const resetFilters = () => {
+  const resetCategoryFilters = () => {
     setFilterTypes(['', 'melee', 'ranged', 'flying', 'mounted', 'siege', 'scout'])
+  }
+  const resetSubCategoryFilters = () => {
+    setFilterGroups(['', 'dragon', 'elemental', 'giant', 'beast'])
+  }
+  const resetTargetBonusFilters = () => {
     setFilterVsTypes([
       'Melee',
       'Ranged',
@@ -508,10 +513,24 @@ export const ArmyList = () => {
       'Giant',
       'Beast'
     ]) // human, epic
-    setFilterGroups(['', 'dragon', 'elemental', 'giant', 'beast'])
+  }
+  const resetGuardsLevelFilters = () => {
     setFilterGuardLevels(['1', '2', '3', '4', '5', '6', '7', '8', '9'])
+  }
+  const resetSpecialistLevelFilters = () => {
     setFilterSpecialistLevels(['1', '2', '3', '4', '5', '6', '7', '8', '9'])
+  }
+  const resetMonsterLevelFilters = () => {
     setFilterMonsterLevels(['3', '4', '5', '6', '7', '8', '9'])
+  }
+
+  const resetFilters = () => {
+    resetCategoryFilters()
+    resetSubCategoryFilters()
+    resetTargetBonusFilters()
+    resetGuardsLevelFilters()
+    resetSpecialistLevelFilters()
+    resetMonsterLevelFilters()
   }
 
   const shouldShow = (type: string) => (unit: BasicUnit) => {
@@ -582,9 +601,21 @@ export const ArmyList = () => {
           type='button'
           onClick={resetFilters}
         >
-          Reset filters
+          Reset all filters
         </button>
-        <div className='flex flex-wrap p-0.5 w-full border border-b-emerald-400 my-2'>
+        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+          <div className='flex space-between items-center w-full mx-1'>
+            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+              Category
+            </p>
+            <button
+              className='cursor-pointer my-0.5 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={resetCategoryFilters}
+            >
+              Reset
+            </button>
+          </div>
           <div className='mx-1'>
             <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
               Melee
@@ -670,7 +701,19 @@ export const ArmyList = () => {
             </label>
           </div>
         </div>
-        <div className='flex flex-wrap p-0.5 w-full border border-b-emerald-400 my-2'>
+        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+          <div className='flex space-between items-center w-full mx-1'>
+            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+              Sub Category
+            </p>
+            <button
+              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={resetSubCategoryFilters}
+            >
+              Reset
+            </button>
+          </div>
           <div className='mx-1'>
             <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
               Dragon
@@ -732,10 +775,19 @@ export const ArmyList = () => {
             </label>
           </div>
         </div>
-        <div className='flex flex-wrap p-0.5 w-full border border-b-emerald-400 my-2'>
-          <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-            by Target Bonus/Feat.damage
-          </p>
+        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+          <div className='flex space-between items-center w-full mx-1'>
+            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+              by Target Feat.Bonus
+            </p>
+            <button
+              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={resetTargetBonusFilters}
+            >
+              Reset
+            </button>
+          </div>
           <div className='mx-1'>
             <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
               vsMelee
@@ -859,10 +911,19 @@ export const ArmyList = () => {
             </label>
           </div>
         </div>
-        <div className='flex flex-wrap p-0.5 w-full border border-b-emerald-400 my-2'>
-          <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-            Guards Level
-          </p>
+        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+          <div className='flex space-between items-center w-full mx-1'>
+            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+              Guards Level
+            </p>
+            <button
+              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={resetGuardsLevelFilters}
+            >
+              Reset
+            </button>
+          </div>
           <div className='mx-1'>
             <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
               1
@@ -973,10 +1034,19 @@ export const ArmyList = () => {
             </label>
           </div>
         </div>
-        <div className='flex flex-wrap p-0.5 w-full border border-b-emerald-400 my-2'>
-          <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-            Specialist Level
-          </p>
+        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+          <div className='flex space-between items-center w-full mx-1'>
+            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+              Specialist Level
+            </p>
+            <button
+              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={resetSpecialistLevelFilters}
+            >
+              Reset
+            </button>
+          </div>
           <div className='mx-1'>
             <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
               1
@@ -1087,11 +1157,19 @@ export const ArmyList = () => {
             </label>
           </div>
         </div>
-        <div className='flex flex-wrap p-0.5 w-full border border-b-emerald-400 my-2'>
-          <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-            Monster Level
-          </p>
-
+        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+          <div className='flex space-between items-center w-full mx-1'>
+            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+              Monster Level
+            </p>
+            <button
+              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={resetMonsterLevelFilters}
+            >
+              Reset
+            </button>
+          </div>
           <div className='mx-1'>
             <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
               3
