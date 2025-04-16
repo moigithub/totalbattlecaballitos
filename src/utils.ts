@@ -97,6 +97,8 @@ export const prepareExportData = (state: StackStoreBasic) => {
     leadership: state.leadership,
     authority: state.authority,
     dominance: state.dominance,
+    gapBasePercent: state.gapBasePercent,
+    selectedTarget: state.selectedTarget,
     army: state.army.map(({ unit, ...stack }) => {
       return { ...stack, unitKey: unit.id }
     })
