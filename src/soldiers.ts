@@ -1334,7 +1334,7 @@ const manyArmedGuardianIV = unitBuilder<MonsterUnit>({
   level: '4'
 })
 const EttinV = unitBuilder<MonsterUnit>({
-  id: 'Ettin',
+  id: 'EttinV',
   clasification: 'monster',
   name: 'EttinV', //'Ettin',
   nameEs: 'EttinV', //'Ettin',
@@ -2180,7 +2180,7 @@ const pounderII: MercUnit = unitBuilder<MercUnit>({
   vsMeleePercent: 667,
   vsFlyingPercent: 859,
   category: 'ranged',
-  group: 'specialist',
+  group: 'mercs',
   level: '9'
 })
 const highlanderII: MercUnit = unitBuilder<MercUnit>({
@@ -2195,7 +2195,7 @@ const highlanderII: MercUnit = unitBuilder<MercUnit>({
   vsMeleePercent: 1333,
   vsFlyingPercent: 1717,
   category: 'ranged',
-  group: 'guardsman',
+  group: 'mercs',
   level: '9'
 })
 const wardenII: MercUnit = unitBuilder<MercUnit>({

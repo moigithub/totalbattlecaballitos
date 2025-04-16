@@ -49,6 +49,11 @@ export const ArmyList = () => {
     const saved = localStorage.getItem('filterSpecialistLevels')
     return saved ? JSON.parse(saved) : ['1', '2', '3', '4', '5', '6', '7', '8', '9']
   })
+  const [filterMercLevels, setFilterMercLevels] = useState<string[]>(() => {
+    // getting stored value
+    const saved = localStorage.getItem('filterMercLevels')
+    return saved ? JSON.parse(saved) : ['5', '6', '7', '8', '9']
+  })
   const [filterMonsterLevels, setFilterMonsterLevels] = useState<string[]>(() => {
     // getting stored value
     const saved = localStorage.getItem('filterMonsterLevels')
@@ -483,7 +488,15 @@ export const ArmyList = () => {
       setFilterSpecialistLevels(filterSpecialistLevels.filter(troop => troop !== e.target.value))
     }
   }
-
+  const markMercLevels = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      if (!filterMercLevels.includes(e.target.value)) {
+        setFilterMercLevels([...filterMercLevels, e.target.value])
+      }
+    } else {
+      setFilterMercLevels(filterMercLevels.filter(troop => troop !== e.target.value))
+    }
+  }
   const markMonsterLevels = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
       if (!filterMonsterLevels.includes(e.target.value)) {
@@ -520,6 +533,10 @@ export const ArmyList = () => {
   const resetSpecialistLevelFilters = () => {
     setFilterSpecialistLevels(['1', '2', '3', '4', '5', '6', '7', '8', '9'])
   }
+  const resetMercLevelFilters = () => {
+    setFilterMercLevels(['5', '6', '7', '8', '9'])
+  }
+
   const resetMonsterLevelFilters = () => {
     setFilterMonsterLevels(['3', '4', '5', '6', '7', '8', '9'])
   }
@@ -530,6 +547,7 @@ export const ArmyList = () => {
     resetTargetBonusFilters()
     resetGuardsLevelFilters()
     resetSpecialistLevelFilters()
+    resetMercLevelFilters()
     resetMonsterLevelFilters()
   }
 
@@ -545,7 +563,7 @@ export const ArmyList = () => {
     const featBonus = whoCanIAttack(unit) //==Ranged,Mounted,Melee,Flying,Beast,Giant,Dragon,Elemental,Fortification,Siege,Human,Epic
     let vsTypeFilter = filterVsTypes.some(vsType => featBonus.includes(vsType))
 
-    const isNotSelectedFilter = !selectedStacks.includes(unit.name.toLowerCase())
+    const isNotSelectedFilter = !selectedStacks.includes(unit.id)
     let levelFilter = true
 
     if (unit.group === 'guardsman' && type === 'guards') {
@@ -560,6 +578,8 @@ export const ArmyList = () => {
       groupFilter = true // notienen dragon,beast,etc
     } else if (unit.group === 'mercs' && type === 'mercenaries') {
       // always show epics
+      levelFilter = filterMercLevels.includes(unit.level)
+
       if (featBonus.includes('Epic')) {
         vsTypeFilter = true // others type(subgroup)
       }
@@ -576,7 +596,7 @@ export const ArmyList = () => {
     return show
   }
 
-  const selectedStacks = army.map(stack => stack.unit.name.toLowerCase())
+  const selectedStacks = army.map(stack => stack.unit.id)
 
   return (
     <aside
@@ -1252,6 +1272,81 @@ export const ArmyList = () => {
                 value={'9'}
                 checked={filterMonsterLevels.includes('9')}
                 onChange={markMonsterLevels}
+              />
+            </label>
+          </div>
+        </div>
+        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+          <div className='flex space-between items-center w-full mx-1'>
+            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+              Merc Level
+            </p>
+            <button
+              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={resetMercLevelFilters}
+            >
+              Reset
+            </button>
+          </div>
+
+          <div className='mx-1'>
+            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+              5
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'5'}
+                checked={filterMercLevels.includes('5')}
+                onChange={markMercLevels}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+              6
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'6'}
+                checked={filterMercLevels.includes('6')}
+                onChange={markMercLevels}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+              7
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'7'}
+                checked={filterMercLevels.includes('7')}
+                onChange={markMercLevels}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+              8
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'8'}
+                checked={filterMercLevels.includes('8')}
+                onChange={markMercLevels}
+              />
+            </label>
+          </div>
+          <div className='mx-1'>
+            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+              9
+              <input
+                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                type='checkbox'
+                value={'9'}
+                checked={filterMercLevels.includes('9')}
+                onChange={markMercLevels}
               />
             </label>
           </div>
