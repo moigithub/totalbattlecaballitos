@@ -51,6 +51,7 @@ import { lvl17HeroicElfSquad } from './monsters.ts'
 import { decodeAndLoadArmySetup, prepareExportData } from './utils.ts'
 import { encodeHash } from './hashStore.ts'
 import PageTitle from './pageTitle.tsx'
+import { ARMY } from './soldiers.ts'
 
 export interface DataResult {
   color: string
@@ -1104,12 +1105,14 @@ ignora lo que continua abajo de esta linea:
         reader.readAsText(event.target.files[0])
       } //end if html5 filelist support
     } else {
-      alert('The File APIs are not fully supported by your browser. Fallback required.')
+      alert('The File APIs are not fully supported by your browser.')
     }
   }
 
   const loadPresetArmy = (event: ChangeEvent<HTMLSelectElement>) => {
     setPresetArmy(event.target.value)
+    const elf10G5M5 =
+      'eyJsZWFkZXJzaGlwIjoxNTAwMDAsImF1dGhvcml0eSI6MTAwMDAsImRvbWluYW5jZSI6MTAwMDAsImdhcEJhc2VQZXJjZW50IjoxMCwic2VsZWN0ZWRUYXJnZXQiOiJjaXRhZGVsZTEwIiwiYXJteSI6W3sibGVhZGVyc2hpcCI6MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjY5LCJnYXBQZXJjZW50IjoxMDAsImlkIjoiRXR0aW5WIiwidW5pdEtleSI6IkV0dGluViIsInVuaXRzQW1vdW50IjozLCJsaW1pdCI6MCwic3RyQm9udXMiOjk5NC4zLCJocEJvbnVzIjo3NDQuNSwidW5pdExpbWl0IjozLCJ1c2VVbml0TGltaXQiOnRydWUsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjo2NiwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6ImZlYXJzb21lTWFudGljb3JhViIsInVuaXRLZXkiOiJmZWFyc29tZU1hbnRpY29yYVYiLCJ1bml0c0Ftb3VudCI6MywibGltaXQiOjAsInN0ckJvbnVzIjo3NzkuMiwiaHBCb251cyI6Njk3LjUsInVuaXRMaW1pdCI6MCwidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MjQwLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6ImJhdHRsZUdyaWZmaW5WIiwidW5pdEtleSI6ImJhdHRsZUdyaWZmaW5WIiwidW5pdHNBbW91bnQiOjEyLCJsaW1pdCI6MCwic3RyQm9udXMiOjc3NS4yLCJocEJvbnVzIjo2NDIsInVuaXRMaW1pdCI6MCwidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MjM2LCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6IkFyY2hlckc1IiwidW5pdEtleSI6IkFyY2hlckc1IiwidW5pdHNBbW91bnQiOjIzNiwibGltaXQiOjAsInN0ckJvbnVzIjo2MjYuMywiaHBCb251cyI6NDY3LCJ1bml0TGltaXQiOjAsInVzZVVuaXRMaW1pdCI6ZmFsc2UsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjM0OCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJBcmNoZXJHNCIsInVuaXRLZXkiOiJBcmNoZXJHNCIsInVuaXRzQW1vdW50IjozNDgsImxpbWl0IjowLCJzdHJCb251cyI6NjI2LjMsImhwQm9udXMiOjQ2NywidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjoxMTAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiQ2F0YXB1bHRFNCIsInVuaXRLZXkiOiJDYXRhcHVsdEU0IiwidW5pdHNBbW91bnQiOjExLCJsaW1pdCI6MCwic3RyQm9udXMiOjU1NC44LCJocEJvbnVzIjozNjEuNSwidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6dHJ1ZSwic3RyTGltaXQiOjI3MDAwMDAsInN0ckxpbWl0VHlwZSI6InZzRm9ydGlmaWNhdGlvbnMiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH1dfQ=='
     const cursed25G6M7Mercs =
       'eyJsZWFkZXJzaGlwIjoyMTAwMDAsImF1dGhvcml0eSI6MTAwMDAsImRvbWluYW5jZSI6MTAwMDAsImFybXkiOlt7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6MzE1LCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJ3eXZlcm5JSSIsInVuaXRLZXkiOiJ3eXZlcm5JSSIsInVuaXRzQW1vdW50Ijo1LCJsaW1pdCI6MCwic3RyQm9udXMiOjE4MzAsImhwQm9udXMiOjE4NTkuMywidW5pdExpbWl0Ijo1LCJ1c2VVbml0TGltaXQiOnRydWUsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6NDU2LCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJkZW1vbmljU2FsYW1hbmRlcklJIiwidW5pdEtleSI6ImRlbW9uaWNTYWxhbWFuZGVySUkiLCJ1bml0c0Ftb3VudCI6MTIsImxpbWl0IjowLCJzdHJCb251cyI6MTIxMiwiaHBCb251cyI6MTM5NS4zLCJ1bml0TGltaXQiOjAsInVzZVVuaXRMaW1pdCI6ZmFsc2UsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjo0ODQsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJibGFja0RyYWdvblZJSSIsInVuaXRLZXkiOiJibGFja0RyYWdvblZJSSIsInVuaXRzQW1vdW50IjoxMSwibGltaXQiOjAsInN0ckJvbnVzIjoxODUxLCJocEJvbnVzIjoxODgyLjgsInVuaXRMaW1pdCI6MCwidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6NTM0NjAwMDAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjMwMDAwLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6IkNhdGFwdWx0RTUiLCJ1bml0S2V5IjoiQ2F0YXB1bHRFNSIsInVuaXRzQW1vdW50IjozMDAwLCJsaW1pdCI6MCwic3RyQm9udXMiOjcwNS41LCJocEJvbnVzIjo1MzUuMywidW5pdExpbWl0IjozMDAwLCJ1c2VVbml0TGltaXQiOnRydWUsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6NTM0LCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJlcGljTW9uc3Rlckh1bnRlcklJIiwidW5pdEtleSI6ImVwaWNNb25zdGVySHVudGVySUkiLCJ1bml0c0Ftb3VudCI6NTM0LCJsaW1pdCI6MCwic3RyQm9udXMiOjM3NS41LCJocEJvbnVzIjo0ODguOCwidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjoxODAwMCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJDYXRhcHVsdEU0IiwidW5pdEtleSI6IkNhdGFwdWx0RTQiLCJ1bml0c0Ftb3VudCI6MTgwMCwibGltaXQiOjAsInN0ckJvbnVzIjo3MDUuNSwiaHBCb251cyI6NTM1LjMsInVuaXRMaW1pdCI6MTgwMCwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjoxNzAwLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6ImJhdHRsZUdyaWZmaW5WSSIsInVuaXRLZXkiOiJiYXR0bGVHcmlmZmluVkkiLCJ1bml0c0Ftb3VudCI6ODUsImxpbWl0IjowLCJzdHJCb251cyI6MTIwMCwiaHBCb251cyI6MTIwMCwidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjozMjIwLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6ImJhdHRsZUdyaWZmaW5WIiwidW5pdEtleSI6ImJhdHRsZUdyaWZmaW5WIiwidW5pdHNBbW91bnQiOjE2MSwibGltaXQiOjAsInN0ckJvbnVzIjoxMjAwLCJocEJvbnVzIjoxMjAwLCJ1bml0TGltaXQiOjAsInVzZVVuaXRMaW1pdCI6ZmFsc2UsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6NDAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6ImV0ZXJuYWxDYW5ub25lZXJJSSIsInVuaXRLZXkiOiJldGVybmFsQ2Fubm9uZWVySUkiLCJ1bml0c0Ftb3VudCI6MSwibGltaXQiOjAsInN0ckJvbnVzIjoxMjEyLCJocEJvbnVzIjoxMzk1LjMsInVuaXRMaW1pdCI6MSwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH1dfQ=='
     const cursed25 =
@@ -1125,6 +1128,9 @@ ignora lo que continua abajo de esta linea:
       'eyJsZWFkZXJzaGlwIjoyNTAwMDAsImF1dGhvcml0eSI6MjUwMDAwLCJkb21pbmFuY2UiOjI1MDAwMCwiYXJteSI6W3sibGVhZGVyc2hpcCI6MjAwMDAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiY29yYXhJIiwidW5pdEtleSI6ImNvcmF4SSIsInVuaXRzQW1vdW50IjoxMDAwLCJsaW1pdCI6MCwic3RyQm9udXMiOjMxMzEuNSwiaHBCb251cyI6MzQwOS44LCJ1bml0TGltaXQiOjEwMDAsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjI1MzgsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJmaXJlUGhvZW5peEkiLCJ1bml0S2V5IjoiZmlyZVBob2VuaXhJIiwidW5pdHNBbW91bnQiOjQ3LCJsaW1pdCI6MCwic3RyQm9udXMiOjI0MjEsImhwQm9udXMiOjI0MDMuMywidW5pdExpbWl0IjozNywidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOnRydWUsInN0ckxpbWl0Ijo3OTIwMDAwMDAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjY3NDAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiYmF0dGxlR3JpZmZpblZJSSIsInVuaXRLZXkiOiJiYXR0bGVHcmlmZmluVklJIiwidW5pdHNBbW91bnQiOjMzNywibGltaXQiOjAsInN0ckJvbnVzIjozMjMxLjUsImhwQm9udXMiOjM1MDkuOCwidW5pdExpbWl0IjozMDAsInVzZVVuaXRMaW1pdCI6ZmFsc2UsInVzZVN0ckxpbWl0Ijp0cnVlLCJzdHJMaW1pdCI6MzgyMjAwMDAwLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjoxMDUyMCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJiYXR0bGVHcmlmZmluVkkiLCJ1bml0S2V5IjoiYmF0dGxlR3JpZmZpblZJIiwidW5pdHNBbW91bnQiOjUyNiwibGltaXQiOjAsInN0ckJvbnVzIjozMjMxLjUsImhwQm9udXMiOjM1MDkuOCwidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjoxNzA4MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJiYXR0bGVHcmlmZmluViIsInVuaXRLZXkiOiJiYXR0bGVHcmlmZmluViIsInVuaXRzQW1vdW50Ijo4NTQsImxpbWl0IjowLCJzdHJCb251cyI6MzIzMS41LCJocEJvbnVzIjozNTA5LjgsInVuaXRMaW1pdCI6MCwidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6NTc4MiwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJ2dWx0dXJlc1ZJSSIsInVuaXRLZXkiOiJ2dWx0dXJlc1ZJSSIsInVuaXRzQW1vdW50Ijo1NzgyLCJsaW1pdCI6MCwic3RyQm9udXMiOjIzMDMuMywiaHBCb251cyI6MjMyMSwidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjoxMDQ1ODAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsImlkIjoiQ2F0YXB1bHRFNCIsInVuaXRLZXkiOiJDYXRhcHVsdEU0IiwidW5pdHNBbW91bnQiOjEwNDU4LCJsaW1pdCI6MCwic3RyQm9udXMiOjExMzEsImhwQm9udXMiOjQ3MCwidW5pdExpbWl0IjoxMTAwMCwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjo2MTgzLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MCwiaWQiOiJ2dWx0dXJlc1ZJIiwidW5pdEtleSI6InZ1bHR1cmVzVkkiLCJ1bml0c0Ftb3VudCI6NjE4MywibGltaXQiOjAsInN0ckJvbnVzIjoyMzAzLjMsImhwQm9udXMiOjIzMjEsInVuaXRMaW1pdCI6MCwidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9LHsibGVhZGVyc2hpcCI6MTExNzYsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjowLCJpZCI6InZ1bHR1cmVzViIsInVuaXRLZXkiOiJ2dWx0dXJlc1YiLCJ1bml0c0Ftb3VudCI6MTExNzYsImxpbWl0IjowLCJzdHJCb251cyI6MjMwMy4zLCJocEJvbnVzIjoyMzIxLCJ1bml0TGltaXQiOjAsInVzZVVuaXRMaW1pdCI6ZmFsc2UsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfSx7ImxlYWRlcnNoaXAiOjAsImF1dGhvcml0eSI6Mzk4LCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjAsImlkIjoiZXBpY01vbnN0ZXJIdW50ZXJJSSIsInVuaXRLZXkiOiJlcGljTW9uc3Rlckh1bnRlcklJIiwidW5pdHNBbW91bnQiOjM5OCwibGltaXQiOjAsInN0ckJvbnVzIjoxMzAwLjUsImhwQm9udXMiOjE1OTUuOCwidW5pdExpbWl0IjowLCJ1c2VVbml0TGltaXQiOmZhbHNlLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJ1c2VIcExpbWl0IjpmYWxzZSwiSHBMaW1pdCI6MH0seyJsZWFkZXJzaGlwIjowLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MzE2OCwiZ2FwUGVyY2VudCI6MTAwLCJpZCI6ImZlYXJzb21lTWFudGljb3JhViIsInVuaXRLZXkiOiJmZWFyc29tZU1hbnRpY29yYVYiLCJ1bml0c0Ftb3VudCI6MTQ0LCJsaW1pdCI6MCwic3RyQm9udXMiOjIwMDAsImhwQm9udXMiOjIwMDAsInVuaXRMaW1pdCI6MCwidXNlVW5pdExpbWl0IjpmYWxzZSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjB9XX0='
 
     switch (event.target.value) {
+      case 'elf10G5M5':
+        decodeAndLoadArmySetup(elf10G5M5)
+        break
       case 'elf20G7M7':
         decodeAndLoadArmySetup(elf20G7M7)
         break
@@ -1154,6 +1160,52 @@ ignora lo que continua abajo de esta linea:
     const data = JSON.stringify(prepareExportData(useStackStore.getState()))
     navigator.clipboard.writeText(encodeHash(data))
   }
+
+  const isEnoughCatasToKillWalls = (): boolean => {
+    if (armyRef.current.length === 0) {
+      return false
+    }
+
+    const catasId = [
+      ARMY.CatapultE1.id,
+      ARMY.CatapultE2.id,
+      ARMY.CatapultE3.id,
+      ARMY.CatapultE4.id,
+      ARMY.CatapultE5.id,
+      ARMY.CatapultE6.id,
+      ARMY.CatapultE7.id,
+      ARMY.CatapultE8.id,
+      ARMY.CatapultE9.id,
+      ARMY.scorpionV.id,
+      ARMY.trebuchetVI.id,
+      ARMY.palintoneVII.id,
+      ARMY.arielII.id
+    ]
+
+    const selectedSieges = army.filter(stack => catasId.includes(stack.unit.id))
+
+    if (selectedSieges.length === 0) {
+      return false
+    }
+
+    const totalDamage = selectedSieges.reduce((total, stack) => {
+      const siegeDamage =
+        stack.unitsAmount *
+        (stack.unit.BASESTR *
+          stack.unit.multiplier *
+          (1 + (stack.strBonus + stack.unit.vsFortificationsPercent) / 100))
+      return total + siegeDamage
+    }, 0)
+
+    const citadelWallsHP = citadel.stacks
+      .filter(stack => stack.unit.category === 'fortification')
+      .reduce((total, stack) => total + stack.unit.BASEHP * stack.unitsAmount, 0)
+
+    const result = totalDamage >= citadelWallsHP
+    return result
+  }
+
+  const showCatasVsWallWarning = !isEnoughCatasToKillWalls()
 
   return (
     <>
@@ -1386,9 +1438,6 @@ ignora lo que continua abajo de esta linea:
                       <option value='dash' disabled>
                         ------------------
                       </option>
-                      <option value='noob'>Citadel Elf 10 G1</option>
-                      <option value='noob'>Citadel Elf 10 G2</option>
-                      <option value='noob'>Citadel Elf 10 G3</option>
                       <option value='noob'>Citadel Elf 10 G4,M3</option>
                       <option value='noob'>Citadel Elf 10 G5,M5,Mercs</option>
                       <option value='dash' disabled>
@@ -1400,6 +1449,9 @@ ignora lo que continua abajo de esta linea:
                         ------------------
                       </option>
 
+                      <option value='elf10G5M5' className='bg-orange-800'>
+                        Citadel Elf 10 G5,M5
+                      </option>
                       <option value='elf20G7M7' className='bg-green-800'>
                         Citadel Elf 20 G7,M7
                       </option>
@@ -1458,6 +1510,12 @@ ignora lo que continua abajo de esta linea:
                 >
                   dont touch me
                 </button>
+
+                {showCatasVsWallWarning && (
+                  <span className='ml-auto text-red-700'>
+                    Not enough catas to kill citadel walls
+                  </span>
+                )}
               </div>
             </div>
 
@@ -1504,7 +1562,7 @@ ignora lo que continua abajo de esta linea:
           </div>
         </div>
         {report.length > 0 && (
-          <div className='relative '>
+          <div className='relative shrink-0 min-w-[300px]'>
             <div className='mt-4 p-4 border-2  sticky top-[164px]  w-fit'>
               {report.map((data, i) => {
                 return (
