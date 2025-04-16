@@ -66,12 +66,14 @@ function Dos() {
   const authority = useStackStore(state => state.authority)
   const dominance = useStackStore(state => state.dominance)
   const gapBasePercent = useStackStore(state => state.gapBasePercent)
+  const selectedTarget = useStackStore(state => state.selectedTarget)
 
   const setLeadership = useStackStore(state => state.setLeadership)
   const setAuthority = useStackStore(state => state.setAuthority)
   const setDominance = useStackStore(state => state.setDominance)
   const resetAllStacks = useStackStore(state => state.resetAllStacks)
   const setGapBasePercent = useStackStore(state => state.setGapBasePercent)
+  const setSelectedTarget = useStackStore(state => state.setSelectedTarget)
   // const updateMinSetup = useStackStore(state => state.updateMinSetup)
 
   const armyRef = useRef(useStackStore.getState().army)
@@ -90,9 +92,9 @@ function Dos() {
   // const getArmyAuthority = useStackStore(state => state.getArmyAuthority)
   // const getArmyDominance = useStackStore(state => state.getArmyDominance)
 
-  const [citadel, setCitadel] = useState<Citadel>(citadele10)
+  const [citadel, setCitadel] = useState<Citadel>(citadele20)
 
-  const [selectedTarget, setSelectedTarget] = useState('citadele10')
+  // const [selectedTarget, setSelectedTarget] = useState('citadele10')
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
   const [report, setReport] = useState<DataResult[][]>([])
 

@@ -11,6 +11,7 @@ export interface StackStoreBasic {
   authority: number
   dominance: number
   gapBasePercent: number
+  selectedTarget: string
   army: Stack[]
 }
 
@@ -23,6 +24,7 @@ interface StackStore extends StackStoreBasic {
   removeStack: (id: string) => void
   resetStack: (id: string) => void
   resetAllStacks: () => void
+  setSelectedTarget: (value: string) => void
   setGapBasePercent: (value: number) => void
   setGapPercent: (id: string, value: number) => void
   setHpBonus: (id: string, value: number) => void
@@ -49,6 +51,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   authority: 10000,
   dominance: 10000,
   gapBasePercent: 10,
+  selectedTarget: 'citadele20',
   army: [],
 
   setLeadership: value => {
@@ -115,6 +118,9 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   // },
   recalculatePosition: () => {
     set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
+  },
+  setSelectedTarget: (value: string) => {
+    set(() => ({ selectedTarget: value }))
   },
   setGapBasePercent: value => {
     set(() => ({ gapBasePercent: value }))
