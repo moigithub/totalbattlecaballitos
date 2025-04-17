@@ -1075,7 +1075,7 @@ const firePhoenixII = unitBuilder<MonsterUnit>({
 
 //-----------------------------
 const battleBoarIII = unitBuilder<MonsterUnit>({
-  id: 'battleBoar',
+  id: 'battleBoarIII',
   clasification: 'monster',
   name: 'battleBoarIII', //'battleBoar'
   nameEs: 'jabali batalla III', //'battleBoar',
@@ -1091,7 +1091,7 @@ const battleBoarIII = unitBuilder<MonsterUnit>({
   level: '3'
 })
 const gorgonMedusaIV = unitBuilder<MonsterUnit>({
-  id: 'gorgonMedusa',
+  id: 'gorgonMedusaIV',
   clasification: 'monster',
   name: 'gorgonMedusaIV',
   nameEs: 'medusa gorgona IV', //'gorgonMedusa',
@@ -1188,7 +1188,7 @@ const tricksterII = unitBuilder<MonsterUnit>({
 })
 //-----------------------------
 const emeraldDragonIII = unitBuilder<MonsterUnit>({
-  id: 'emeraldDragon',
+  id: 'emeraldDragonIII',
   clasification: 'monster',
   name: 'emeraldDragonIII',
   nameEs: 'Dragon esmeralda III', //'emeraldDragon',
@@ -1204,7 +1204,7 @@ const emeraldDragonIII = unitBuilder<MonsterUnit>({
   level: '3'
 })
 const magicDragonIV = unitBuilder<MonsterUnit>({
-  id: 'magicDragon',
+  id: 'magicDragonIV',
   clasification: 'monster',
   name: 'magicDragonIV',
   nameEs: 'Dragon magico IV', //'magicDragon',
@@ -1220,7 +1220,7 @@ const magicDragonIV = unitBuilder<MonsterUnit>({
   level: '4'
 })
 const desertConquerV = unitBuilder<MonsterUnit>({
-  id: 'desertConquer',
+  id: 'desertConquerV',
   clasification: 'monster',
   name: 'desertConquerV',
   nameEs: 'conquistador desierto V', //'desertConquer',
@@ -1237,7 +1237,7 @@ const desertConquerV = unitBuilder<MonsterUnit>({
 })
 
 const crystalDragonVI = unitBuilder<MonsterUnit>({
-  id: 'crystalDragon',
+  id: 'crystalDragonVI',
   clasification: 'monster',
   name: 'crystalDragonVI',
   nameEs: 'Dragon cristal VI', //'crystalDragon',
