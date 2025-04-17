@@ -86,6 +86,12 @@ export const decodeAndLoadArmySetup = (data: string) => {
     if (parsed.dominance && parsed.dominance > 0) {
       useStackStore.getState().setDominance(parsed.dominance)
     }
+    if (parsed.gapBasePercent && parsed.gapBasePercent > 0) {
+      useStackStore.getState().setGapBasePercent(parsed.gapBasePercent)
+    }
+    if (parsed.selectedTarget) {
+      useStackStore.getState().setSelectedTarget(parsed.selectedTarget)
+    }
   }
   // Using state outside of a component
   // const paw = useStore.getState().paw // read value
