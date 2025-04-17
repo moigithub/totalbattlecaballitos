@@ -104,18 +104,6 @@ export const Card = ({
       {/* <p className='stack-minSetup'>Min {stack.minSetup}</p> */}
       {/* <p className='stack-limit'>Limit {stack.limit}</p> */}
 
-      <div className='stack-hpBonus'>
-        <span title='HP bonus %'>+HP %</span>
-        <input
-          type='number'
-          className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-          value={stack.hpBonus}
-          onChange={e => {
-            const value = parseFloat(e.target.value) || 0
-            setHpBonus(stack.id!, value)
-          }}
-        />
-      </div>
       <div className='stack-strBonus'>
         <span title='STR bonus %'>+STR %</span>
 
@@ -126,6 +114,18 @@ export const Card = ({
           onChange={e => {
             const value = parseFloat(e.target.value) || 0
             setStrBonus(stack.id!, value)
+          }}
+        />
+      </div>
+      <div className='stack-hpBonus'>
+        <span title='HP bonus %'>+HP %</span>
+        <input
+          type='number'
+          className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          value={stack.hpBonus}
+          onChange={e => {
+            const value = parseFloat(e.target.value) || 0
+            setHpBonus(stack.id!, value)
           }}
         />
       </div>
