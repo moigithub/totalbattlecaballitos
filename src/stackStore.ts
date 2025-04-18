@@ -29,6 +29,7 @@ interface StackStore extends StackStoreBasic {
   setGapPercent: (id: string, value: number) => void
   setHpBonus: (id: string, value: number) => void
   setStrBonus: (id: string, value: number) => void
+  togglePlusOne: (id: string) => void
   toggleUseUnitLimit: (id: string) => void
   setStackUnitLimit: (id: string, value: number) => void
   toggleUseStrLimit: (id: string) => void
@@ -165,7 +166,15 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
-
+  togglePlusOne: (id: string) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return { ...stack, usePlusOne: !stack.usePlusOne }
+        } else return stack
+      })
+    }))
+  },
   toggleUseUnitLimit: (id: string) => {
     set(state => ({
       army: state.army.map(stack => {

@@ -27,6 +27,7 @@ export const Card = ({
   const setStrLimit = useStackStore(state => state.setStackStrLimit)
   const setStrLimitType = useStackStore(state => state.setStackStrLimitType)
   const toggleUseHpLimit = useStackStore(state => state.toggleUseHpLimit)
+  const togglePlusOne = useStackStore(state => state.togglePlusOne)
   const setHpLimit = useStackStore(state => state.setStackHpLimit)
 
   const removeStack = useStackStore(state => state.removeStack)
@@ -186,6 +187,17 @@ export const Card = ({
                 setStrLimit(stack.id!, value)
               }}
             />
+            <label className='ml-1 whitespace-nowrap'>
+              +1
+              <input
+                className='ml-1 '
+                type='checkbox'
+                checked={stack.usePlusOne}
+                onChange={() => {
+                  togglePlusOne(stack.id!)
+                }}
+              />
+            </label>
           </>
         )}
       </div>
