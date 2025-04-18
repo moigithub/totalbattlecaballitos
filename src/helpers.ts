@@ -1,5 +1,5 @@
 import { FightStack, ObjProps } from './citadelData'
-import { addReportData, DataResult } from './dos'
+import { addReportData, ColumnResult } from './dos'
 // import { Result } from './dos'
 import { BasicUnit, Stack } from './types'
 import { whoCanIAttack } from './utils'
@@ -448,16 +448,63 @@ const getEnemiesWithFeatureBonus = (
       getBonusByCategory(attackingStack, stack.unit.subGroup) > 0
   )
 }
+const getBestDmgEffectiveTarget = (
+  attackingStack: FightStack,
+  enemiesWithEnoughHealth: FightStack[]
+): FightStack | null => {
+  const dmgVsEnemies = enemiesWithEnoughHealth.map(enemy => {
+    const health = calcStackHealthWithBonus(enemy, enemy.unit.hpBonus || 0)
 
-const logAliveEnemies = (aliveEnemies: FightStack[]) => {
-  console.log('Alive enemies:')
+    const attackerDmg = calcStackStrengthWithBonus(
+      attackingStack,
+      (attackingStack.unit.strBonus || 0) +
+        getBonusByCategory(attackingStack, enemy.unit.category) +
+        getBonusByCategory(attackingStack, enemy.unit.subGroup)
+    )
+    return {
+      unit: enemy,
+      dmg: health - attackerDmg
+    }
+  })
+
+  if (dmgVsEnemies.length === 1) return dmgVsEnemies[0].unit
+  if (dmgVsEnemies.length > 1) {
+    return dmgVsEnemies.filter(result => result.dmg > 0).toSorted((a, b) => a.dmg - b.dmg)[0].unit
+  }
+
+  return null
+}
+
+const logEnemies = (enemies: FightStack[], attackingStack: FightStack, comment: string) => {
+  console.log(comment, '===================')
+  // yo soy flying, quiero saber si mi enemigo tiene bono vsFlying y cuanto es el daño calculado
   console.table(
-    aliveEnemies.map(s => ({
-      name: s.unit.name,
-      units: s.unitsAmount,
-      categ: s.unit.category,
-      subGroup: s.unit.subGroup
-    }))
+    enemies.map(enemy => {
+      const bonus = enemy.unit.strBonus || 0
+      const vsCategoryBonus = getBonusByCategory(enemy, attackingStack.unit.category)
+      const vsCategory2Bonus = getBonusByCategory(enemy, attackingStack.unit.subGroup)
+
+      const hp = calcStackHealthWithBonus(enemy, enemy.unit.hpBonus || 0)
+      const attackerStr = calcStackStrengthWithBonus(
+        attackingStack,
+        (attackingStack.unit.strBonus || 0) +
+          getBonusByCategory(attackingStack, enemy.unit.category) +
+          getBonusByCategory(attackingStack, enemy.unit.subGroup)
+      )
+
+      return {
+        name: enemy.unit.name,
+        units: enemy.unitsAmount,
+        categ: enemy.unit.category,
+        subGroup: enemy.unit.subGroup,
+        bonuses: whoCanIAttack(enemy.unit as BasicUnit).join(', '),
+        strongest: calcStackStrengthWithBonus(enemy, bonus),
+        threat: calcStackStrengthWithBonus(enemy, bonus + vsCategoryBonus + vsCategory2Bonus),
+        enemyHp: hp,
+        attackerStr: attackerStr,
+        appliedDmg: hp - attackerStr
+      }
+    })
   )
 }
 
@@ -465,82 +512,146 @@ const logAttackerDetails = (attackingStack: FightStack) => {
   console.log(
     'Attacker:',
     attackingStack.unit.name,
-    'can attack:',
+    '(',
+    attackingStack.unit.category,
+    ':',
+    attackingStack.unit.subGroup,
+    ') can attack:',
     whoCanIAttack(attackingStack.unit as BasicUnit).join(', ')
-  )
-}
-
-const logEnemiesWithFeatureBonus = (enemiesWithFeatureBonus: FightStack[]) => {
-  console.log('Enemies with feature bonus:')
-  console.table(
-    enemiesWithFeatureBonus.map(s => ({
-      name: s.unit.name,
-      type: s.unit.category,
-      subGroup: s.unit.subGroup,
-      bonus: whoCanIAttack(s.unit as BasicUnit).join(', ')
-    }))
-  )
-}
-
-const logEnemiesWithEnoughHealth = (
-  attackingStack: FightStack,
-  enemiesWithEnoughHealth: FightStack[]
-) => {
-  console.log('Enemies with enough health:')
-  console.table(
-    enemiesWithEnoughHealth.map(s => ({
-      name: s.unit.name,
-      type: s.unit.category,
-      subGroup: s.unit.subGroup,
-      bonus: whoCanIAttack(s.unit as BasicUnit).join(', '),
-      threat: calcStackStrengthWithBonus(
-        s,
-        getBonusByCategory(s, attackingStack.unit.category) +
-          getBonusByCategory(s, attackingStack.unit.subGroup) +
-          (s.unit?.strBonus ?? 0)
-      )
-    }))
   )
 }
 
 export const selectTarget = (
   attackingStack: FightStack,
-  enemyStacks: FightStack[],
-  attackedStacks: Set<FightStack>
+  enemyStacks: FightStack[]
+  // attackedStacks: Set<FightStack>
 ): FightStack | null => {
   if (enemyStacks.length === 0) return null
 
   const aliveEnemies = enemyStacks.filter(stack => stack.unitsAmount > 0)
   if (aliveEnemies.length === 0) return null
 
-  logAliveEnemies(aliveEnemies)
+  logEnemies(aliveEnemies, attackingStack, 'alive enemies')
   logAttackerDetails(attackingStack)
 
   const enemiesWithFeatureBonus = getEnemiesWithFeatureBonus(attackingStack, aliveEnemies)
   if (enemiesWithFeatureBonus.length > 0) {
-    logEnemiesWithFeatureBonus(enemiesWithFeatureBonus)
+    logEnemies(enemiesWithFeatureBonus, attackingStack, 'Enemies with feature bonus')
 
     const enemiesWithEnoughHealth = getEnemiesWithEnoughHealth(
       attackingStack,
       enemiesWithFeatureBonus
     )
     if (enemiesWithEnoughHealth.length > 0) {
-      logEnemiesWithEnoughHealth(attackingStack, enemiesWithEnoughHealth)
+      logEnemies(enemiesWithEnoughHealth, attackingStack, 'Enemies with enough health')
 
-      const enemiesNotAttackedYet = enemiesWithEnoughHealth.filter(s => !attackedStacks.has(s))
-      const target =
-        getBiggestThreat(attackingStack, enemiesNotAttackedYet) ||
-        getBiggestThreat(attackingStack, enemiesWithEnoughHealth)
-      return target
+      /**
+       revisar donde puedo aprovechar mejor el daño producido, y tener menor desperdicio
+       formula = vida - daño con feature >0 y el menor de todos
+       ejemplo:
+
+       firefenix tipo elemental:flying tiene bono vsMelee
+       contra ent y bear ambos de tipo melee
+       la fuerza del firefenix esta por debajo de ambos
+       asi que tiene 2 objetivos (2 reglas cumplidas)
+       a cual debe atacar ?
+
+       mi fuerza+bono vsMelee(701%) 802_274_880
+        vida del ent  941_700_000.00
+        vida del bear 792_000_000.00
+
+       formula = vida - dmgConBonus
+
+       despues de aplicar el daño efectivo
+      ent  941_700_000.00 - 802_274_880    = 139425120
+      bear 792_000_000.00 - 802_274_880    = -10274880
+
+      en el caso del bear, hay mucho desperdicio, por lo que se escoje al ent como objetivo
+
+      ---
+      otro ejemplo
+
+      mi fuerza+bono vsMelee(701%) 791_340_000
+      vida del ent  941_700_000.00
+      vida del bear 792_000_000.00
+
+      despues de aplicar el daño efectivo
+      ent  941_700_000.00 - 791_340_000    = 150360000
+      bear 792_000_000.00 - 791_340_000    = 660000
+
+      en ambos casos no hay desperdicio,
+      pero en el caso del bear hay un daño maximo,
+      por lo que se escoje al bear
+      --
+
+      en conclusion: se aprovecha mejor el daño ejectivo
+      como calcularlo ?
+
+      formula: vida - dmgConBonus
+      filtrar los negativos, y obtener el menor posible como objetivo
+
+      whysomebearmustsurvive.png
+      whysomebearmustsurvive.txt
+      */
+
+      const bestDmgEffectiveTarget = getBestDmgEffectiveTarget(
+        attackingStack,
+        enemiesWithEnoughHealth
+      )
+
+      if (bestDmgEffectiveTarget) {
+        return bestDmgEffectiveTarget
+      } else {
+        console.log('error no target,bestDmgEffectiveTarget', 'no deberia pasar')
+        return null
+      }
+
+      // const enemiesNotAttackedYet = enemiesWithEnoughHealth.filter(s => !attackedStacks.has(s))
+      // const threat1 = getBiggestThreat(attackingStack, enemiesNotAttackedYet)
+      // const threat2 = getBiggestThreat(attackingStack, enemiesWithEnoughHealth)
+
+      // if (threat1) {
+      // console.log('biggestthreat from enemiesNotAttackedYet', structuredClone(threat1))
+      // } else {
+      //   console.log('strongest from enemiesWithEnoughHealth', structuredClone(threat2))
+      // }
+
+      // return threat1 || threat2
     }
+  } else {
+    console.log('no enemies with feature bonus')
   }
-  const threat1 = getBiggestThreat(attackingStack, aliveEnemies)
-  console.log('biggestthreat from alive enemies', structuredClone(threat1))
 
+  /**
+   biggest threat tiene mayor prioridad que strongeststack
+   secuencia: citadel 15
+   10manti ataca ent
+   unicornrider ataca 41griffin5
+
+   manti es el que tiene mayor fuerza, sin embargo el unicornrider  elije el griffin
+   por el griffin tiene bono contra mounted que es el unicornrider
+   por lo tanto es mayor la amenaza
+**/
+  /**
+ otro ejemplo de biggest threat
+ citadel20
+ 4564archerG5 ataca lifeDragon
+ ent ataca 2441archerG6
+
+ ambos archers tienen bono vs melee (ent)
+ siendo el archerG5 el mas fuerte,
+ pero ataca al G6, por que el feat bono lo tiene mas alto
+ * */
+
+  // const threat1 = getBiggestThreat(attackingStack, aliveEnemies)
   const strongest = getStrongestStack(aliveEnemies)
-  console.log('strongest from alive enemies', structuredClone(strongest))
 
-  const target = threat1 || strongest
+  // if (threat1) {
+  //   console.log('biggestthreat from alive enemies', structuredClone(threat1))
+  // } else {
+  console.log('strongest from alive enemies', structuredClone(strongest))
+  // }
+  const target = /*threat1 ||*/ strongest
 
   return target
 }
@@ -651,6 +762,13 @@ const getNextTurn = (
   const aliveStacks = stacks.filter(stack => stack.unitsAmount > 0)
   const unattackedStacks = aliveStacks.filter(stack => !attackedStacks.has(stack))
 
+  console.log('nextturn, unattacked, strongest')
+  console.table(
+    unattackedStacks.map(s => ({
+      name: s.unit.name,
+      strength: calcStackStrengthWithBonus(s, s.unit.strBonus || 0)
+    }))
+  )
   const strongestStack = getStrongestStack(unattackedStacks)
 
   if (strongestStack) {
@@ -661,8 +779,8 @@ const getNextTurn = (
   return null
 }
 
-export const fight = (attacker: FightStack[], defender: FightStack[]): DataResult[][] => {
-  const checkResult: DataResult[][] = []
+export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnResult[] => {
+  const checkResult: ColumnResult[] = []
   const playerStacks: FightStack[] = attacker
   const enemyStacks: FightStack[] = defender
 
@@ -672,9 +790,11 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): DataResul
   let outerLoopProtect = 200
   let lineCounter = 1
 
+  console.log('fight', structuredClone(playerStacks))
+
   while (haveTroopsAlive(attacker) && haveTroopsAlive(defender)) {
     console.log(`\nCiclo ${cycle}:`)
-    addReportData(checkResult, [{ color: 'red', msg: `LAP ${cycle}:` }])
+    addReportData(checkResult, { bg: '', data: [{ color: 'red', msg: `LAP ${cycle}:` }] })
 
     const attackedStacks = new Set<FightStack>() // Rastrear stacks que ya han atacado
     let allStacksAttacked = false // Indica si todos los stacks han atacado en este ciclo
@@ -689,35 +809,44 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): DataResul
         attackedStacks // Pasar el conjunto de stacks que ya han atacado
       )
 
-      console.log('===============================================')
+      console.log('%c ===================', 'background: #222; color: #bada55; font-size: 20px;')
       console.log(
         'inner cycle',
         innerCycle,
         'stack attacker',
         stack?.unit.name,
-        stack,
+        structuredClone(stack),
         '...picking target'
       )
 
       if (stack) {
         // Procesar el stack si está vivo y no ha atacado en este ciclo
-        const targetStack = selectTarget(stack, isPlayerTurn ? defender : attacker, attackedStacks)
-        console.log('target found', targetStack)
+        const targetStack = selectTarget(
+          stack,
+          isPlayerTurn ? defender : attacker /*, attackedStacks*/
+        )
+        console.log('target found', structuredClone(targetStack))
         if (targetStack) {
           const damage = calculateEffectiveDamage(stack, targetStack)
           const unitsKilled = applyDamage(stack, targetStack, damage)
 
-          addReportData(checkResult, [
-            { color: 'yellow', msg: `${lineCounter++}: ` },
-            { color: 'green', msg: stack.unit.name + ' ' },
-            { color: 'white', msg: 'attacked ' },
-            { color: 'green', msg: targetStack.unit.name + ' ' },
-            { color: 'white', msg: 'dealing ' },
-            { color: 'blue', msg: `${damage.toFixed(0)} ` },
-            { color: 'white', msg: 'killing ' },
-            { color: 'red', msg: `${unitsKilled} ` },
-            { color: 'white', msg: 'units ' }
-          ])
+          addReportData(checkResult, {
+            bg: isPlayerTurn ? 'gray' : 'darkgray',
+            data: [
+              { color: 'yellow', msg: `${lineCounter++}: ` },
+              { color: 'blue', msg: stack.unitsAmount.toString() },
+              { color: 'green', msg: stack.unit.name },
+              { color: 'white', msg: 'attacked ' },
+              { color: 'blue', msg: (unitsKilled + targetStack.unitsAmount).toString() },
+              { color: 'green', msg: targetStack.unit.name },
+              { color: 'white', msg: 'dealing ' },
+              { color: 'blue', msg: `${damage.toFixed(0)} ` },
+              { color: 'white', msg: 'killing ' },
+              { color: 'red', msg: `${unitsKilled} ` },
+              { color: 'white', msg: 'units ' },
+              ...(targetStack.unitsAmount === 0 ? [{ color: 'red', msg: 'DEAD ' }] : [])
+            ]
+          })
 
           attackedStacks.add(stack) // Marcar el stack como atacado
         }
@@ -739,7 +868,7 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): DataResul
       isPlayerTurn = endTurn(isPlayerTurn)
 
       if (!haveTroopsAlive(attacker) || !haveTroopsAlive(defender)) {
-        console.log('we got a winner')
+        console.log('%c we got a winner', 'font-size: 40px; color: yellow;')
         break
       }
 
@@ -761,44 +890,59 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): DataResul
 
   const winner = haveTroopsAlive(attacker) ? 'ATTACKER' : 'DEFENDER'
   console.log(`\n¡La batalla ha terminado! El ganador es el bando ${winner}.`)
-  addReportData(checkResult, [
-    { color: 'yellow', msg: 'WINNER: ' },
-    { color: 'purple', msg: winner }
-  ])
+  addReportData(checkResult, {
+    bg: '',
+    data: [
+      { color: 'yellow', msg: 'WINNER: ' },
+      { color: 'purple', msg: winner }
+    ]
+  })
 
   // create fight resume report
-  addReportData(checkResult, [{ color: 'purple', msg: '-------------------------------' }])
-  addReportData(checkResult, [{ color: 'purple', msg: 'SUMMARY' }])
-  addReportData(checkResult, [{ color: 'purple', msg: '-------------------------------' }])
+  addReportData(checkResult, {
+    bg: '',
+    data: [{ color: 'purple', msg: '-------------------------------' }]
+  })
+  addReportData(checkResult, { bg: '', data: [{ color: 'purple', msg: 'SUMMARY' }] })
+  addReportData(checkResult, {
+    bg: '',
+    data: [{ color: 'purple', msg: '-------------------------------' }]
+  })
 
   let looseCount = 0
   if (winner === 'ATTACKER') {
     attacker.forEach(unit => {
       if (unit.originalUnitsAmount !== unit.unitsAmount) {
         looseCount++
-        addReportData(checkResult, [
-          { color: 'blue', msg: unit.unit.name },
-          { color: 'white', msg: 'lost' },
-          { color: 'red', msg: `${unit.originalUnitsAmount - unit.unitsAmount}` },
-          { color: 'white', msg: 'units' }
-        ])
+        addReportData(checkResult, {
+          bg: '',
+          data: [
+            { color: 'blue', msg: unit.unit.name },
+            { color: 'white', msg: 'lost' },
+            { color: 'red', msg: `${unit.originalUnitsAmount - unit.unitsAmount}` },
+            { color: 'white', msg: 'units' }
+          ]
+        })
       }
     })
   } else {
     defender.forEach(unit => {
       if (unit.originalUnitsAmount !== unit.unitsAmount) {
         looseCount++
-        addReportData(checkResult, [
-          { color: 'blue', msg: unit.unit.name },
-          { color: 'white', msg: 'lost' },
-          { color: 'red', msg: `${unit.originalUnitsAmount - unit.unitsAmount}` },
-          { color: 'white', msg: 'units' }
-        ])
+        addReportData(checkResult, {
+          bg: '',
+          data: [
+            { color: 'blue', msg: unit.unit.name },
+            { color: 'white', msg: 'lost' },
+            { color: 'red', msg: `${unit.originalUnitsAmount - unit.unitsAmount}` },
+            { color: 'white', msg: 'units' }
+          ]
+        })
       }
     })
   }
   if (looseCount === 0) {
-    addReportData(checkResult, [{ color: 'yellow', msg: 'NO loses' }])
+    addReportData(checkResult, { bg: '', data: [{ color: 'yellow', msg: 'NO loses' }] })
   }
 
   return checkResult
