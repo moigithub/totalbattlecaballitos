@@ -1714,7 +1714,7 @@ ignora lo que continua abajo de esta linea:
             </div>
           </div>
         </div>
-        <div className='flex flex-col'>
+        <div className='flex flex-col max-w-[300px]'>
           <div
             className='p-4'
             onClick={() => {

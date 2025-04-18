@@ -29,6 +29,7 @@ export const Card = ({
   const toggleUseHpLimit = useStackStore(state => state.toggleUseHpLimit)
   const togglePlusOne = useStackStore(state => state.togglePlusOne)
   const setHpLimit = useStackStore(state => state.setStackHpLimit)
+  const setStackComment = useStackStore(state => state.setStackComment)
 
   const removeStack = useStackStore(state => state.removeStack)
   const resetStack = useStackStore(state => state.resetStack)
@@ -312,6 +313,16 @@ export const Card = ({
         <span className='text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6'>
           Max ({gapValue.toFixed(0)})
         </span>
+      </div>
+
+      <div className='stack-comment text-sm text-pink-500 dark:text-pink-400'>
+        <input
+          className='w-full h-8 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
+          type='text'
+          value={stack.comment}
+          onChange={e => setStackComment(stack.id!, e.target.value)}
+          placeholder='enter notes here'
+        />
       </div>
     </div>
   )
