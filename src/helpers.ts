@@ -469,7 +469,9 @@ const getBestDmgEffectiveTarget = (
 
   if (dmgVsEnemies.length === 1) return dmgVsEnemies[0].unit
   if (dmgVsEnemies.length > 1) {
-    return dmgVsEnemies.filter(result => result.dmg > 0).toSorted((a, b) => a.dmg - b.dmg)[0].unit
+    const lowDamage = dmgVsEnemies.filter(result => result.dmg > 0)
+    if (lowDamage.length === 0) return null
+    return lowDamage.toSorted((a, b) => a.dmg - b.dmg)[0].unit
   }
 
   return null
@@ -603,19 +605,20 @@ export const selectTarget = (
         return bestDmgEffectiveTarget
       } else {
         console.log('error no target,bestDmgEffectiveTarget', 'no deberia pasar')
-        return null
+        console.log('fallback to biggestthreat')
+        // return null
       }
 
       // const enemiesNotAttackedYet = enemiesWithEnoughHealth.filter(s => !attackedStacks.has(s))
       // const threat1 = getBiggestThreat(attackingStack, enemiesNotAttackedYet)
-      // const threat2 = getBiggestThreat(attackingStack, enemiesWithEnoughHealth)
+      const threat2 = getBiggestThreat(attackingStack, enemiesWithEnoughHealth)
 
       // if (threat1) {
       // console.log('biggestthreat from enemiesNotAttackedYet', structuredClone(threat1))
       // } else {
       //   console.log('strongest from enemiesWithEnoughHealth', structuredClone(threat2))
       // }
-
+      return threat2
       // return threat1 || threat2
     }
   } else {

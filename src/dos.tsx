@@ -824,7 +824,8 @@ second REMAINS second
   }
 
   const verifyCitadel = () => {
-    // console.log('verifying citadele20')
+    setLoading(true)
+    console.log('verifying citadele20')
     const checkResult: ColumnResult[] = []
     // let troopsTypes: boolean = false
 
@@ -876,6 +877,9 @@ second REMAINS second
 
     setReport(checkResult)
     // console.log(' citadele20 result', checkResult)
+    setTimeout(() => {
+      setLoading(false)
+    }, 200)
   }
 
   const generateData = () => {
@@ -1473,10 +1477,11 @@ ignora lo que continua abajo de esta linea:
           {selectedTarget === 'lvl17HeroicElfSquad' && <div>lvl17 Heroic Elf Squad</div>}
 
           <button
-            className='px-1 py-0.5 bg-indigo-500 text-md font-bold text-white'
+            className='px-5 py-0.5 bg-indigo-500 text-md font-bold text-white rounded-lg'
             onClick={verifyCitadel}
+            disabled={loading}
           >
-            krap Zimulation
+            {loading ? '.....thinking' : 'krap Zimulation'}
           </button>
         </div>
       </nav>
