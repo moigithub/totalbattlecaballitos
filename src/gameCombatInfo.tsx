@@ -164,7 +164,7 @@ export const GameCombatInfo = () => {
                 or <span className='text-yellow-400'>unitStrengthWithBonusAndFeatureBonus</span>
               </p>
               <p>maxUnits = enemyStackHealth / unitStrengthWithBonus </p>
-              <p>minUnits = enemyStackHealth / unitStrengthWithBonusAndFeatureBonus + 1 </p>
+              <p>minUnits = enemyStackHealth / unitStrengthWithBonusAndFeatureBonus </p>
               <p className='text-blue-500'>example:</p>
               <p className='text-blue-500'>enemy, flying, total health stack = 10000</p>
               <p className='text-blue-500'>archers G1 with 10% strength bonus</p>
@@ -175,29 +175,35 @@ export const GameCombatInfo = () => {
               </p>
               <p>checking:</p>
               <p>
-                50 * (1 + 10 / 100) * <span className='text-purple-600'>181</span> = 9955{' '}
-                <span className='text-pink-400'>(very close to 10k)</span>
+                50 * (1 + 10 / 100) * <span className='text-purple-600'>181</span> = 9955
               </p>
               <p>
-                50 * (1 + 10 / 100) * <span className='text-purple-600'>181.81</span> = 9999.55{' '}
-                <span className='text-pink-400'>(very close to 10k)</span>
+                if we round up, the total damage will be higher, making the targetSelector to pick
+                another one (check elf30 firePhoenix vs ent or bear)
+              </p>
+              <p>
+                50 * (1 + 10 / 100) * <span className='text-purple-600'>182</span> ={' '}
+                <span className='text-red-600'>10010</span>
               </p>
               <br />
-              <p>minUnits = enemyStackHealth / unitStrengthWithBonusAndFeatureBonus + 1 </p>
+              <p>minUnits = enemyStackHealth / unitStrengthWithBonusAndFeatureBonus </p>
               <span className='text-purple-700 ml-5'>(vsFlying)</span>{' '}
               unitStrengthWithBonusAndFeatureBonus = 50 * (1 + (10+67) / 100) ={' '}
               <span className='text-red-600 font-bold'>88.5</span>
               <p>
-                minUnits = 10000 / 88.5 + 1 =<span className='text-purple-600'>113</span>.994
+                minUnits = 10000 / 88.5 =<span className='text-purple-600'>112</span>.994
               </p>
               <p>checking:</p>
               <p>
-                50 * (1 + (10+67) / 100) * <span className='text-purple-600'>113</span> = 10000.5
-                <span className='text-pink-400'>(passed 10k)</span>
+                50 * (1 + (10+67) / 100) * <span className='text-purple-600'>112</span> = 9912
               </p>
               <p>
-                50 * (1 + (10+67) / 100) * <span className='text-purple-600'>113.994</span> =
-                <span className='text-pink-400'>10088.469 (passed 10k)</span>
+                if we round up, the total damage will be higher, making the targetSelector to pick
+                another one (check elf30 firePhoenix vs ent or bear)
+              </p>
+              <p>
+                50 * (1 + (10+67) / 100) * <span className='text-purple-600'>113</span> =
+                <span className='text-red-600'>10000.5 </span>
               </p>
             </div>
           </li>
