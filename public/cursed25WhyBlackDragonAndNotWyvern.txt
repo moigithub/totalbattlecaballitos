@@ -1,0 +1,29 @@
+preset: cursed25 G6 M7 Mercs(2)
+
+why attacked black dragon and not wyvern
+why deathrider attacked heavyalabarder and not salamander 
+
+cursed 25
+
+ordered config setup
+amount:unit:strBonus:hpBonus
+5:wyvernII:1825:1862.3
+12:salamanderII:1207:1402.3
+11:blackDragonVII:1846:1885.8
+3000:Cat4:707.5:542.3
+500:EpicHunterII:372:497.3
+4000:HeavyAlabarderVI:933:1058.3
+
+
+attack sequence
+
+cursedDragon attack wyvernII
+wyvernII attack cursedDendroid
+giantZombie attack blackDragonVII
+demonicSalamander attack cursedDragon
+bullRider attack eternalCanoner
+blackDragonVII attack giantZombie
+deathRider attack demonicSalamander
+cat5 attack cursedDragon 
+EpicHunterII attack bullRider
+HeavyAlabarderVI attack deathRider

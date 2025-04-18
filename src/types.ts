@@ -134,11 +134,10 @@ export interface MonsterUnit extends BasicUnit {
 export type Unit = GuardsmanUnit | SpecialistUnit | EngineerUnit | MonsterUnit | MercUnit
 
 export interface Stack {
+  // health: number // (base hp+bonus) *units // DEBE ser calculado y no guardado, por si cambia el bono no tener que recalcular de nuevo
+  // strength: number // (base str+bonus) *units// calculado basado contra que esta atacando// recalculado, no guardado
   id: string // stack ID,,, i think this can be random, but since unit.id is unique, im using it
   unitKey: string // to reload store data on rehydratation
-  // health: number // (base hp+bonus) *units // DEBE ser calculado y no guardado, por si cambia el bono no tener que recalcular de nuevo
-  //healthLeft o damageTaken
-  // strength: number // (base str+bonus) *units// calculado basado contra que esta atacando// recalculado, no guardado
   leadership: number
   authority: number
   dominance: number
@@ -156,7 +155,5 @@ export interface Stack {
   useHpLimit: boolean
   HpLimit: number
   unitsAmount: number
-  // minSetup: number // used to calculate how many units are needed to kill one monster
-  // lockMinSetup: boolean //to know if the unit number increments one by one or by "minSetup" amount
   limit: number // max unit value
 }

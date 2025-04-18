@@ -437,6 +437,7 @@ export const ArmyList = () => {
       hpBonus: 0,
       unitLimit: 0,
       usePlusOne: false,
+      comment: '',
       useUnitLimit: false,
       useStrLimit: false,
       strLimit: 0,
