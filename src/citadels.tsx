@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import ReactGA from 'react-ga4'
 
 import {
   citadelc20,
@@ -155,6 +156,10 @@ export const Citadels = () => {
   }
 
   const calc = () => {
+    ReactGA.event({
+      category: 'catapults',
+      action: 'calc'
+    })
     // calculate how many catapults needed to kill a citadel
     // but its health must be lower than centaurs damage
     // so it dont get targeted by centaurs

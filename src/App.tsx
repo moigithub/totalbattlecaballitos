@@ -4,6 +4,9 @@ import './App.css'
 // import { Disclaimer } from './disclaimer'
 import { useEffect } from 'react'
 import { decodeAndLoadArmySetup } from './utils'
+import reactGA from 'react-ga4'
+
+reactGA.initialize('G-6K9SG0Z6WS')
 
 function App() {
   useEffect(() => {
