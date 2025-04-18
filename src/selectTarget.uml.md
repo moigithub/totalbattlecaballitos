@@ -23,16 +23,16 @@ start
     if (Are there enemies where I have FeatureBonus against them?) then (<color:red>yes)
       if (are they healthy enough, above my damage range?) then (<color:red>yes)
         if (have attacked yet?) then (<color:red>yes)
-          #brown:return the biggest threat from the enemies who did not attacked yet;
-        else (<color:red>no)
           #brown:return the biggest threat from the enemies with enough health;
+        else (<color:red>no)
+          #brown:return the biggest threat from the enemies who did not attacked yet;
         endif
         stop
       else (<color:red>no)
       endif
     else (<color:red>no)
     endif
-    #brown:return the Biggest Threat from alive Enemies;
+    #brown:return the strongest from alive Enemies;
     stop
   endif
 

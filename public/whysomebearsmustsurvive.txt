@@ -1,0 +1,82 @@
+ent:melee 941_700_000.00 hp / 313_900_000.00 str 
+vs Ranged +55%   486_545_000  
+vs Dragon +45% 455_155_000
+
+------
+bear:melee 792_000_000.00 hp  // 264000000.00  str
+vs Mounted   +70%   448_800_000    
+vs Elemental +50%   396_000_000
+
+------
+
+firefenix elemental:flying vs Melee,Dragon
+
+41 units, 2163.8% str  total  STR 612_584_280   
+vsMelee(701%) 802_274_880    
+ 
+ataca ent
+
+vida - dmgConBonus
+ent  941_700_000.00 - 802_274_880    = 139425120
+bear 792_000_000.00 - 802_274_880    = -10274880
+
+resto menor....  que es mayor a cero = ent
+------
+40 units,  2196.5% str  total   STR 606_276_000  
+vsMelee(701%) 791_340_000    
+ 
+ataca bear
+
+vida - dmgConBonus
+ent  941_700_000.00 - 791_340_000    = 150360000 
+bear 792_000_000.00 - 791_340_000    = 660000
+resto menor....  que es mayor a cero = bear
+
+--------------
+--------------
+-------------
+Carmen SanDiego, creo que ya encontre una explicacion logica, comparando los numeros
+--
+tanto el ent  como el bear son de tipo melee
+el firefenix tiene bono contra melee
+--
+el ent tiene 941_700_000 de HP
+y el bear tiene 792_000_000 de HP
+--
+con 41 fenix a 2163.8% tienes 612_584_280   de fuerza
+y 
+con 40 fenix a 2196.5% tienes 606_276_000  de fuerza
+--
+ambos valores estan por debajo de la vida del ent y del bear
+--
+asi que las reglas de 
+- tener bono contra melee
+- y la fuerza maxima+bonus (sin feature bonus) estar por debajo de la vida del objetivo 
+
+se cumple en ambos
+--
+entonces la regla que me falta(ba), es cual objetivo elegir si tengo mas de 1
+---
+y segun lo que creo es por el daño incluido con el bono
+===
+en el caso de 41 fenix (ataca al ent)
+vsMelee(701%) 802_274_880  
+--
+formula: vida - daño con bono
+--
+ent :  941_700_000.00 - 802_274_880    = 139425120
+bear:  792_000_000.00 - 802_274_880    = -10274880
+
+si ataca al bear.. hay "mucho desperdicio"
+por eso en el reporte esta atacando al ent
+===
+
+en el caso de 40 fenix (ataca al bear)
+vsMelee(701%) 791_340_000 
+
+ent : 941_700_000.00 - 791_340_000    = 150360000 
+bear: 792_000_000.00 - 791_340_000    = 660000
+
+si ataca al bear .. hay menor desperdicio
+===
+en otras palabras se aprovecha mejor el daño

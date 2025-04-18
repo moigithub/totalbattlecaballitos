@@ -1,0 +1,26 @@
+citadel 15
+
+10 manti  ataca 21 ent (matando 13)
+47 unicorn rider ataca 41 griffin5 (matando 9)
+31 griffin5 ataca 47unicorn rider (matando 40)
+1100 druid ataca 10 manti (mantando 1)
+50 stone gargoyle ataca 1100druid (matando 637)
+290 centaur ataca 150 cat4 (matando 45)
+12 ice phoenix ataca 290centaur(matando 173)
+
+8 ent ataca 9 manti (matando 1)
+400 vulture ataca 8ent (matando 8)
+5000 elf archer ataca 8 manti (no mato)
+105 cata4 ataca elfarcher matando 1711
+463 druid ataca manti (matando 1)
+7 manti ataca druid (matand 463)
+3289 elf archer ataca manti (matando 1)
+31 griffin ataca elf archer (matand 3289)
+
+117 centaur ataca cat4 (matando 19)
+50 stone gargoyle ataca 117 centaur (matando 117)
+7 unicorn rider ataca 31griffin5 (matando2)
+12 ice phonix ataca unicorn rider (matando 7)
+
+
+

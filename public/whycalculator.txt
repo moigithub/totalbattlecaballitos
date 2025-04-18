@@ -1,0 +1,26 @@
+[AGW] zAnnihilator: what's a calculator teaching? nothing. it's leading you down a path of misunderstanding if the rules of the game you play. 
+===========================
+totally agree 100000%
+==========================
+calculator won't teach you a shit about combat rules
+calculator will not tell you send vultures or griffin as 2nd stack, because you want to kill centaur
+calculator wont teach you about strategy's
+calculator as its name indicates, it does some math, (and have some filter limits)
+---
+so.... if you have 1000 leadership, if you want to send 80000 troops.. it will give you only max amount of you can send, (the same applies to dominance and authority)
+---
+if you change the amount of second stack, it will help you recalculate the correct amount of the rest of your troops, so your STACK ORDER remains intact
+---
+it can help you to calculate the min or max amount of troops your stack need based on the strength/health input (ie: i want to target centaur, my max strength cant be higher than centaur health)
+---
+if you want to reorder your army, or introduce/remove any troops, it will recalculate the amount of all stacks based on that new input
+---
+if you want to leave a space between stacks (in case of small changes in strength bonus, so that your setup remains resilient, and not break because you used another captain, leveled up or changed equipment) it can recompute troops numbers easily
+---
+it will not tell you why reducing/layering cats
+it will not tell you why you adding a canoner/ranged unit with huge health
+it will not tell you why you reducing the amount of vultures/griffins and must be 2nd strongest
+--
+all that is part of your strategy/combat rules
+---
+as i said before.. calculator.. is about troops count
