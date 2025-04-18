@@ -512,6 +512,29 @@ export const ArmyList = () => {
     }
   }
 
+  const clearCategoryFilters = () => {
+    setFilterTypes([])
+  }
+  const clearSubCategoryFilters = () => {
+    setFilterGroups([])
+  }
+  const clearTargetBonusFilters = () => {
+    setFilterVsTypes([])
+  }
+  const clearGuardsLevelFilters = () => {
+    setFilterGuardLevels([])
+  }
+  const clearSpecialistLevelFilters = () => {
+    setFilterSpecialistLevels([])
+  }
+  const clearMercLevelFilters = () => {
+    setFilterMercLevels([])
+  }
+
+  const clearMonsterLevelFilters = () => {
+    setFilterMonsterLevels([])
+  }
+
   const resetCategoryFilters = () => {
     setFilterTypes(['', 'melee', 'ranged', 'flying', 'mounted', 'siege', 'scout'])
   }
@@ -636,6 +659,13 @@ export const ArmyList = () => {
             <button
               className='cursor-pointer my-0.5 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
               type='button'
+              onClick={clearCategoryFilters}
+            >
+              Clear
+            </button>
+            <button
+              className='ml-1 cursor-pointer my-0.5 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
               onClick={resetCategoryFilters}
             >
               Reset
@@ -734,6 +764,13 @@ export const ArmyList = () => {
             <button
               className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
               type='button'
+              onClick={clearSubCategoryFilters}
+            >
+              Clear
+            </button>
+            <button
+              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
               onClick={resetSubCategoryFilters}
             >
               Reset
@@ -803,10 +840,17 @@ export const ArmyList = () => {
         <div className='flex flex-wrap p-0.5 w-full border  my-2'>
           <div className='flex space-between items-center w-full mx-1'>
             <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-              by Target Feat.Bonus
+              Feat.Bonus Target
             </p>
             <button
               className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={clearTargetBonusFilters}
+            >
+              Clear
+            </button>
+            <button
+              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
               type='button'
               onClick={resetTargetBonusFilters}
             >
@@ -944,6 +988,13 @@ export const ArmyList = () => {
             <button
               className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
               type='button'
+              onClick={clearGuardsLevelFilters}
+            >
+              Clear
+            </button>
+            <button
+              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
               onClick={resetGuardsLevelFilters}
             >
               Reset
@@ -1066,6 +1117,13 @@ export const ArmyList = () => {
             </p>
             <button
               className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={clearSpecialistLevelFilters}
+            >
+              Clear
+            </button>
+            <button
+              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
               type='button'
               onClick={resetSpecialistLevelFilters}
             >
@@ -1190,6 +1248,13 @@ export const ArmyList = () => {
             <button
               className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
               type='button'
+              onClick={clearMonsterLevelFilters}
+            >
+              Clear
+            </button>
+            <button
+              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
               onClick={resetMonsterLevelFilters}
             >
               Reset
@@ -1288,6 +1353,13 @@ export const ArmyList = () => {
             </p>
             <button
               className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+              type='button'
+              onClick={clearMercLevelFilters}
+            >
+              Clear
+            </button>
+            <button
+              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
               type='button'
               onClick={resetMercLevelFilters}
             >
