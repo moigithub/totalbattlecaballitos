@@ -2270,7 +2270,20 @@ const scarfaceII: MercUnit = unitBuilder<MercUnit>({
   group: 'mercs', // 'specialist',
   level: '9'
 })
-
+const bunnieII: MercUnit = unitBuilder<MercUnit>({
+  id: 'bunnieII',
+  clasification: 'merc',
+  name: 'bunnieII',
+  nameEs: 'cazadorMayor',
+  BASEHP: 75000,
+  BASESTR: 25000,
+  AUTHORITY: 1,
+  INITIATIVE: 10,
+  // vsBeastManPercent:1000, //contra hombres bestia
+  category: '',
+  group: 'mercs', // 'specialist',
+  level: '9'
+})
 export interface Army {
   [key: string]: BasicUnit
 }
@@ -2433,5 +2446,6 @@ export const ARMY: Army = {
   galloperII,
   quicksandII,
   scarfaceII,
-  graceII
+  graceII,
+  bunnieII
 }

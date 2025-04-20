@@ -247,6 +247,8 @@ export const ArmyList = () => {
       unitType = ARMY.epicMonsterHunterVII
     } else if (type === 'epicMonsterHunterII') {
       unitType = ARMY.epicMonsterHunterII
+    } else if (type === 'bunnieII') {
+      unitType = ARMY.bunnieII
     } else if (type === 'chariotVI') {
       unitType = ARMY.chariotVI
     } else if (type === 'deathChariotVI') {
@@ -614,7 +616,7 @@ export const ArmyList = () => {
       }
     }
 
-    const show =
+    let show =
       isNotSelectedFilter &&
       searchFilter &&
       levelFilter &&
@@ -622,6 +624,11 @@ export const ArmyList = () => {
       groupFilter &&
       vsTypeFilter
     // if (show) console.log('graceII', filterGroups, unit)
+
+    if (['bunnieII'].includes(unit.id)) {
+      show = true
+    }
+
     return show
   }
 
@@ -3032,7 +3039,16 @@ export const ArmyList = () => {
                   Epic Monster Hunter II
                 </button>
               )}
-
+              {shouldShow('mercenaries')(ARMY.bunnieII) && (
+                <button
+                  className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                  onClick={() => {
+                    addTroops('bunnieII')
+                  }}
+                >
+                  Bunnie II
+                </button>
+              )}
               {shouldShow('mercenaries')(ARMY.wyvernII) && (
                 <button
                   className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
