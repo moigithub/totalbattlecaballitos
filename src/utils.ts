@@ -113,6 +113,11 @@ export const decodeAndLoadArmySetup = (data: string) => {
     if (parsed.selectedTarget) {
       useStackStore.getState().setSelectedTarget(parsed.selectedTarget)
     }
+    if (parsed.sequence) {
+      useStackStore.getState().setSequence(parsed.sequence)
+    } else {
+      useStackStore.getState().setSequence('')
+    }
   }
   // Using state outside of a component
   // const paw = useStore.getState().paw // read value
@@ -126,6 +131,7 @@ export const prepareExportData = (state: StackStoreBasic) => {
     dominance: state.dominance,
     gapBasePercent: state.gapBasePercent,
     selectedTarget: state.selectedTarget,
+    sequence: state.sequence,
     army: state.army.map(({ unit, ...stack }) => {
       return { ...stack, unitKey: unit.id }
     })

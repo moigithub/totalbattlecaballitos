@@ -1,0 +1,29 @@
+cursed25
+preset: g6m7mercs(2)
+---
+5 :  400 Bull rider V attacked  1 EternalCanonerII dealing  17980000 killing  0  units 
+---
+
+attacker Bull rider V mounted  
+i can attack  Ranged 
+strength  11,600,000 
+health: 34,800,000  
+damage: vsRanged 19,140,000
+
+
+yo puedo atacar a estos 2
+			type	canAtk		bonus		str		health		myDmg		theirDmg
+heavyArbalesterVI	ranged, Flying, Melee	65	0	38,840,800	130,656,240	41284800	38,840,800(si me pega, lo esquivo)(no tengo suficiente vida)
+eternalCannoneerII	ranged, Flying		65	0	5,772,800	 19,737,960	6058800		5,772,800 (si le pego, ello esquiva)(no tiene suficiente vida)
+
+[].filter(cb)  si es true se queda
+
+filtrar miVida<=suDmg && miDmg>=suVida
+
+este me puede atacar
+demonicSalamanderII	melee, 	Mounted		0	65	64304400	221739480	64304400	67,502,400 no hay fallback
+
+
+
+
+answer: prioritize lower health

@@ -1,0 +1,59 @@
+I ATTACK FIRST
+ATTACKER: ME, DEFENDER: CITADEL
+------------------
+1:  10 fearsomeManticoraV attacked  21 Ent VI dealing  3047550 killing  13  units
+(reason: entVI is the strongest one available)
+
+2:  47 Unicorn Rider V attacked  41 battleGriffinV dealing  1269000  killing  10  units
+(reason: battleGriffinV have bonus against mounted and its max strength with bonus no vsXPercent bonus is lower than UnicornRiderV health, UnicornRiderV is mounted, so is biggest threat)
+
+3:  31 battleGriffinV attacked  47 Unicorn Rider V dealing  3280199 killing  40  units
+(reason: battleGriffinV have vsMounted bonus Unicorn rider category is mounted, and battleGriffinV max strength with strBonus but without vsXPercent bonus is below Unicorn Rider V health)
+
+4:  1100 Druid II attacked  10 fearsomeManticoraV dealing  990000  killing  1  units
+(reason: fearsomeManticoraV is the strongest one available)
+
+5:  50 stoneGargoyleIII attacked  1100 Druid II dealing  1722528 killing  617  units
+(reason: stoneGargoyleIII have bonus against melee, DruidII category is melee, stoneGargoyleIII max strength with strBonus, no vsXPercent bonus is below DruidII health)
+
+6:  290 Centaur III attacked  150 CatapultsIV dealing  904800 killing  45  units
+(reason: CentaurIII have bonus against siege, CatapultIV category is siege, CentaurIII max strength with strBonus, no vsXPercent bonus is below CatapultIV health)
+
+7:  12 icePhoenixIV attacked  290 Centaur III dealing  1351522 killing  173  units
+(reason: centaur III is the strongest one available)
+
+8:  8 Ent VI attacked  9 fearsomeManticoraV dealing  584000  killing  1  units
+(reason: fearsomeManticoraV is the strongest one available)
+
+9:  400 vulturesV attacked  8 Ent VI dealing  1551450 killing  8  units (random % chance to do extra damage)
+(reason: Ent VI  is the strongest one available)
+
+10:  5000 Elf archer I attacked  8 fearsomeManticoraV dealing  500000  killing  0  units
+(reason: fearsomeManticoraV is the strongest one available)
+
+11:  105 CatapultE4 attacked  5000 Elf archer I dealing  513529 killing  1711  units
+(reason: Elf archer I is the strongest one available)
+
+12:  463 Druid II attacked  8 fearsomeManticoraV dealing  416700 killing  1  units
+(reason: fearsomeManticoraV is the strongest one available)
+
+13:  7 fearsomeManticoraV attacked  463 Druid II dealing  1247472 killing  463 units  DEAD
+(reason: Druid II is the strongest one available)
+
+14:  3289 Elf archer I attacked  7 fearsomeManticoraV dealing  328900 killing  1  units
+(reason: fearsomeManticoraV is the strongest one available)
+
+15:  31 battleGriffinV attacked 3289 Elf archer I dealing  986471  killing  3289 units  DEAD
+(reason: Elf archer I is the strongest one available)
+
+16:  117 Centaur III attacked 105 CatapultIV dealing  365040  killing  19  units
+(reason: CentaurIII have bonus against siege, CatapultIV category is siege, CentaurIII max strength with strBonus, no vsXPercent bonus is below CatapultIV health)
+
+17:  50 stoneGargoyleIII attacked  117 Centaur III dealing  910478  killing  117  units  DEAD
+(reason: CentaurIII is the strongest one available)
+
+18:  7 Unicorn Rider V attacked  31 battleGriffinV dealing  189000  killing  2  units
+(reason: battleGriffinV is the strongest one available)
+
+19:  12 icePhoenixIV attacked  7 Unicorn Rider V dealing  526801 killing  7  units  DEAD
+(reason: Unicorn Rider V is the strongest one available)

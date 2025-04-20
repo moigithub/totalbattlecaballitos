@@ -17,13 +17,13 @@ amount:unit:strBonus:hpBonus
 
 attack sequence
 
-cursedDragon attack wyvernII
-wyvernII attack cursedDendroid
-giantZombie attack blackDragonVII
-demonicSalamander attack cursedDragon
-bullRider attack eternalCanoner
-blackDragonVII attack giantZombie
-deathRider attack demonicSalamander
-cat5 attack cursedDragon 
-EpicHunterII attack bullRider
-HeavyAlabarderVI attack deathRider
+120 cursedDragonVI attack 5 wyvernII, 38400000 de daño, matando 0
+5 wyvernII attack 205 cursedDendroidVI, 67650000 de daño, matando 205
+540 giantZombieV attack 11 blackDragonVII, 17820000 de daño, matando 0
+12 demonicSalamander attack 120 cursedDragonVI, 64304400 de daño, matando 66
+400 bullRider attack 1 eternalCanoner, 17980000 de daño, matando 0
+11 blackDragonVII attack 540 giantZombieV, 53460000 de daño, matando 540
+2750 deathRiderIII attack 12 demonicSalamander, 8800000 de daño, matando 0
+3000 catapultV attack 54 cursedDragonVI , 50895600 de daño, matando 54
+500 EpicHunterII attack 400 bullRider, 34800000 de daño, matando 400
+4000 HeavyAlabarderVI attack 2750 deathRiderIII, 26400000 de daño, matando 2750

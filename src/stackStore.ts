@@ -13,6 +13,7 @@ export interface StackStoreBasic {
   gapBasePercent: number
   selectedTarget: string
   army: Stack[]
+  sequence: string
 }
 
 interface StackStore extends StackStoreBasic {
@@ -24,6 +25,7 @@ interface StackStore extends StackStoreBasic {
   removeStack: (id: string) => void
   resetStack: (id: string) => void
   resetAllStacks: () => void
+  setSequence: (value: string) => void
   setSelectedTarget: (value: string) => void
   setGapBasePercent: (value: number) => void
   setGapPercent: (id: string, value: number) => void
@@ -39,13 +41,11 @@ interface StackStore extends StackStoreBasic {
   toggleUseHpLimit: (id: string) => void
   setStackHpLimit: (id: string, value: number) => void
   recalculatePosition: () => void
-  // updateMinSetup: (id: string, minSetup: number) => void
   addUnits: (id: string, amount: number) => void
   removeUnits: (id: string, amount: number) => void
   getStackStrength: (id: string) => number
   getStackAllStrength: (id: string) => [] | { type: string; percent: number; str: number }[]
   getStackHealth: (id: string) => number
-  // toggleLockMin: (id: string) => void
 }
 
 const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> = (set, get) => ({
@@ -55,6 +55,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
   gapBasePercent: 10,
   selectedTarget: 'citadele20',
   army: [],
+  sequence: '',
 
   setLeadership: value => {
     set(() => ({ leadership: value }))
@@ -66,7 +67,6 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
     set(() => ({ dominance: value }))
   },
   setArmy: (data: Stack[]) => {
-    //TODO: generate id for each stack
     set(() => ({ army: data }))
   },
 
@@ -105,21 +105,11 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
-  // updateMinSetup: (id: string, minSetup: number) => {
-  //   set(state => ({
-  //     army: state.army.map(stack => {
-  //       if (stack.id === id) {
-  //         return {
-  //           ...stack,
-  //           minSetup
-  //         }
-  //       }
-  //       return stack
-  //     })
-  //   }))
-  // },
   recalculatePosition: () => {
     set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
+  },
+  setSequence: (value: string) => {
+    set(() => ({ sequence: value }))
   },
   setSelectedTarget: (value: string) => {
     set(() => ({ selectedTarget: value }))

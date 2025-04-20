@@ -1,26 +1,28 @@
+preset: testsequence1
+
+why: UnicornRiderV attack griffing and not fearsomeManticoraV 
+
 citadel 15
 
-10 manti  ataca 21 ent (matando 13)
-47 unicorn rider ataca 41 griffin5 (matando 9)
-31 griffin5 ataca 47unicorn rider (matando 40)
-1100 druid ataca 10 manti (mantando 1)
-50 stone gargoyle ataca 1100druid (matando 637)
-290 centaur ataca 150 cat4 (matando 45)
-12 ice phoenix ataca 290centaur(matando 173)
-
-8 ent ataca 9 manti (matando 1)
-400 vulture ataca 8ent (matando 8)
-5000 elf archer ataca 8 manti (no mato)
-105 cata4 ataca elfarcher matando 1711
-463 druid ataca manti (matando 1)
-7 manti ataca druid (matand 463)
-3289 elf archer ataca manti (matando 1)
-31 griffin ataca elf archer (matand 3289)
-
-117 centaur ataca cat4 (matando 19)
-50 stone gargoyle ataca 117 centaur (matando 117)
-7 unicorn rider ataca 31griffin5 (matando2)
-12 ice phonix ataca unicorn rider (matando 7)
+10 fearsomeManticoraV  ataca 21 ent (matando 13) 3047550 de daño
+47 unicorn rider ataca 41  battleGriffinV (matando 9) 1269000 de daño
+31  battleGriffinV ataca 47 unicorn rider (matando 40) 3280199 de daño
+1100 druid ataca 10 fearsomeManticoraV (mantando 1) 990000 de daño
+50 stoneGargoyleIII ataca 1100 druid (matando 637) 1722528 de daño
+290 centaur ataca 150 CatapultE4 (matando 45) 904800 de daño
+12 icePhoenixIV ataca 290 centaur (matando 173) 1351522 de daño
+8 ent ataca 9 fearsomeManticoraV (matando 1) 584000 de daño
+400 vulturesV ataca 8 ent (matando 8) 1551450 de daño
+5000 elf archer ataca 8 fearsomeManticoraV (matando 0) 500000 de daño
+105 CatapultE4 ataca elf archer (matando 1711) 513529 de daño
+463 druid ataca fearsomeManticoraV (matando 1) 416700 de daño
+7 fearsomeManticoraV ataca druid (matando 463) 1247472 de daño
+3289 elf archer ataca fearsomeManticoraV (matando 1) 328900 de daño
+31 battleGriffinV ataca elf archer (matand 3289) 986471 de daño
+117 centaur ataca CatapultE4 (matando 19) 365040 de daño
+50 stoneGargoyleIII ataca 117 centaur (matando 117) 910478 de daño
+7 unicorn rider ataca 31 battleGriffinV (matando2) 189000 de daño
+12 icePhoenixIV ataca unicorn rider (matando 7) 526801 de daño
 
 
 

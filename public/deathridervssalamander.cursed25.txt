@@ -1,0 +1,33 @@
+cursed25
+preset: g6m7mercs(2)
+---
+
+7:  2750 Death rider III attacked  12 demonicSalamanderII dealing  8800000  killing  0  units 
+----
+
+Death rider III mounted
+i can attack  Ranged 
+strength  8,800,000 
+health: 26,400,000  
+damage: vsRanged 13,200,000
+
+			type		canAtk		bonus		str		health		myDmg		theirDmg
+heavyArbalesterVI	ranged, 	Flying, Melee	50	0	38,840,800	130,656,240	13200000	38,840,800(si me pega, lo esquivo)(no tengo suficiente vida)
+eternalCannoneerII	ranged, 	Flying		50	0	5772800		597,960		13200000	5,772,800  (si le pego, ello esquiva)(no tiene suficiente vida)
+
+
+
+demonicSalamanderII	melee, 		Mounted		0	65	64,304,400	221739480	8800000		67,502,400 (mayor amenaza entre todos) fallback
+
+
+[].filter(cb)  si es true se queda
+filtrar miVida<=suDmg && miDmg>=suVida
+
+
+posible answer: 
+
+- most threatening ?
+
+si me pega el 
+heavyArbalesterVI	38,840,800 de daño
+demonicSalamanderII	67,502,400 de daño con bono
