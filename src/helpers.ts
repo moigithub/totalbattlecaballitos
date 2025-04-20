@@ -393,7 +393,6 @@ const getStrongestStack = (stacks: FightStack[]): FightStack | null => {
   })
 }
 
-
 function getApplicableBonusType1(attacker: FightStack, target: FightStack): string | undefined {
   // Check category bonuses first (higher priority)
   if (target.unit.category === 'melee' && attacker.unit.vsMeleePercent > 0) {
@@ -497,218 +496,219 @@ const getLogData = (candidates: FightStack[], attacker: FightStack) => {
  * @param enemyArmy - Array de stacks enemigos disponibles
  * @returns Stack enemigo seleccionado como objetivo o null si no hay objetivos válidos
  */
- function selectTargetWithLoggingBoo(
-  attacker: FightStack,
-  enemyArmy: FightStack[]
-): FightStack | null {
-  // helper Calculate total applicable bonuses (category + subgroup)
-  const calculateTotalBonus = (source: FightStack, target: FightStack): number => {
-    const bonusCategoryKey = `vs${
-      target.unit.category.charAt(0).toUpperCase() + target.unit.category.slice(1)
-    }Percent`
-    const bonusSubGroupKey = `vs${
-      target.unit.subGroup.charAt(0).toUpperCase() + target.unit.subGroup.slice(1)
-    }Percent`
-    // console.log('calculateTotalBonus keys ', target.unit.name, bonusCategoryKey, bonusSubGroupKey)
-    const categoryBonus = (source.unit[bonusCategoryKey as keyof ObjProps] as number) || 0
-    const subgroupBonus = (source.unit[bonusSubGroupKey as keyof ObjProps] as number) || 0
-    return categoryBonus + subgroupBonus
-  }
 
-  // 1. Filter alive enemies
-  const aliveEnemies = enemyArmy.filter(enemy => enemy.unitsAmount > 0)
+//  function selectTargetWithLoggingBoo(
+//   attacker: FightStack,
+//   enemyArmy: FightStack[]
+// ): FightStack | null {
+//   // helper Calculate total applicable bonuses (category + subgroup)
+//   const calculateTotalBonus = (source: FightStack, target: FightStack): number => {
+//     const bonusCategoryKey = `vs${
+//       target.unit.category.charAt(0).toUpperCase() + target.unit.category.slice(1)
+//     }Percent`
+//     const bonusSubGroupKey = `vs${
+//       target.unit.subGroup.charAt(0).toUpperCase() + target.unit.subGroup.slice(1)
+//     }Percent`
+//     // console.log('calculateTotalBonus keys ', target.unit.name, bonusCategoryKey, bonusSubGroupKey)
+//     const categoryBonus = (source.unit[bonusCategoryKey as keyof ObjProps] as number) || 0
+//     const subgroupBonus = (source.unit[bonusSubGroupKey as keyof ObjProps] as number) || 0
+//     return categoryBonus + subgroupBonus
+//   }
 
-  const attackerHealth =
-    attacker.unit.BASEHP * (1 + (attacker.unit.hpBonus || 0) / 100) * attacker.unitsAmount -
-    attacker.accumulatedDamage
-  const attackerStrength =
-    attacker.unit.BASESTR * (1 + (attacker.unit.strBonus || 0) / 100) * attacker.unitsAmount
+//   // 1. Filter alive enemies
+//   const aliveEnemies = enemyArmy.filter(enemy => enemy.unitsAmount > 0)
 
-  console.log(
-    'selectTarget: attacker',
-    attacker.unit.name,
-    attacker.unit.category,
-    attacker.unit.subGroup,
-    'i can attack ',
-    whoCanIAttack(attacker.unit as BasicUnit).join(', '),
-    'strength ',
-    attackerStrength,
-    'health:',
-    attackerHealth,
-    ' damage:',
-    whoCanIAttack(attacker.unit as BasicUnit)
-      .map(
-        vsBonus =>
-          `vs${vsBonus} ${
-            attacker.unit.BASESTR *
-            (1 +
-              ((attacker.unit.strBonus || 0) + getApplicableBonusValue(attacker, 'vs' + vsBonus)) /
-                100) *
-            attacker.unitsAmount
-          }`
-      )
-      .join(', ')
-  )
-  console.log('Initial Alive Enemies', aliveEnemies)
+//   const attackerHealth =
+//     attacker.unit.BASEHP * (1 + (attacker.unit.hpBonus || 0) / 100) * attacker.unitsAmount -
+//     attacker.accumulatedDamage
+//   const attackerStrength =
+//     attacker.unit.BASESTR * (1 + (attacker.unit.strBonus || 0) / 100) * attacker.unitsAmount
 
-  if (aliveEnemies.length === 0) {
-    console.log('No alive enemies remaining')
-    return null
-  }
+//   console.log(
+//     'selectTarget: attacker',
+//     attacker.unit.name,
+//     attacker.unit.category,
+//     attacker.unit.subGroup,
+//     'i can attack ',
+//     whoCanIAttack(attacker.unit as BasicUnit).join(', '),
+//     'strength ',
+//     attackerStrength,
+//     'health:',
+//     attackerHealth,
+//     ' damage:',
+//     whoCanIAttack(attacker.unit as BasicUnit)
+//       .map(
+//         vsBonus =>
+//           `vs${vsBonus} ${
+//             attacker.unit.BASESTR *
+//             (1 +
+//               ((attacker.unit.strBonus || 0) + getApplicableBonusValue(attacker, 'vs' + vsBonus)) /
+//                 100) *
+//             attacker.unitsAmount
+//           }`
+//       )
+//       .join(', ')
+//   )
+//   console.log('Initial Alive Enemies', aliveEnemies)
 
-  // 3. Categorize targets with stacked bonus data
-  const categorized = aliveEnemies.map(enemy => ({
-    enemy,
-    myTotalBonus: calculateTotalBonus(attacker, enemy),
-    theirTotalBonus: calculateTotalBonus(enemy, attacker),
-    strength: enemy.unit.BASESTR * (1 + (enemy.unit.strBonus || 0) / 100) * enemy.unitsAmount,
-    health:
-      enemy.unit.BASEHP * (1 + (enemy.unit.hpBonus || 0) / 100) * enemy.unitsAmount -
-      enemy.accumulatedDamage,
-    theirdamage:
-      enemy.unit.BASESTR *
-      (1 + ((enemy.unit.strBonus || 0) + calculateTotalBonus(enemy, attacker)) / 100) *
-      enemy.unitsAmount,
-    mydamage:
-      enemy.unit.BASESTR *
-      (1 + ((enemy.unit.strBonus || 0) + calculateTotalBonus(attacker, enemy)) / 100) *
-      enemy.unitsAmount,
+//   if (aliveEnemies.length === 0) {
+//     console.log('No alive enemies remaining')
+//     return null
+//   }
 
-    hasAnyMyBonus: calculateTotalBonus(attacker, enemy) > 0,
-    hasAnyTheirBonus: calculateTotalBonus(enemy, attacker) > 0
-  }))
+//   // 3. Categorize targets with stacked bonus data
+//   const categorized = aliveEnemies.map(enemy => ({
+//     enemy,
+//     myTotalBonus: calculateTotalBonus(attacker, enemy),
+//     theirTotalBonus: calculateTotalBonus(enemy, attacker),
+//     strength: enemy.unit.BASESTR * (1 + (enemy.unit.strBonus || 0) / 100) * enemy.unitsAmount,
+//     health:
+//       enemy.unit.BASEHP * (1 + (enemy.unit.hpBonus || 0) / 100) * enemy.unitsAmount -
+//       enemy.accumulatedDamage,
+//     theirdamage:
+//       enemy.unit.BASESTR *
+//       (1 + ((enemy.unit.strBonus || 0) + calculateTotalBonus(enemy, attacker)) / 100) *
+//       enemy.unitsAmount,
+//     mydamage:
+//       enemy.unit.BASESTR *
+//       (1 + ((enemy.unit.strBonus || 0) + calculateTotalBonus(attacker, enemy)) / 100) *
+//       enemy.unitsAmount,
 
-  console.log(
-    'categorized enemies who i can attack using my vsType bonuses',
-    whoCanIAttack(attacker.unit as BasicUnit).join(', '),
-    getLogData(
-      categorized.map(t => t.enemy),
-      attacker
-    )
-  )
-  console.table(
-    categorized.map(t => ({
-      target: t.enemy.unit.name,
-      type: [t.enemy.unit.category, t.enemy.unit.subGroup].join(', '),
-      canAttack: whoCanIAttack(t.enemy.unit as BasicUnit).join(', '),
-      myTotalBonus: t.myTotalBonus,
-      theirTotalBonus: t.theirTotalBonus,
-      strength: t.strength,
-      health: t.health,
-      mydamage: t.mydamage,
-      theirdamage: t.theirdamage,
-      hasAnyMyBonus: t.hasAnyMyBonus,
-      hasAnyTheirBonus: t.hasAnyTheirBonus
-    }))
-  )
+//     hasAnyMyBonus: calculateTotalBonus(attacker, enemy) > 0,
+//     hasAnyTheirBonus: calculateTotalBonus(enemy, attacker) > 0
+//   }))
 
-  // 4. Priority selection logic
-  let selectedTarget: FightStack | null = null
-  let selectionReason = ''
+//   console.log(
+//     'categorized enemies who i can attack using my vsType bonuses',
+//     whoCanIAttack(attacker.unit as BasicUnit).join(', '),
+//     getLogData(
+//       categorized.map(t => t.enemy),
+//       attacker
+//     )
+//   )
+//   console.table(
+//     categorized.map(t => ({
+//       target: t.enemy.unit.name,
+//       type: [t.enemy.unit.category, t.enemy.unit.subGroup].join(', '),
+//       canAttack: whoCanIAttack(t.enemy.unit as BasicUnit).join(', '),
+//       myTotalBonus: t.myTotalBonus,
+//       theirTotalBonus: t.theirTotalBonus,
+//       strength: t.strength,
+//       health: t.health,
+//       mydamage: t.mydamage,
+//       theirdamage: t.theirdamage,
+//       hasAnyMyBonus: t.hasAnyMyBonus,
+//       hasAnyTheirBonus: t.hasAnyTheirBonus
+//     }))
+//   )
 
-  // Group 1: Enemies where we have stacked bonuses
-  // enemy health cant be lower than our damage
-  const myBonusTargets = categorized
-    .filter(t => t.hasAnyMyBonus && t.health >= attackerStrength)
-    .sort((a, b) => b.myTotalBonus - a.myTotalBonus || b.strength - a.strength)
+//   // 4. Priority selection logic
+//   let selectedTarget: FightStack | null = null
+//   let selectionReason = ''
 
-  console.log(
-    '%c checking for targets with my bonuses %s',
-    'color: green; font-weight: bold; font-size: 1.5em;',
-    whoCanIAttack(attacker.unit as BasicUnit).join(', ')
-  )
+//   // Group 1: Enemies where we have stacked bonuses
+//   // enemy health cant be lower than our damage
+//   const myBonusTargets = categorized
+//     .filter(t => t.hasAnyMyBonus && t.health >= attackerStrength)
+//     .sort((a, b) => b.myTotalBonus - a.myTotalBonus || b.strength - a.strength)
 
-  if (myBonusTargets.length > 0) {
-    selectedTarget = myBonusTargets[0].enemy
-    const bonusSources: string[] = []
-    if (attacker.unit[`vs${selectedTarget.unit.category}Percent` as keyof ObjProps] as number)
-      bonusSources.push(selectedTarget.unit.category)
-    if (attacker.unit[`vs${selectedTarget.unit.subGroup}Percent` as keyof ObjProps] as number)
-      bonusSources.push(selectedTarget.unit.subGroup)
+//   console.log(
+//     '%c checking for targets with my bonuses %s',
+//     'color: green; font-weight: bold; font-size: 1.5em;',
+//     whoCanIAttack(attacker.unit as BasicUnit).join(', ')
+//   )
 
-    selectionReason = `We have stacked bonuses against ${bonusSources.join('+')} (total +${
-      myBonusTargets[0].myTotalBonus
-    }%)`
-  }
-  // Group 2: Enemies that have stacked bonuses against us
-  else {
-    console.log(
-      '%c checking for targets higher threat %s',
-      'color: green; font-weight: bold; font-size: 1.5em;',
-      [attacker.unit.category, attacker.unit.subGroup].join(', ')
-    )
+//   if (myBonusTargets.length > 0) {
+//     selectedTarget = myBonusTargets[0].enemy
+//     const bonusSources: string[] = []
+//     if (attacker.unit[`vs${selectedTarget.unit.category}Percent` as keyof ObjProps] as number)
+//       bonusSources.push(selectedTarget.unit.category)
+//     if (attacker.unit[`vs${selectedTarget.unit.subGroup}Percent` as keyof ObjProps] as number)
+//       bonusSources.push(selectedTarget.unit.subGroup)
 
-    // enemy attack strength/damage cant be higher than our health
-    const theirBonusTargets = categorized
-      // .filter(t => /* t.hasAnyTheirBonus &&*/ t.strength <= attackerHealth)
-      .sort((a, b) => b.theirdamage - a.theirdamage || b.strength - a.strength)
-    // .sort((a, b) => b.theirTotalBonus - a.theirTotalBonus || b.strength - a.strength)
+//     selectionReason = `We have stacked bonuses against ${bonusSources.join('+')} (total +${
+//       myBonusTargets[0].myTotalBonus
+//     }%)`
+//   }
+//   // Group 2: Enemies that have stacked bonuses against us
+//   else {
+//     console.log(
+//       '%c checking for targets higher threat %s',
+//       'color: green; font-weight: bold; font-size: 1.5em;',
+//       [attacker.unit.category, attacker.unit.subGroup].join(', ')
+//     )
 
-    console.table(
-      theirBonusTargets.map(t => ({
-        target: t.enemy.unit.name,
-        type: [t.enemy.unit.category, t.enemy.unit.subGroup].join(', '),
-        canAttack: whoCanIAttack(t.enemy.unit as BasicUnit).join(', '),
-        myTotalBonus: t.myTotalBonus,
-        theirTotalBonus: t.theirTotalBonus,
-        strength: t.strength,
-        health: t.health,
-        mydamage: t.mydamage,
-        theirdamage: t.theirdamage,
-        hasAnyMyBonus: t.hasAnyMyBonus,
-        hasAnyTheirBonus: t.hasAnyTheirBonus
-      }))
-    )
+//     // enemy attack strength/damage cant be higher than our health
+//     const theirBonusTargets = categorized
+//       // .filter(t => /* t.hasAnyTheirBonus &&*/ t.strength <= attackerHealth)
+//       .sort((a, b) => b.theirdamage - a.theirdamage || b.strength - a.strength)
+//     // .sort((a, b) => b.theirTotalBonus - a.theirTotalBonus || b.strength - a.strength)
 
-    if (theirBonusTargets.length > 0) {
-      selectedTarget = theirBonusTargets[0].enemy
-      const bonusSources: string[] = []
-      if (selectedTarget.unit[`vs${attacker.unit.category}Percent` as keyof ObjProps] as number)
-        bonusSources.push(attacker.unit.category)
-      if (selectedTarget.unit[`vs${attacker.unit.subGroup}Percent` as keyof ObjProps] as number)
-        bonusSources.push(attacker.unit.subGroup)
+//     console.table(
+//       theirBonusTargets.map(t => ({
+//         target: t.enemy.unit.name,
+//         type: [t.enemy.unit.category, t.enemy.unit.subGroup].join(', '),
+//         canAttack: whoCanIAttack(t.enemy.unit as BasicUnit).join(', '),
+//         myTotalBonus: t.myTotalBonus,
+//         theirTotalBonus: t.theirTotalBonus,
+//         strength: t.strength,
+//         health: t.health,
+//         mydamage: t.mydamage,
+//         theirdamage: t.theirdamage,
+//         hasAnyMyBonus: t.hasAnyMyBonus,
+//         hasAnyTheirBonus: t.hasAnyTheirBonus
+//       }))
+//     )
 
-      selectionReason = `Target has stacked bonuses against our ${bonusSources.join('+')} (total +${
-        theirBonusTargets[0].theirTotalBonus
-      }%)`
-    }
-    // Group 3: Fallback to strongest
-    else {
-      console.log('%c checking for strongest', 'color: green; font-weight: bold; font-size: 1.5em;')
+//     if (theirBonusTargets.length > 0) {
+//       selectedTarget = theirBonusTargets[0].enemy
+//       const bonusSources: string[] = []
+//       if (selectedTarget.unit[`vs${attacker.unit.category}Percent` as keyof ObjProps] as number)
+//         bonusSources.push(attacker.unit.category)
+//       if (selectedTarget.unit[`vs${attacker.unit.subGroup}Percent` as keyof ObjProps] as number)
+//         bonusSources.push(attacker.unit.subGroup)
 
-      const strongestTarget = [...categorized].sort((a, b) => b.strength - a.strength)
+//       selectionReason = `Target has stacked bonuses against our ${bonusSources.join('+')} (total +${
+//         theirBonusTargets[0].theirTotalBonus
+//       }%)`
+//     }
+//     // Group 3: Fallback to strongest
+//     else {
+//       console.log('%c checking for strongest', 'color: green; font-weight: bold; font-size: 1.5em;')
 
-      console.table(
-        strongestTarget.map(t => ({
-          target: t.enemy.unit.name,
-          type: [t.enemy.unit.category, t.enemy.unit.subGroup].join(', '),
-          canAttack: whoCanIAttack(t.enemy.unit as BasicUnit).join(', '),
-          myTotalBonus: t.myTotalBonus,
-          theirTotalBonus: t.theirTotalBonus,
-          strength: t.strength,
-          health: t.health,
-          mydamage: t.mydamage,
-          theirdamage: t.theirdamage,
-          hasAnyMyBonus: t.hasAnyMyBonus,
-          hasAnyTheirBonus: t.hasAnyTheirBonus
-        }))
-      )
+//       const strongestTarget = [...categorized].sort((a, b) => b.strength - a.strength)
 
-      selectedTarget = strongestTarget[0].enemy
-      selectionReason = `Fallback to strongest enemy (strength=${
-        strongestTarget[0].enemy.unit.BASESTR *
-        (1 + (strongestTarget[0].enemy.unit.strBonus || 0) / 100) *
-        strongestTarget[0].enemy.unitsAmount
-      })`
-    }
-  }
-  console.log('SelectTarget:', selectionReason, selectedTarget)
+//       console.table(
+//         strongestTarget.map(t => ({
+//           target: t.enemy.unit.name,
+//           type: [t.enemy.unit.category, t.enemy.unit.subGroup].join(', '),
+//           canAttack: whoCanIAttack(t.enemy.unit as BasicUnit).join(', '),
+//           myTotalBonus: t.myTotalBonus,
+//           theirTotalBonus: t.theirTotalBonus,
+//           strength: t.strength,
+//           health: t.health,
+//           mydamage: t.mydamage,
+//           theirdamage: t.theirdamage,
+//           hasAnyMyBonus: t.hasAnyMyBonus,
+//           hasAnyTheirBonus: t.hasAnyTheirBonus
+//         }))
+//       )
 
-  // logger.recordFinalDecision(selectedTarget, selectionReason, attacker);
-  // console.log(logger.printFormattedLog());
-  return selectedTarget
-}
-*/
+//       selectedTarget = strongestTarget[0].enemy
+//       selectionReason = `Fallback to strongest enemy (strength=${
+//         strongestTarget[0].enemy.unit.BASESTR *
+//         (1 + (strongestTarget[0].enemy.unit.strBonus || 0) / 100) *
+//         strongestTarget[0].enemy.unitsAmount
+//       })`
+//     }
+//   }
+//   console.log('SelectTarget:', selectionReason, selectedTarget)
+
+//   // logger.recordFinalDecision(selectedTarget, selectionReason, attacker);
+//   // console.log(logger.printFormattedLog());
+//   return selectedTarget
+// }
+
 export const calculateEffectiveDamage = (
   attackingStack: FightStack,
   defendingStack: FightStack
