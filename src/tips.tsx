@@ -19,9 +19,10 @@ import { FirstStackAmountTip } from './tips/FirstStackAmount'
 import { CounterAttackTip } from './tips/turnBasedSystem'
 import { MoreStacksTip } from './tips/moreStacks'
 import { CentaurStrategiesTip } from './tips/strategiesVsCentaur'
+import { AttackSequence2530Tip } from './tips/attackSequence2530'
 
 const myMin = 0
-const myMax = 19
+const myMax = 20
 
 export const Tips = () => {
   const [whichTip, setWichTip] = useState(() => {
@@ -56,6 +57,7 @@ export const Tips = () => {
       {whichTip === 17 && <CounterAttackTip />}
       {whichTip === 18 && <MoreStacksTip />}
       {whichTip === 19 && <CentaurStrategiesTip />}
+      {whichTip === 20 && <AttackSequence2530Tip />}
     </div>
   )
 }
