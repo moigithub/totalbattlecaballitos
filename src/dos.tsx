@@ -76,7 +76,8 @@ import {
   elf30G9S9b,
   testsequence1,
   elf30somebearsurvive,
-  elf30somebearsurvive2
+  elf30somebearsurvive2,
+  elfHeroic17
 } from '@/citadelPresets.ts'
 
 export interface DataResult {
@@ -880,6 +881,7 @@ second REMAINS second
     const citadelWithoutWalls = citadel.stacks.filter(
       stack => stack.unit.category !== 'fortification'
     )
+    console.log('citadelWithoutWalls', citadelWithoutWalls)
 
     const citadelClone = structuredClone(citadelWithoutWalls)
 
@@ -1192,6 +1194,9 @@ ignora lo que continua abajo de esta linea:
     setPresetArmy(event.target.value)
 
     switch (event.target.value) {
+      case 'elfHeroic17':
+        decodeAndLoadArmySetup(elfHeroic17)
+        break
       case 'testsequence1':
         decodeAndLoadArmySetup(testsequence1)
         break
@@ -1379,7 +1384,7 @@ ignora lo que continua abajo de esta linea:
                   <option value='citadele30'>Elf Citadel lvl 30</option>
                   <option value='citadelc20'>Cursed Citadel lvl 20</option>
                   <option value='citadelc25'>Cursed Citadel lvl 25</option>
-                  {/* <option value='lvl17HeroicElfSquad'>lvl 17 Heroic Elf Squad</option> */}
+                  <option value='lvl17HeroicElfSquad'>lvl 17 Heroic Elf Squad</option>
                 </select>
               </div>
 
@@ -1669,6 +1674,7 @@ ignora lo que continua abajo de esta linea:
                       <option value='testsequence1'>testsequence1</option>
                       <option value='testsequence2'>someBearMustSurvive</option>
                       <option value='testsequence3'>someBearMustSurvive2</option>
+                      <option value='elfHeroic17'>elfHeroic17</option>
                     </select>
                   </div>
                 </div>
