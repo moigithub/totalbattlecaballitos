@@ -88,7 +88,7 @@ export const CitadelData = ({ type }: { type: string }) => {
               <td
                 className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
                 onClick={() => {
-                  navigator.clipboard.writeText(totalHealth.toFixed(2))
+                  navigator.clipboard.writeText(totalHealth.toString())
                 }}
               >
                 {totalHealth.toLocaleString().replace(/,/g, '_')}
@@ -100,7 +100,7 @@ export const CitadelData = ({ type }: { type: string }) => {
               <td
                 className='px-1 py-0.5  text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
                 onClick={() => {
-                  navigator.clipboard.writeText(totalStrength.toFixed(2))
+                  navigator.clipboard.writeText(totalStrength.toString())
                 }}
               >
                 {totalStrength.toLocaleString().replace(/,/g, '_')}
@@ -223,7 +223,7 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
               <td
                 className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
                 onClick={() => {
-                  navigator.clipboard.writeText(totalHealth.toFixed(2))
+                  navigator.clipboard.writeText(totalHealth.toString())
                 }}
               >
                 {totalHealth.toLocaleString().replace(/,/g, '_')}
@@ -236,7 +236,7 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
               <td
                 className='px-1 py-0.5 text-gray-300  cursor-pointer hover:text-lime-400 hover:font-bold'
                 onClick={() => {
-                  navigator.clipboard.writeText(totalStrength.toFixed(2))
+                  navigator.clipboard.writeText(totalStrength.toString())
                 }}
               >
                 {totalStrength.toLocaleString().replace(/,/g, '_')}
