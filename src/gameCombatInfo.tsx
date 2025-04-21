@@ -130,7 +130,21 @@ export const GameCombatInfo = () => {
                     IF the enemy DO NOT have any melee or flying units, it will pick the strongest
                     troop alive
                   </p>
-                  <img src='/selectTarget.jpg' alt='target selection flow diagram' />
+                  <img src='/targetSelectionRules1.jpg' alt='target selection rules example' />
+                  <img src='/targetSelectionRules2.jpg' alt='target selection rules example' />
+                  <img src='/targetSelectionRules3.jpg' alt='target selection rules example' />
+                  <ul>
+                    <li>
+                      enemy should be healthy enough, above my damage/strength with bonus/no
+                      feat.bonus
+                    </li>
+                    <li>the enemy which we can do most damage would be picked as target</li>
+                    <li>
+                      if we do the same damage to all enemies, then the enemy who can do highest
+                      damage to us would be picked as target (biggest threat)
+                    </li>
+                    <li>if no enemies found, fallback to the strongest enemy</li>
+                  </ul>
                 </div>
                 <br />
               </ul>
