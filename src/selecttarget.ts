@@ -1,7 +1,22 @@
 import { FightStack, ObjProps } from '@/citadelData'
 import { BasicUnit } from '@/types'
 import { whoCanIAttack } from '@/utils'
-
+/**
+ * 21/04/25
+ * si hay varios del mismo tipo, ejemplo 2 melee (bear y ent)
+ * y hay una tropa con bono vsMelee (firefenix)
+ * y si la fuerza con bonos incluido el feat.bono es mayor a la vida de alguno,
+ * ejm. fireFenix + %strBono + %vsMeleeBono > bear health
+ * entonces se elijira al ent, donde mejor se aprovechara el daño
+ *
+ * quiere decir q hay otro criterio para seleccionar objetivo
+ *
+ * 1. q tenga suficiente vida (hp>str)
+ * 2. si el dmg es igual para todos
+ * 3. dentro del mismo tipo, si el daño con bono supera la vida, se escoje a otro q tenga mas vida
+ * 3. se escojera al q nos pueda hacer mas daño
+ * 4. fallback al mas fuerte
+ */
 interface AttackStats {
   // strength: number
   damage: number
@@ -133,7 +148,9 @@ export function selectTargetToAttack(
   )
 
   // 4. Filtrar objetivos válidos según las condiciones
-  const validTargets = defenderStats.filter(({ defender }) => {
+  // tiene que tener suficiente vida mayor a mi fuerza
+  //
+  let validTargets = defenderStats.filter(({ defender }) => {
     // game rule... si mi fuerza sobrepasa a su vida busca otro target
     // game rule... para target un enemigo, bajar la fuerza debajo de su vida para atacarlo
     return (
@@ -169,18 +186,58 @@ export function selectTargetToAttack(
     }))
   )
 
-  // validTargets = validTargets.filter(({ defender, stats }) => {
-  //   // Calcular daño que el defensor puede hacer al atacante
-  //   // const defenderStatsAgainstAttacker = calculateAttackDamage(defender, attacker)
+  // quiero saber si hay mas de 2enemigos con la misma categoria/sugbrupo
+  // si hay mas de 2, y el daño con bono supera la vida de uno, se debe escoger al siguiente que tenga suficiente vida
+  const allUnitsCategAndSubGroup = validTargets
+    .reduce(
+      (all, t) => [...all, t.defender.unit.category, t.defender.unit.subGroup],
+      [] as string[]
+    )
+    .filter(Boolean)
+    .map(s => s.trim())
+  const allUniquesCategAndSubGroup = [...new Set(allUnitsCategAndSubGroup)]
+  const haveDuplicates = allUnitsCategAndSubGroup.length !== allUniquesCategAndSubGroup.length
+  console.log('%c duplicates?', 'color: orange, font-size: 20px', haveDuplicates && ' YES')
+  console.log(allUnitsCategAndSubGroup, allUniquesCategAndSubGroup)
 
-  //   // console.log('inside filter', defender.unit.name, defender, defenderStatsAgainstAttacker)
-  //   // game rule... si mi fuerza sobrepasa a su vida busca otro target
-  //   // game rule... para target un enemigo, bajar la fuerza debajo de su vida para atacarlo
-  //   return (
-  //     // defenderStatsAgainstAttacker.defenderStrength <= attackerHealth // el no tiene suficiente vida
-  //     stats.defenderStrength <= attackerHealth // el no tiene suficiente vida
-  //   )
-  // })
+  validTargets = validTargets.filter(({ defender, stats }) => {
+    // game rule... si mi fuerza sobrepasa a su vida busca otro target
+    // game rule... para target un enemigo, bajar la fuerza debajo de su vida para atacarlo
+
+    // if we have bonuses, we target the healthy one
+    if (haveDuplicates) {
+      return (
+        // stats.damage === is attacker strength with all bonuses
+        stats.damage <=
+        defender.unit.BASEHP * (1 + (defender.unit.hpBonus || 0) / 100) * defender.unitsAmount -
+          defender.accumulatedDamage // no tengo suficiente vida
+      )
+    }
+    return true
+  })
+
+  console.log('filtered targets ', 'strength+bonuses <= defender health  ')
+  console.table(
+    validTargets.map(t => ({
+      defender: t.defender.unit.name,
+      type: [t.defender.unit.category, t.defender.unit.subGroup].join(', '),
+      canAttack: whoCanIAttack(t.defender.unit as BasicUnit).join(', '),
+      strength: attackerStrength,
+      health: attackerHealth,
+      damage: t.stats.damage, // attacker str+feat.bonus
+
+      defenderStrength: t.stats.defenderStrength,
+      theyAttackMe: t.stats.threat, //defender str+feat.bonus
+      defenderHealth: t.stats.defenderHealth,
+
+      miDmgMenorQueSuHp: `${attackerStrength}<=${t.stats.defenderHealth}=${
+        attackerStrength <= t.stats.defenderHealth ? 'true' : ''
+      }`,
+      suDmgMenorQueMiHp: `${t.stats.defenderStrength}<=${attackerHealth.toFixed(0)}=${
+        t.stats.defenderStrength <= attackerHealth ? 'true' : ''
+      }`
+    }))
+  )
 
   // 5. Seleccionar objetivo entre los válidos
   if (validTargets.length > 0) {
