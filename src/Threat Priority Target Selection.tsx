@@ -1,68 +1,68 @@
 import { FightStack, ObjProps } from './citadelData'
-import { calculateEffectiveDamage } from './helpers'
+// import { calculateEffectiveDamage } from './helpers'
 import { BasicUnit } from './types'
 import { whoCanIAttack } from './utils'
 /**
  * EL ULTIMO DEL DIA 19/04/25
  * funciona con testsequence1
  */
-function getApplicableBonusType1(attacker: FightStack, target: FightStack): string | undefined {
-  // Check category bonuses first (higher priority)
-  if (target.unit.category === 'melee' && attacker.unit.vsMeleePercent > 0) {
-    return 'vsMelee'
-  }
-  if (target.unit.category === 'ranged' && attacker.unit.vsRangedPercent > 0) {
-    return 'vsRanged'
-  }
-  if (target.unit.category === 'mounted' && attacker.unit.vsMountedPercent > 0) {
-    return 'vsMounted'
-  }
-  if (target.unit.category === 'flying' && attacker.unit.vsFlyingPercent > 0) {
-    return 'vsFlying'
-  }
-  if (target.unit.category === 'siege' && attacker.unit.vsSiegePercent > 0) {
-    return 'vsSiege'
-  }
-  return undefined // No applicable bonus
-}
+// function getApplicableBonusType1(attacker: FightStack, target: FightStack): string | undefined {
+//   // Check category bonuses first (higher priority)
+//   if (target.unit.category === 'melee' && attacker.unit.vsMeleePercent > 0) {
+//     return 'vsMelee'
+//   }
+//   if (target.unit.category === 'ranged' && attacker.unit.vsRangedPercent > 0) {
+//     return 'vsRanged'
+//   }
+//   if (target.unit.category === 'mounted' && attacker.unit.vsMountedPercent > 0) {
+//     return 'vsMounted'
+//   }
+//   if (target.unit.category === 'flying' && attacker.unit.vsFlyingPercent > 0) {
+//     return 'vsFlying'
+//   }
+//   if (target.unit.category === 'siege' && attacker.unit.vsSiegePercent > 0) {
+//     return 'vsSiege'
+//   }
+//   return undefined // No applicable bonus
+// }
 
-function getApplicableBonusType2(attacker: FightStack, target: FightStack): string | undefined {
-  // Check sub-group bonuses second
-  if (target.unit.subGroup === 'beast' && attacker.unit.vsBeastPercent > 0) {
-    return 'vsBeast'
-  }
-  if (target.unit.subGroup === 'giant' && attacker.unit.vsGiantPercent > 0) {
-    return 'vsGiant'
-  }
-  if (target.unit.subGroup === 'elemental' && attacker.unit.vsElementalPercent > 0) {
-    return 'vsElemental'
-  }
-  if (target.unit.subGroup === 'dragon' && attacker.unit.vsDragonPercent > 0) {
-    return 'vsDragon'
-  }
+// function getApplicableBonusType2(attacker: FightStack, target: FightStack): string | undefined {
+//   // Check sub-group bonuses second
+//   if (target.unit.subGroup === 'beast' && attacker.unit.vsBeastPercent > 0) {
+//     return 'vsBeast'
+//   }
+//   if (target.unit.subGroup === 'giant' && attacker.unit.vsGiantPercent > 0) {
+//     return 'vsGiant'
+//   }
+//   if (target.unit.subGroup === 'elemental' && attacker.unit.vsElementalPercent > 0) {
+//     return 'vsElemental'
+//   }
+//   if (target.unit.subGroup === 'dragon' && attacker.unit.vsDragonPercent > 0) {
+//     return 'vsDragon'
+//   }
 
-  return undefined // No applicable bonus
-}
+//   return undefined // No applicable bonus
+// }
 
-const getLogData = (candidates: FightStack[], attacker: FightStack) => {
-  return candidates.map(candidate => {
-    const bonusType1 = getApplicableBonusType1(attacker, candidate) || '' //category
-    const bonusType2 = getApplicableBonusType2(attacker, candidate) || '' //subgroup
+// const getLogData = (candidates: FightStack[], attacker: FightStack) => {
+//   return candidates.map(candidate => {
+//     const bonusType1 = getApplicableBonusType1(attacker, candidate) || '' //category
+//     const bonusType2 = getApplicableBonusType2(attacker, candidate) || '' //subgroup
 
-    return {
-      id: candidate.id,
-      bonusType1,
-      bonusValue1: getApplicableBonusValue(attacker, bonusType1),
-      bonusType2, // tengo vsMelee y el enemy es melee
-      bonusValue2: getApplicableBonusValue(attacker, bonusType2),
-      damagePotential: calculateEffectiveDamage(attacker, candidate),
-      threatLevel: calculateThreat(candidate, attacker),
-      currentHealth:
-        candidate.unit.BASEHP * (1 + (candidate.unit.hpBonus || 0) / 100) * candidate.unitsAmount -
-        candidate.accumulatedDamage
-    }
-  })
-}
+//     return {
+//       id: candidate.id,
+//       bonusType1,
+//       bonusValue1: getApplicableBonusValue(attacker, bonusType1),
+//       bonusType2, // tengo vsMelee y el enemy es melee
+//       bonusValue2: getApplicableBonusValue(attacker, bonusType2),
+//       damagePotential: calculateEffectiveDamage(attacker, candidate),
+//       threatLevel: calculateThreat(candidate, attacker),
+//       currentHealth:
+//         candidate.unit.BASEHP * (1 + (candidate.unit.hpBonus || 0) / 100) * candidate.unitsAmount -
+//         candidate.accumulatedDamage
+//     }
+//   })
+// }
 
 /**
  * Calcula la amenaza potencial de un objetivo contra el atacante

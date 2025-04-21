@@ -2,8 +2,8 @@ import { selectTargetToAttack } from '@/selecttarget'
 import { FightStack, ObjProps } from './citadelData'
 import { addReportData, ColumnResult } from './dos'
 // import { Result } from './dos'
-import { BasicUnit, Stack } from './types'
-import { whoCanIAttack } from './utils'
+import { Stack } from './types'
+// import { whoCanIAttack } from './utils'
 // import { selectTargetWithLoggingBoo2 } from '../Sistema de Logging para Selección'
 
 export const getArmyLeadership = (army: Stack[]) => {
@@ -393,102 +393,102 @@ const getStrongestStack = (stacks: FightStack[]): FightStack | null => {
   })
 }
 
-function getApplicableBonusType1(attacker: FightStack, target: FightStack): string | undefined {
-  // Check category bonuses first (higher priority)
-  if (target.unit.category === 'melee' && attacker.unit.vsMeleePercent > 0) {
-    return 'vsMelee'
-  }
-  if (target.unit.category === 'ranged' && attacker.unit.vsRangedPercent > 0) {
-    return 'vsRanged'
-  }
-  if (target.unit.category === 'mounted' && attacker.unit.vsMountedPercent > 0) {
-    return 'vsMounted'
-  }
-  if (target.unit.category === 'flying' && attacker.unit.vsFlyingPercent > 0) {
-    return 'vsFlying'
-  }
-  if (target.unit.category === 'siege' && attacker.unit.vsSiegePercent > 0) {
-    return 'vsSiege'
-  }
-  return undefined // No applicable bonus
-}
+// function getApplicableBonusType1(attacker: FightStack, target: FightStack): string | undefined {
+//   // Check category bonuses first (higher priority)
+//   if (target.unit.category === 'melee' && attacker.unit.vsMeleePercent > 0) {
+//     return 'vsMelee'
+//   }
+//   if (target.unit.category === 'ranged' && attacker.unit.vsRangedPercent > 0) {
+//     return 'vsRanged'
+//   }
+//   if (target.unit.category === 'mounted' && attacker.unit.vsMountedPercent > 0) {
+//     return 'vsMounted'
+//   }
+//   if (target.unit.category === 'flying' && attacker.unit.vsFlyingPercent > 0) {
+//     return 'vsFlying'
+//   }
+//   if (target.unit.category === 'siege' && attacker.unit.vsSiegePercent > 0) {
+//     return 'vsSiege'
+//   }
+//   return undefined // No applicable bonus
+// }
 
-function getApplicableBonusType2(attacker: FightStack, target: FightStack): string | undefined {
-  // Check sub-group bonuses second
-  if (target.unit.subGroup === 'beast' && attacker.unit.vsBeastPercent > 0) {
-    return 'vsBeast'
-  }
-  if (target.unit.subGroup === 'giant' && attacker.unit.vsGiantPercent > 0) {
-    return 'vsGiant'
-  }
-  if (target.unit.subGroup === 'elemental' && attacker.unit.vsElementalPercent > 0) {
-    return 'vsElemental'
-  }
-  if (target.unit.subGroup === 'dragon' && attacker.unit.vsDragonPercent > 0) {
-    return 'vsDragon'
-  }
+// function getApplicableBonusType2(attacker: FightStack, target: FightStack): string | undefined {
+//   // Check sub-group bonuses second
+//   if (target.unit.subGroup === 'beast' && attacker.unit.vsBeastPercent > 0) {
+//     return 'vsBeast'
+//   }
+//   if (target.unit.subGroup === 'giant' && attacker.unit.vsGiantPercent > 0) {
+//     return 'vsGiant'
+//   }
+//   if (target.unit.subGroup === 'elemental' && attacker.unit.vsElementalPercent > 0) {
+//     return 'vsElemental'
+//   }
+//   if (target.unit.subGroup === 'dragon' && attacker.unit.vsDragonPercent > 0) {
+//     return 'vsDragon'
+//   }
 
-  return undefined // No applicable bonus
-}
+//   return undefined // No applicable bonus
+// }
 
-function getApplicableBonusValue(attacker: FightStack, bonusType: string): number {
-  if (!bonusType) return 0
+// function getApplicableBonusValue(attacker: FightStack, bonusType: string): number {
+//   if (!bonusType) return 0
 
-  // Map bonus type to the actual value
-  switch (bonusType) {
-    case 'vsMelee':
-      return attacker.unit.vsMeleePercent || 0
-    case 'vsRanged':
-      return attacker.unit.vsRangedPercent || 0
-    case 'vsMounted':
-      return attacker.unit.vsMountedPercent || 0
-    case 'vsFlying':
-      return attacker.unit.vsFlyingPercent || 0
-    case 'vsSiege':
-      return attacker.unit.vsSiegePercent || 0
-    case 'vsBeast':
-      return attacker.unit.vsBeastPercent || 0
-    case 'vsGiant':
-      return attacker.unit.vsGiantPercent || 0
-    case 'vsElemental':
-      return attacker.unit.vsElementalPercent || 0
-    case 'vsDragon':
-      return attacker.unit.vsDragonPercent || 0
-    default:
-      return 0
-  }
-}
-function calculateThreat(target: FightStack, attacker: FightStack): number {
-  // Calcular fuerza total del objetivo (sin bonos del jugador)
-  const targetStrength = target.unit.BASESTR * target.unitsAmount
+//   // Map bonus type to the actual value
+//   switch (bonusType) {
+//     case 'vsMelee':
+//       return attacker.unit.vsMeleePercent || 0
+//     case 'vsRanged':
+//       return attacker.unit.vsRangedPercent || 0
+//     case 'vsMounted':
+//       return attacker.unit.vsMountedPercent || 0
+//     case 'vsFlying':
+//       return attacker.unit.vsFlyingPercent || 0
+//     case 'vsSiege':
+//       return attacker.unit.vsSiegePercent || 0
+//     case 'vsBeast':
+//       return attacker.unit.vsBeastPercent || 0
+//     case 'vsGiant':
+//       return attacker.unit.vsGiantPercent || 0
+//     case 'vsElemental':
+//       return attacker.unit.vsElementalPercent || 0
+//     case 'vsDragon':
+//       return attacker.unit.vsDragonPercent || 0
+//     default:
+//       return 0
+//   }
+// }
+// function calculateThreat(target: FightStack, attacker: FightStack): number {
+//   // Calcular fuerza total del objetivo (sin bonos del jugador)
+//   const targetStrength = target.unit.BASESTR * target.unitsAmount
 
-  // Identificar bonos del objetivo contra el atacante
-  const targetBonus1 =
-    (target[`vs${attacker.unit.category}Percent` as keyof FightStack] as number) || 0
-  const targetBonus2 =
-    (target[`vs${attacker.unit.subGroup}Percent` as keyof FightStack] as number) || 0
+//   // Identificar bonos del objetivo contra el atacante
+//   const targetBonus1 =
+//     (target[`vs${attacker.unit.category}Percent` as keyof FightStack] as number) || 0
+//   const targetBonus2 =
+//     (target[`vs${attacker.unit.subGroup}Percent` as keyof FightStack] as number) || 0
 
-  return targetStrength * (1 + (targetBonus1 + targetBonus2) / 100)
-}
-const getLogData = (candidates: FightStack[], attacker: FightStack) => {
-  return candidates.map(candidate => {
-    const bonusType1 = getApplicableBonusType1(attacker, candidate) || '' //category
-    const bonusType2 = getApplicableBonusType2(attacker, candidate) || '' //subgroup
+//   return targetStrength * (1 + (targetBonus1 + targetBonus2) / 100)
+// }
+// const getLogData = (candidates: FightStack[], attacker: FightStack) => {
+//   return candidates.map(candidate => {
+//     const bonusType1 = getApplicableBonusType1(attacker, candidate) || '' //category
+//     const bonusType2 = getApplicableBonusType2(attacker, candidate) || '' //subgroup
 
-    return {
-      id: candidate.id,
-      bonusType1,
-      bonusValue1: getApplicableBonusValue(attacker, bonusType1),
-      bonusType2, // tengo vsMelee y el enemy es melee
-      bonusValue2: getApplicableBonusValue(attacker, bonusType2),
-      damagePotential: calculateEffectiveDamage(attacker, candidate),
-      threatLevel: calculateThreat(candidate, attacker),
-      currentHealth:
-        candidate.unit.BASEHP * (1 + (candidate.unit.hpBonus || 0) / 100) * candidate.unitsAmount -
-        candidate.accumulatedDamage
-    }
-  })
-}
+//     return {
+//       id: candidate.id,
+//       bonusType1,
+//       bonusValue1: getApplicableBonusValue(attacker, bonusType1),
+//       bonusType2, // tengo vsMelee y el enemy es melee
+//       bonusValue2: getApplicableBonusValue(attacker, bonusType2),
+//       damagePotential: calculateEffectiveDamage(attacker, candidate),
+//       threatLevel: calculateThreat(candidate, attacker),
+//       currentHealth:
+//         candidate.unit.BASEHP * (1 + (candidate.unit.hpBonus || 0) / 100) * candidate.unitsAmount -
+//         candidate.accumulatedDamage
+//     }
+//   })
+// }
 
 /**
  * Selecciona el mejor objetivo para un stack atacante según las reglas del juego
