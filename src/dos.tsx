@@ -63,15 +63,20 @@ import {
   elf15G5M3,
   elf15G5M5,
   elf15G5M5S5,
+  elf20G6Mercs,
+  elf20G6S5Mercs,
   elf20G7M7,
   elf20G7Mercs,
+  elf20G7Mercs2,
   elf25G7S6M5,
   elf25G7S7M5,
   elf25G8S7,
   elf30G8S8M8,
   elf30G9S9,
   elf30G9S9b,
-  testsequence1
+  testsequence1,
+  elf30somebearsurvive,
+  elf30somebearsurvive2
 } from '@/citadelPresets.ts'
 
 export interface DataResult {
@@ -1185,12 +1190,16 @@ ignora lo que continua abajo de esta linea:
   const loadPresetArmy = (event: ChangeEvent<HTMLSelectElement>) => {
     setReport([])
     setPresetArmy(event.target.value)
-    // const testsequence1 =
-    // 'eyJsZWFkZXJzaGlwIjoxNTAwMDAsImF1dGhvcml0eSI6MTAwMDAsImRvbWluYW5jZSI6MTAwMDAsImdhcEJhc2VQZXJjZW50IjoxLCJzZWxlY3RlZFRhcmdldCI6ImNpdGFkZWxlMTUiLCJzZXF1ZW5jZSI6IkkgQVRUQUNLIEZJUlNUXG5BVFRBQ0tFUjogTUUsIERFRkVOREVSOiBDSVRBREVMXG4tLS0tLS0tLS0tLS0tLS0tLS1cbjE6ICAxMCBmZWFyc29tZU1hbnRpY29yYVYgYXR0YWNrZWQgIDIxIEVudCBWSSBkZWFsaW5nICAzMDQ3NTUwIGtpbGxpbmcgIDEzICB1bml0cyBcbjI6ICA0NyBVbmljb3JuIFJpZGVyIFYgYXR0YWNrZWQgIDQxIGJhdHRsZUdyaWZmaW5WIGRlYWxpbmcgIDEyNjkwMDAgIGtpbGxpbmcgIDEwICB1bml0cyBcbjM6ICAzMSBiYXR0bGVHcmlmZmluViBhdHRhY2tlZCAgNDcgVW5pY29ybiBSaWRlciBWIGRlYWxpbmcgIDMyODAxOTkga2lsbGluZyAgNDAgIHVuaXRzIFxuNDogIDExMDAgRHJ1aWQgSUkgYXR0YWNrZWQgIDEwIGZlYXJzb21lTWFudGljb3JhViBkZWFsaW5nICA5OTAwMDAgIGtpbGxpbmcgIDEgIHVuaXRzIFxuNTogIDUwIHN0b25lR2FyZ295bGVJSUkgYXR0YWNrZWQgIDExMDAgRHJ1aWQgSUkgZGVhbGluZyAgMTcyMjUyOCBraWxsaW5nICA2MTcgIHVuaXRzIFxuNjogIDI5MCBDZW50YXVyIElJSSBhdHRhY2tlZCAgMTUwIENhdGFwdWx0c0lWIGRlYWxpbmcgIDkwNDgwMCBraWxsaW5nICA0NSAgdW5pdHMgXG43OiAgMTIgaWNlUGhvZW5peElWIGF0dGFja2VkICAyOTAgQ2VudGF1ciBJSUkgZGVhbGluZyAgMTM1MTUyMiBraWxsaW5nICAxNzMgIHVuaXRzIFxuODogIDggRW50IFZJIGF0dGFja2VkICA5IGZlYXJzb21lTWFudGljb3JhViBkZWFsaW5nICA1ODQwMDAgIGtpbGxpbmcgIDEgIHVuaXRzIFxuOTogIDQwMCB2dWx0dXJlc1YgYXR0YWNrZWQgIDggRW50IFZJIGRlYWxpbmcgIDE1NTE0NTAga2lsbGluZyAgOCAgdW5pdHMgKHJhbmRvbSAlIGNoYW5jZSB0byBkbyBleHRyYSBkYW1hZ2UpXG4xMDogIDUwMDAgRWxmIGFyY2hlciBJIGF0dGFja2VkICA4IGZlYXJzb21lTWFudGljb3JhViBkZWFsaW5nICA1MDAwMDAgIGtpbGxpbmcgIDAgIHVuaXRzIFxuMTE6ICAxMDUgQ2F0YXB1bHRFNCBhdHRhY2tlZCAgNTAwMCBFbGYgYXJjaGVyIEkgZGVhbGluZyAgNTEzNTI5IGtpbGxpbmcgIDE3MTEgIHVuaXRzIFxuMTI6ICA0NjMgRHJ1aWQgSUkgYXR0YWNrZWQgIDggZmVhcnNvbWVNYW50aWNvcmFWIGRlYWxpbmcgIDQxNjcwMCBraWxsaW5nICAxICB1bml0cyBcbjEzOiAgNyBmZWFyc29tZU1hbnRpY29yYVYgYXR0YWNrZWQgIDQ2MyBEcnVpZCBJSSBkZWFsaW5nICAxMjQ3NDcyIGtpbGxpbmcgIDQ2MyB1bml0cyAgREVBRCBcbjE0OiAgMzI4OSBFbGYgYXJjaGVyIEkgYXR0YWNrZWQgIDcgZmVhcnNvbWVNYW50aWNvcmFWIGRlYWxpbmcgIDMyODkwMCBraWxsaW5nICAxICB1bml0cyBcbjE1OiAgMzEgYmF0dGxlR3JpZmZpblYgYXR0YWNrZWQgMzI4OSBFbGYgYXJjaGVyIEkgZGVhbGluZyAgOTg2NDcxICBraWxsaW5nICAzMjg5IHVuaXRzICBERUFEIFxuMTY6ICAxMTcgQ2VudGF1ciBJSUkgYXR0YWNrZWQgMTA1IENhdGFwdWx0SVYgZGVhbGluZyAgMzY1MDQwICBraWxsaW5nICAxOSAgdW5pdHNcbjE3OiAgNTAgc3RvbmVHYXJnb3lsZUlJSSBhdHRhY2tlZCAgMTE3IENlbnRhdXIgSUlJIGRlYWxpbmcgIDkxMDQ3OCAga2lsbGluZyAgMTE3ICB1bml0cyAgREVBRCBcbjE4OiAgNyBVbmljb3JuIFJpZGVyIFYgYXR0YWNrZWQgIDMxIGJhdHRsZUdyaWZmaW5WIGRlYWxpbmcgIDE4OTAwMCAga2lsbGluZyAgMiAgdW5pdHMgXG4xOTogIDEyIGljZVBob2VuaXhJViBhdHRhY2tlZCAgNyBVbmljb3JuIFJpZGVyIFYgZGVhbGluZyAgNTI2ODAxIGtpbGxpbmcgIDcgIHVuaXRzICBERUFEIFxuIiwiYXJteSI6W3siaWQiOiJmZWFyc29tZU1hbnRpY29yYVYiLCJ1bml0S2V5IjoiZmVhcnNvbWVNYW50aWNvcmFWIiwibGVhZGVyc2hpcCI6MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjIyMCwiZ2FwUGVyY2VudCI6MTAwLCJ1c2VQbHVzT25lIjpmYWxzZSwiaHBCb251cyI6NDEwLjgsInN0ckJvbnVzIjo1NjYuNSwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1bml0TGltaXQiOjEwLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJjb21tZW50IjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjAsInVuaXRzQW1vdW50IjoxMCwibGltaXQiOjB9LHsiaWQiOiJiYXR0bGVHcmlmZmluViIsInVuaXRLZXkiOiJiYXR0bGVHcmlmZmluViIsImxlYWRlcnNoaXAiOjgyMCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwidXNlUGx1c09uZSI6ZmFsc2UsImhwQm9udXMiOjI4NC44LCJzdHJCb251cyI6NTY5LjUsInVzZVVuaXRMaW1pdCI6dHJ1ZSwidW5pdExpbWl0Ijo0MSwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwiY29tbWVudCI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowLCJ1bml0c0Ftb3VudCI6NDEsImxpbWl0IjowfSx7ImlkIjoic3RvbmVHYXJnb3lsZUlJSSIsInVuaXRLZXkiOiJzdG9uZUdhcmdveWxlSUlJIiwibGVhZGVyc2hpcCI6MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjQwMCwiZ2FwUGVyY2VudCI6MTAwLCJ1c2VQbHVzT25lIjpmYWxzZSwiaHBCb251cyI6Mzc1LjgsInN0ckJvbnVzIjo1NjYuNSwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1bml0TGltaXQiOjUwLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJjb21tZW50IjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjAsInVuaXRzQW1vdW50Ijo1MCwibGltaXQiOjB9LHsiaWQiOiJpY2VQaG9lbml4SVYiLCJ1bml0S2V5IjoiaWNlUGhvZW5peElWIiwibGVhZGVyc2hpcCI6MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjE4MCwiZ2FwUGVyY2VudCI6MTAwLCJ1c2VQbHVzT25lIjpmYWxzZSwiaHBCb251cyI6Mzc3LjgsInN0ckJvbnVzIjo1NjYuNSwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1bml0TGltaXQiOjEyLCJ1c2VTdHJMaW1pdCI6ZmFsc2UsInN0ckxpbWl0IjowLCJzdHJMaW1pdFR5cGUiOiIiLCJjb21tZW50IjoiIiwidXNlSHBMaW1pdCI6ZmFsc2UsIkhwTGltaXQiOjAsInVuaXRzQW1vdW50IjoxMiwibGltaXQiOjB9LHsiaWQiOiJ2dWx0dXJlc1YiLCJ1bml0S2V5IjoidnVsdHVyZXNWIiwibGVhZGVyc2hpcCI6NDAwLCJhdXRob3JpdHkiOjAsImRvbWluYW5jZSI6MCwiZ2FwUGVyY2VudCI6MTAwLCJ1c2VQbHVzT25lIjpmYWxzZSwiaHBCb251cyI6MjA0LjgsInN0ckJvbnVzIjo1MTYuNSwidXNlVW5pdExpbWl0Ijp0cnVlLCJ1bml0TGltaXQiOjQwMCwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwiY29tbWVudCI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowLCJ1bml0c0Ftb3VudCI6NDAwLCJsaW1pdCI6MH0seyJpZCI6IkNhdGFwdWx0RTQiLCJ1bml0S2V5IjoiQ2F0YXB1bHRFNCIsImxlYWRlcnNoaXAiOjE1MDAsImF1dGhvcml0eSI6MCwiZG9taW5hbmNlIjowLCJnYXBQZXJjZW50IjoxMDAsInVzZVBsdXNPbmUiOmZhbHNlLCJocEJvbnVzIjoxMjYuOCwic3RyQm9udXMiOjIzNywidXNlVW5pdExpbWl0Ijp0cnVlLCJ1bml0TGltaXQiOjE1MCwidXNlU3RyTGltaXQiOmZhbHNlLCJzdHJMaW1pdCI6MCwic3RyTGltaXRUeXBlIjoiIiwiY29tbWVudCI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowLCJ1bml0c0Ftb3VudCI6MTUwLCJsaW1pdCI6MH1dfQ=='
 
     switch (event.target.value) {
       case 'testsequence1':
         decodeAndLoadArmySetup(testsequence1)
+        break
+      case 'testsequence2':
+        decodeAndLoadArmySetup(elf30somebearsurvive)
+        break
+      case 'testsequence3':
+        decodeAndLoadArmySetup(elf30somebearsurvive2)
         break
       case 'elf10G5M5':
         decodeAndLoadArmySetup(elf10G5M5)
@@ -1204,11 +1213,20 @@ ignora lo que continua abajo de esta linea:
       case 'elf15G5M5S5':
         decodeAndLoadArmySetup(elf15G5M5S5)
         break
+      case 'elf20G6Mercs':
+        decodeAndLoadArmySetup(elf20G6Mercs)
+        break
+      case 'elf20G6S5Mercs':
+        decodeAndLoadArmySetup(elf20G6S5Mercs)
+        break
       case 'elf20G7M7':
         decodeAndLoadArmySetup(elf20G7M7)
         break
       case 'elf20G7Mercs':
         decodeAndLoadArmySetup(elf20G7Mercs)
+        break
+      case 'elf20G7Mercs2':
+        decodeAndLoadArmySetup(elf20G7Mercs2)
         break
       case 'cursed20G5S5M4':
         decodeAndLoadArmySetup(cursed20G5S5M4)
@@ -1604,11 +1622,20 @@ ignora lo que continua abajo de esta linea:
                       <option value='dash' disabled>
                         ------------------
                       </option>
+                      <option value='elf20G6Mercs' className='bg-green-800'>
+                        Citadel Elf 20 G6,Mercs
+                      </option>
+                      <option value='elf20G6S5Mercs' className='bg-green-800'>
+                        Citadel Elf 20 G6,S5,Mercs
+                      </option>
                       <option value='elf20G7M7' className='bg-green-800'>
                         Citadel Elf 20 G7,M7
                       </option>
                       <option value='elf20G7Mercs' className='bg-green-800'>
                         Citadel Elf 20 G7,Mercs
+                      </option>
+                      <option value='elf20G7Mercs2' className='bg-green-800'>
+                        Citadel Elf 20 G7,Mercs(2)
                       </option>
                       <option value='dash' disabled>
                         ------------------
@@ -1640,6 +1667,8 @@ ignora lo que continua abajo de esta linea:
                       </option>
 
                       <option value='testsequence1'>testsequence1</option>
+                      <option value='testsequence2'>someBearMustSurvive</option>
+                      <option value='testsequence3'>someBearMustSurvive2</option>
                     </select>
                   </div>
                 </div>
