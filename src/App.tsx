@@ -1,10 +1,11 @@
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 
 import './App.css'
 // import { Disclaimer } from './disclaimer'
-import { useEffect } from 'react'
+import { Fragment, useEffect } from 'react'
 import { decodeAndLoadArmySetup } from './utils'
 import reactGA from 'react-ga4'
+import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'flowbite-react'
 
 reactGA.initialize('G-6K9SG0Z6WS')
 
@@ -23,72 +24,28 @@ function App() {
   }, [])
 
   return (
-    <>
-      <nav className='bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600'>
-        <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
-          Troops calculation - totalbattle
-          <div
-            className='items-center justify-between hidden w-full md:flex md:w-auto md:order-1'
-            id='navbar-sticky'
-          >
-            <ul className='flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
-              <li>
-                <NavLink
-                  to={`/calc`}
-                  className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                >
-                  Stack Calc
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={`/info`}
-                  className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                >
-                  Info
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={`/mercenaries`}
-                  className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                >
-                  Mercenaries
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={`/citadels-catas`}
-                  className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                >
-                  Citadels catapults
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={`/game-combat`}
-                  className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                >
-                  Game combat
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to={`/merc-finder`}
-                  className='block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
-                >
-                  Mercenary finder tools
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <nav className='z-10'>
+      <Navbar fluid rounded>
+        <NavbarBrand>
+          <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white'>
+            Troops Counter
+          </span>
+        </NavbarBrand>
+        <NavbarToggle />
+        <NavbarCollapse>
+          <NavbarLink href='/calc'>Stack Calc</NavbarLink>
+          <NavbarLink href='/info'>info</NavbarLink>
+          <NavbarLink href='/mercenaries'>Mercenaries</NavbarLink>
+          <NavbarLink href='/citadels-catas'>Citadels catapults</NavbarLink>
+          <NavbarLink href='/game-combat'>Game combat</NavbarLink>
+          <NavbarLink href='/merc-finder'>Game combat</NavbarLink>
+        </NavbarCollapse>
+      </Navbar>
 
       <Outlet />
 
       {/* <Disclaimer /> */}
-    </>
+    </nav>
   )
 }
 
