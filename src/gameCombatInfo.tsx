@@ -93,7 +93,8 @@ export const GameCombatInfo = () => {
           </li>
           <li className='mt-2'>
             <span className='text-lime-700'>
-              Picking a target, is based on the greatest possible damage
+              Picking a target, is based on the greatest possible damage, where it can be used
+              better
             </span>
             <div className='ml-8'>
               <ul>
@@ -133,12 +134,18 @@ export const GameCombatInfo = () => {
                   <img src='/targetSelectionRules1.jpg' alt='target selection rules example' />
                   <img src='/targetSelectionRules2.jpg' alt='target selection rules example' />
                   <img src='/targetSelectionRules3.jpg' alt='target selection rules example' />
-                  <ul>
+                  <ul className='list-disc list-inside'>
                     <li>
                       enemy should be healthy enough, above my damage/strength with bonus/no
                       feat.bonus
                     </li>
                     <li>the enemy which we can do most damage would be picked as target</li>
+                    <li>
+                      if we have bonus against enemy (ie: firePhoenix have vsMelee), and we get 2
+                      enemies of the same type (ie: bear and ent, both melee), and our damage+all
+                      bonuses is higher than bear health, but lower than ent health, it will pick
+                      ent as target
+                    </li>
                     <li>
                       if we do the same damage to all enemies, then the enemy who can do highest
                       damage to us would be picked as target (biggest threat)
