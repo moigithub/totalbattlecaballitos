@@ -77,7 +77,9 @@ import {
   testsequence1,
   elf30somebearsurvive,
   elf30somebearsurvive2,
-  elfHeroic17
+  elfHeroic17,
+  cursed25Test,
+  cursed25M6Mercs
 } from '@/citadelPresets.ts'
 
 export interface DataResult {
@@ -384,6 +386,9 @@ second REMAINS second
             if (stack.usePlusOne) {
               unitStrength = 0
             }
+            if (stack.useMinusOne) {
+              unitStrength = unitStrength * 2
+            }
             // fix: 14/4/25
             // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
             // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
@@ -525,7 +530,9 @@ second REMAINS second
                   if (stack.usePlusOne) {
                     unitStrength = 0
                   }
-
+                  if (stack.useMinusOne) {
+                    unitStrength = unitStrength * 2
+                  }
                   // fix: 14/4/25
                   // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
                   // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
@@ -642,7 +649,9 @@ second REMAINS second
                   if (stack.usePlusOne) {
                     unitStrength = 0
                   }
-
+                  if (stack.useMinusOne) {
+                    unitStrength = unitStrength * 2
+                  }
                   // fix: 14/4/25
                   // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
                   // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
@@ -760,7 +769,9 @@ second REMAINS second
                   if (stack.usePlusOne) {
                     unitStrength = 0
                   }
-
+                  if (stack.useMinusOne) {
+                    unitStrength = unitStrength * 2
+                  }
                   // fix: 14/4/25
                   // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
                   // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
@@ -1242,6 +1253,10 @@ ignora lo que continua abajo de esta linea:
       case 'cursed25G6M7Mercs':
         decodeAndLoadArmySetup(cursed25G6M7Mercs)
         break
+
+      case 'cursed25M6Mercs':
+        decodeAndLoadArmySetup(cursed25M6Mercs)
+        break
       case 'cursed25G6M7MercsB':
         decodeAndLoadArmySetup(cursed25G6M7MercsB)
         break
@@ -1269,6 +1284,10 @@ ignora lo que continua abajo de esta linea:
         break
       case 'noob':
         alert('IF you like this idea, send me your BR to include it in the next version @moogumuro')
+        break
+
+      case 'cursed25Test':
+        decodeAndLoadArmySetup(cursed25Test)
         break
     }
   }
@@ -1594,6 +1613,9 @@ ignora lo que continua abajo de esta linea:
                       <option value='cursed25' className='bg-green-800'>
                         Citadel Cursed 25
                       </option>
+                      <option value='cursed25M6Mercs' className='bg-green-800'>
+                        Citadel Cursed 25 M6,Mercs
+                      </option>
                       <option value='cursed25G6M7Mercs' className='bg-green-800'>
                         Citadel Cursed 25 G6,M7,Mercs
                       </option>
@@ -1674,6 +1696,7 @@ ignora lo que continua abajo de esta linea:
                       <option value='testsequence1'>testsequence1</option>
                       <option value='testsequence2'>someBearMustSurvive</option>
                       <option value='testsequence3'>someBearMustSurvive2</option>
+                      <option value='cursed25Test'>cursed25Test</option>
                       <option value='elfHeroic17'>elfHeroic17</option>
                     </select>
                   </div>

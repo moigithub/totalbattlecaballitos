@@ -143,6 +143,7 @@ export interface Stack {
   dominance: number
   gapPercent: number
   usePlusOne: boolean
+  useMinusOne: boolean
   unit: Unit
   hpBonus: number
   strBonus: number

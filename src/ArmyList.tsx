@@ -282,6 +282,7 @@ export const ArmyList = () => {
       hpBonus: 0,
       unitLimit: 0,
       usePlusOne: false,
+      useMinusOne: false,
       comment: '',
       useUnitLimit: false,
       useStrLimit: false,
@@ -762,7 +763,7 @@ export const ArmyList = () => {
   return (
     <aside
       id='sidebar-multi-level-sidebar'
-      className='fixed top-[56px] left-0 z-10 w-64 h-[calc(100vh-56px)] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
+      className='fixed top-[56px] left-0 z-1 w-64 h-[calc(100vh-56px)] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
       aria-label='Sidebar'
     >
       <div className=' w-full px-4 py-2  bg-gray-800'>
@@ -1562,7 +1563,7 @@ export const ArmyList = () => {
           </div>
         </div>
       </section>
-      <div className='h-[calc(100%-255px-56px)] mt-2 px-3 py-2 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
+      <div className='h-[calc(100%-300px-74px-56px)] mt-2 px-3 py-2 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
         <h2 className='header-title'>Army</h2>
         <div className='army-list'>
           {guardsman.length > 0 &&

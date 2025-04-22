@@ -32,6 +32,7 @@ interface StackStore extends StackStoreBasic {
   setHpBonus: (id: string, value: number) => void
   setStrBonus: (id: string, value: number) => void
   togglePlusOne: (id: string) => void
+  toggleMinusOne: (id: string) => void
   toggleUseUnitLimit: (id: string) => void
   setStackUnitLimit: (id: string, value: number) => void
   toggleUseStrLimit: (id: string) => void
@@ -162,6 +163,15 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       army: state.army.map(stack => {
         if (stack.id === id) {
           return { ...stack, usePlusOne: !stack.usePlusOne }
+        } else return stack
+      })
+    }))
+  },
+  toggleMinusOne: (id: string) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return { ...stack, useMinusOne: !stack.useMinusOne }
         } else return stack
       })
     }))

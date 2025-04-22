@@ -28,6 +28,7 @@ export const Card = ({
   const setStrLimitType = useStackStore(state => state.setStackStrLimitType)
   const toggleUseHpLimit = useStackStore(state => state.toggleUseHpLimit)
   const togglePlusOne = useStackStore(state => state.togglePlusOne)
+  const toggleMinusOne = useStackStore(state => state.toggleMinusOne)
   const setHpLimit = useStackStore(state => state.setStackHpLimit)
   const setStackComment = useStackStore(state => state.setStackComment)
 
@@ -195,7 +196,30 @@ export const Card = ({
                 type='checkbox'
                 checked={stack.usePlusOne}
                 onChange={() => {
+                  // si ambos estan apagados, te permito prenderlo
+                  // si minus esta apagado, y plus encendido, apagar plus
+                  // si minus esta prendido, y plus esta apagado, toggle both
+                  if (!stack.usePlusOne && stack.useMinusOne) {
+                    toggleMinusOne(stack.id!)
+                  }
                   togglePlusOne(stack.id!)
+                }}
+              />
+            </label>
+            <label className='ml-1 whitespace-nowrap'>
+              -1
+              <input
+                className='ml-1 '
+                type='checkbox'
+                checked={stack.useMinusOne}
+                onChange={() => {
+                  // si ambos estan apagados, te permito prenderlo
+                  // si plus esta apagado, y minus encendido, apagar minus
+                  // si plus esta prendido, y minus esta apagado, toggle both
+                  if (stack.usePlusOne && !stack.useMinusOne) {
+                    togglePlusOne(stack.id!)
+                  }
+                  toggleMinusOne(stack.id!)
                 }}
               />
             </label>

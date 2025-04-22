@@ -72,6 +72,7 @@ const getData = (stack: Stack) => {
     dominance: stack.dominance || 0,
     gapPercent: stack.gapPercent || 0,
     usePlusOne: stack.usePlusOne || false,
+    useMinusOne: stack.useMinusOne || false,
     hpBonus: stack.hpBonus || 0,
     strBonus: stack.strBonus || 0,
     useUnitLimit: stack.useUnitLimit || false,
