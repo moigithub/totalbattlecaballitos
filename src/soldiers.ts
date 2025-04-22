@@ -197,9 +197,9 @@ const SpyS5 = spyBuilder('SpyS5', 'SpyS5', 'EspiaS5', 780, 260, '5')
 
 //----------------------------------
 const deadshotV = unitBuilder<SpecialistUnit>({
-  id: 'deadshotsV',
+  id: 'deadshotV',
   clasification: 'army',
-  name: 'deadshotsV',
+  name: 'deadshotV',
   nameEs: 'Ballestero elite V',
   BASEHP: 1560,
   BASESTR: 520,
@@ -213,9 +213,9 @@ const deadshotV = unitBuilder<SpecialistUnit>({
   level: '5'
 })
 const deadshotVI = unitBuilder<SpecialistUnit>({
-  id: 'deadshotsVI',
+  id: 'deadshotVI',
   clasification: 'army',
-  name: 'deadshotsVI',
+  name: 'deadshotVI',
   nameEs: 'Ballestero elite VI',
   BASEHP: 2820,
   BASESTR: 940,
@@ -229,9 +229,9 @@ const deadshotVI = unitBuilder<SpecialistUnit>({
   level: '6'
 })
 const deadshotVII = unitBuilder<SpecialistUnit>({
-  id: 'deadshotsVII',
+  id: 'deadshotVII',
   clasification: 'army',
-  name: 'deadshotsVII',
+  name: 'deadshotVII',
   nameEs: 'Ballestero elite VII',
   BASEHP: 5100,
   BASESTR: 1700,
@@ -961,7 +961,7 @@ const CatapultE9 = catapultBuilder(
 
 //------------------------------------
 const waterElementalIII = unitBuilder<MonsterUnit>({
-  id: 'waterElemental',
+  id: 'waterElementalIII',
   clasification: 'monster',
   name: 'waterElementalIII', //'waterElemental',
   nameEs: 'Elemental agua III', //'waterElemental',

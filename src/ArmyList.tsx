@@ -86,21 +86,21 @@ export const ArmyList = () => {
   const addTroops = (type: string) => {
     const UNIT_TYPE_MAPPING: Record<string, BasicUnit> = {
       // General Units
-      'Rider G1': ARMY.RiderG1,
-      'Rider G2': ARMY.RiderG2,
-      'Rider G3': ARMY.RiderG3,
-      'Rider G4': ARMY.RiderG4,
-      'Rider G5': ARMY.RiderG5,
-      'Spearman G1': ARMY.SpearmanG1,
-      'Spearman G2': ARMY.SpearmanG2,
-      'Spearman G3': ARMY.SpearmanG3,
-      'Spearman G4': ARMY.SpearmanG4,
-      'Spearman G5': ARMY.SpearmanG5,
-      'Archer G1': ARMY.ArcherG1,
-      'Archer G2': ARMY.ArcherG2,
-      'Archer G3': ARMY.ArcherG3,
-      'Archer G4': ARMY.ArcherG4,
-      'Archer G5': ARMY.ArcherG5,
+      RiderG1: ARMY.RiderG1,
+      RiderG2: ARMY.RiderG2,
+      RiderG3: ARMY.RiderG3,
+      RiderG4: ARMY.RiderG4,
+      RiderG5: ARMY.RiderG5,
+      SpearmanG1: ARMY.SpearmanG1,
+      SpearmanG2: ARMY.SpearmanG2,
+      SpearmanG3: ARMY.SpearmanG3,
+      SpearmanG4: ARMY.SpearmanG4,
+      SpearmanG5: ARMY.SpearmanG5,
+      ArcherG1: ARMY.ArcherG1,
+      ArcherG2: ARMY.ArcherG2,
+      ArcherG3: ARMY.ArcherG3,
+      ArcherG4: ARMY.ArcherG4,
+      ArcherG5: ARMY.ArcherG5,
       battleGriffinV: ARMY.battleGriffinV,
       battleGriffinVI: ARMY.battleGriffinVI,
       battleGriffinVII: ARMY.battleGriffinVII,
@@ -120,16 +120,16 @@ export const ArmyList = () => {
       coraxII: ARMY.coraxII,
 
       // Specialists
-      'Swordsman S1': ARMY.SwordmanS1,
-      'Swordsman S2': ARMY.SwordmanS2,
-      'Swordsman S3': ARMY.SwordmanS3,
-      'Swordsman S4': ARMY.SwordmanS4,
-      'Swordsman S5': ARMY.SwordmanS5,
-      'Spy S1': ARMY.SpyS1,
-      'Spy S2': ARMY.SpyS2,
-      'Spy S3': ARMY.SpyS3,
-      'Spy S4': ARMY.SpyS4,
-      'Spy S5': ARMY.SpyS5,
+      SwordmanS1: ARMY.SwordmanS1,
+      SwordmanS2: ARMY.SwordmanS2,
+      SwordmanS3: ARMY.SwordmanS3,
+      SwordmanS4: ARMY.SwordmanS4,
+      SwordmanS5: ARMY.SwordmanS5,
+      SpyS1: ARMY.SpyS1,
+      SpyS2: ARMY.SpyS2,
+      SpyS3: ARMY.SpyS3,
+      SpyS4: ARMY.SpyS4,
+      SpyS5: ARMY.SpyS5,
       deadshotV: ARMY.deadshotV,
       deadshotVI: ARMY.deadshotVI,
       deadshotVII: ARMY.deadshotVII,
@@ -155,15 +155,15 @@ export const ArmyList = () => {
       panopticII: ARMY.panopticII,
 
       // Engineering
-      'Catapult E1': ARMY.CatapultE1,
-      'Catapult E2': ARMY.CatapultE2,
-      'Catapult E3': ARMY.CatapultE3,
-      'Catapult E4': ARMY.CatapultE4,
-      'Catapult E5': ARMY.CatapultE5,
-      'Catapult E6': ARMY.CatapultE6,
-      'Catapult E7': ARMY.CatapultE7,
-      'Catapult E8': ARMY.CatapultE8,
-      'Catapult E9': ARMY.CatapultE9,
+      CatapultE1: ARMY.CatapultE1,
+      CatapultE2: ARMY.CatapultE2,
+      CatapultE3: ARMY.CatapultE3,
+      CatapultE4: ARMY.CatapultE4,
+      CatapultE5: ARMY.CatapultE5,
+      CatapultE6: ARMY.CatapultE6,
+      CatapultE7: ARMY.CatapultE7,
+      CatapultE8: ARMY.CatapultE8,
+      CatapultE9: ARMY.CatapultE9,
 
       // Mercenaries
       epicMonsterHunterVI: ARMY.epicMonsterHunterVI,
@@ -474,7 +474,7 @@ export const ArmyList = () => {
     // if (show) console.log('graceII', filterGroups, unit)
 
     if (['bunnieII'].includes(unit.id)) {
-      show = true
+      show = isNotSelectedFilter && true
     }
 
     return show
