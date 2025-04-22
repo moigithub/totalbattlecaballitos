@@ -765,18 +765,18 @@ export const ArmyList = () => {
       className='fixed top-[56px] left-0 z-10 w-64 h-[calc(100vh-56px)] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
       aria-label='Sidebar'
     >
-      <section className='px-4 py-4 max-h-[300px] overflow-y-auto bg-gray-50 dark:bg-gray-800'>
-        <div>
-          <label>Search :</label>
+      <div className=' w-full px-4 py-2  bg-gray-800'>
+        <label>Search :</label>
 
-          <input
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full   p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            type='text'
-            placeholder='Unit name, ie: spearman'
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-        </div>
+        <input
+          className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full   p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          type='text'
+          placeholder='Unit name, ie: spearman'
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+      </div>
+      <section className='px-4 py-2 max-h-[300px] overflow-y-auto bg-gray-50 dark:bg-gray-800'>
         <button
           className='w-full cursor-pointer my-1 px-1 py-0.5 text-sm bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
           type='button'
@@ -1562,7 +1562,7 @@ export const ArmyList = () => {
           </div>
         </div>
       </section>
-      <div className='h-[calc(100%-255px-56px)] mt-2 px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
+      <div className='h-[calc(100%-255px-56px)] mt-2 px-3 py-2 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
         <h2 className='header-title'>Army</h2>
         <div className='army-list'>
           {guardsman.length > 0 &&
