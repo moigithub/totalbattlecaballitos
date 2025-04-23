@@ -1,6 +1,7 @@
-import { selectTargetToAttack } from '@/selecttarget'
+// import { selectTargetToAttack } from '@/selecttarget'
 import { FightStack, ObjProps } from './citadelData'
 import { addReportData, ColumnResult } from './dos'
+import { selectTargetToAttack } from './selecttarget2'
 // import { Result } from './dos'
 import { Stack } from './types'
 // import { whoCanIAttack } from './utils'
@@ -810,16 +811,27 @@ const getNextTurn = (
   isPlayerTurn: boolean,
   playerStacks: FightStack[],
   enemyStacks: FightStack[],
-  attackedStacks: Set<FightStack> // Añadir este parámetro
+  attackedStacks: Set<string> // Añadir este parámetro
 ): FightStack | null => {
   const stacks = isPlayerTurn ? playerStacks : enemyStacks
 
   const aliveStacks = stacks.filter(stack => stack.unitsAmount > 0)
-  const unattackedStacks = aliveStacks.filter(stack => !attackedStacks.has(stack))
+  console.log('alive stacks', aliveStacks)
+  console.table(
+    aliveStacks.map(s => ({
+      id: s.id,
+      name: s.unit.name,
+      strength: calcStackStrengthWithBonus(s, s.unit.strBonus || 0)
+    }))
+  )
+
+  const unattackedStacks = aliveStacks.filter(stack => !attackedStacks.has(stack.id))
+  console.log('attacked stacks', Array.from(attackedStacks))
 
   console.log('nextturn, unattacked, strongest')
   console.table(
     unattackedStacks.map(s => ({
+      id: s.id,
       name: s.unit.name,
       strength: calcStackStrengthWithBonus(s, s.unit.strBonus || 0)
     }))
@@ -850,7 +862,7 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
   while (haveTroopsAlive(attacker) && haveTroopsAlive(defender)) {
     addReportData(checkResult, { bg: '', data: [{ color: 'red', msg: `LAP ${cycle}:` }] })
 
-    const attackedStacks = new Set<FightStack>() // Rastrear stacks que ya han atacado
+    const attackedStacks = new Set<string>() // Rastrear stacks que ya han atacado
     let allStacksAttacked = false // Indica si todos los stacks han atacado en este ciclo
 
     let innerLoopProtect = 200
@@ -879,7 +891,8 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
         // const targetStack = selectTargetWithLoggingBoo2(
         const targetStack = selectTargetToAttack(
           stack,
-          isPlayerTurn ? defender : attacker /*, attackedStacks*/
+          isPlayerTurn ? defender : attacker
+          // attackedStacks
         )
         // console.log('target found', structuredClone(targetStack))
         if (targetStack) {
@@ -904,7 +917,7 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
             ]
           })
 
-          attackedStacks.add(stack) // Marcar el stack como atacado
+          attackedStacks.add(stack.id) // Marcar el stack como atacado
         }
       }
 

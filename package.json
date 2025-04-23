@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "tailwind": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
-    "postinstall": "flowbite-react patch"
+    "postinstall": "flowbite-react patch",
+    "test": "vitest"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
@@ -22,8 +23,10 @@
     "react-dom": "^18.3.1",
     "react-ga4": "^2.1.0",
     "react-router-dom": "^6.27.0",
+    "react-scripts": "^5.0.1",
     "tailwind-merge": "^3.1.0",
     "uuid": "^11.0.2",
+    "vite-tsconfig-paths": "^5.1.4",
     "zustand": "^5.0.0",
     "zustand-debounce": "^2.2.0"
   },
@@ -31,19 +34,25 @@
     "@eslint/js": "^9.13.0",
     "@tailwindcss/vite": "^4.0.15",
     "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
-    "@types/jest": "^29.5.14",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^22.13.13",
-    "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
     "@vitejs/plugin-react": "^4.3.3",
     "eslint": "^9.13.0",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.13",
     "globals": "^15.11.0",
+    "jsdom": "^26.1.0",
     "tailwindcss": "^4.0.15",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.10.0",
-    "vite": "^6.2.5"
+    "unplugin-auto-import": "^19.1.2",
+    "vite": "^6.2.5",
+    "vitest": "^3.1.2"
   }
 }

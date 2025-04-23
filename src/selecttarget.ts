@@ -85,6 +85,7 @@ function calculateAttackDamage(attacker: FightStack, defender: FightStack): Atta
 export function selectTargetToAttack(
   attacker: FightStack,
   defenders: FightStack[]
+  // attackedStacks: Set<string>
 ): FightStack | null {
   // 3. Calcular vida del atacante
   const attackerHealth =
@@ -106,7 +107,7 @@ export function selectTargetToAttack(
     }
   ])
 
-  // 1. Filtrar defensores vivos
+  // 1. Filtrar defensores vivos, que han atacado para hacer counter attack
   const aliveDefenders = defenders.filter(defender => {
     const health =
       defender.unit.BASEHP * (1 + (defender.unit.hpBonus || 0) / 100) * defender.unitsAmount -
@@ -197,8 +198,8 @@ export function selectTargetToAttack(
     .map(s => s.trim())
   const allUniquesCategAndSubGroup = [...new Set(allUnitsCategAndSubGroup)]
   const haveDuplicates = allUnitsCategAndSubGroup.length !== allUniquesCategAndSubGroup.length
-  console.log('%c duplicates?', 'color: orange, font-size: 20px', haveDuplicates && ' YES')
-  console.log(allUnitsCategAndSubGroup, allUniquesCategAndSubGroup)
+  // console.log('%c duplicates?', 'color: orange, font-size: 20px', haveDuplicates && ' YES')
+  // console.log(allUnitsCategAndSubGroup, allUniquesCategAndSubGroup)
 
   validTargets = validTargets.filter(({ defender, stats }) => {
     // game rule... si mi fuerza sobrepasa a su vida busca otro target
@@ -278,7 +279,18 @@ export function selectTargetToAttack(
       }))
     )
 
-    return validTargets[0].defender
+    // const attacked = validTargets.filter(t => attackedStacks.has(t.defender.id))
+    // const notAttacked = validTargets.filter(t => !attackedStacks.has(t.defender.id))
+
+    // if (notAttacked.length === 1) {
+    //   return notAttacked[0].defender // except on last one
+    // } else {
+    //   if (attacked.length > 0) {
+    //     return attacked[0].defender // we counter attack
+    //   }
+    // }
+
+    // return validTargets[0].defender
   }
 
   console.log('no hay targets, fallback to the most threatening target')

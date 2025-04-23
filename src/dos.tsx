@@ -79,7 +79,8 @@ import {
   elf30somebearsurvive2,
   elfHeroic17,
   cursed25Test,
-  cursed25M6Mercs
+  cursed25M6Mercs,
+  testSeq3
 } from '@/citadelPresets.ts'
 
 export interface DataResult {
@@ -864,6 +865,34 @@ second REMAINS second
     }, 300)
   }
 
+  const genTestData = () => {
+    const fightStack = army
+      .map(stack => {
+        const vsPercent = Object.entries(stack.unit).filter(kv => {
+          return kv[0].startsWith('vs') && kv[0].endsWith('Percent') && kv[1] > 0
+        })
+        const vs = vsPercent.map(v => `${v[0]}:${v[1]}`).join(',')
+        return `createFightStack('${stack.id}','${stack.unit.name}','${stack.unit.category}','${stack.unit.subGroup}',${stack.unit.BASESTR},${stack.unit.BASEHP},${stack.strBonus},${stack.hpBonus},${stack.unitsAmount},{${vs}})`
+      })
+      .join(',\n')
+
+    const citadelWithoutWalls = citadel.stacks
+      .filter(stack => stack.unit.category !== 'fortification')
+      .map(stack => {
+        const vsPercent = Object.entries(stack.unit).filter(kv => {
+          return kv[0].startsWith('vs') && kv[0].endsWith('Percent') && kv[1] > 0
+        })
+        const vs = vsPercent.map(v => `${v[0]}:${v[1]}`).join(',')
+        return `createFightStack('${stack.id}','${stack.unit.name}','${stack.unit.category}','${stack.unit.subGroup}',${stack.unit.BASESTR},${stack.unit.BASEHP},0,0,${stack.unitsAmount},{${vs}})`
+      })
+      .join(',\n')
+
+    const playerStacks = 'const playerStacks: FightStack[] = [' + fightStack + ']'
+    const enemyStacks = 'const enemyStacks: FightStack[] = [' + citadelWithoutWalls + ']'
+
+    navigator.clipboard.writeText(playerStacks + '\n\n' + enemyStacks)
+  }
+
   const verifyCitadel = () => {
     setLoading(true)
     console.log('verifying citadele20')
@@ -1132,6 +1161,10 @@ reglas de seleccion confirmadas:
 muestrame un algoritmo de seleccion de objetivo de ataque
 y la implementacion de la funcion selectTargetToAttack en typescript
 
+
+if i have damage bonus against certain category and subgroup, this should take preference, if only one enemy belong to those categories, then it will be selected, if more than one enemy belong to the same category or subgroup, then it should check which one have enough health to receive the attack with all bonuses, then fallback to biggest threat, and finally fallback to strongest
+
+
 en que se seleccione todos los objetivos vivos del oponente
 y que filtre todos los oponentes que su vida total con bonos incluidos menos el daño acumulado,
 sea menor igual al su vida daño total del atacante con bonos incluidos
@@ -1288,6 +1321,9 @@ ignora lo que continua abajo de esta linea:
 
       case 'cursed25Test':
         decodeAndLoadArmySetup(cursed25Test)
+        break
+      case 'testSeq3':
+        decodeAndLoadArmySetup(testSeq3)
         break
     }
   }
@@ -1504,6 +1540,9 @@ ignora lo que continua abajo de esta linea:
             </button>
           </div>
           <div className='mt-5'>
+            <p onClick={genTestData}>test</p>
+          </div>
+          <div className='mt-5'>
             {' '}
             <label>
               Show original/expected sequence
@@ -1696,6 +1735,7 @@ ignora lo que continua abajo de esta linea:
                       <option value='testsequence1'>testsequence1</option>
                       <option value='testsequence2'>someBearMustSurvive</option>
                       <option value='testsequence3'>someBearMustSurvive2</option>
+                      <option value='testSeq3'>testSeq3 elf25</option>
                       <option value='cursed25Test'>cursed25Test</option>
                       <option value='elfHeroic17'>elfHeroic17</option>
                     </select>

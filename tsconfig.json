@@ -8,9 +8,11 @@
     "target": "ES2023",
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
+    "types": ["vitest/globals"]
   }
 }
