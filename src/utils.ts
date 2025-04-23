@@ -2,12 +2,14 @@ import { ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
 // import { EnemyUnit } from './monsters'
-import { BasicUnit, Stack, Unit } from './types'
+import { BasicUnit, EngineerUnit, GuardsmanUnit, SpecialistUnit, Stack } from './types'
 import { decodeHash } from './hashStore'
 import { ARMY } from './soldiers'
 import { StackStoreBasic, useStackStore } from './stackStore'
 
-export const whoCanIAttack = (unit: BasicUnit): string[] => {
+export const whoCanIAttack = (
+  unit: BasicUnit | GuardsmanUnit | SpecialistUnit | EngineerUnit
+): string[] => {
   const target = []
 
   if (unit.vsRangedPercent > 0) {
@@ -58,7 +60,7 @@ export const cn = (...inputs: ClassValue[]) => {
 // tbarmy:"eyJzdGF0ZSI6eyJsZWFkZXJzaGlwIjoxMDAwMCwiYXV0aG9yaXR5IjoxMDAwMCwiZG9taW5hbmNlIjoxMDAwMCwiYXJteSI6W3sibGVhZGVyc2hpcCI6MCwiYXV0aG9yaXR5IjowLCJkb21pbmFuY2UiOjAsImdhcFBlcmNlbnQiOjEwMCwiaWQiOiJTcGVhcm1hbkc1IiwidW5pdEtleSI6IlNwZWFybWFuRzUiLCJ1bml0c0Ftb3VudCI6MCwibWluU2V0dXAiOjAsImxvY2tNaW5TZXR1cCI6dHJ1ZSwibGltaXQiOjAsInN0ckJvbnVzIjowLCJocEJvbnVzIjowLCJ1bml0TGltaXQiOjAsInVzZVVuaXRMaW1pdCI6ZmFsc2UsInVzZVN0ckxpbWl0IjpmYWxzZSwic3RyTGltaXQiOjAsInN0ckxpbWl0VHlwZSI6IiIsInVzZUhwTGltaXQiOmZhbHNlLCJIcExpbWl0IjowfV19LCJ2ZXJzaW9uIjo4fQ=="
 
 const getData = (stack: Stack) => {
-  const unit = ARMY[stack.unitKey as string] as Unit
+  const unit = ARMY[stack.unitKey as string] as BasicUnit
 
   if (!unit) {
     console.log('decodeAndLoadArmySetup error unit', stack.unitKey, stack)

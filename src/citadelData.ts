@@ -3,7 +3,7 @@ import { Category, Group, SubGroup } from './types'
 export interface ObjProps {
   name: string
   category: Category // melee, ranged,mounted,flying,| scout|siege
-  group: Group // 'guardsman' specialist engineer mercs
+  group: Group // 'guardsman' specialist engineer mercs enemy
   subGroup: SubGroup //'elemental' | 'dragon' | 'beast' | 'giant'
   BASESTR: number
   BASEHP: number

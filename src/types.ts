@@ -91,7 +91,7 @@ interface HumanUnit extends BasicUnit {
 
 export interface GuardsmanUnit extends HumanUnit {
   group: 'guardsman'
-  race: 'human' | 'beast'
+  // race: 'human' | 'beast'
   clasification: 'army'
   category: keyof Guardsman
 }
@@ -100,22 +100,22 @@ export interface MercUnit extends BasicUnit {
   AUTHORITY: number
   LEADERSHIP: 0
   DOMINANCE: 0
-  group: 'guardsman'
-  race: 'human'
+  group: 'mercs'
+  // race: 'human'
   clasification: 'merc'
   category: keyof Mercs
 }
 
 export interface SpecialistUnit extends HumanUnit {
   group: 'specialist'
-  race: 'human' | 'beast'
+  // race: 'human' | 'beast'
   clasification: 'army'
   category: keyof Specialist
 }
 
 export interface EngineerUnit extends HumanUnit {
   group: 'engineer'
-  race: 'human'
+  // race: 'human'
   clasification: 'army'
   category: keyof Engineer
 }
@@ -125,8 +125,8 @@ export interface MonsterUnit extends BasicUnit {
   AUTHORITY: 0
   LEADERSHIP: 0
   group: 'monster'
-  subGroup: 'elemental' | 'dragon' | 'beast' | 'giant'
-  race: 'monster'
+  // subGroup: 'elemental' | 'dragon' | 'beast' | 'giant'
+  // race: 'monster'
   clasification: 'monster'
   category: keyof Monster
 }
@@ -144,7 +144,7 @@ export interface Stack {
   gapPercent: number
   usePlusOne: boolean
   useMinusOne: boolean
-  unit: Unit
+  unit: BasicUnit
   hpBonus: number
   strBonus: number
   useUnitLimit: boolean
