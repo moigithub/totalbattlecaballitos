@@ -35,12 +35,6 @@ export const GameCombatInfo = () => {
             <span className='text-lime-700'>The stack with highest strength attack first</span>
           </li>
           <li className='mt-2'>
-            <span className='text-lime-700'>
-              My strongest stack vs the enemy stack that can do the most{' '}
-              <span className='text-purple-600'>efective damage</span> to me
-            </span>
-          </li>
-          <li className='mt-2'>
             The <span className='text-purple-600'>efective damage</span> done to the enemy is
             calculated using the feature bonus
           </li>
@@ -96,66 +90,22 @@ export const GameCombatInfo = () => {
               Picking a target, is based on the greatest possible damage, where it can be used
               better
             </span>
-            <div className='ml-8'>
-              <ul>
-                <li className='ml-5'>Archers have bonus against melee and flying</li>
-                <li className='ml-5'>
-                  IF the enemy have a troop with the same type as my bonus and with higher health
-                  than damage done including bonus (WITHOUT feature bonus), it will pick it as
-                  target
+            <div className='ml-10'>
+              <ul className='list-disc list-inside'>
+                <li>
+                  enemy should be healthy enough, above my damage/strength with bonus/no feat.bonus
                 </li>
-                <div className='ml-10'>
-                  <p>
-                    Continuing the example as archer: where i can do 5500{' '}
-                    <span className='text-purple-700'>regular damage</span>
-                  </p>
-                  <p>
-                    IF the enemy have a troop of type flying, with health of 5501, then it will be
-                    picked as target
-                  </p>
-                  <p>
-                    IF the enemy have more than 2 melee units, example :entVI(vsRanged 55%) and
-                    abominationVI (vsRanged 60%) both with health more than 5500, then it will pick
-                    abominationVI as target, because abominationVI has 60% damage vsRanged, IF it
-                    counter attack/attack back it will do more damage
-                  </p>
-                  <p>
-                    IF the enemy do not have any flying and have a troop of type melee, with health
-                    of 5501, then it will be picked as target
-                  </p>
-                  <p>
-                    IF the enemy have flying and melee units, BUT their health are LOWER than 5500,
-                    then it will be skipped and pick another target
-                  </p>
-                  <p>
-                    IF the enemy DO NOT have any melee or flying units, it will pick the strongest
-                    troop alive
-                  </p>
-                  <img src='/targetSelectionRules1.jpg' alt='target selection rules example' />
-                  <img src='/targetSelectionRules2.jpg' alt='target selection rules example' />
-                  <img src='/targetSelectionRules3.jpg' alt='target selection rules example' />
-                  <ul className='list-disc list-inside'>
-                    <li>
-                      enemy should be healthy enough, above my damage/strength with bonus/no
-                      feat.bonus
-                    </li>
-                    <li>the enemy which we can do most damage would be picked as target</li>
-                    <li>
-                      if we have bonus against enemy (ie: firePhoenix have vsMelee), and we get 2
-                      enemies of the same type (ie: bear and ent, both melee), and our damage+all
-                      bonuses is higher than bear health, but lower than ent health, it will pick
-                      ent as target
-                    </li>
-                    <li>
-                      if we do the same damage to all enemies, then the enemy who can do highest
-                      damage to us would be picked as target (biggest threat)
-                    </li>
-                    <li>if no enemies found, fallback to the strongest enemy</li>
-                  </ul>
-                </div>
-                <br />
+                <li>the enemy which we can do most damage would be picked as target</li>
+                <li>
+                  if the most damage i can do to the enemies are the same, we determine the target
+                  based on the biggest threat (how much damage the enemy could do to us)
+                </li>
               </ul>
+              <img src='/targetSelectionRules1.jpg' alt='target selection rules example' />
+              <img src='/targetSelectionRules2.jpg' alt='target selection rules example' />
+              <img src='/targetSelectionRules3.jpg' alt='target selection rules example' />
             </div>
+            <br />
           </li>
           <li className='mt-2'>
             <span className='text-lime-700'>Damaged applied</span>

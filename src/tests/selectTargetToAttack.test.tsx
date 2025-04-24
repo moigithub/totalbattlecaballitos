@@ -500,7 +500,7 @@ describe('selectTargetToAttack, vsBonus', () => {
     })
   ]
 
-  describe('have 2 or more same type, it should pick lowest health > dmg + all bonuses', () => {
+  describe('have 2 or more same type', () => {
     test('firePhoenixI should hit EntVI, most dmg', () => {
       /**
        *  'firePhoenixI' │ 'flying, elemental' │ 'Melee, Dragon' │hp '1684728540' │ str '612584280'
