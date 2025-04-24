@@ -917,12 +917,23 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
             ]
           })
 
+          // marcar los muertos como atacados
+          if (targetStack.unitsAmount === 0 && !attackedStacks.has(targetStack.id)) {
+            attackedStacks.add(targetStack.id)
+          }
+
           attackedStacks.add(stack.id) // Marcar el stack como atacado
         }
       }
 
       // Verificar si todos los stacks han atacado en este ciclo
       const totalStacks = playerStacks.length + enemyStacks.length
+      console.log(
+        '%c all attacked? ',
+        'font-size:18px;color:purple',
+        attackedStacks.size,
+        totalStacks
+      )
       if (attackedStacks.size >= totalStacks) {
         console.log('all stacks attacked *********')
         allStacksAttacked = true // Todos los stacks han atacado
