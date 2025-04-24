@@ -80,7 +80,9 @@ import {
   elfHeroic17,
   cursed25Test,
   cursed25M6Mercs,
-  testSeq3
+  testSeq3,
+  testSeq4Elf25,
+  testSeq4Elf20
 } from '@/citadelPresets.ts'
 
 export interface DataResult {
@@ -1322,8 +1324,14 @@ ignora lo que continua abajo de esta linea:
       case 'cursed25Test':
         decodeAndLoadArmySetup(cursed25Test)
         break
+      case 'testSeq4Elf20':
+        decodeAndLoadArmySetup(testSeq4Elf20)
+        break
       case 'testSeq3':
         decodeAndLoadArmySetup(testSeq3)
+        break
+      case 'testSeq4Elf25':
+        decodeAndLoadArmySetup(testSeq4Elf25)
         break
     }
   }
@@ -1425,7 +1433,7 @@ ignora lo que continua abajo de esta linea:
               </div>
             </div>
             <div className=''>
-              <div className='group  hidden lg:block'>
+              <div className='mt-5'>
                 <label>Target </label>
                 <select
                   className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -1580,7 +1588,7 @@ ignora lo que continua abajo de esta linea:
       </nav>
 
       <div className='pt-[57px] sm:ml-64 flex bg-gray-900'>
-        <div className='p-4 border-2 max-w-[1200px]'>
+        <div className='p-4 border-2 w-full min-w-[1100px]'>
           <div className='stack-container'>
             <div className='sticky  top-[57px]'>
               <div className='flex items-center  '>
@@ -1735,7 +1743,9 @@ ignora lo que continua abajo de esta linea:
                       <option value='testsequence1'>testsequence1</option>
                       <option value='testsequence2'>someBearMustSurvive</option>
                       <option value='testsequence3'>someBearMustSurvive2</option>
+                      <option value='testSeq4Elf20'>testSeq4 elf20</option>
                       <option value='testSeq3'>testSeq3 elf25</option>
+                      <option value='testSeq4Elf25'>testSeq4 elf25</option>
                       <option value='cursed25Test'>cursed25Test</option>
                       <option value='elfHeroic17'>elfHeroic17</option>
                     </select>
@@ -1842,7 +1852,7 @@ ignora lo que continua abajo de esta linea:
             </div>
           </div>
         </div>
-        <div className='flex flex-col max-w-[300px]'>
+        <div className='flex flex-col w-full min-w-[350px]'>
           <div
             className='p-4'
             onClick={() => {
@@ -1854,7 +1864,7 @@ ignora lo que continua abajo de esta linea:
           </div>
 
           {report.length > 0 && (
-            <div className='relative shrink-0 min-w-[300px]'>
+            <div className='relative shrink-0 w-full'>
               <div className='mt-4 p-4 border-2  sticky top-[164px]  w-fit'>
                 {report.map((data, i) => {
                   let bgColor = ''

@@ -146,7 +146,27 @@ describe('selectTargetToAttack, citadel30', () => {
   })
 
   describe('biggest threat', () => {
-    test('2. coraxI should hit LifeDragonVII, biggest threat', () => {
+    test('2. coraxI should hit LifeDragonVII, most dmg', () => {
+      /**
+       * coraxI (flying) vsMounted, vsFortifications, STR 3,978,097,920 HP 11966901120
+       * vsMounted: 6,392,854,080
+       *
+       * 'LifeDragonVII' │ 'flying, dragon'   │ 'Mounted, Giant'     │STR 552,000,000    │ HP 1,656,000,000
+       * normal dmg to LifeDragonVII 3,978,097,920
+       * health < normal damage.. DISCARTED, not enough health
+       * dmg with bonus to lifeDragon: 3,978,097,920 (sin bono)
+       * if dragon attacks me, dmg : 552,000,000 (biggest threat, he does, higher dmg, sin bono)
+       *
+       *  * conclusion:  DISCARTED, not enough health
+       *
+       * 'CentaurIII' │ 'mounted, ' │ 'Ranged, Siege' │ str 127400000          │ hp 382,200,000
+       * normal dmg to centaur: 3978097920
+       * dmg with bonus to centaur: 6,392,854,080 (i do higher dmg, con bono)
+       * if centaur attacksme, dmg : 127,400,000 (sin bono)
+       *
+       *  * conclusion:  DISCARTED, not enough health
+       *
+       */
       const attacker = playerStacks[0] // coraxI
       const target = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('LifeDragonVII')
@@ -245,7 +265,7 @@ describe('selectTargetToAttack, citadel30', () => {
       expect(target?.unit.name).toBe('coraxI')
     })
 
-    test('15. coraxI should hit PegasoRiderIV, biggest threat ', () => {
+    test('15. coraxI should hit PegasoRiderIV, most dmg ', () => {
       // LifeDragonVII, EntVI, BearV, PegasoRiderIV, CentaurIII
       // coraxI, firePhoenixI, vulturesVI, battleGriffinVII, vulturesVII, fearsomeManticoraV, CatapultE6, battleGriffinVI
 
@@ -275,7 +295,7 @@ describe('selectTargetToAttack, citadel30', () => {
       expect(target?.unit.name).toBe('coraxI')
     })
 
-    test('17. firePhoenixI should hit EntVI, biggest threat ', () => {
+    test('17. firePhoenixI should hit EntVI, most dmg ', () => {
       // LifeDragonVII, EntVI, BearV, PegasoRiderIV, CentaurIII
       // coraxI, firePhoenixI, vulturesVI, battleGriffinVII, vulturesVII, fearsomeManticoraV, CatapultE6, battleGriffinVI
 
@@ -290,7 +310,7 @@ describe('selectTargetToAttack, citadel30', () => {
       expect(target?.unit.name).toBe('EntVI')
     })
 
-    test('19. vulturesVI should hit BearV, biggest threat', () => {
+    test('19. vulturesVI should hit BearV, most dmg', () => {
       // LifeDragonVII, EntVI, BearV, PegasoRiderIV, CentaurIII
       // coraxI, firePhoenixI, vulturesVI, battleGriffinVII, vulturesVII, fearsomeManticoraV, CatapultE6, battleGriffinVI
 
@@ -306,8 +326,8 @@ describe('selectTargetToAttack, citadel30', () => {
     })
   })
 
-  describe('vsBonus preference, have vsBonus, target belong to that categ. and dmg+strBonus <= target health', () => {
-    test('4. firePhoenixI should hit BearV, ent and bear are melees but dmg + all Bonuses is ok high for bear and ent, bear is lower', () => {
+  describe('citadel30 somebearmustsurvive2', () => {
+    test('4. firePhoenixI should hit BearV, biggest threat', () => {
       enemyStacks[0].unitsAmount = 0 // lifeDragons dead
       playerStacks[0].unitsAmount -= 77 // coraxI lost units
       const attacker = playerStacks[1] // firePhoenixI
@@ -315,7 +335,7 @@ describe('selectTargetToAttack, citadel30', () => {
       expect(target?.unit.name).toBe('BearV')
     })
 
-    test('6. vulturesVI should hit CentaurIII, vulture have vsMounted, centaur is mounted, and dmg+bonus <= centaur health', () => {
+    test('6. vulturesVI should hit CentaurIII, most dmg', () => {
       // LifeDragonVII, EntVI, BearV, PegasoRiderIV, CentaurIII
       // coraxI, firePhoenixI, vulturesVI, battleGriffinVII, vulturesVII, fearsomeManticoraV, CatapultE6, battleGriffinVI
 
@@ -327,7 +347,7 @@ describe('selectTargetToAttack, citadel30', () => {
       expect(target?.unit.name).toBe('CentaurIII')
     })
 
-    test('7. BearV should hit firePhoenixI, bear have vsElemental bonus, firephoenix is elemental', () => {
+    test('7. BearV should hit firePhoenixI, most dmg', () => {
       // LifeDragonVII, EntVI, BearV, PegasoRiderIV, CentaurIII
       // coraxI, firePhoenixI, vulturesVI, battleGriffinVII, vulturesVII, fearsomeManticoraV, CatapultE6, battleGriffinVI
 
@@ -340,7 +360,7 @@ describe('selectTargetToAttack, citadel30', () => {
       expect(target?.unit.name).toBe('firePhoenixI')
     })
 
-    test('10. fearsomeManticoraV should hit PegasoRiderIV, manti have vsFlying bonus, pegaso is flying ', () => {
+    test('10. fearsomeManticoraV should hit PegasoRiderIV, most dmg ', () => {
       // LifeDragonVII, EntVI, BearV, PegasoRiderIV, CentaurIII
       // coraxI, firePhoenixI, vulturesVI, battleGriffinVII, vulturesVII, fearsomeManticoraV, CatapultE6, battleGriffinVI
 
@@ -354,7 +374,7 @@ describe('selectTargetToAttack, citadel30', () => {
       expect(target?.unit.name).toBe('PegasoRiderIV')
     })
 
-    test('18. BearV should hit firePhoenixI, bear have vsElemental bonus, firephoenix is elemental', () => {
+    test('18. BearV should hit firePhoenixI, most dmg', () => {
       // LifeDragonVII, EntVI, BearV, PegasoRiderIV, CentaurIII
       // coraxI, firePhoenixI, vulturesVI, battleGriffinVII, vulturesVII, fearsomeManticoraV, CatapultE6, battleGriffinVI
 
@@ -481,7 +501,16 @@ describe('selectTargetToAttack, vsBonus', () => {
   ]
 
   describe('have 2 or more same type, it should pick lowest health > dmg + all bonuses', () => {
-    test('firePhoenixI should hit EntVI, because firePhoenixI have vsMelee bonus, ent and bear are melees but dmg + all Bonuses is too high for bear, not for ent', () => {
+    test('firePhoenixI should hit EntVI, most dmg', () => {
+      /**
+       *  'firePhoenixI' │ 'flying, elemental' │ 'Melee, Dragon' │hp '1684728540' │ str '612584280'
+       * str with vsMelee bonuses  802274880
+       *
+       * 'EntVI'         │ 'melee, elemental' │ 'Ranged, Dragon'         │mostDmg 802274880      │ str 313900000        │strWithBonusVsMe 313900000    │hp: 941700000
+       * 'BearV'         │ 'melee, beast'     │ 'Mounted, Elemental'     │mostDmg 792000000      │ str 264000000        │strWithBonusVsMe 396000000    │hp: 792000000
+
+       */
+
       // LifeDragonVII, EntVI, BearV, PegasoRiderIV, CentaurIII
       // coraxI, firePhoenixI, vulturesVI, battleGriffinVII, vulturesVII, fearsomeManticoraV, CatapultE6, battleGriffinVI
 
@@ -490,6 +519,163 @@ describe('selectTargetToAttack, vsBonus', () => {
       const attacker = playerStacks[1] // firePhoenixI
       const target = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('EntVI')
+    })
+  })
+})
+
+describe('selectTargetToAttack', () => {
+  //citadel 20, testSeq4 elf20
+
+  const playerStacks: FightStack[] = [
+    createFightStack(
+      'battleGriffinV',
+      'battleGriffinV',
+      'flying',
+      '',
+      10000,
+      30000,
+      1996.8,
+      1443.5,
+      140,
+      { vsMountedPercent: 395, vsFortificationsPercent: 208 }
+    ),
+    createFightStack(
+      'battleGriffinVI',
+      'battleGriffinVI',
+      'flying',
+      '',
+      19000,
+      57000,
+      1996.8,
+      1443.5,
+      70,
+      { vsMountedPercent: 592, vsFortificationsPercent: 311 }
+    ),
+    createFightStack(
+      'blackDragonVII',
+      'blackDragonVII',
+      'flying',
+      'dragon',
+      300000,
+      900000,
+      2033.3,
+      1508.5,
+      3,
+      { vsMeleePercent: 570, vsBeastPercent: 729 }
+    ),
+    createFightStack(
+      'windLordVII',
+      'windLordVII',
+      'melee',
+      'elemental',
+      310000,
+      930000,
+      1617.8,
+      1148.5,
+      1,
+      { vsMountedPercent: 387, vsDragonPercent: 911 }
+    ),
+    createFightStack(
+      'destructiveColossusVII',
+      'destructiveColossusVII',
+      'ranged',
+      'giant',
+      290000,
+      870000,
+      1586.3,
+      1123.5,
+      1,
+      { vsFlyingPercent: 547, vsMeleePercent: 752 }
+    ),
+    createFightStack(
+      'ancientTerrorVII',
+      'ancientTerrorVII',
+      'mounted',
+      'beast',
+      280000,
+      840000,
+      1613.3,
+      1187.5,
+      1,
+      { vsRangedPercent: 752, vsFortificationsPercent: 547 }
+    ),
+    createFightStack('CatapultE6', 'E6 Ballistae I', 'siege', '', 4730, 28400, 1142.8, 780, 65, {
+      vsFortificationsPercent: 494
+    })
+  ]
+
+  const enemyStacks: FightStack[] = [
+    createFightStack('1', 'LifeDragonVII', 'flying', 'dragon', 240000, 720000, 0, 0, 41, {
+      vsMountedPercent: 60,
+      vsGiantPercent: 50
+    }),
+    createFightStack('2', 'EntVI', 'melee', 'elemental', 73000, 219000, 0, 0, 110, {
+      vsRangedPercent: 55,
+      vsDragonPercent: 45
+    }),
+    createFightStack('3', 'CentaurIII', 'mounted', '', 2600, 7800, 0, 0, 2500, {
+      vsRangedPercent: 50,
+      vsSiegePercent: 20
+    }),
+    createFightStack('4', 'BearV', 'melee', 'beast', 22000, 66000, 0, 0, 230, {
+      vsMountedPercent: 70,
+      vsElementalPercent: 50
+    }),
+    createFightStack('5', 'DruidII', 'ranged', '', 900, 2700, 0, 0, 3600, { vsMeleePercent: 25 })
+  ]
+
+  describe('pick the one where i can deal highest dmg', () => {
+    test('lifeDragonVII should hit AncientTerrorVII, most dmg', () => {
+      /**
+       *  'LifeDragonVII' │ 'flying, dragon' │ 'Mounted, Giant' │hp '29,520,000' │ str '9840000'
+       * vs Mounted +60%  15_744_000
+       * vs Giant +50%    14_760_000
+       *
+       *  'battleGriffinV'         │ 'flying, '         │ 'Mounted, Fortifications' │ str 29355200   │hp 64827000
+       * normal dmg to griffin: 9,840,000
+       * health > normal damage
+       * dmg with bonus:        9840000
+       * if me ataca,:       29,355,200 (highest threat)
+       *
+       * *conclusion: if i attack battleGriffinV..max damage i can do is 9840000
+       *
+       *
+       *
+       * 'destructiveColossusVII' │'ranged, giant'  │ 'Flying, Melee'       │STR 4890270    │ HP 10,644,450
+       * normal dmg to destructiveColossusVII 9,840,000
+       * health > normal damage
+       *
+       * dmg with bonus to destructiveColossusVII: 14,760,000 (con bono)
+       * if dragon attacks me, dmg : 6476570 (higher threat, he do higher dmg, con bono)
+       *
+       ** conclusion: if i atack destructiveColossusVII, max damage i can do is 10,644,450
+       *
+       *
+       *
+       *'ancientTerrorVII'       │ 'mounted, beast' │ 'Ranged, Fortifications' │STR 4797240    │ HP 10,815,000
+       * normal dmg to ancientTerrorVII 9840000
+       * health > normal damage
+       *
+       * dmg with bonus to ancientTerrorVII: 15,744,000 (I do, higher dmg, con bono)
+       * if dragon attacks me, dmg : 4797240 (sin bono)
+       *
+       ** conclusion: if i atack ancientTerrorVII, max damage i can do is 10,815,000
+       * ----
+       ** final conclusion: can do most dmg to ancientTerrorVII
+       * ----
+       *
+       * got 2 target, destructiveColossusVII(giant), ancientTerrorVII(mounted)
+       *  picking mounted because can do 60% damage, which is higher than 50%
+       *
+       *
+       * lifeDragon STR 552_000_000 vsMounted 883_200_000
+       * ancientTerror HP  Hp 10_815_000
+       */
+      // battleGriffinVI  blackDragonVII  windLordVII  destructiveColossusVII  ancientTerrorVII  CatapultE6
+      // LifeDragonVII  EntVI  CentaurIII  BearV  DruidII
+      const attacker = enemyStacks[0] // LifeDragonVII
+      const target = selectTargetToAttack(attacker, playerStacks)
+      expect(target?.unit.name).toBe('ancientTerrorVII')
     })
   })
 })
