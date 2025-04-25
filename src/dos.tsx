@@ -155,7 +155,7 @@ function Dos() {
   const [presetArmy, setPresetArmy] = useState<string>('')
   const [pasto, setPasto] = useState<boolean>(false)
   const [showTips, setShowTips] = useState<boolean>(false)
-  const [openModal, setOpenModal] = useState(true)
+  const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
 
   // const sensors = useSensor(PointerSensor, {
