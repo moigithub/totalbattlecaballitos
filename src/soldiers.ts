@@ -922,8 +922,8 @@ const CatapultE4 = catapultBuilder('CatapultE4', 'CatapultE4', 'CatapultE4', 875
 const CatapultE5 = catapultBuilder('CatapultE5', 'CatapultE5', 'CatapultE5', 15800, 2630, 329, '5')
 const CatapultE6 = catapultBuilder(
   'CatapultE6',
-  'E6 Ballistae I',
-  'E6 Balista I',
+  'E6 Ballistae VI',
+  'E6 Balista VI',
   28400,
   4730,
   494,
@@ -931,8 +931,8 @@ const CatapultE6 = catapultBuilder(
 )
 const CatapultE7 = catapultBuilder(
   'CatapultE7',
-  'E7 Ballistae II',
-  'E7 Balista II',
+  'E7 Ballistae VII',
+  'E7 Balista VII',
   51000,
   8500,
   740,
