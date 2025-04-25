@@ -83,7 +83,10 @@ export const CitadelData = ({ type }: { type: string }) => {
           return (
             <tr key={`stack${stack.unit.name}`}>
               <td className='px-1 py-0.5'> {stack.unit.name}</td>
-              <td className='px-1 py-0.5'> {stack.unit.category}</td>
+              <td className='px-1 py-0.5'>
+                {' '}
+                {[stack.unit.category, stack.unit.subGroup].join(', ')}
+              </td>
               <td className='px-1 py-0.5'> {stack.unitsAmount}</td>
               <td
                 className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
@@ -213,7 +216,10 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
           return (
             <tr key={`stack${stack.unit.name}`}>
               <td className='px-1 py-0.5'> {stack.unit.name}</td>
-              <td className='px-1 py-0.5'> {stack.unit.category}</td>
+              <td className='px-1 py-0.5'>
+                {' '}
+                {[stack.unit.category, stack.unit.subGroup].join(', ')}
+              </td>
               <td className='px-1 py-0.5'> {stack.unitsAmount}</td>
               {/* amount */}
               <td className='px-1 py-0.5'> {stack.unit.BASESTR}</td>
