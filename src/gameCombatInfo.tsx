@@ -189,6 +189,47 @@ export const GameCombatInfo = () => {
           </li>
         </ul>
 
+        <p>Resumen</p>
+        <ul>
+          <li>
+            1. La secuencia de ataque se determina por la "fuerza del escuadron", primero el más
+            fuerte, luego el siguiente más fuerte, y así hasta el más débil..
+          </li>
+          <li>
+            2. El escuadrón mas fuerte (paso anterior) que aun no haya atacado, atacará al escuadrón
+            al que pueda infligir el mayor daño posible (el calculo de daño incluye
+            caracteristicas).
+          </li>
+          <li>
+            3. Solo se atacara, si el oponente tiene salud suficiente, mayor o igual a la "fuerza
+            del escuadron", si no se buscara otro objetivo
+          </li>
+          <li>
+            4. si varios enemigos pueden recibir el mismo daño, atacará al escuadrón que sea la
+            mayor amenaza.
+          </li>
+          <li>
+            5. la sequencia de ataque es alternada, Si un bando tiene más escuadrones (ejemplo: 10
+            vs 5), los escuadrones extras esperan su turno hasta que todos hayan atacado una vez, y
+            luego se repite el ciclo, hasta que solo quede un bando con vida
+          </li>
+          <li>7. el daño acumulado solo permanece durante la batalla</li>
+          <li>8. el daño maximo aplicado se limita a la cantidad de vida que tiene el oponente</li>
+          <p>formulas:</p>
+          <p>
+            fuerza del escuadron = la fuerza de la tropa + el % de fuerza adicional × número de
+            tropas en el escuadrón (NO incluye las características)
+          </p>
+          <p>example: 100 archerG1 with 55% strength bonus vs flying</p>
+          <p>fuerza del escuadron =50 + 55% * 100 = 7750</p>
+          <p>
+            daño maximo = la fuerza de la tropa + el % de fuerza adicional + el % de las
+            caracteristicas × número de tropas en el escuadrón
+          </p>
+          <p>example: 100 archerG1 with 55% strength bonus vs flying (67%)</p>
+          <p>daño maximo =50 + 55% + 67% * 100 = 11100</p>
+        </ul>
+
         <h2 className='mt-8 font-bold text-4xl text-green-700'>Some strategies used on citadels</h2>
         <ul className='list-disc list-inside'>
           <li className='mt-4 text-red-700'>TO prevent centaurs from killing your catapults</li>
