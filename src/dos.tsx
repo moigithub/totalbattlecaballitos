@@ -82,7 +82,8 @@ import {
   cursed25M6Mercs,
   testSeq3,
   testSeq4Elf25,
-  testSeq4Elf20
+  testSeq4Elf20,
+  testElf30
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
 
@@ -1273,6 +1274,11 @@ ignora lo que continua abajo de esta linea:
       case 'testsequence3':
         decodeAndLoadArmySetup(elf30somebearsurvive2)
         break
+
+      case 'testElf30':
+        decodeAndLoadArmySetup(testElf30)
+        break
+
       case 'elf10G5M5':
         decodeAndLoadArmySetup(elf10G5M5)
         break
@@ -1761,6 +1767,7 @@ ignora lo que continua abajo de esta linea:
                         ------------------
                       </option>
 
+                      <option value='testElf30'>test simulator Elf30</option>
                       <option value='testsequence1'>testsequence1</option>
                       <option value='testsequence2'>someBearMustSurvive</option>
                       <option value='testsequence3'>someBearMustSurvive2</option>
