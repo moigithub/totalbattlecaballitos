@@ -84,15 +84,24 @@ import {
   testSeq4Elf25,
   testSeq4Elf20
 } from '@/citadelPresets.ts'
-
-export interface DataResult {
-  color: string
-  msg: string
-}
+import { BattleReport } from './battleReport.tsx'
 
 export interface ColumnResult {
-  bg: string
-  data: DataResult[]
+  lineCounter: number
+
+  isPlayerTurn: boolean
+  attackerUnits: number
+  attackerName: string
+  attackerUnitLost: number
+  isAttackerDead: boolean
+
+  oponentUnits: number
+  oponentName: string
+  oponentUnitLost: number
+  isOponentDead: boolean
+
+  damage: number
+  usedFeat: boolean
 }
 
 export const addReportData = (checkResult: ColumnResult[], column: ColumnResult) => {
@@ -135,7 +144,8 @@ function Dos() {
 
   // const [selectedTarget, setSelectedTarget] = useState('citadele10')
   const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
-  const [report, setReport] = useState<ColumnResult[]>([])
+  const [reportMeAttacks, setReportMeAttacks] = useState<ColumnResult[]>([])
+  const [reportMeDefends, setReportMeDefends] = useState<ColumnResult[]>([])
 
   const [cardType, setCardType] = useState('card') // card , smallcard
   // const [gapPercent, setGapPercent] = useState(10) // card , smallcard
@@ -144,7 +154,7 @@ function Dos() {
   const [presetArmy, setPresetArmy] = useState<string>('')
   const [pasto, setPasto] = useState<boolean>(false)
   const [showTips, setShowTips] = useState<boolean>(false)
-
+  const [openModal, setOpenModal] = useState(true)
   const [loading, setLoading] = useState(false)
 
   // const sensors = useSensor(PointerSensor, {
@@ -208,7 +218,8 @@ function Dos() {
   }, [selectedTarget])
 
   const changeMobTarget = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setReport([])
+    setReportMeAttacks([])
+    setReportMeDefends([])
     setSelectedTarget(e.target.value)
   }
 
@@ -898,7 +909,7 @@ second REMAINS second
   const verifyCitadel = () => {
     setLoading(true)
     console.log('verifying citadele20')
-    const checkResult: ColumnResult[] = []
+
     // let troopsTypes: boolean = false
 
     // ***********************************
@@ -906,16 +917,6 @@ second REMAINS second
 
     // BOTH sides my army, citadel already ordered based on stack strength, so no need to do anything
     // INFO: I DO first attack
-    addReportData(checkResult, {
-      bg: '',
-      data: [{ color: 'green', msg: 'DOUBLE DAMAGE IS NOT CONSIDERED' }]
-    })
-    addReportData(checkResult, { bg: '', data: [{ color: 'white', msg: 'I ATTACK FIRST' }] })
-    addReportData(checkResult, {
-      bg: '',
-      data: [{ color: 'white', msg: 'ATTACKER: ME, DEFENDER: CITADEL' }]
-    })
-    addReportData(checkResult, { bg: '', data: [{ color: 'white', msg: '------------------' }] })
 
     // prepare army units for fighting, format data to have same structure as citadel
     const myArmy = prepareArmyData(army)
@@ -927,16 +928,9 @@ second REMAINS second
 
     const citadelClone = structuredClone(citadelWithoutWalls)
 
-    let result = fight(myArmy, citadelClone)
-    checkResult.push(...result)
-    addReportData(checkResult, { bg: '', data: [{ color: 'white', msg: '------------------' }] })
-    addReportData(checkResult, { bg: '', data: [{ color: 'white', msg: 'CITADEL ATTACK FIRST' }] })
-    addReportData(checkResult, {
-      bg: '',
-      data: [{ color: 'white', msg: 'ATTACKER: CITADEL, DEFENDER: ME' }]
-    })
-    addReportData(checkResult, { bg: '', data: [{ color: 'white', msg: '------------------' }] })
+    const attackResult = fight(myArmy, citadelClone)
 
+    setReportMeAttacks(attackResult)
     const myArmy2 = prepareArmyData(army)
 
     const citadelWithoutWalls2 = citadel.stacks.filter(
@@ -944,28 +938,41 @@ second REMAINS second
     )
 
     const citadelClone2 = structuredClone(citadelWithoutWalls2)
-    result = fight(citadelClone2, myArmy2)
-    checkResult.push(...result)
+    const defendResult = fight(citadelClone2, myArmy2)
+    setReportMeDefends(defendResult)
     // console.log('citadel after hit', citadel)
 
-    if (sequence === '') {
-      const attackSequence = checkResult
-        .map(entry => {
-          return entry.data
-            .map(data => {
-              return data.msg
-            })
-            .join(' ')
-        })
-        .join('\r\n')
+    // if (sequence === '') {
+    //   const attackHeader = `No double damage or walls are included, \r\nI attack first\r\n`
+    //   const attackSequence = attackResult
+    //     .map(entry => {
+    //       return entry.data
+    //         .map(data => {
+    //           return data.msg
+    //         })
+    //         .join(' ')
+    //     })
+    //     .join('\r\n')
 
-      setSequence(attackSequence)
-    }
-    setReport(checkResult)
+    //   const defendHeader = `No double damage or walls are included, \r\nI defend first\r\n`
+    //   const defendSequence = defendResult
+    //     .map(entry => {
+    //       return entry.data
+    //         .map(data => {
+    //           return data.msg
+    //         })
+    //         .join(' ')
+    //     })
+    //     .join('\r\n')
+
+    //   setSequence(attackHeader + attackSequence + defendHeader + defendSequence)
+    // }
+
     // console.log(' citadele20 result', checkResult)
 
     setTimeout(() => {
       setLoading(false)
+      setOpenModal(true)
     }, 200)
   }
 
@@ -1037,13 +1044,26 @@ Army: A collection of stacks. Each player and enemy initializes an army consisti
 and the following game rules (#gameRules):
 
 1. Selección de objetivo:
-- Target Stack: The stack with the highest threat is selected as the target.
-- se busca al enemigo al que mas daño efectivo se le pueda hacer incluidos los bonos de ataque
-- si tengo mas de 1 bono de ataque, segun mi categoria y mi subGrupo, estos se suman para hacer el calculo del daño total
-- si mi daño total con bonos de ataque son mayores a la vida del enemigo, buscar otro objetivo
-- si el daño total con bono de ataque del enemigo es mayor a mi vida, buscar otro objetivo
-- el daño total con bonos de ataque no puede sobrepasar la vida del oponente
-- si no encuentra ningun objetivo, entonces se elije al mas fuerte de los enemigos
+
+
+1. La secuencia de ataque se determina por la "fuerza del escuadron", primero el más fuerte, luego el siguiente más fuerte, y así hasta el más débil..
+2. El escuadrón mas fuerte (paso anterior) que aun no haya atacado, atacará al escuadrón al que pueda infligir el mayor daño posible (el calculo de daño incluye caracteristicas).
+3. Solo se atacara, si el oponente tiene salud suficiente, mayor o igual a la "fuerza del escuadron", si no se buscara otro objetivo
+4. si varios enemigos pueden recibir el mismo daño, atacará al escuadrón que sea la mayor amenaza.
+5. la sequencia de ataque es alternada, Si un bando tiene más escuadrones (ejemplo: 10 vs 5), los escuadrones extras esperan su turno hasta que todos hayan atacado una vez, y luego se repite el ciclo, hasta que solo quede un bando con vida
+7. el daño acumulado solo permanece durante la batalla
+8. el daño maximo aplicado se limita a la cantidad de vida que tiene el oponente
+
+formulas:
+fuerza del escuadron = la fuerza de la tropa + el % de fuerza adicional × número de tropas en el escuadrón (NO incluye las características)
+
+example: 100 archerG1 with 55% strength bonus    vs flying
+fuerza del escuadron =50 + 55% * 100 = 7750
+
+daño maximo = la fuerza de la tropa + el % de fuerza adicional + el % de las caracteristicas × número de tropas en el escuadrón
+
+example: 100 archerG1 with 55% strength bonus    vs flying (67%)
+daño maximo =50 + 55% + 67% * 100 = 11100
 
 
 2. Daño efectivo:
@@ -1189,7 +1209,7 @@ ignora lo que continua abajo de esta linea:
     setJsonExport(report2)
     alert('asdfasfasd')
     console.log('report promp', jsonExport)
-    console.log('report promp', report)
+
     navigator.clipboard.writeText(report2)
   }
 
@@ -1236,7 +1256,8 @@ ignora lo que continua abajo de esta linea:
   }
 
   const loadPresetArmy = (event: ChangeEvent<HTMLSelectElement>) => {
-    setReport([])
+    setReportMeAttacks([])
+    setReportMeDefends([])
     setPresetArmy(event.target.value)
 
     switch (event.target.value) {
@@ -1642,7 +1663,7 @@ ignora lo que continua abajo de esta linea:
                     Export army
                   </button>
 
-                  <div className='ml-10 w-[200px] flex items-center'>
+                  <div className='ml-10 w-full min-w-[250px] flex items-center'>
                     <label>Preset</label>
                     <select
                       className='ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -1863,48 +1884,13 @@ ignora lo que continua abajo de esta linea:
             {troopsSummary}
           </div>
 
-          {report.length > 0 && (
-            <div className='relative shrink-0 w-full'>
-              <div className='mt-4 p-4 border-2  sticky top-[164px]  w-fit'>
-                {report.map((data, i) => {
-                  let bgColor = ''
-                  if (data.bg == 'gray') {
-                    bgColor = 'bg-yellow-950'
-                  } else if (data.bg == 'darkgray') {
-                    bgColor = 'bg-gray-800'
-                  }
-
-                  return (
-                    <li key={`rpt${i}`} className={`text-sm bg- ${bgColor}`}>
-                      {data.data.map((col, x) => {
-                        let color = 'text-green-400'
-                        if (col.color == 'blue') {
-                          color = 'text-blue-500'
-                        }
-                        if (col.color == 'white') {
-                          color = 'text-gray-200'
-                        }
-                        if (col.color == 'red') {
-                          color = 'text-red-500'
-                        }
-                        if (col.color == 'purple') {
-                          color = 'text-purple-200'
-                        }
-                        if (col.color == 'yellow') {
-                          color = 'text-yellow-300'
-                        }
-                        return (
-                          <span key={`col${x}`} className={`${color}`}>
-                            {col.msg}{' '}
-                          </span>
-                        )
-                      })}
-                    </li>
-                  )
-                })}
-              </div>
-            </div>
-          )}
+          <BattleReport
+            open={openModal}
+            onOpen={setOpenModal}
+            attackReport={reportMeAttacks}
+            defendReport={reportMeDefends}
+            title={selectedTarget}
+          />
         </div>
       </div>
 

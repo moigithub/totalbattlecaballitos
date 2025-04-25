@@ -139,7 +139,7 @@ function calculateAttackStats(attacker: FightStack, defender: FightStack): Attac
   }
 }
 
-function getBonus(attacker: FightStack, targetType: string): number {
+export function getBonus(attacker: FightStack, targetType: string): number {
   const property = `vs${capitalizeFirstLetter(targetType)}Percent` as keyof ObjProps
   return (attacker.unit[property] as number) || 0
 }
