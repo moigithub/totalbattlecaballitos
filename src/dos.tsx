@@ -155,6 +155,7 @@ function Dos() {
   const [presetArmy, setPresetArmy] = useState<string>('')
   const [pasto, setPasto] = useState<boolean>(false)
   const [showTips, setShowTips] = useState<boolean>(false)
+  const [showTargetData, setShowTargetData] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -1424,61 +1425,103 @@ ignora lo que continua abajo de esta linea:
       <PageTitle title='Calc' />
       <ArmyList />
 
-      <nav className='pt-[57px] sm:ml-64 flex'>
-        <div className='px-3 py-3 lg:px-5 lg:pl-3'>
-          <div className='config-container flex flex-wrap gap-8'>
+      <nav className='pt-[57px] sm:ml-64 flex flex-col'>
+        <div className='px-3 py-3 lg:px-5 lg:pl-3 flex'>
+          <div className='config-container flex items-center'>
             <div className=''>
-              <div>
-                <label>Leadership </label>
-                <input
-                  type='number'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  value={leadership}
-                  onChange={changeLeadership}
-                  required
-                />
-              </div>
-              <div>
-                <label>Authority (mercs)</label>
-                <input
-                  type='number'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  value={authority}
-                  onChange={changeAuthority}
-                  required
-                />
-              </div>
-              <div>
-                <label>Dominance (monsters)</label>
-                <input
-                  type='number'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  value={dominance}
-                  onChange={changeDominance}
-                  required
-                />
-              </div>
+              <button
+                data-drawer-target='sidebar-multi-level-sidebar'
+                data-drawer-toggle='sidebar-multi-level-sidebar'
+                aria-controls='sidebar-multi-level-sidebar'
+                type='button'
+                className='cursor-pointer sm:hidden focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300   rounded-lg text-xs px-0.5 py-0.5 me-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
+              >
+                Show Army
+              </button>
             </div>
-            <div className=''>
-              <div className='mt-5'>
-                <label>Target </label>
-                <select
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  value={selectedTarget}
-                  onChange={changeMobTarget}
-                >
-                  <option value='citadele10'>Elf Citadel lvl 10</option>
-                  <option value='citadele15'>Elf Citadel lvl 15</option>
-                  <option value='citadele20'>Elf Citadel lvl 20</option>
-                  <option value='citadele25'>Elf Citadel lvl 25</option>
-                  <option value='citadele30'>Elf Citadel lvl 30</option>
-                  <option value='citadelc20'>Cursed Citadel lvl 20</option>
-                  <option value='citadelc25'>Cursed Citadel lvl 25</option>
-                  <option value='lvl17HeroicElfSquad'>lvl 17 Heroic Elf Squad</option>
-                </select>
-              </div>
 
-              <div className='mt-5'>
+            <div className='ml-2 flex items-center'>
+              <label>Target </label>
+              <select
+                className='ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                value={selectedTarget}
+                onChange={changeMobTarget}
+              >
+                <option value='citadele10'>Elf Citadel lvl 10</option>
+                <option value='citadele15'>Elf Citadel lvl 15</option>
+                <option value='citadele20'>Elf Citadel lvl 20</option>
+                <option value='citadele25'>Elf Citadel lvl 25</option>
+                <option value='citadele30'>Elf Citadel lvl 30</option>
+                <option value='citadelc20'>Cursed Citadel lvl 20</option>
+                <option value='citadelc25'>Cursed Citadel lvl 25</option>
+                <option value='lvl17HeroicElfSquad'>lvl 17 Heroic Elf Squad</option>
+              </select>
+            </div>
+
+            <div className='ml-2 '>
+              <label>
+                Show target data{' '}
+                <input
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm   focus:ring-blue-500 focus:border-blue-500   w-[15px] h-[15px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  type='checkbox'
+                  checked={showTargetData}
+                  onChange={() => setShowTargetData(!showTargetData)}
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+
+        {showTargetData && (
+          <div className='hidden lg:block'>
+            {selectedTarget === 'citadele10' && <CitadelData type='e10' />}
+            {selectedTarget === 'citadele15' && <CitadelData type='e15' />}
+            {selectedTarget === 'citadele20' && <CitadelData type='e20' />}
+            {selectedTarget === 'citadele25' && <CitadelData type='e25' />}
+            {selectedTarget === 'citadele30' && <CitadelData type='e30' />}
+            {selectedTarget === 'citadelc20' && <CitadelData type='c20' />}
+            {selectedTarget === 'citadelc25' && <CitadelData type='c25' />}
+            {selectedTarget === 'lvl17HeroicElfSquad' && <div>lvl17 Heroic Elf Squad</div>}
+          </div>
+        )}
+
+        <div className='flex gap-4'>
+          <div className=' border border-b-blue-500 p-2'>
+            <div>
+              <label>Leadership </label>
+              <input
+                type='number'
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                value={leadership}
+                onChange={changeLeadership}
+                required
+              />
+            </div>
+            <div>
+              <label>Authority (mercs)</label>
+              <input
+                type='number'
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                value={authority}
+                onChange={changeAuthority}
+                required
+              />
+            </div>
+            <div>
+              <label>Dominance (monsters)</label>
+              <input
+                type='number'
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                value={dominance}
+                onChange={changeDominance}
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className=' border border-b-blue-500 p-2'>
+              <div className=' '>
                 <label>Sacrifice strength limit</label>
                 <input
                   type='radio'
@@ -1503,24 +1546,34 @@ ignora lo que continua abajo de esta linea:
                 />
               </div>
             </div>
+            <div className='mt-5 border border-b-blue-500 p-2'>
+              <label>
+                Show original/expected sequence{' '}
+                <input
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500   w-[15px] h-[15px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  type='checkbox'
+                  checked={pasto}
+                  onChange={() => setPasto(!pasto)}
+                />
+              </label>
+            </div>
+            <div className='mt-5  border border-b-blue-500 p-2 flex'>
+              <label>
+                Show tips{' '}
+                <input
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm   focus:ring-blue-500 focus:border-blue-500   w-[15px] h-[15px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                  type='checkbox'
+                  checked={showTips}
+                  onChange={() => setShowTips(!showTips)}
+                />
+              </label>
+            </div>
           </div>
 
-          {/* ---------------------- */}
-
-          <div className=''>
-            <button
-              data-drawer-target='sidebar-multi-level-sidebar'
-              data-drawer-toggle='sidebar-multi-level-sidebar'
-              aria-controls='sidebar-multi-level-sidebar'
-              type='button'
-              className='cursor-pointer sm:hidden focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300   rounded-lg text-xs px-0.5 py-0.5 me-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
-            >
-              Show Army
-            </button>
-
-            <div className='mt-5'>
+          <div className='flex flex-col gap-2'>
+            <div className=' border border-b-blue-500 p-2'>
               <div>
-                <label>Card</label>
+                <label>Card</label>{' '}
                 <input
                   type='radio'
                   value='card'
@@ -1532,7 +1585,7 @@ ignora lo que continua abajo de esta linea:
                 />
               </div>
               <div>
-                <label>Small Card</label>
+                <label>Small Card</label>{' '}
                 <input
                   type='radio'
                   value='card'
@@ -1542,9 +1595,9 @@ ignora lo que continua abajo de esta linea:
                     setCardType('smallcard')
                   }}
                 />
-              </div>{' '}
+              </div>
               <div>
-                <label>Tiny Card</label>
+                <label>Tiny Card</label>{' '}
                 <input
                   type='radio'
                   value='card'
@@ -1556,61 +1609,32 @@ ignora lo que continua abajo de esta linea:
                 />
               </div>
             </div>
-          </div>
-          <div className='mt-5'>
-            <button
-              className='px-2 py-0.5 bg-red-600 text-gray-100 rounded-2xl'
-              onClick={generateData}
-            >
-              testAI
-            </button>
-          </div>
-          <div className='mt-5'>
-            <button
-              className='px-5 py-0.5 bg-indigo-500 text-md font-bold text-white rounded-lg'
-              onClick={verifyCitadel}
-              disabled={loading}
-            >
-              {loading ? '.....thinking' : 'ZimulatoR'}
-            </button>
-          </div>
-          <div className='mt-5'>
-            <p onClick={genTestData}>test</p>
-          </div>
-          <div className='mt-5'>
-            {' '}
-            <label>
-              Show original/expected sequence
-              <input
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500   w-[15px] h-[15px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                type='checkbox'
-                checked={pasto}
-                onChange={() => setPasto(!pasto)}
-              />{' '}
-            </label>
-          </div>
-          <div className='mt-5'>
-            <label>
-              Show tips
-              <input
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm   focus:ring-blue-500 focus:border-blue-500   w-[15px] h-[15px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                type='checkbox'
-                checked={showTips}
-                onChange={() => setShowTips(!showTips)}
-              />
-            </label>
-          </div>
-        </div>
 
-        <div className='hidden lg:block'>
-          {selectedTarget === 'citadele10' && <CitadelData type='e10' />}
-          {selectedTarget === 'citadele15' && <CitadelData type='e15' />}
-          {selectedTarget === 'citadele20' && <CitadelData type='e20' />}
-          {selectedTarget === 'citadele25' && <CitadelData type='e25' />}
-          {selectedTarget === 'citadele30' && <CitadelData type='e30' />}
-          {selectedTarget === 'citadelc20' && <CitadelData type='c20' />}
-          {selectedTarget === 'citadelc25' && <CitadelData type='c25' />}
-          {selectedTarget === 'lvl17HeroicElfSquad' && <div>lvl17 Heroic Elf Squad</div>}
+            <div className=' border border-b-blue-500 p-2 flex gap-2'>
+              <div className=''>
+                <button
+                  className='px-2 py-0.5 bg-red-600 text-gray-100 rounded-2xl'
+                  onClick={generateData}
+                >
+                  testAI
+                </button>
+              </div>
+
+              <div className=''>
+                <p onClick={genTestData}>test</p>
+              </div>
+            </div>
+
+            <div className=''>
+              <button
+                className='px-5 py-2.5 cursor-pointer bg-indigo-500 text-md font-bold text-white rounded-lg text-3xl leading-5 tracking-widest'
+                onClick={verifyCitadel}
+                disabled={loading}
+              >
+                {loading ? '.....thinking' : 'SIMULATE Fight'}
+              </button>
+            </div>
+          </div>
         </div>
       </nav>
 
@@ -1796,14 +1820,14 @@ ignora lo que continua abajo de esta linea:
 
               <div className='btn-group'>
                 <button
-                  className='inline-flex text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed'
                   onClick={calcSTR}
                   disabled={loading}
                 >
                   {loading ? '.....thinking' : 'CALCULATE'}
                 </button>
                 <button
-                  className='inline-flex cursor-pointer focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300    text-lg px-3.5 py-0.5 me-2  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
+                  className='cursor-pointer focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300    text-lg px-3.5 py-0.5 me-2  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
                   onClick={() => {
                     setArmy([])
                     setPresetArmy('')
@@ -1812,7 +1836,7 @@ ignora lo que continua abajo de esta linea:
                   Clear
                 </button>
                 <button
-                  className='inline-flex cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
+                  className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
                   onClick={() => {
                     setArmy(
                       armyRef.current.toSorted((a, b) => {
