@@ -42,12 +42,6 @@ export const BattleReport = ({
 
 const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
   return report.map((data, i) => {
-    // let bgColor = ''
-    // if (data.bg == 'gray') {
-    //   bgColor = 'bg-yellow-950'
-    // } else if (data.bg == 'darkgray') {
-    //   bgColor = 'bg-gray-800'
-    // }
     const {
       isPlayerTurn,
       lineCounter,
@@ -66,8 +60,8 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
     console.log('report data', data)
 
     const bgColor = isPlayerTurn
-      ? 'bg-gradient-to-r from-zinc-800 from-10%  to-gray-700 to-80% '
-      : 'bg-gradient-to-l from-zinc-800 from-10%  to-gray-700 to-80% '
+      ? 'bg-gradient-to-r from-gray-800 from-10%  to-gray-700 to-80% '
+      : 'bg-gradient-to-l from-gray-800 from-10%  to-gray-700 to-80% '
     return (
       <div key={`rpt${i}`} className={`p-2 flex gap-1.5 items-center ${bgColor}`}>
         <div className='p-4'>{lineCounter}</div>
@@ -84,8 +78,11 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
             )}
           </div>
           {isAttackerDead && (
-            <div className='absolute top-0  w-full h-full flex items-center justify-center text-red-600'>
-              <span className='font-lg font-bold text-2xl'>Dead</span>
+            <div className='absolute top-0  w-full h-full flex items-center justify-center text-red-600 '>
+              {/* <span className='font-lg font-bold text-2xl'>Dead</span>
+               */}
+              <div className='bg-gray-900/70 absolute w-full h-full'></div>
+              <img className='z-1' src='./cross.png' alt='dead' width={60} height={60} />
             </div>
           )}
         </div>
@@ -104,7 +101,10 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
           </div>
           {isOponentDead && (
             <div className='absolute  top-0 w-full h-full flex items-center justify-center text-red-600'>
-              <span className='font-lg font-bold text-2xl'>Dead</span>
+              {/* <span className='font-lg font-bold text-2xl'>Dead</span>
+               */}
+              <div className='bg-gray-900/70 absolute w-full h-full'></div>
+              <img className='z-1' src='./cross.png' alt='dead' width={60} height={60} />
             </div>
           )}
         </div>
@@ -119,12 +119,6 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
 
 const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
   return report.map((data, i) => {
-    // let bgColor = ''
-    // if (data.bg == 'gray') {
-    //   bgColor = 'bg-yellow-950'
-    // } else if (data.bg == 'darkgray') {
-    //   bgColor = 'bg-gray-800'
-    // }
     const {
       isPlayerTurn,
       lineCounter,
@@ -143,8 +137,8 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
     console.log('report data', data)
 
     const bgColor = isPlayerTurn
-      ? 'bg-gradient-to-r from-zinc-800 from-10%  to-gray-700 to-80% '
-      : 'bg-gradient-to-l from-zinc-800 from-10%  to-gray-700 to-80% '
+      ? 'bg-gradient-to-r from-gray-800 from-10%  to-gray-700 to-80% '
+      : 'bg-gradient-to-l from-gray-800 from-10%  to-gray-700 to-80% '
     return (
       <div key={`rpt${i}`} className={`p-2 flex gap-1.5 items-center ${bgColor}`}>
         <div className='p-4'>{lineCounter}</div>
@@ -162,7 +156,10 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
           </div>
           {isOponentDead && (
             <div className='absolute top-0  w-full h-full flex items-center justify-center text-red-600'>
-              <span className='font-lg font-bold text-2xl'>Dead</span>
+              {/* <span className='font-lg font-bold text-2xl'>Dead</span>
+               */}
+              <div className='bg-gray-900/70 absolute  w-full h-full'></div>
+              <img className='z-1' src='./cross.png' alt='dead' width={60} height={60} />
             </div>
           )}
         </div>
@@ -181,7 +178,10 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
           </div>
           {isAttackerDead && (
             <div className='absolute  top-0 w-full h-full flex items-center justify-center text-red-600'>
-              <span className='font-lg font-bold text-2xl'>Dead</span>
+              {/* <span className='font-lg font-bold text-2xl'>Dead</span>
+               */}
+              <div className='bg-gray-900/70 absolute w-full h-full'></div>
+              <img className='z-1' src='./cross.png' alt='dead' width={60} height={60} />
             </div>
           )}
         </div>

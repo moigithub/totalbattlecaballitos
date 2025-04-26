@@ -5,7 +5,7 @@ import App from './App.tsx'
 
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-// import Uno from './uno.tsx'
+
 import Dos from './dos.tsx'
 import { Info } from './info.tsx'
 import { MercList } from './mercList.tsx'
@@ -24,10 +24,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <Navigate to='/calc' replace={true} /> },
-      // {
-      //   path: 'v1',
-      //   element: <Uno />
-      // },
+
       {
         path: 'calc',
         element: <Dos />

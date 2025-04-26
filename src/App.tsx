@@ -34,11 +34,11 @@ function App() {
         <NavbarToggle />
         <NavbarCollapse>
           <NavbarLink href='/calc'>Stack Calc</NavbarLink>
-          <NavbarLink href='/info'>info</NavbarLink>
           <NavbarLink href='/mercenaries'>Mercenaries</NavbarLink>
           <NavbarLink href='/citadels-catas'>Citadels catapults</NavbarLink>
           <NavbarLink href='/game-combat'>Game combat</NavbarLink>
-          <NavbarLink href='/merc-finder'>Game combat</NavbarLink>
+          <NavbarLink href='/merc-finder'>Merc finder tools</NavbarLink>
+          <NavbarLink href='/info'>old info</NavbarLink>
         </NavbarCollapse>
       </Navbar>
 

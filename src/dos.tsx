@@ -86,6 +86,7 @@ import {
   testElf30
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
+import { Checkbox } from 'flowbite-react'
 
 export interface ColumnResult {
   lineCounter: number
@@ -1461,9 +1462,7 @@ ignora lo que continua abajo de esta linea:
             <div className='ml-2 '>
               <label>
                 Show target data{' '}
-                <input
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm   focus:ring-blue-500 focus:border-blue-500   w-[15px] h-[15px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  type='checkbox'
+                <Checkbox
                   checked={showTargetData}
                   onChange={() => setShowTargetData(!showTargetData)}
                 />
@@ -1486,7 +1485,7 @@ ignora lo que continua abajo de esta linea:
         )}
 
         <div className='flex gap-4'>
-          <div className=' border border-b-blue-500 p-2'>
+          <div className=' border border-blue-400/25 p-2 border-opacity-10'>
             <div>
               <label>Leadership </label>
               <input
@@ -1520,7 +1519,7 @@ ignora lo que continua abajo de esta linea:
           </div>
 
           <div>
-            <div className=' border border-b-blue-500 p-2'>
+            <div className=' border border-blue-400/25 p-2 border-opacity-10'>
               <div className=' '>
                 <label>Sacrifice strength limit</label>
                 <input
@@ -1546,32 +1545,31 @@ ignora lo que continua abajo de esta linea:
                 />
               </div>
             </div>
-            <div className='mt-5 border border-b-blue-500 p-2'>
+
+            <div className='mt-2  border border-blue-400/25 p-2 border-opacity-10 flex'>
               <label>
-                Show original/expected sequence{' '}
-                <input
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500   w-[15px] h-[15px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  type='checkbox'
-                  checked={pasto}
-                  onChange={() => setPasto(!pasto)}
-                />
+                Show tips <Checkbox checked={showTips} onChange={() => setShowTips(!showTips)} />
               </label>
             </div>
-            <div className='mt-5  border border-b-blue-500 p-2 flex'>
+
+            <div className='mt-2 border border-blue-400/25 p-2 border-opacity-10 flex gap-2'>
+              <button
+                className='px-2 py-0.5 bg-red-600 text-gray-100 rounded-2xl'
+                onClick={generateData}
+              >
+                testAI
+              </button>
+
+              <p onClick={genTestData}>test</p>
+
               <label>
-                Show tips{' '}
-                <input
-                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm   focus:ring-blue-500 focus:border-blue-500   w-[15px] h-[15px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                  type='checkbox'
-                  checked={showTips}
-                  onChange={() => setShowTips(!showTips)}
-                />
+                Seq <Checkbox checked={pasto} onChange={() => setPasto(!pasto)} />
               </label>
             </div>
           </div>
 
           <div className='flex flex-col gap-2'>
-            <div className=' border border-b-blue-500 p-2'>
+            <div className=' border border-blue-400/25 p-2 border-opacity-10'>
               <div>
                 <label>Card</label>{' '}
                 <input
@@ -1610,24 +1608,9 @@ ignora lo que continua abajo de esta linea:
               </div>
             </div>
 
-            <div className=' border border-b-blue-500 p-2 flex gap-2'>
-              <div className=''>
-                <button
-                  className='px-2 py-0.5 bg-red-600 text-gray-100 rounded-2xl'
-                  onClick={generateData}
-                >
-                  testAI
-                </button>
-              </div>
-
-              <div className=''>
-                <p onClick={genTestData}>test</p>
-              </div>
-            </div>
-
             <div className=''>
               <button
-                className='px-5 py-2.5 cursor-pointer bg-indigo-500 text-md font-bold text-white rounded-lg text-3xl leading-5 tracking-widest'
+                className='px-5 py-4 cursor-pointer bg-green-500 text-md font-bold text-white rounded-lg text-3xl leading-5 tracking-widest'
                 onClick={verifyCitadel}
                 disabled={loading}
               >
@@ -1638,8 +1621,17 @@ ignora lo que continua abajo de esta linea:
         </div>
       </nav>
 
+      <div
+        className='p-1 sm:ml-64  bg-gray-900'
+        onClick={() => {
+          navigator.clipboard.writeText(troopsSummary)
+        }}
+      >
+        <p className='block w-full'>click to copy</p>
+        {troopsSummary}
+      </div>
       <div className='pt-[57px] sm:ml-64 flex bg-gray-900'>
-        <div className='p-4 border-2 w-full min-w-[1100px]'>
+        <div className='p-4 border-2 border-blue-400/25  w-full min-w-[1100px]'>
           <div className='stack-container'>
             <div className='sticky  top-[57px]'>
               <div className='flex items-center  '>
@@ -1849,7 +1841,7 @@ ignora lo que continua abajo de esta linea:
                     )
                   }}
                 >
-                  dont touch me
+                  Sort by health (descending)
                 </button>
 
                 {showCatasVsWallWarning && (
@@ -1905,16 +1897,6 @@ ignora lo que continua abajo de esta linea:
           </div>
         </div>
         <div className='flex flex-col w-full min-w-[350px]'>
-          <div
-            className='p-4'
-            onClick={() => {
-              navigator.clipboard.writeText(troopsSummary)
-            }}
-          >
-            <p className='block w-full'>click to copy</p>
-            {troopsSummary}
-          </div>
-
           <BattleReport
             open={openModal}
             onOpen={setOpenModal}

@@ -66,7 +66,7 @@ export const MercFinder = () => {
 
         <h3>HOW to use it</h3>
         <p>
-          make sure you are at 25% zoon, scroll, scroll, scroll, scroll, scroll, scroll, scroll,
+          make sure you are at 25% zoom, scroll, scroll, scroll, scroll, scroll, scroll, scroll,
           scroll, scroll, scroll, scroll, until it BEEPS, then you have your merc on the screen
         </p>
 
@@ -79,6 +79,14 @@ export const MercFinder = () => {
           <br />
           <p>alternative if you play on windows:</p>
           <p>executable program: https://tinyurl.com/imgFindTB</p>
+        </div>
+
+        <div>
+          <p>
+            also saw another tool named clickerman, which uses a script to find some
+            pixels/points/color pattern on the screen
+          </p>
+          <p>and autohotkey, which can do image search</p>
         </div>
 
         <br />
