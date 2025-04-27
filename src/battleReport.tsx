@@ -57,8 +57,6 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
       usedFeat
     } = data
 
-    console.log('report data', data)
-
     const bgColor = isPlayerTurn
       ? 'bg-gradient-to-r from-gray-800 from-10%  to-gray-700 to-80% '
       : 'bg-gradient-to-l from-gray-800 from-10%  to-gray-700 to-80% '
@@ -133,8 +131,6 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
       damage,
       usedFeat
     } = data
-
-    console.log('report data', data)
 
     const bgColor = isPlayerTurn
       ? 'bg-gradient-to-r from-gray-800 from-10%  to-gray-700 to-80% '

@@ -188,7 +188,7 @@ function Dos() {
   }, [])
 
   useEffect(() => useStackStore.subscribe(state => (armyRef.current = state.army)), [])
-  console.log('selectedTarget', selectedTarget)
+
   useEffect(() => {
     let selectedCitadel = citadele10
     if (selectedTarget === 'citadele10') {
@@ -243,6 +243,95 @@ function Dos() {
       const value = parseInt(e.target.value)
       setDominance(value)
     }
+  }
+
+  const shouldAddArmy = (ARMY: Stack[], i: number) => {
+    const stack = ARMY[i]
+    if (stack.useUnitLimit && stack.unitsAmount >= stack.unitLimit) {
+      // console.log('rompio unit limit')
+      return false
+    }
+
+    if (stack.useStrLimit) {
+      const stackStrengthWithBonus = getStrengthWithBonus(stack)
+      const featBonus =
+        stack.strLimitType
+          .split(',')
+          .map(t => t.trim())
+          .filter(Boolean) ?? []
+      const allBonusesPercent = stackStrengthWithBonus.reduce(
+        (total, bonus) => (featBonus.includes(bonus.type) ? bonus.percent + total : total),
+        0
+      )
+
+      const unitStrengthBase = stack.unit.BASESTR * (1 + (stack.strBonus + allBonusesPercent) / 100)
+      const stackStrength = unitStrengthBase * stack.unitsAmount
+
+      let unitStrength = unitStrengthBase
+      if (stack.usePlusOne) {
+        unitStrength = unitStrengthBase * 0
+      }
+      if (stack.useMinusOne) {
+        unitStrength = unitStrengthBase * 2
+      }
+
+      // console.log(' stackstrength', stackStrength)
+      // console.log('unitStrengthBase', unitStrengthBase)
+      // console.log('stack.unitsAmount', stack.unitsAmount)
+      // console.log('unitstrengt', unitStrength)
+      // console.log('both', stackStrength + unitStrength, '>', stack.strLimit)
+      // console.log('featBonus', featBonus)
+      // console.log('allBonusesPercent', allBonusesPercent)
+      if (stackStrength + unitStrength >= stack.strLimit) {
+        // console.log('rompio strlimit')
+        return false
+      }
+    }
+
+    const unitsCount = 1
+    const stackStrength = getStackStrength(ARMY, i)
+    // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
+    const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
+    const newStackStrength = totalSTRPerUnit * unitsCount
+
+    // 3. calcular str del sacrificio
+    const sacrificeGroupStrength = getStackStrength(ARMY, 0)
+    // console.log('sacrifice strength', sacrificeGroupStrength)
+
+    // calculate gap for next stacks
+    const gapStrength = (sacrificeGroupStrength * gapBasePercent) / 100
+
+    const finalGapStrength = (gapStrength * ARMY[i - 1].gapPercent) / 100
+    let groupStrength = sacrificeGroupStrength - finalGapStrength
+    if (addUnitMode === 'previousStackStatsLimit') {
+      const previousGroupStrength = getStackStrength(ARMY, i - 1)
+      groupStrength = previousGroupStrength - finalGapStrength
+    }
+    console.log('group with gap', stackStrength + newStackStrength, '>', groupStrength)
+    if (stackStrength + newStackStrength >= groupStrength) {
+      // 9. agregar al stack
+      // console.log('rompio stack str')
+      return false
+    }
+
+    const stackHealth = getStackHealth(ARMY, i)
+    // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
+    const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
+    const newStackHealth = totalHPPerUnit * unitsCount
+    if (stack.useHpLimit && stackHealth + newStackHealth >= stack.HpLimit) {
+      // console.log(
+      //   'dom: hp limit',
+      //   ARMY[i].useHpLimit,
+      //   stackHealth + newStackHealth,
+      //   '>=',
+      //   ARMY[i].HpLimit
+      // )
+
+      // console.log('rompio HP limit')
+      return false
+    }
+
+    return true
   }
 
   const calcSTR = () => {
@@ -332,29 +421,29 @@ second REMAINS second
     let lastDominanceCalculated = 0 // to break the loop, if didnt changed (loop protection)
 
     let playing = true
-    let gapStrength = 0
+
     while (playing) {
       // 1. check leadership acumulado del army
       // 2. agregar 1 unit al sacrificio
-      let stack: Stack | null = ARMY[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
+      const stackZero: Stack | null = ARMY[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
       // console.log('army0', army[0], armyRef.current[0])
 
       let canIAddToFirstStack = true
       if (
-        stack.unit.clasification === 'army' &&
-        getArmyLeadership(ARMY) + stack.unit.LEADERSHIP > leadership
+        stackZero.unit.clasification === 'army' &&
+        getArmyLeadership(ARMY) + stackZero.unit.LEADERSHIP > leadership
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
       } else if (
-        stack.unit.clasification === 'merc' &&
-        getArmyAuthority(ARMY) + stack.unit.AUTHORITY > authority
+        stackZero.unit.clasification === 'merc' &&
+        getArmyAuthority(ARMY) + stackZero.unit.AUTHORITY > authority
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
       } else if (
-        stack.unit.clasification === 'monster' &&
-        getArmyDominance(ARMY) + stack.unit.DOMINANCE > dominance
+        stackZero.unit.clasification === 'monster' &&
+        getArmyDominance(ARMY) + stackZero.unit.DOMINANCE > dominance
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
@@ -364,72 +453,65 @@ second REMAINS second
         canIAddToFirstStack = false
       }
 
-      const unitStrength = stack.unit.BASESTR * (1 + stack.strBonus / 100)
-
+      // const unitStrength = stack.unit.BASESTR * (1 + stack.strBonus / 100)
+      console.log('use str limit 0', ARMY[0].useStrLimit, stackZero.strLimitType)
       if (ARMY[0].useStrLimit) {
-        if (
-          stack.strLimitType === '' &&
-          getStackStrength(ARMY, 0) + unitStrength >= ARMY[0].strLimit
-        ) {
-          // el strLimit se pone la vida del enemigo
-          // para que calcule la cantidad maxima de tropas a enviar
-          // en el calculo del strLimit SIN  feature bonus: ejm. SIN vsMelee
-          // la fuerza maxima del stack debe ser menor que la vida del enemigo
-          // para que al seleccionar objetivo se tenga como target ese stack espeficico del enemigo
-          // ejm.
-          // si tengo bono de ataque vsMounted, y el enemigo tiene una tropa de tipo mounted, y su vida es de 1000
-          // para poder atacarlo, la fuerza maxima de mi stack debe ser menor que 1000
-          //--
-          // SI incluyo el bono vsMounted en el calculo de la fuerza maxima, debo agregar 1 unidad extra a la cuenta de tropas
-          // para que el daño efectivo total (incluido vsMounted) sobrepase a la vida disponible del enemigo
-          //--
-          // SI NO incluyo algun bono en el calculo de la fuerza maxima, voy a tener unidades extra, que aun van a atacar al mismo objetivo
-          // y el daño efectivo total, va a exceder mucho mas que la vida disponible del enemigo
-          //--
-          // en ambos casos se apunta al mismo objetivo, pero al incluir el bono vsMounted y agregar 1, se ahorran mas tropas
-          //--
-          // en el codigo al tener la comprobacion con > y NO con >= automaticamente se suma 1 a la cuenta, por lo que el usuario no tiene que agregar nada
+        const stackStrengthWithBonus = getStrengthWithBonus(ARMY[0])
 
+        const featBonus =
+          stackZero.strLimitType
+            .split(',')
+            .map(t => t.trim())
+            .filter(Boolean) ?? []
+        // if (featBonus.length >= 0) {
+        const allBonusesPercent = stackStrengthWithBonus.reduce(
+          (total, bonus) => (featBonus.includes(bonus.type) ? bonus.percent + total : total),
+          0
+        )
+
+        const unitStrengthBase =
+          stackZero.unit.BASESTR * (1 + (stackZero.strBonus + allBonusesPercent) / 100)
+        const stackStrength = unitStrengthBase * stackZero.unitsAmount
+
+        let unitStrength = unitStrengthBase
+        if (stackZero.usePlusOne) {
+          unitStrength = unitStrengthBase * 0
+        }
+        if (stackZero.useMinusOne) {
+          unitStrength = unitStrengthBase * 2
+        }
+        // fix: 14/4/25
+        // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
+        // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
+
+        // fix: 17/4/25
+        // si se pasa (ver nota anterior 14/4/25) el selectTarget cambiara de objetivo
+        // a otro donde no haya desperdicio de daño: ver ejemplo firefenix vs melee or ent, cual escoje?
+
+        // fix: 27/04/25
+        // los bonos se pueden acumular, ejm: stonegargoyle(vsMelee,vsBeast) vs Beast(melee,beast)
+
+        // en strLimit se pone la vida del enemigo
+        // para que calcule la cantidad maxima de tropas a enviar
+        // en el calculo del strLimit se usa el feature bonus: ejm. vsMelee
+        // que se usa para el calculo del "daño efectivo" que es lo que se aplica al restar vida en una pelea
+        // por lo tanto, este "daño efectivo" debe ser mayor o igual a la vida
+        // por lo que debo agregar 1 unidad extra a la cuenta de tropas
+        // y se debe usar > en lugar de >=
+
+        console.log('ZERO stackstrength', stackStrength)
+        console.log('unitstrengt', unitStrength)
+        console.log('both', stackStrength + unitStrength, '>', ARMY[0].strLimit)
+        console.log('featBonus', featBonus)
+        console.log('allBonusesPercent', allBonusesPercent)
+        if (stackStrength + unitStrength >= ARMY[0].strLimit) {
+          console.log('no zero add')
           canIAddToFirstStack = false
-        } else {
-          const stackStrengthWithBonus = getStrengthWithBonus(ARMY[0])
-
-          const strLimitValue = stackStrengthWithBonus.find(
-            limit => limit.type === stack?.strLimitType
-          )
-          if (strLimitValue) {
-            const stackStrength = strLimitValue.str
-            let unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
-            if (stack.usePlusOne) {
-              unitStrength = 0
-            }
-            if (stack.useMinusOne) {
-              unitStrength = unitStrength * 2
-            }
-            // fix: 14/4/25
-            // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
-            // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
-
-            // fix: 17/4/25
-            // si se pasa (ver nota anterior 14/4/25) el selectTarget cambiara de objetivo
-            // a otro donde no haya desperdicio de daño: ver ejemplo firefenix vs melee or ent, cual escoje?
-
-            // en strLimit se pone la vida del enemigo
-            // para que calcule la cantidad maxima de tropas a enviar
-            // en el calculo del strLimit se usa el feature bonus: ejm. vsMelee
-            // que se usa para el calculo del "daño efectivo" que es lo que se aplica al restar vida en una pelea
-            // por lo tanto, este "daño efectivo" debe ser mayor o igual a la vida
-            // por lo que debo agregar 1 unidad extra a la cuenta de tropas
-            // y se debe usar > en lugar de >=
-            if (stackStrength + unitStrength > ARMY[0].strLimit) {
-              canIAddToFirstStack = false
-            }
-          }
         }
       }
 
-      const unitHealth = stack.unit.BASEHP * (1 + stack.hpBonus / 100)
-      if (ARMY[0].useHpLimit && getStackHealth(ARMY, 0) + unitHealth > ARMY[0].HpLimit) {
+      const unitHealth = stackZero.unit.BASEHP * (1 + stackZero.hpBonus / 100)
+      if (ARMY[0].useHpLimit && getStackHealth(ARMY, 0) + unitHealth >= ARMY[0].HpLimit) {
         canIAddToFirstStack = false
       }
 
@@ -439,152 +521,23 @@ second REMAINS second
 
       // console.log('army0', army[0], armyRef.current[0])
 
-      // 3. calcular str del sacrificio
-      const sacrificeGroupStrength = getStackStrength(ARMY, 0)
-      // console.log('sacrifice strength', sacrificeGroupStrength)
-
-      // calculate gap for next stacks
-      gapStrength = (sacrificeGroupStrength * gapBasePercent) / 100
-
-      // const monsterStack = getMobTarget(stack.unit)
-      // const unitsNeededToKill1Mob = calculateUnitsMobKill(monsterStack.unit, stack.unit)
-      // updateMinSetup(stack.id!, unitsNeededToKill1Mob)
-
       for (let i = 1; i < ARMY.length; i++) {
-        stack = ARMY[i] //armyRef.current[i]
-        if (!stack) {
+        if (!ARMY[i]) {
           playing = false
           break
         }
         // console.log('current stack', stack)
 
-        // 4. calcular cuantos unit necesita pa matar 1 mob
-        // const monsterStack = getMobTarget(stack.unit)
-
-        // TODO: move calc minsetup when add the soldier (left panel)
-        // const unitsNeededToKill1Mob = calculateUnitsMobKill(monsterStack.unit, stack.unit)
-        // const unitsNeededToKill1Mob = 1 //siempre 1
-        // updateMinSetup(stack.id!, unitsNeededToKill1Mob)
-        // console.log('min units mob kill', stack.unit.name, unitsNeededToKill1Mob)
-
         /**manejo de leadership */
-        if (stack.unit.clasification === 'army') {
+        if (ARMY[i].unit.clasification === 'army') {
           // 6. check leadership del nuevo grupo
-          // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
           const unitsCount = 1 // por ahora siempre 1
-          const newStackLeadership = stack.unit.LEADERSHIP * unitsCount
+          const newStackLeadership = ARMY[i].unit.LEADERSHIP * unitsCount
 
           // 7 check leadership acumulado + leadership nuevo sea menor que el disponible
 
           while (getArmyLeadership(ARMY) + newStackLeadership <= leadership) {
-            // console.log(
-            //   '...lead',
-            //   stack.unit.name,
-            //   stack.strBonus,
-            //   stack.useStrLimit,
-            //   stack.strLimit,
-            //   stack.useUnitLimit,
-            //   stack.unitLimit
-            // )
-            // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackStrength = getStackStrength(ARMY, i)
-
-            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
-            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
-            const newStackStrength = totalSTRPerUnit * unitsCount
-
-            const finalGapStrength = (gapStrength * ARMY[i - 1].gapPercent) / 100
-
-            let groupStrength = sacrificeGroupStrength - finalGapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
-            if (addUnitMode === 'previousStackStatsLimit') {
-              const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength - finalGapStrength
-            }
-
-            // console.log(
-            //   'unit limit',
-            //   stack.useUnitLimit,
-            //   stack.units,
-            //   getStackUnits(stack.id),
-            //   stack.unitLimit,
-            //   getStackStrLimit(stack.id),
-            //   stack.strLimit
-            // )
-            if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
-              // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
-              // console.log('rompio lead1')
-              break
-            }
-
-            // if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
-            //   // console.log(
-            //   //   'lead: str limit',
-            //   //   ARMY[i].useStrLimit,
-            //   //   stackStrength + newStackStrength,
-            //   //   '>=',
-            //   //   ARMY[i].strLimit
-            //   // )
-
-            //   // console.log('rompio lead2')
-            //   break
-            // }
-
-            if (ARMY[i].useStrLimit) {
-              if (
-                stack.strLimitType === '' &&
-                stackStrength + newStackStrength >= ARMY[i].strLimit
-              ) {
-                break
-              } else {
-                const stackStrengthWithBonus = getStrengthWithBonus(ARMY[i])
-
-                const strLimitValue = stackStrengthWithBonus.find(
-                  limit => limit.type === stack?.strLimitType
-                )
-                if (strLimitValue) {
-                  const stackStrength = strLimitValue.str
-                  let unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
-                  if (stack.usePlusOne) {
-                    unitStrength = 0
-                  }
-                  if (stack.useMinusOne) {
-                    unitStrength = unitStrength * 2
-                  }
-                  // fix: 14/4/25
-                  // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
-                  // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
-
-                  // fix: 17/4/25
-                  // si se pasa (ver nota anterior 14/4/25) el selectTarget cambiara de objetivo
-                  // a otro donde no haya desperdicio de daño: ver ejemplo firefenix vs melee or ent, cual escoje?
-
-                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
-                    break
-                  }
-                }
-              }
-            }
-
-            if (stackStrength + newStackStrength >= groupStrength) {
-              // 9. agregar al stack
-              // console.log('rompio lead3')
-              break
-            }
-
-            const stackHealth = getStackHealth(ARMY, i)
-            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
-            const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
-            const newStackHealth = totalHPPerUnit * unitsCount
-            if (ARMY[i].useHpLimit && stackHealth + newStackHealth >= ARMY[i].HpLimit) {
-              // console.log(
-              //   'lead: hp limit',
-              //   ARMY[i].useHpLimit,
-              //   stackHealth + newStackHealth,
-              //   '>=',
-              //   ARMY[i].HpLimit
-              // )
-
-              // console.log('rompio lead4')
+            if (!shouldAddArmy(ARMY, i)) {
               break
             }
 
@@ -595,122 +548,15 @@ second REMAINS second
           }
         }
 
-        if (stack.unit.clasification === 'merc') {
+        if (ARMY[i].unit.clasification === 'merc') {
           // 5. check authority acumulado del mercenaries
           // 6. check authority del nuevo grupo
           // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
           const unitsCount = 1 //siempre 1
-          const newStackAuthority = stack.unit.AUTHORITY * unitsCount
+          const newStackAuthority = ARMY[i].unit.AUTHORITY * unitsCount
           // 7 check authority acumulado + authority nuevo sea menor que el disponible
           while (getArmyAuthority(ARMY) + newStackAuthority <= authority) {
-            // console.log(
-            //   '...auth',
-            //   stack.unit.name,
-            //   stack.strBonus,
-            //   stack.useStrLimit,
-            //   stack.strLimit,
-            //   stack.useUnitLimit,
-            //   stack.unitLimit
-            // )
-            // console.log(
-            //   'check auth calc MENOR IGUAL ',
-            //   getArmyAuthority(ARMY) + newStackAuthority,
-            //   'authority',
-            //   authority
-            // )
-            // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackStrength = getStackStrength(ARMY, i)
-            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
-            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
-            const newStackStrength = totalSTRPerUnit * unitsCount
-
-            const finalGapStrength = (gapStrength * ARMY[i - 1].gapPercent) / 100
-            let groupStrength = sacrificeGroupStrength - finalGapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
-            if (addUnitMode === 'previousStackStatsLimit') {
-              const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength - finalGapStrength
-            }
-
-            if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
-              // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
-              // console.log('rompio merc1')
-              break
-            }
-
-            // if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
-            //   // console.log(
-            //   //   'auth: str limit',
-            //   //   ARMY[i].useStrLimit,
-            //   //   stackStrength + newStackStrength,
-            //   //   '>=',
-            //   //   ARMY[i].strLimit
-            //   // )
-            //   // console.log('rompio merc2')
-            //   break
-            // }
-            if (ARMY[i].useStrLimit) {
-              if (
-                stack.strLimitType === '' &&
-                stackStrength + newStackStrength >= ARMY[i].strLimit
-              ) {
-                break
-              } else {
-                const stackStrengthWithBonus = getStrengthWithBonus(ARMY[i])
-
-                const strLimitValue = stackStrengthWithBonus.find(
-                  limit => limit.type === stack?.strLimitType
-                )
-                if (strLimitValue) {
-                  const stackStrength = strLimitValue.str
-                  let unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
-                  if (stack.usePlusOne) {
-                    unitStrength = 0
-                  }
-                  if (stack.useMinusOne) {
-                    unitStrength = unitStrength * 2
-                  }
-                  // fix: 14/4/25
-                  // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
-                  // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
-
-                  // fix: 17/4/25
-                  // si se pasa (ver nota anterior 14/4/25) el selectTarget cambiara de objetivo
-                  // a otro donde no haya desperdicio de daño: ver ejemplo firefenix vs melee or ent, cual escoje?
-
-                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
-                    break
-                  }
-                }
-              }
-            }
-
-            if (stackStrength + newStackStrength >= groupStrength) {
-              // console.log(
-              //   'break on str mayor ',
-              //   stackStrength,
-              //   newStackStrength,
-              //   stackStrength + newStackStrength,
-              //   '>',
-              //   groupStrength
-              // )
-              // console.log('rompio merc3')
-              break
-            }
-
-            const stackHealth = getStackHealth(ARMY, i)
-            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
-            const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
-            const newStackHealth = totalHPPerUnit * unitsCount
-            if (ARMY[i].useHpLimit && stackHealth + newStackHealth >= ARMY[i].HpLimit) {
-              // console.log(
-              //   'auth: hp limit',
-              //   ARMY[i].useHpLimit,
-              //   stackHealth + newStackHealth,
-              //   '>=',
-              //   ARMY[i].HpLimit
-              // )
-
-              // console.log('rompio merc4')
+            if (!shouldAddArmy(ARMY, i)) {
               break
             }
 
@@ -720,12 +566,11 @@ second REMAINS second
           }
         }
 
-        if (stack.unit.clasification === 'monster') {
+        if (ARMY[i].unit.clasification === 'monster') {
           // 5. check DOMINANCE acumulado del mercenaries
           // 6. check DOMINANCE del nuevo grupo
-          // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
           const unitsCount = 1
-          const newStackDominance = stack.unit.DOMINANCE * unitsCount
+          const newStackDominance = ARMY[i].unit.DOMINANCE * unitsCount
 
           // 7 check DOMINANCE acumulado + DOMINANCE nuevo sea menor que el disponible
           while (getArmyDominance(ARMY) + newStackDominance <= dominance) {
@@ -739,95 +584,12 @@ second REMAINS second
             //   stack.unitLimit
             // )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
-            const stackStrength = getStackStrength(ARMY, i)
-            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus)
-            const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
-            const newStackStrength = totalSTRPerUnit * unitsCount
 
-            const finalGapStrength = (gapStrength * ARMY[i - 1].gapPercent) / 100
-            let groupStrength = sacrificeGroupStrength - finalGapStrength // if (addUnitMode === 'sacrificeStatsLimit') {}
-            if (addUnitMode === 'previousStackStatsLimit') {
-              const previousGroupStrength = getStackStrength(ARMY, i - 1)
-              groupStrength = previousGroupStrength - finalGapStrength
-            }
-
-            if (ARMY[i].useUnitLimit && ARMY[i].unitsAmount >= ARMY[i].unitLimit) {
-              // if (stack.useUnitLimit && getStackUnits(stack.id) >= getStackUnitLimit(stack.id)) {
-              // console.log('rompio dom1')
+            if (!shouldAddArmy(ARMY, i)) {
               break
             }
 
-            // if (ARMY[i].useStrLimit && stackStrength + newStackStrength >= ARMY[i].strLimit) {
-            //   // console.log(
-            //   //   'dominance: str limit',
-            //   //   ARMY[i].useStrLimit,
-            //   //   stackStrength + newStackStrength,
-            //   //   '>=',
-            //   //   ARMY[i].strLimit
-            //   // )
-            //   // console.log('rompio dom2')
-            //   break
-            // }
-            if (ARMY[i].useStrLimit) {
-              if (
-                stack.strLimitType === '' &&
-                stackStrength + newStackStrength >= ARMY[i].strLimit
-              ) {
-                break
-              } else {
-                const stackStrengthWithBonus = getStrengthWithBonus(ARMY[i])
-
-                const strLimitValue = stackStrengthWithBonus.find(
-                  limit => limit.type === stack?.strLimitType
-                )
-                if (strLimitValue) {
-                  const stackStrength = strLimitValue.str
-                  let unitStrength = stack.unit.BASESTR * (1 + strLimitValue.percent / 100)
-                  if (stack.usePlusOne) {
-                    unitStrength = 0
-                  }
-                  if (stack.useMinusOne) {
-                    unitStrength = unitStrength * 2
-                  }
-                  // fix: 14/4/25
-                  // para poder apuntar a un objetivo, solo el str sin feat.bono debe estar debajo del limite de vida del oponente
-                  // el strLimit con bono si puede pasar, es mas si DEBE pasar para poder asegurar que lo mate
-
-                  // fix: 17/4/25
-                  // si se pasa (ver nota anterior 14/4/25) el selectTarget cambiara de objetivo
-                  // a otro donde no haya desperdicio de daño: ver ejemplo firefenix vs melee or ent, cual escoje?
-
-                  if (stackStrength + unitStrength > ARMY[i].strLimit) {
-                    break
-                  }
-                }
-              }
-            }
-
-            if (stackStrength + newStackStrength >= groupStrength) {
-              // 9. agregar al stack
-              // console.log('rompio dom3')
-              break
-            }
-
-            const stackHealth = getStackHealth(ARMY, i)
-            // const totalSTRPerUnit = getSTRWithBonus(stack.unit, bonus) //sin el config bonus
-            const totalHPPerUnit = stack.unit.BASEHP * (1 + stack.hpBonus / 100) // ahora individual cada stack tiene su prpio bonus
-            const newStackHealth = totalHPPerUnit * unitsCount
-            if (ARMY[i].useHpLimit && stackHealth + newStackHealth >= ARMY[i].HpLimit) {
-              // console.log(
-              //   'dom: hp limit',
-              //   ARMY[i].useHpLimit,
-              //   stackHealth + newStackHealth,
-              //   '>=',
-              //   ARMY[i].HpLimit
-              // )
-
-              // console.log('rompio dom4')
-              break
-            }
-
-            // console.log('dominance: agregando units en ', ARMY[i].unit.name)
+            console.log('dominance: agregando units en ', ARMY[i].unit.name)
             addArmyUnits(ARMY, i, unitsCount)
           }
         }

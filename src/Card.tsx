@@ -5,6 +5,8 @@ import { useStackStore } from './stackStore'
 import { Stack } from './types'
 import { whoCanIAttack } from './utils'
 import { cn } from './utils'
+import { Checkbox } from 'flowbite-react'
+import { useState } from 'react'
 
 export const Card = ({
   stack,
@@ -42,11 +44,24 @@ export const Card = ({
   const getStackAllStrength = useStackStore(state => state.getStackAllStrength)
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stack.id })
   const setGapPercent = useStackStore(state => state.setGapPercent)
+  const [featBonus, setFeatBonus] = useState<string[]>([])
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     marginBottom: `${stack.gapPercent / 5}px`
+  }
+
+  const checkFeatBonus = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const bonus = e.target.value
+    let bonuses = featBonus
+    if (bonuses.includes(bonus)) {
+      bonuses = featBonus.filter(b => b !== bonus)
+    } else {
+      bonuses = [...featBonus, bonus]
+    }
+    setFeatBonus(bonuses)
+    setStrLimitType(stack.id!, bonuses.join(','))
   }
 
   const unitHealth = stack.unit.BASEHP * (1 + stack.hpBonus / 100)
@@ -56,16 +71,48 @@ export const Card = ({
   const stackAllStrength = getStackAllStrength(stack.id!)
   const otherStrengthInfo = stackAllStrength.map(data => {
     return (
-      <span className={data.type} key={data.type}>
+      <span
+        className={`ml-2 whitespace-nowrap ${data.type}`}
+        key={data.type}
+        onClick={() => navigator.clipboard.writeText(data.str.toString())}
+      >
         {data.type}({data.percent}%) {data.str.toLocaleString().replace(/,/g, '_')}
+        {stack.useStrLimit && (
+          <Checkbox
+            className='ml-2'
+            value={data.type}
+            checked={featBonus.includes(data.type)}
+            onChange={checkFeatBonus}
+            // onClick={(e) => setStrLimitType(stack.id!, data.type)}
+          />
+        )}
       </span>
     )
   })
-  const strBonusOptions = stackAllStrength.map(data => data.type)
+
+  const allBonusesPercent = stackAllStrength.reduce(
+    (total, bonus) => (featBonus.includes(bonus.type) ? bonus.percent + total : total),
+    0
+  )
+  const totalDamage =
+    stack.unit.BASESTR * (1 + (stack.strBonus + allBonusesPercent) / 100) * stack.unitsAmount
+  otherStrengthInfo.push(
+    <span
+      className={`ml-2 whitespace-nowrap bg-gray-700 text-gray-200 px-2.5`}
+      key={'allselectedbonus'}
+    >
+      Damage ({allBonusesPercent}%) {totalDamage.toFixed(0)}
+    </span>
+  )
+
+  // const strBonusOptions = stackAllStrength.map(data => data.type)
 
   return (
     <div
-      className={cn('stack-card', overflow ? 'border-red-600 border-3' : 'border border-gray-500 ')}
+      className={cn(
+        'stack-card ',
+        overflow ? 'border-red-600 border-3' : 'border border-gray-500 '
+      )}
       ref={setNodeRef}
       style={style}
     >
@@ -156,7 +203,7 @@ export const Card = ({
       </div>
 
       <div className='stack-strLimit'>
-        Str Limit?
+        Dmg Limit?
         <input
           type='checkbox'
           checked={stack.useStrLimit}
@@ -166,20 +213,6 @@ export const Card = ({
         />
         {stack.useStrLimit && (
           <>
-            <select
-              className='ml-1 inline-flex bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full max-w-[80px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              onChange={e => {
-                setStrLimitType(stack.id!, e.target.value)
-              }}
-              value={stack.strLimitType}
-            >
-              <option value=''>Stack Str</option>
-              {strBonusOptions.map(option => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
             <input
               type='number'
               className='ml-1 inline-flex  bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full max-w-[120px] p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
@@ -267,19 +300,6 @@ export const Card = ({
           -
         </button>
       </div>
-      {/* {!isFirst && (
-        <div className='stack-config'>
-          <label>lock Min</label>
-
-          <input
-            type='checkbox'
-            checked={stack.lockMinSetup}
-            onChange={() => {
-              toggleLockMin(stack.id!)
-            }}
-          />
-        </div>
-      )} */}
 
       <div className='stack-delete'>
         <button
@@ -313,7 +333,6 @@ export const Card = ({
           Str {unitStrength.toLocaleString().replace(/,/g, '_')}
         </span>
       </div>
-      {/* <span className='stack-id tiny'>(id.{stack.id})</span> */}
 
       <div className='stack-gap relative mb-6'>
         <label htmlFor='labels-range-input' className='sr-only'>
