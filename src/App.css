@@ -167,6 +167,7 @@ table th {
 
   gap: 8px;
   min-width: 600px;
+  max-width: 1200px;
   width: 100%;
   margin: 10px 0;
 }

@@ -63,7 +63,7 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
     return (
       <div key={`rpt${i}`} className={`p-2 flex gap-1.5 items-center ${bgColor}`}>
         <div className='p-4'>{lineCounter}</div>
-        <div className='flex flex-col justify-between shrink-0 relative border border-b-fuchsia-500 w-[200px] h-[80px]'>
+        <div className='flex flex-col justify-between shrink-0 relative border border-fuchsia-500/80 w-[200px] h-[80px]'>
           <div className='font-bold text-center px-2'>{attackerName}</div>
           <div>
             <div className='text-right px-2 text-white text-xs bg-gradient-to-r from-transparent from-30% via-gray-700 via-60% to-gray-900 to-100% '>
@@ -85,7 +85,7 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
           )}
         </div>
         <div className='font-extrabold text-5xl'>{isPlayerTurn ? '⇒' : '⇐'}</div>
-        <div className='flex flex-col justify-between shrink-0  relative border border-b-fuchsia-500 w-[200px] h-[80px]'>
+        <div className='flex flex-col justify-between shrink-0  relative border border-fuchsia-500/80 w-[200px] h-[80px]'>
           <div className='font-bold text-center px-2'>{oponentName}</div>
           <div>
             <div className='text-right px-2 text-white text-xs bg-gradient-to-r from-transparent from-30% via-gray-700 via-60% to-gray-900 to-100% '>
@@ -138,7 +138,7 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
     return (
       <div key={`rpt${i}`} className={`p-2 flex gap-1.5 items-center ${bgColor}`}>
         <div className='p-4'>{lineCounter}</div>
-        <div className='flex flex-col justify-between shrink-0 relative border border-b-fuchsia-500 w-[200px] h-[80px]'>
+        <div className='flex flex-col justify-between shrink-0 relative border border-fuchsia-500/80 w-[200px] h-[80px]'>
           <div className='font-bold text-center px-2'>{oponentName}</div>
           <div>
             <div className='text-right px-2 text-white text-xs bg-gradient-to-r from-transparent from-30% via-gray-700 via-60% to-gray-900 to-100% '>
@@ -160,7 +160,7 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
           )}
         </div>
         <div className='font-extrabold text-5xl'>{isPlayerTurn ? '⇐' : '⇒'}</div>
-        <div className='flex flex-col justify-between shrink-0  relative border border-b-fuchsia-500 w-[200px] h-[80px]'>
+        <div className='flex flex-col justify-between shrink-0  relative border border-fuchsia-500/80 w-[200px] h-[80px]'>
           <div className='font-bold text-center px-2'>{attackerName}</div>
           <div>
             <div className='text-right px-2 text-white text-xs bg-gradient-to-r from-transparent from-30% via-gray-700 via-60% to-gray-900 to-100% '>

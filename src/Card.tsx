@@ -72,7 +72,7 @@ export const Card = ({
   const otherStrengthInfo = stackAllStrength.map(data => {
     return (
       <span
-        className={`ml-2 whitespace-nowrap ${data.type}`}
+        className={`ml-2 whitespace-nowrap text-xs flex items-center ${data.type}`}
         key={data.type}
         onClick={() => navigator.clipboard.writeText(data.str.toString())}
       >
@@ -106,13 +106,14 @@ export const Card = ({
 
   otherStrengthInfo.push(
     <span
-      className={`ml-2 whitespace-nowrap bg-gray-700 text-gray-200 px-2.5`}
+      className={`ml-2 whitespace-nowrap font-bold bg-gray-700 text-gray-200 px-2.5`}
       key={'allselectedbonus'}
+      onClick={() => navigator.clipboard.writeText(totalDamage.toFixed(0))}
     >
       {multiplier > 1 && (
-        <span className='text-sm text-orange-200'>(x{stack.unit.multiplier})</span>
+        <span className='text-xs text-orange-200'>(x{stack.unit.multiplier})</span>
       )}{' '}
-      Damage ({allBonusesPercent}%) {totalDamage.toFixed(0)}
+      Damage {allBonusesPercent > 0 && <>({allBonusesPercent}%)</>} {totalDamage.toFixed(0)}
     </span>
   )
 
@@ -150,7 +151,7 @@ export const Card = ({
           STR {stackStrength.toLocaleString().replace(/,/g, '_')}
         </span>
       </p>
-      <p className='stack-other-strength flex flex-wrap text-sm text-teal-600'>
+      <p className='stack-other-strength flex flex-wrap text-sm text-teal-600 max-w-[500px]'>
         STR {otherStrengthInfo}
       </p>
       {stack.unit.clasification === 'army' && (
