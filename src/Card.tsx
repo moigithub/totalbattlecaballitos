@@ -94,13 +94,24 @@ export const Card = ({
     (total, bonus) => (featBonus.includes(bonus.type) ? bonus.percent + total : total),
     0
   )
+  let multiplier = 1
+  if (featBonus.includes('vsFortifications')) {
+    multiplier = stack.unit.multiplier
+  }
   const totalDamage =
-    stack.unit.BASESTR * (1 + (stack.strBonus + allBonusesPercent) / 100) * stack.unitsAmount
+    stack.unit.BASESTR *
+    (1 + (stack.strBonus + allBonusesPercent) / 100) *
+    stack.unitsAmount *
+    multiplier
+
   otherStrengthInfo.push(
     <span
       className={`ml-2 whitespace-nowrap bg-gray-700 text-gray-200 px-2.5`}
       key={'allselectedbonus'}
     >
+      {multiplier > 1 && (
+        <span className='text-sm text-orange-200'>(x{stack.unit.multiplier})</span>
+      )}{' '}
       Damage ({allBonusesPercent}%) {totalDamage.toFixed(0)}
     </span>
   )
@@ -360,7 +371,7 @@ export const Card = ({
 
       <div className='stack-comment text-sm text-pink-500 dark:text-pink-400'>
         <input
-          className='w-full h-8 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700'
+          className='w-full h-8 bg-gray-200 rounded-lg appearance-none   dark:bg-gray-700'
           type='text'
           value={stack.comment}
           onChange={e => setStackComment(stack.id!, e.target.value)}

@@ -83,7 +83,8 @@ import {
   testSeq3,
   testSeq4Elf25,
   testSeq4Elf20,
-  testElf30
+  testElf30,
+  elf10G3M5Mercs
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
 import { Checkbox } from 'flowbite-react'
@@ -264,7 +265,13 @@ function Dos() {
         0
       )
 
-      const unitStrengthBase = stack.unit.BASESTR * (1 + (stack.strBonus + allBonusesPercent) / 100)
+      let multiplier = 1
+      if (featBonus.includes('vsFortifications')) {
+        multiplier = stack.unit.multiplier
+      }
+
+      const unitStrengthBase =
+        stack.unit.BASESTR * (1 + (stack.strBonus + allBonusesPercent) / 100) * multiplier
       const stackStrength = unitStrengthBase * stack.unitsAmount
 
       let unitStrength = unitStrengthBase
@@ -1046,6 +1053,9 @@ ignora lo que continua abajo de esta linea:
       case 'elf10G5M5':
         decodeAndLoadArmySetup(elf10G5M5)
         break
+      case 'elf10G3M5Mercs':
+        decodeAndLoadArmySetup(elf10G3M5Mercs)
+        break
       case 'elf15G5M3':
         decodeAndLoadArmySetup(elf15G5M3)
         break
@@ -1479,6 +1489,9 @@ ignora lo que continua abajo de esta linea:
                       </option>
                       <option value='dash' disabled>
                         ------------------
+                      </option>
+                      <option value='elf10G3M5Mercs' className='bg-orange-800'>
+                        Citadel Elf 10 G3,M4, Mercs
                       </option>
                       <option value='elf10G5M5' className='bg-orange-800'>
                         Citadel Elf 10 G5,M5
