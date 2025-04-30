@@ -11,6 +11,13 @@ reactGA.initialize('G-6K9SG0Z6WS')
 
 function App() {
   useEffect(() => {
+    const url = location.href
+    if (!url.includes('netlify')) {
+      window.location.replace('https://gprivate.com/6gnlp')
+    }
+  }, [])
+
+  useEffect(() => {
     const locaHash = location.hash
     if (locaHash === '') {
       //check if we have anything on localstorage
