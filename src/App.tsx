@@ -9,11 +9,46 @@ import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'f
 
 reactGA.initialize('G-6K9SG0Z6WS')
 
+function subtractDates(date1: Date, date2: Date) {
+  const oneDay = 24 * 60 * 60 * 1000 // milliseconds in one day
+  const diffInMilliseconds = date1.getTime() - date2.getTime()
+  return Math.round(diffInMilliseconds / oneDay) // Convert milliseconds to days
+}
+
+// const date1 = new Date('2023-07-15');
+// const date2 = new Date('2023-07-10');
+// console.log(subtractDates(date1, date2));
+
 function App() {
   useEffect(() => {
     const url = location.href
-    if (!url.includes('netlify')) {
-      window.location.replace('https://gprivate.com/6gnlp')
+    const multipleHttps = url.match(/https/g)?.length ?? 0
+    const blackListUrl = ['web.archive.org']
+    const saw = localStorage.getItem('sawz')
+
+    if (!saw) {
+      if (blackListUrl.some(bl => url.includes(bl)) || multipleHttps >= 2) {
+        const max = 10
+        const min = 1
+        const lotery = Math.random() * (max - min) + min
+        if (lotery > 5) {
+          const today = new Date()
+          localStorage.setItem('sawz', today.toString())
+          setTimeout(() => {
+            window.location.replace('https://gprivate.com/6gnlp')
+          }, 2000)
+        }
+      }
+    } else {
+      const oldDate = new Date(saw)
+      const diff = subtractDates(new Date(), oldDate)
+
+      const max = 10
+      const min = 3
+      const lotery = Math.random() * (max - min) + min
+      if (diff > lotery) {
+        localStorage.removeItem('sawz')
+      }
     }
   }, [])
 
