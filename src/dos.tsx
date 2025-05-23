@@ -85,7 +85,8 @@ import {
   testSeq4Elf20,
   testElf30,
   elf10G3M5Mercs,
-  elf10G5M5b
+  elf10G5M5b,
+  elf15G5S6
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
 import { Checkbox } from 'flowbite-react'
@@ -679,6 +680,399 @@ second REMAINS second
     navigator.clipboard.writeText(playerStacks + '\n\n' + enemyStacks)
   }
 
+  const genAIData = () => {
+    const allArmy = Object.values(ARMY)
+
+    const citadelData = citadel.stacks
+      .filter(stack => stack.unit.category !== 'fortification')
+      .map(stack => ({
+        unitId: stack.unit.name,
+        baseStr: stack.unit.BASESTR,
+        baseHp: stack.unit.BASEHP,
+        unitsAmount: stack.unitsAmount,
+        category: stack.unit.category,
+        vsMeleePercent: stack.unit.vsMeleePercent,
+        vsRangedPercent: stack.unit.vsRangedPercent,
+        vsMountedPercent: stack.unit.vsMountedPercent,
+        vsFlyingPercent: stack.unit.vsFlyingPercent,
+        vsBeastPercent: stack.unit.vsBeastPercent,
+        vsGiantPercent: stack.unit.vsGiantPercent,
+        vsElementalPercent: stack.unit.vsElementalPercent,
+        vsDragonPercent: stack.unit.vsDragonPercent,
+        vsSiegePercent: stack.unit.vsSiegePercent
+      }))
+
+    const data =
+      /**
+     row format
+     unitId,basestr,basehp,bonusStr,bonusHP,category,group+subGroup,unitsAmount,vsMelee%,vsETC%
+     */
+      armyRef.current.map(stack => ({
+        unitId: stack.unitKey,
+        baseStr: stack.unit.BASESTR,
+        baseHp: stack.unit.BASEHP,
+        bonusStr: stack.strBonus,
+        bonusHp: stack.hpBonus,
+        category: stack.unit.category,
+        group: stack.unit.group,
+        subGroup: stack.unit.subGroup,
+        unitsAmount: stack.unitsAmount,
+        vsMeleePercent: stack.unit.vsMeleePercent,
+        vsRangedPercent: stack.unit.vsRangedPercent,
+        vsMountedPercent: stack.unit.vsMountedPercent,
+        vsFlyingPercent: stack.unit.vsFlyingPercent,
+        vsBeastPercent: stack.unit.vsBeastPercent,
+        vsGiantPercent: stack.unit.vsGiantPercent,
+        vsElementalPercent: stack.unit.vsElementalPercent,
+        vsDragonPercent: stack.unit.vsDragonPercent,
+        vsSiegePercent: stack.unit.vsSiegePercent
+      }))
+
+    const citadelJsonData = JSON.stringify(citadelData)
+
+    const jsondata = JSON.stringify(data)
+
+    const prompt = `
+    [Role]
+Act as a strict data processor.
+you know everything about a combat system,
+
+[Rules]
+- Only use explicitly provided parameters
+- Never infer unstated variables
+- Flag any missing critical data with "Parameter Required: [X]"
+
+  this is a game combat system where have 2 sides, each sides can have many troops which we call a "stack" or "squad"
+  and each stack can have many units.
+
+  each unit have a category, subgroup, base strength, base health, strength bonus percent, health bonus percent,
+  a strength bonus percent against centain opponent categories or subgroups (vsXPercent)
+
+  it uses a turn-based system, where each side is sorted based on their stack strength
+  ,descending, from strongest to weakest
+  and the opponent is choose based on to whom the squad can do the most damage
+  and fallback to whom is the more treathening opponent
+
+
+  - ATTACK SEQUENCE
+  to fight each side takes alternated turn, not sequential, example
+  attacker have the following squads: a1,a2,a3
+  defender have the following squads: d1,d2,d3
+
+  if attacker attack first, then the sequence would be like this:
+
+a1 will attack first
+then d1 will attack
+then a2 will attack
+then d2 will attack
+then a3 will attack
+then d3 will attack
+
+if one squad from one side dies, the next on the side queue will take its place, so it dont lose a turn,
+dead squad will not participate on attacks
+example:
+
+Example Fixed Sequence:
+a1 attacks → kills d1
+[d1 removed from queue]
+d2 attacks (replaces d1's turn)
+a2 attacks
+d3 attacks
+a3 attacks
+
+
+the squad who already attacked, will not attack again until another cycle start, and it repeats as many cycles needed,
+until one side have no troops alive
+
+in case any of the sides, have more squads than the other, then each squads who have not attacked yet,
+will attack at the end of the cycle, before starts a new one, example:
+
+  attacker have the following squads: a1,a2,a3,a4,a5,a6,a7
+  defender have the following squads: d1,d2,d3
+
+  if attacker attack first, then the sequence would be like this:
+
+a1 will attack first
+then d1 will attack
+then a2 will attack
+then d2 will attack
+then a3 will attack
+then d3 will attack
+then a4 will attack
+then a5 will attack
+then a6 will attack
+then a7 will attack
+
+- DEAD UNIT HANDLING:
+  Immediately remove any squad when 'remaining_health ≤ 0'.
+  The next living squad in that side's original order automatically fills the attack slot.
+
+
+- FORMULAS
+totalHealth = baseHp * (1 + bonusHp/100) * unitsAmount - accumulatedDamage
+stack strength = stack.unit.BASESTR * (1+ bonusStr /100) * units amount
+damage = min ( stack.unit.BASESTR * (1+( bonusStr  + vsXPercent_category + vsXPercent_subgroup )/100) * units amount , totalHealth_enemy)
+the max damage applied would be limited by the enemy health
+
+the vsXPercent will only apply if the opponent belongs to the same bonus/category the attacker have
+example
+
+archer, have bonus against flying 30% and bonus against dragon 10%
+
+if the opponent have "flying" category and "beast" subgroup
+the damage formula would be
+
+damage = min ( stack.unit.BASESTR * (1+( bonusStr  + vsFlying )/100) * units amount , totalHealth_enemy)
+because only flying bonus match the category
+
+---
+if the opponent have "flying" category and "dragon" subgroup
+the damage formula would be
+
+damage = min ( stack.unit.BASESTR * (1+( bonusStr  + vsFlying +vsDragon)/100) * units amount , totalHealth_enemy)
+because both bonuses matches to the category and subgroup
+
+----
+if the opponent have "ranged" category and "elemental" subgroup
+the damage formula would be
+
+damage = min ( stack.unit.BASESTR * (1+( bonusStr  )/100) * units amount , totalHealth_enemy)
+because no matching bonuses
+
+
+- ACUMULATED DAMAGE
+if the damage do not kill the enemy it will be added into the next attack
+
+- TARGET SELECTION RULES
+which is based on
+1. Damage Maximization: Prioritizes targets the attacker can deal the most damage to
+2. Threat Mitigation: Considers how much damage the defender can retaliate with
+3. Bonus Optimization: Leverages all applicable combat bonuses
+4. Dead units cannot be selected as targets
+5. Attackers with no valid living targets skip their turn
+
+rules:
+1. only alives opponents will be selected
+2. if stack strength is lower than the opponent health another target will be selected
+3. the opponent is choosen based on to whom the squad can do the most damage
+   which can be found using the "damage" formula above
+   if the "damage" is equal on more than 1 target, then the most threatening will be selected
+
+   so you need to compute
+    damage: BASESTR × (1 + all applicable Bonuses/100) × unitsAmount
+    threat: Defender's potential counter-damage
+
+    and Sort
+
+    Primary sort: mostDamage (descending)
+    Secondary sort: threat (descending)
+    This ensures:
+        Highest priority to targets you can eliminate quickly
+        Secondary preference to dangerous enemies that could retaliate hard
+
+
+
+  - CODE INTERFACE
+
+
+export type Category =
+| 'mounted'
+| 'ranged'
+| 'melee'
+| 'scout'
+| 'flying'
+| 'fortification'
+| 'siege'
+| '' //mercenaries dont have
+
+export type Group = 'enemy' | 'mercs' | 'guardsman' | 'specialist' | 'engineer' | 'monster'
+export type SubGroup = '' | 'beast' | 'elemental' | 'dragon' | 'giant'
+
+export interface ObjProps {
+  name: string
+  category: Category // melee, ranged,mounted,flying,| scout|siege
+  group: Group // 'guardsman' specialist engineer mercs enemy
+  subGroup: SubGroup //'elemental' | 'dragon' | 'beast' | 'giant'
+  BASESTR: number
+  BASEHP: number
+  strBonus?: number
+  hpBonus?: number
+  multiplier: number // para las catapultas que tienen x 20
+  vsRangedPercent: number
+  vsSiegePercent: number
+  vsBeastPercent: number
+  vsHumanPercent: number
+  vsMountedPercent: number
+  vsFlyingPercent: number
+  vsMeleePercent: number
+  vsFortificationsPercent: number
+  vsGiantPercent: number
+  vsEpicPercent: number
+  vsElementalPercent: number
+  vsDragonPercent: number
+}
+
+export interface FightStack {
+  id: string
+  unit: ObjProps
+  unitsAmount: number
+  originalUnitsAmount: number
+  accumulatedDamage: number
+}
+
+interface AttackStats {
+  attackerStrength: number
+  damage: number // Potential damage with all bonuses
+  threat: number // Defender's potential counter damage
+  defenderHealth: number
+  defenderStrength: number
+  mostDamage: number
+}
+
+
+- USER INPUT (#USERINPUT)
+if the user tells you he/she have G4, it means he have guardsman from level 1 to 4
+if the user tells you he/she have S6, it means he have specialis from level 1 to 6
+if the user tells you he/she have M3, it means he have monster from level 1 to 3
+
+if he have G4, he can use mercenaries (merc or mercs) until level 6
+if he have G5, he can use mercenaries (merc or mercs) until level 7
+if he have G6, he can use mercenaries (merc or mercs) until level 9
+
+any level  higher than the specified by the user, will not be available
+
+the user will provide you his army setup, where you can use to determine, what troops he have
+and the max level of each groups he can use
+
+and also he will provide you the enemy he will attack
+
+you can give suggerences and modify the user army if needed to get the best result
+you are allowed to change troops types or troops amount
+based on the levels he have
+
+do not assume or create new fields or data values
+
+
+- USER EXPECTATION #USEREXPECTATION
+the user want to know the best possible combination, based on the available guardsman,specialist,monster or mercenaries
+he can use to have lower or zero loses
+and expect you to do the calculations and give him the best setup possible
+on both scenarios, if he attack first or second
+and have a summary if he would win or loose, and how many units will loose if any
+
+- FIXED GAME DATA
+available soldiers JSON data (#soldiers): ${JSON.stringify(allArmy)}
+
+ - USER DATA INPUT
+
+    enemy JSON data (#enemy): ${citadelJsonData}
+
+    player JSON data (#player):${jsondata}
+
+    Dissalowed:
+    - #soldiers and #enemy data can not be changed
+
+    Allowed:
+      #player troops types or unitAmount can be changed
+
+determine what troops types he user could use, based on #USERINPUT and #soldiers data
+and give recomendations based on #USEREXPECTATION
+
+show me a battle report where both #player and #enemy attack eachother using all squads from both sides, and #player attack first
+  `
+
+    const prompt2 = `[COMBAT RULESET v2.5]
+  # Core Mechanics
+  1. **Unit Properties**:
+     - Each unit has:
+       'BASESTR', 'BASEHP', 'unitsAmount', 'category', 'subGroup',  'hpBonus','strBonus',
+       'vsXPercent' bonuses (where X matches defender traits)
+  2. **Stack Health and Strength**:
+    - 'stackHealth = BASEHP × (1 + hpBonus/100) × unitsAmount - accumulatedDamage'
+    - 'stackStrength = BASESTR × (1 + strBonus/100) × unitsAmount'
+
+  # Attack Sequence
+  1. **Initiation**:
+     - Attacker always strikes first in first round
+     - Alternate turns strictly (A1→D1→A2→D2...)
+
+  2. **Turn Handling**:
+     '''python
+     while any_squads_alive(attacker) and any_squads_alive(defender):
+         for attacker_squad, defender_squad in zip(attacker_queue, defender_queue):
+             if attacker_squad.is_alive():
+                 process_attack(attacker_squad, select_target(defender))
+             if defender_squad.is_alive():  # Dead units skip turns
+                 process_attack(defender_squad, select_target(attacker))
+     '''
+
+  3. **Death Processing** (NEW):
+     - When unit health ≤ 0:
+       a) Immediately remove from attack queue
+       b) Next living unit in original order fills the turn slot
+       c) Never recalculate turn order mid-battle
+
+  # Target Selection
+  1. **Valid Targets**:
+     - Only living units with 'stackStrength < defenderHealth'
+     - Must have matching 'vsXPercent' bonuses if applicable
+
+  2. **Priority**:
+     '''python
+     def select_target(attacker, defenders):
+         viable = [d for d in defenders if d.is_alive()]
+         return max(
+             viable,
+             key=lambda d: (
+                 damage_potential(attacker, d),
+                 d.stackStrength  # Tiebreaker
+             )
+         )
+     '''
+
+  # Damage Calculation
+  '''mathematica
+  damage = Min[
+    BASESTR × (1 + Σapplicable_bonuses/100) × unitsAmount,
+    target.totalHealth
+  ]
+  '''
+
+  # GAME DATA
+available soldiers JSON data (#soldiers): ${JSON.stringify(allArmy)}
+
+#  USER DATA INPUT
+
+    enemy JSON data (#enemy): ${citadelJsonData}
+
+    player JSON data (#player):${jsondata}
+
+
+
+    analyze the player setup and provide me a lower or zero loses setup if possible, show me a battle report attack sequence
+   `
+
+    const x = `
+  # Example Flow
+  ''''artifact
+  id: combat_example
+  name: Attack Sequence
+  type: markdown
+  content: |-
+    Attacker Queue: [A1, A2, A3]
+    Defender Queue: [D1, D2]
+
+    Round 1:
+    - A1 kills D1 → D1 removed
+    - D2 attacks (replaces D1's slot)
+    - A2 attacks
+    - [D3 would attack here if existed]
+    - A3 attacks
+  `
+
+    navigator.clipboard.writeText(prompt2)
+  }
+
   const verifyCitadel = () => {
     setLoading(true)
     console.log('verifying citadele20')
@@ -1063,6 +1457,9 @@ ignora lo que continua abajo de esta linea:
       case 'elf15G5M3':
         decodeAndLoadArmySetup(elf15G5M3)
         break
+      case 'elf15G5S6':
+        decodeAndLoadArmySetup(elf15G5S6)
+        break
       case 'elf15G5M5':
         decodeAndLoadArmySetup(elf15G5M5)
         break
@@ -1337,6 +1734,7 @@ ignora lo que continua abajo de esta linea:
               </button>
 
               <p onClick={genTestData}>test</p>
+              <p onClick={genAIData}>testAI2</p>
 
               <label>
                 Seq <Checkbox checked={pasto} onChange={() => setPasto(!pasto)} />
@@ -1511,6 +1909,9 @@ ignora lo que continua abajo de esta linea:
                       </option>
                       <option value='elf15G5M3' className='bg-blue-600'>
                         Citadel Elf 15 G5,M3
+                      </option>
+                      <option value='elf15G5S6' className='bg-blue-600'>
+                        Citadel Elf 15 G5,S6
                       </option>
                       <option value='elf15G5M5' className='bg-blue-600'>
                         Citadel Elf 15 G5,M5

@@ -497,7 +497,7 @@ export const ArmyList = () => {
     ...(shouldShow('guards')(ARMY.ArcherG5) ? [ARMY.ArcherG5] : [])
   ]
   const riders = [
-    ...(shouldShow('guards')(ARMY.ArcherG1) ? [ARMY.ArcherG1] : []),
+    ...(shouldShow('guards')(ARMY.RiderG1) ? [ARMY.RiderG1] : []),
     ...(shouldShow('guards')(ARMY.RiderG2) ? [ARMY.RiderG2] : []),
     ...(shouldShow('guards')(ARMY.RiderG3) ? [ARMY.RiderG3] : []),
     ...(shouldShow('guards')(ARMY.RiderG4) ? [ARMY.RiderG4] : []),

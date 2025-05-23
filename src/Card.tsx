@@ -44,7 +44,10 @@ export const Card = ({
   const getStackAllStrength = useStackStore(state => state.getStackAllStrength)
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stack.id })
   const setGapPercent = useStackStore(state => state.setGapPercent)
-  const [featBonus, setFeatBonus] = useState<string[]>([])
+  const [featBonus, setFeatBonus] = useState<string[]>(() => {
+    if (!stack.strLimitType) return []
+    return stack.strLimitType.split(',')
+  })
 
   const style = {
     transform: CSS.Transform.toString(transform),
