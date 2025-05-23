@@ -1,9 +1,8 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 
 import './App.css'
 // import { Disclaimer } from './disclaimer'
 import { useEffect } from 'react'
-import { decodeAndLoadArmySetup } from './utils'
 import reactGA from 'react-ga4'
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'flowbite-react'
 

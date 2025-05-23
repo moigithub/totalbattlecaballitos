@@ -3,8 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link, createBrowserRouter, Navigate, RouterProvider } from 'react-router'
 
 import Dos from './dos.tsx'
 import { Info } from './info.tsx'
