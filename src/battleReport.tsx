@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react'
-import { ColumnResult } from './dos'
+import { ColumnResult } from './helpers'
 
 export const BattleReport = ({
   attackReport = [],
