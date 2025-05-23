@@ -221,7 +221,7 @@ export const lvl17HeroicElfSquad: Citadel = {
 // lvl17HeroicElfSquad.stacks.sort(
 //   (a, b) => b.unit.BASESTR * b.unitsAmount - a.unit.BASESTR * a.unitsAmount
 // )
-console.log(
-  'lvl17HeroicElfSquad.stacks',
-  lvl17HeroicElfSquad.stacks.map(s => ({ ...s, sstr: s.unit.BASESTR * s.unitsAmount }))
-)
+// console.log(
+//   'lvl17HeroicElfSquad.stacks',
+//   lvl17HeroicElfSquad.stacks.map(s => ({ ...s, sstr: s.unit.BASESTR * s.unitsAmount }))
+// )

@@ -1567,14 +1567,15 @@ export const ArmyList = () => {
         <h2 className='header-title'>Army</h2>
         <div className='army-list'>
           {guardsman.length > 0 &&
-            guardsman.map(({ title, troops, keyName }) => {
+            guardsman.map(({ title, troops, keyName }, idx) => {
               return troops.length > 0 ? (
-                <div className='guardsmen'>
+                <div className='guardsmen' key={`alguards-${idx}`}>
                   <p className='group-title'>{title}</p>
                   <div className='btn-group'>
                     {troops.map(u => {
                       return (
                         <button
+                          key={`alb-${u.id}`}
                           className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                           onClick={() => {
                             addTroops(u.id)
@@ -1587,20 +1588,19 @@ export const ArmyList = () => {
                     })}
                   </div>
                 </div>
-              ) : (
-                <></>
-              )
+              ) : null
             })}
 
           {specialist.length > 0 &&
-            specialist.map(({ title, troops, keyName }) => {
+            specialist.map(({ title, troops, keyName }, idx) => {
               return troops.length > 0 ? (
-                <div className='specialists'>
+                <div className='specialists' key={`alspclist-${idx}`}>
                   <p className='group-title'>{title}</p>
                   <div className='btn-group'>
                     {troops.map(u => {
                       return (
                         <button
+                          key={`alb-${u.id}`}
                           className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                           onClick={() => {
                             addTroops(u.id)
@@ -1613,9 +1613,7 @@ export const ArmyList = () => {
                     })}
                   </div>
                 </div>
-              ) : (
-                <></>
-              )
+              ) : null
             })}
 
           <div className='engineer'>
@@ -1624,6 +1622,7 @@ export const ArmyList = () => {
               {engineers.map(u => {
                 return (
                   <button
+                    key={`alb-${u.id}`}
                     className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                     onClick={() => {
                       addTroops(u.id)
@@ -1639,12 +1638,13 @@ export const ArmyList = () => {
           {monsters.length > 0 && (
             <div className='monsters'>
               <p className='group-title'>Monsters</p>
-              {monsters.map(monster => {
+              {monsters.map((monster, idx) => {
                 return (
-                  <div className='btn-group'>
+                  <div className='btn-group' key={`almonstr-${idx}`}>
                     {monster.map(m => {
                       return (
                         <button
+                          key={`alb-${m.id}`}
                           className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                           onClick={() => {
                             addTroops(m.id)
@@ -1663,12 +1663,13 @@ export const ArmyList = () => {
           {mercs.length > 0 && (
             <div className='mercs'>
               <p className='group-title'>mercs</p>
-              {mercs.map(u => {
+              {mercs.map((u, idx) => {
                 return (
-                  <div className='btn-group'>
+                  <div className='btn-group' key={`almerc-${idx}`}>
                     {u.map(m => {
                       return (
                         <button
+                          key={`alb-${m.id}`}
                           className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
                           onClick={() => {
                             addTroops(m.id)

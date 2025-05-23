@@ -52,19 +52,6 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    const locaHash = location.hash
-    if (locaHash === '') {
-      //check if we have anything on localstorage
-      console.log('loading from localstorage')
-      const storedValue = localStorage.getItem('tbstacks')
-      if (storedValue) {
-        // Helper function to decode the hash
-        decodeAndLoadArmySetup(storedValue)
-      }
-    }
-  }, [])
-
   return (
     <nav className='z-10'>
       <Navbar fluid rounded>

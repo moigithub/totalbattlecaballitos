@@ -1,10 +1,10 @@
+import { prepareExportData, prepareImportData } from './utils'
 import { create, StateCreator } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { Stack } from './types'
-import { hashStorage } from '@/hashStore'
+import { customLocalStorage } from '@/hashStore'
 import { createDebouncedJSONStorage } from 'zustand-debounce'
 import { getStrengthWithBonus } from './helpers'
-import { prepareExportData, prepareImportData } from './utils'
 
 export interface StackStoreBasic {
   leadership: number
@@ -41,7 +41,7 @@ interface StackStore extends StackStoreBasic {
   setStackComment: (id: string, value: string) => void
   toggleUseHpLimit: (id: string) => void
   setStackHpLimit: (id: string, value: number) => void
-  recalculatePosition: () => void
+
   addUnits: (id: string, amount: number) => void
   removeUnits: (id: string, amount: number) => void
   getStackStrength: (id: string) => number
@@ -106,9 +106,7 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
       })
     }))
   },
-  recalculatePosition: () => {
-    set(state => ({ army: state.army.map((stack, index) => ({ ...stack, position: index })) }))
-  },
+
   setSequence: (value: string) => {
     set(() => ({ sequence: value }))
   },
@@ -375,14 +373,16 @@ export const useStackStore = create<StackStore>()(
       name: 'stacks',
       version: 8,
       // storage: createJSONStorage(() => hashStorage),
-      storage: createDebouncedJSONStorage(hashStorage, {
+      storage: createDebouncedJSONStorage(customLocalStorage, {
         debounceTime: 500 // Debounce time in milliseconds ⏳
         // Other options can be specified here
       }),
       partialize: s => {
+        // console.log('zustand:partialize', s)
         return prepareExportData(s)
       },
       merge: (persistedState, currentState): StackStore => {
+        // console.log('zustand:merge', persistedState, currentState)
         // console.log('persistedState', persistedState)
         // console.log('currentstate', currentState)
 

@@ -1,6 +1,6 @@
 import { StateStorage } from 'zustand/middleware'
 
-export const hashStorage: StateStorage = {
+/* const hashStorage: StateStorage = {
   getItem: (key): string => {
     const searchParams = new URLSearchParams(location.hash.slice(1))
     const value = searchParams.get(key)
@@ -22,6 +22,41 @@ export const hashStorage: StateStorage = {
     const searchParams = new URLSearchParams(location.hash.slice(1))
     searchParams.delete(key)
     location.hash = searchParams.toString()
+  }
+}*/
+
+export const customLocalStorage: StateStorage = {
+  getItem: key => {
+    if (location.search) {
+      // have values preference from search, ignore localstorage
+      const searchParams = new URLSearchParams(location.search)
+      const value = searchParams.get(key)
+
+      // Helper function to decode the search
+      return decodeHash(String(value))
+    }
+    console.log('zustand:storage:getItem key', key)
+
+    const value = localStorage.getItem(key)
+    // Helper function to decode the hash
+    return decodeHash(String(value))
+  }, // Read only hashed value
+  setItem: (key, value) => {
+    console.log('zustand:storage:setItem key:value', key, value)
+    const encodedValue = encodeHash(value)
+    localStorage.setItem(key, encodedValue)
+
+    //https://url.com/#stacks=
+    const searchParams = new URLSearchParams(location.search)
+    searchParams.set('stacks', encodedValue)
+    // location.hash = searchParams.toString()
+    window.history.replaceState(null, '', `?${searchParams.toString()}`)
+  }, // Store only hashed value
+  removeItem: (key: string) => {
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.delete(key)
+    window.history.replaceState(null, '', `?${searchParams.toString()}`)
+    localStorage.removeItem(key)
   }
 }
 

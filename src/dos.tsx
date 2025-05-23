@@ -1022,24 +1022,6 @@ available soldiers JSON data (#soldiers): ${JSON.stringify(allArmy)}
     analyze the player setup and provide me a lower or zero loses setup if possible, show me a battle report attack sequence
    `
 
-    const x = `
-  # Example Flow
-  ''''artifact
-  id: combat_example
-  name: Attack Sequence
-  type: markdown
-  content: |-
-    Attacker Queue: [A1, A2, A3]
-    Defender Queue: [D1, D2]
-
-    Round 1:
-    - A1 kills D1 → D1 removed
-    - D2 attacks (replaces D1's slot)
-    - A2 attacks
-    - [D3 would attack here if existed]
-    - A3 attacks
-  `
-
     navigator.clipboard.writeText(prompt2)
   }
 
