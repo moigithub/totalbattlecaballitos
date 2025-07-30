@@ -457,8 +457,13 @@ second REMAINS second
           0
         )
 
+        let multiplier = 1
+        if (featBonus.includes('vsFortifications')) {
+          multiplier = stackZero.unit.multiplier
+        }
+
         const unitStrengthBase =
-          stackZero.unit.BASESTR * (1 + (stackZero.strBonus + allBonusesPercent) / 100)
+          stackZero.unit.BASESTR * (1 + (stackZero.strBonus + allBonusesPercent) / 100) * multiplier
         const stackStrength = unitStrengthBase * stackZero.unitsAmount
 
         let unitStrength = unitStrengthBase
