@@ -480,6 +480,11 @@ table th {
 
 }
 
+.noFeatBonus {
+    padding: 0 10px;
+  background-color: #ccc;
+  color: black;
+}
 .vsMounted,
 .mountbadges {
   padding: 0 10px;

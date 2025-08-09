@@ -68,76 +68,65 @@ export const CitadelData = ({ type }: { type: string }) => {
         <tr>
           <th>Stack</th>
           <th>Type</th>
-          <th>Amount</th>
           <th>Total health</th>
-          <th>+Hp</th>
-          <th>Regular Damage</th>
-          <th>+Str</th>
+
           <th>Dmg + bonus</th>
         </tr>
       </thead>
       <tbody>
         {target.stacks.map(stack => {
           const totalHealth = stack.unitsAmount * stack.unit.BASEHP
-          const totalStrength = stack.unitsAmount * stack.unit.BASESTR
+
           return (
             <tr key={`stack${stack.unit.name}`}>
               <td className='px-1 py-0.5'> {stack.unit.name}</td>
               <td className='px-1 py-0.5'>
                 {' '}
-                {[stack.unit.category, stack.unit.subGroup].join(', ')}
+                {[stack.unit.category, stack.unit.subGroup].filter(Boolean).join(', ')}
               </td>
-              <td className='px-1 py-0.5'> {stack.unitsAmount}</td>
-              <td
-                className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
-                onClick={() => {
-                  navigator.clipboard.writeText(totalHealth.toString())
-                }}
-              >
-                {totalHealth.toLocaleString().replace(/,/g, '_')}
-              </td>
+
+              {/* total health  */}
               <td>
                 <input type='checkbox' value={totalHealth.toString()} onChange={markHpTroop} />
+                <span
+                  className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
+                  onClick={() => {
+                    navigator.clipboard.writeText(totalHealth.toString())
+                  }}
+                >
+                  {totalHealth.toLocaleString().replace(/,/g, '_')}
+                </span>
               </td>
-              {/* total health  */}
-              <td
-                className='px-1 py-0.5  text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
-                onClick={() => {
-                  navigator.clipboard.writeText(totalStrength.toString())
-                }}
-              >
-                {totalStrength.toLocaleString().replace(/,/g, '_')}
-              </td>
+
               {/* total strength  */}
 
-              <td>
-                <input type='checkbox' value={totalStrength.toString()} onChange={markStrTroop} />
+              <td className='px-1 py-0.5'>
+                {getTroopBadges(stack).map((data, i) => (
+                  <div key={`badge+${i}`} className='flex flex-column'>
+                    <div className='flex flex-row text-xs'>
+                      <input
+                        type='checkbox'
+                        id={data.id + data.badge}
+                        value={data.value.toString()}
+                        onChange={markStrTroop}
+                      />{' '}
+                      {data.percent > 0 && (
+                        <span className={data.badge}>
+                          {data.desc} +{data.percent}%
+                        </span>
+                      )}
+                      {data.percent === 0 && <span className={data.badge}>{data.desc}</span>}
+                      <span>{data.value.toLocaleString().replace(/,/g, '_')}</span>
+                    </div>
+                  </div>
+                ))}
               </td>
-              <td className='px-1 py-0.5'>{getTroopBadges(stack)}</td>
             </tr>
           )
         })}
+
         <tr>
-          <td></td>
-          <td></td>
-          <td className='px-1 py-0.5'>Total</td>
-          <td className='px-1 py-0.5'>
-            {target.stacks
-              .reduce((dmg, stack) => dmg + stack.unitsAmount * stack.unit.BASEHP, 0)
-              .toLocaleString()
-              .replace(/,/g, '_')}
-          </td>
-          <td></td>
-          <td className='px-1 py-0.5'>
-            {target.stacks
-              .reduce((dmg, stack) => dmg + stack.unitsAmount * stack.unit.BASESTR, 0)
-              .toLocaleString()
-              .replace(/,/g, '_')}
-          </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td colSpan={8}>
+          <td colSpan={4}>
             Selected damage:{' '}
             {selectedStr
               .map(str => {
@@ -152,7 +141,7 @@ export const CitadelData = ({ type }: { type: string }) => {
           </td>
         </tr>
         <tr>
-          <td colSpan={8}>
+          <td colSpan={4}>
             Selected Health:{' '}
             {selectedHp
               .map(Hp => {
@@ -171,17 +160,21 @@ export const CitadelData = ({ type }: { type: string }) => {
   )
 }
 
+interface StrData {
+  id: string
+  value: number
+}
 export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
-  const [selectedStr, setSelectedStr] = useState<string[]>([])
+  const [selectedStr, setSelectedStr] = useState<StrData[]>([])
   const [selectedHp, setSelectedHp] = useState<string[]>([])
 
   const markStrTroop = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      if (!selectedStr.includes(e.target.value)) {
-        setSelectedStr([...selectedStr, e.target.value])
+      if (!selectedStr.find(s => s.id === e.target.id)) {
+        setSelectedStr([...selectedStr, { id: e.target.id, value: +e.target.value }])
       }
     } else {
-      setSelectedStr(selectedStr.filter(troop => troop !== e.target.value))
+      setSelectedStr(selectedStr.filter(s => s.id !== e.target.id))
     }
   }
   const markHpTroop = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -202,10 +195,9 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
           <th>Amount</th>
           <th>Base strength</th>
           <th>Base health</th>
+
           <th>Total health</th>
-          <th></th>
-          <th>Regular Damage</th>
-          <th></th>
+
           <th>Dmg + bonus</th>
         </tr>
       </thead>
@@ -218,40 +210,62 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
               <td className='px-1 py-0.5'> {stack.unit.name}</td>
               <td className='px-1 py-0.5'>
                 {' '}
-                {[stack.unit.category, stack.unit.subGroup].join(', ')}
+                {[stack.unit.category, stack.unit.subGroup].filter(Boolean).join(', ')}
               </td>
               <td className='px-1 py-0.5'> {stack.unitsAmount}</td>
               {/* amount */}
               <td className='px-1 py-0.5'> {stack.unit.BASESTR}</td>
               {/* str */}
               <td className='px-1 py-0.5'> {stack.unit.BASEHP}</td>
-              {/* hp */}
-              <td
-                className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
-                onClick={() => {
-                  navigator.clipboard.writeText(totalHealth.toString())
-                }}
-              >
-                {totalHealth.toLocaleString().replace(/,/g, '_')}
-              </td>
+              {/* total health  */}
               <td>
                 <input type='checkbox' value={totalHealth.toString()} onChange={markHpTroop} />
+                <span
+                  className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
+                  onClick={() => {
+                    navigator.clipboard.writeText(totalHealth.toString())
+                  }}
+                >
+                  {totalHealth.toLocaleString().replace(/,/g, '_')}
+                </span>
               </td>
 
-              {/* total health  */}
-              <td
-                className='px-1 py-0.5 text-gray-300  cursor-pointer hover:text-lime-400 hover:font-bold'
-                onClick={() => {
-                  navigator.clipboard.writeText(totalStrength.toString())
-                }}
-              >
-                {totalStrength.toLocaleString().replace(/,/g, '_')}
-              </td>
-              <td>
-                <input type='checkbox' value={totalStrength.toString()} onChange={markStrTroop} />
-              </td>
               {/* total strength  */}
-              <td className='px-1 py-0.5'>{getTroopBadges(stack)}</td>
+              <td className='px-1 py-0.5'>
+                {getTroopBadges(stack).map((data, i) => (
+                  <div key={`badge+${i}`} className='flex flex-column'>
+                    <div className='flex flex-row text-xs'>
+                      <input
+                        type='checkbox'
+                        id={data.id + data.badge}
+                        value={data.value.toString()}
+                        onChange={markStrTroop}
+                      />{' '}
+                      {data.percent > 0 && (
+                        <span
+                          className={data.badge}
+                          onClick={() => {
+                            navigator.clipboard.writeText(totalStrength.toString())
+                          }}
+                        >
+                          {data.desc} +{data.percent}%
+                        </span>
+                      )}
+                      {data.percent === 0 && (
+                        <span
+                          className={data.badge}
+                          onClick={() => {
+                            navigator.clipboard.writeText(totalStrength.toString())
+                          }}
+                        >
+                          {data.desc}
+                        </span>
+                      )}
+                      <span>{data.value.toLocaleString().replace(/,/g, '_')}</span>
+                    </div>
+                  </div>
+                ))}
+              </td>
             </tr>
           )
         })}
@@ -259,13 +273,13 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
           <td colSpan={10}>
             Selected damage:{' '}
             {selectedStr
-              .map(str => {
-                return str
+              .map(dataStr => {
+                return dataStr.value
               })
               .join(' + ')}
             {` = `}
             {selectedStr
-              .reduce((total, str) => total + parseInt(str), 0)
+              .reduce((total, strData) => total + strData.value, 0)
               .toLocaleString()
               .replace(/,/g, '_')}
           </td>
