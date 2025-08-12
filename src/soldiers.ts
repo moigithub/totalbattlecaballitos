@@ -501,6 +501,7 @@ const royalLionI = unitBuilder<SpecialistUnit>({
   vsFortificationsPercent: 350,
   category: 'flying',
   group: 'specialist',
+  subGroup: 'beast',
   level: '8'
 })
 const royalLionII = unitBuilder<SpecialistUnit>({
@@ -516,6 +517,7 @@ const royalLionII = unitBuilder<SpecialistUnit>({
   vsFortificationsPercent: 525,
   category: 'flying',
   group: 'specialist',
+  subGroup: 'beast',
   level: '9'
 })
 const panopticI = unitBuilder<SpecialistUnit>({
@@ -643,6 +645,7 @@ const battleGriffinV = unitBuilder<GuardsmanUnit>({
   vsFortificationsPercent: 208,
   category: 'flying',
   group: 'guardsman',
+  subGroup: 'beast',
   level: '5'
 })
 const battleGriffinVI = unitBuilder<GuardsmanUnit>({
@@ -659,6 +662,7 @@ const battleGriffinVI = unitBuilder<GuardsmanUnit>({
   vsFortificationsPercent: 311,
   category: 'flying',
   group: 'guardsman',
+  subGroup: 'beast',
   level: '6'
 })
 const battleGriffinVII = unitBuilder<GuardsmanUnit>({
@@ -675,6 +679,7 @@ const battleGriffinVII = unitBuilder<GuardsmanUnit>({
   vsFortificationsPercent: 467,
   category: 'flying',
   group: 'guardsman',
+  subGroup: 'beast',
   level: '7'
 })
 
