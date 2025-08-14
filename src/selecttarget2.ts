@@ -43,7 +43,7 @@ export function selectTargetToAttack(
 
   const attackerHealth =
     attacker.unit.BASEHP * (1 + (attacker.unit.hpBonus || 0) / 100) * attacker.unitsAmount -
-    attacker.accumulatedDamage
+    attacker.accumulatedDamageAliveUnits
 
   const attackerStrength =
     attacker.unit.BASESTR * (1 + (attacker.unit.strBonus || 0) / 100) * attacker.unitsAmount
@@ -87,6 +87,13 @@ export function selectTargetToAttack(
     }))
   )
 
+  if (sortedByMostDmg.length > 1) {
+   sortedByMostDmg[0].defender.attackReason = 'most damage'
+   if (sortedByMostDmg[0].stats.mostDamage === sortedByMostDmg[1].stats.mostDamage) {
+    sortedByMostDmg[0].defender.attackReason = 'most threatening'
+   } 
+  }
+
   return sortedByMostDmg[0]?.defender ?? null
 }
 
@@ -95,7 +102,7 @@ export function selectTargetToAttack(
 function calculateDefenderHealth(defender: FightStack): number {
   return (
     defender.unit.BASEHP * (1 + (defender.unit.hpBonus || 0) / 100) * defender.unitsAmount -
-    defender.accumulatedDamage
+    defender.accumulatedDamageAliveUnits
   )
 }
 

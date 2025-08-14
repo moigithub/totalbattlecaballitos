@@ -29,7 +29,9 @@ export interface FightStack {
   unit: ObjProps
   unitsAmount: number
   originalUnitsAmount: number
-  accumulatedDamage: number
+  accumulatedDamageAliveUnits: number
+  totalAccumulatedDamage: number
+  attackReason: string
 }
 
 export interface Citadel {
@@ -208,36 +210,48 @@ export const citadele10: Citadel = {
       unit: objectDB.walls,
       unitsAmount: 90,
       originalUnitsAmount: 90,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
-    { id: '1', unit: objectDB.bearV, unitsAmount: 9, originalUnitsAmount: 9, accumulatedDamage: 0 },
+    { id: '1', unit: objectDB.bearV, unitsAmount: 9, originalUnitsAmount: 9, accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:'' },
     {
       id: '2',
       unit: objectDB.pegasoRiderIV,
       unitsAmount: 19,
       originalUnitsAmount: 19,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '3',
       unit: objectDB.elfArcherI,
       unitsAmount: 1200,
       originalUnitsAmount: 1200,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '4',
       unit: objectDB.druidII,
       unitsAmount: 100,
       originalUnitsAmount: 100,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '5',
       unit: objectDB.dwarf,
       unitsAmount: 2200,
       originalUnitsAmount: 2200,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     }
   ]
 }
@@ -250,7 +264,9 @@ export const citadele15: Citadel = {
       unit: objectDB.walls,
       unitsAmount: 700,
       originalUnitsAmount: 700,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
 
     {
@@ -258,35 +274,45 @@ export const citadele15: Citadel = {
       unit: objectDB.entVI,
       unitsAmount: 21,
       originalUnitsAmount: 21,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '2',
       unit: objectDB.unicornRiderV,
       unitsAmount: 47,
       originalUnitsAmount: 47,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '3',
       unit: objectDB.druidII,
       unitsAmount: 1100,
       originalUnitsAmount: 1100,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '4',
       unit: objectDB.centaurIII,
       unitsAmount: 290,
       originalUnitsAmount: 290,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '5',
       unit: objectDB.elfArcherI,
       unitsAmount: 5000,
       originalUnitsAmount: 5000,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     }
   ]
 }
@@ -299,7 +325,9 @@ export const citadele20: Citadel = {
       unit: objectDB.walls,
       unitsAmount: 3650,
       originalUnitsAmount: 3650,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '1',
@@ -307,7 +335,9 @@ export const citadele20: Citadel = {
       unit: objectDB.lifeDragonVII,
       unitsAmount: 41,
       originalUnitsAmount: 41,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '2',
@@ -315,7 +345,9 @@ export const citadele20: Citadel = {
       unit: objectDB.entVI,
       unitsAmount: 110,
       originalUnitsAmount: 110,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '3',
@@ -323,7 +355,9 @@ export const citadele20: Citadel = {
       unit: objectDB.centaurIII,
       unitsAmount: 2500,
       originalUnitsAmount: 2500,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '4',
@@ -331,7 +365,9 @@ export const citadele20: Citadel = {
       unit: objectDB.bearV,
       unitsAmount: 230,
       originalUnitsAmount: 230,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '5',
@@ -339,7 +375,9 @@ export const citadele20: Citadel = {
       unit: objectDB.druidII,
       unitsAmount: 3600,
       originalUnitsAmount: 3600,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     }
   ]
 }
@@ -351,42 +389,54 @@ export const citadele25: Citadel = {
       unit: objectDB.walls,
       unitsAmount: 31900,
       originalUnitsAmount: 31900,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '1',
       unit: objectDB.lifeDragonVII,
       unitsAmount: 480,
       originalUnitsAmount: 480,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '2',
       unit: objectDB.entVI,
       unitsAmount: 880,
       originalUnitsAmount: 880,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '3',
       unit: objectDB.bearV,
       unitsAmount: 2400,
       originalUnitsAmount: 2400,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '4',
       unit: objectDB.pegasoRiderIV,
       unitsAmount: 4300,
       originalUnitsAmount: 4300,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '5',
       unit: objectDB.centaurIII,
       unitsAmount: 10000,
       originalUnitsAmount: 10000,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     }
   ]
 }
@@ -399,42 +449,54 @@ export const citadele30: Citadel = {
       unit: objectDB.walls,
       unitsAmount: 135000,
       originalUnitsAmount: 135000,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '1',
       unit: objectDB.lifeDragonVII,
       unitsAmount: 2300,
       originalUnitsAmount: 2300,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '2',
       unit: objectDB.entVI,
       unitsAmount: 4300,
       originalUnitsAmount: 4300,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '3',
       unit: objectDB.bearV,
       unitsAmount: 12000,
       originalUnitsAmount: 12000,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '4',
       unit: objectDB.pegasoRiderIV,
       unitsAmount: 21000,
       originalUnitsAmount: 21000,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '5',
       unit: objectDB.centaurIII,
       unitsAmount: 49000,
       originalUnitsAmount: 49000,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     }
   ]
 }
@@ -447,42 +509,54 @@ export const citadelc20: Citadel = {
       unit: objectDB.walls,
       unitsAmount: 9200,
       originalUnitsAmount: 9200,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '1',
       unit: objectDB.cursedDragonVII,
       unitsAmount: 10,
       originalUnitsAmount: 10,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '2',
       unit: objectDB.giantZombieV,
       unitsAmount: 80,
       originalUnitsAmount: 80,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '3',
       unit: objectDB.deathRiderIII,
       unitsAmount: 650,
       originalUnitsAmount: 650,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '4',
       unit: objectDB.bullRiderV,
       unitsAmount: 54,
       originalUnitsAmount: 54,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '5',
       unit: objectDB.wereWolfII,
       unitsAmount: 2900,
       originalUnitsAmount: 2900,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     }
   ]
 }
@@ -494,42 +568,54 @@ export const citadelc25: Citadel = {
       unit: objectDB.walls,
       unitsAmount: 77500,
       originalUnitsAmount: 77500,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '1',
       unit: objectDB.cursedDragonVII,
       unitsAmount: 120,
       originalUnitsAmount: 120,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '2',
       unit: objectDB.cursedDendroidVI,
       unitsAmount: 205,
       originalUnitsAmount: 205,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '3',
       unit: objectDB.giantZombieV,
       unitsAmount: 540,
       originalUnitsAmount: 540,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '4',
       unit: objectDB.bullRiderV,
       unitsAmount: 400,
       originalUnitsAmount: 400,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     },
     {
       id: '5',
       unit: objectDB.deathRiderIII,
       unitsAmount: 2750,
       originalUnitsAmount: 2750,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
+      attackReason:''
     }
   ]
 }

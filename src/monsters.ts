@@ -79,35 +79,45 @@ export const lvl17HeroicElfSquad: Citadel = {
       unit: entVI,
       unitsAmount: 130,
       originalUnitsAmount: 130,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'e2',
       unit: entVI,
       unitsAmount: 130,
       originalUnitsAmount: 130,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'e3',
       unit: entVI,
       unitsAmount: 130,
       originalUnitsAmount: 130,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'e4',
       unit: entVI,
       unitsAmount: 130,
       originalUnitsAmount: 130,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'e5',
       unit: entVI,
       unitsAmount: 130,
       originalUnitsAmount: 130,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
 
     {
@@ -115,35 +125,45 @@ export const lvl17HeroicElfSquad: Citadel = {
       unit: unicornRiderV,
       unitsAmount: 114,
       originalUnitsAmount: 114,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'ur2',
       unit: unicornRiderV,
       unitsAmount: 114,
       originalUnitsAmount: 114,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'ur3',
       unit: unicornRiderV,
       unitsAmount: 114,
       originalUnitsAmount: 114,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'ur4',
       unit: unicornRiderV,
       unitsAmount: 114,
       originalUnitsAmount: 114,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'ur5',
       unit: unicornRiderV,
       unitsAmount: 114,
       originalUnitsAmount: 114,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
 
     {
@@ -151,70 +171,90 @@ export const lvl17HeroicElfSquad: Citadel = {
       unit: pegasusRiderIV,
       unitsAmount: 170,
       originalUnitsAmount: 170,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'pr2',
       unit: pegasusRiderIV,
       unitsAmount: 170,
       originalUnitsAmount: 170,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'pr3',
       unit: pegasusRiderIV,
       unitsAmount: 170,
       originalUnitsAmount: 170,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'pr4',
       unit: pegasusRiderIV,
       unitsAmount: 170,
       originalUnitsAmount: 170,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'pr5',
       unit: pegasusRiderIV,
       unitsAmount: 170,
       originalUnitsAmount: 170,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'd1',
       unit: druidII,
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'd2',
       unit: druidII,
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'd3',
       unit: druidII,
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'd4',
       unit: druidII,
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     },
     {
       id: 'd5',
       unit: druidII,
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
-      accumulatedDamage: 0
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0,
+      attackReason: ''
     }
   ]
 }

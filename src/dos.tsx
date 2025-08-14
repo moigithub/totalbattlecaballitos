@@ -87,7 +87,13 @@ import {
   testElf30,
   elf10G3M5Mercs,
   elf10G5M5b,
-  elf15G5S6
+  elf15G5S6,
+  elf30G8S6M5,
+  elf25G7S6M5b,
+  elf15G5M3b,
+  elf15G5M3c,
+  elf10G5M3,
+  cursed20G5S5Merc
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
 import { Checkbox } from 'flowbite-react'
@@ -1401,7 +1407,9 @@ ignora lo que continua abajo de esta linea:
       case 'testElf30':
         decodeAndLoadArmySetup(testElf30)
         break
-
+      case 'elf10G5M3':
+        decodeAndLoadArmySetup(elf10G5M3)
+        break
       case 'elf10G5M5':
         decodeAndLoadArmySetup(elf10G5M5)
         break
@@ -1413,6 +1421,12 @@ ignora lo que continua abajo de esta linea:
         break
       case 'elf15G5M3':
         decodeAndLoadArmySetup(elf15G5M3)
+        break
+      case 'elf15G5M3b':
+        decodeAndLoadArmySetup(elf15G5M3b)
+        break
+      case 'elf15G5M3c':
+        decodeAndLoadArmySetup(elf15G5M3c)
         break
       case 'elf15G5S6':
         decodeAndLoadArmySetup(elf15G5S6)
@@ -1441,6 +1455,9 @@ ignora lo que continua abajo de esta linea:
       case 'cursed20G5S5M4':
         decodeAndLoadArmySetup(cursed20G5S5M4)
         break
+      case 'cursed20G5S5Merc':
+        decodeAndLoadArmySetup(cursed20G5S5Merc)
+        break
       case 'cursed25':
         decodeAndLoadArmySetup(cursed25)
         break
@@ -1460,12 +1477,19 @@ ignora lo que continua abajo de esta linea:
       case 'elf25G7S6M5':
         decodeAndLoadArmySetup(elf25G7S6M5)
         break
+      case 'elf25G7S6M5b':
+        decodeAndLoadArmySetup(elf25G7S6M5b)
+        break
       case 'elf25G7S7M5':
         decodeAndLoadArmySetup(elf25G7S7M5)
         break
 
       case 'elf25G8S7':
         decodeAndLoadArmySetup(elf25G8S7)
+        break
+
+      case 'elf30G8S6M5':
+        decodeAndLoadArmySetup(elf30G8S6M5)
         break
       case 'elf30G8S8M8':
         decodeAndLoadArmySetup(elf30G8S8M8)
@@ -1828,6 +1852,8 @@ ignora lo que continua abajo de esta linea:
                       </option>
 
                       <option value='cursed20G5S5M4'>Citadel Cursed 20, G5,S5,M4</option>
+                      <option value='cursed20G5S5Merc'>Citadel Cursed 20, G5,S5,Mercs</option>
+                      
                       <option value='dash' disabled>
                         ------------------
                       </option>
@@ -1852,6 +1878,10 @@ ignora lo que continua abajo de esta linea:
                       <option value='elf10G3M5Mercs' className='bg-orange-800'>
                         Citadel Elf 10 G3,M4, Mercs
                       </option>
+                      
+                      <option value='elf10G5M3' className='bg-orange-800'>
+                        Citadel Elf 10 G5,M3
+                      </option>
                       <option value='elf10G5M5b' className='bg-orange-800'>
                         Citadel Elf 10 G5,M5(2)
                       </option>
@@ -1866,6 +1896,12 @@ ignora lo que continua abajo de esta linea:
                       </option>
                       <option value='elf15G5M3' className='bg-blue-600'>
                         Citadel Elf 15 G5,M3
+                      </option>
+                      <option value='elf15G5M3b' className='bg-blue-600'>
+                        Citadel Elf 15 G5,M3(2)
+                      </option>
+                      <option value='elf15G5M3c' className='bg-blue-600'>
+                        Citadel Elf 15 G5,M3(3)
                       </option>
                       <option value='elf15G5S6' className='bg-blue-600'>
                         Citadel Elf 15 G5,S6
@@ -1900,6 +1936,9 @@ ignora lo que continua abajo de esta linea:
                       <option value='elf25G7S6M5' className='bg-orange-600'>
                         Citadel Elf 25 G7,S6,M5
                       </option>
+                      <option value='elf25G7S6M5b' className='bg-orange-600'>
+                        Citadel Elf 25 G7,S6,M5 (2)
+                      </option>
                       <option value='elf25G7S7M5' className='bg-orange-600'>
                         Citadel Elf 25 G7,S7,M5
                       </option>
@@ -1908,6 +1947,10 @@ ignora lo que continua abajo de esta linea:
                       </option>
                       <option value='dash' disabled>
                         ------------------
+                      </option>
+                      
+                      <option value='elf30G8S6M5' className='bg-green-800'>
+                        Citadel Elf 30 G8,M5,S6
                       </option>
                       <option value='elf30G8S8M8' className='bg-green-800'>
                         Citadel Elf 30 G8,M8,S8

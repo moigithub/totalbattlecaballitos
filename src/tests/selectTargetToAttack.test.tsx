@@ -33,7 +33,9 @@ const createFightStack = (
     } as ObjProps,
     unitsAmount,
     originalUnitsAmount: unitsAmount,
-    accumulatedDamage: 0
+    accumulatedDamageAliveUnits: 0,
+    totalAccumulatedDamage:0,
+    attackReason:''
   }
 }
 

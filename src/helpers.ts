@@ -9,14 +9,17 @@ export interface ColumnResult {
   attackerUnits: number
   attackerName: string
   attackerUnitLost: number
+  attacker:FightStack
   isAttackerDead: boolean
 
   oponentUnits: number
   oponentName: string
+  opponent: FightStack
   oponentUnitLost: number
   isOponentDead: boolean
 
   damage: number
+  acummulatedDamage: number
   usedFeat: boolean
 }
 
@@ -354,7 +357,9 @@ export const prepareArmyData = (army: Stack[]): FightStack[] => {
       id: stack.id,
       unitsAmount: stack.unitsAmount,
       originalUnitsAmount: stack.unitsAmount,
-      accumulatedDamage: 0
+      attackReason: '', 
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage:0,
     }
   })
 }
@@ -408,7 +413,7 @@ const getStrongestStack = (stacks: FightStack[]): FightStack | null => {
 export const calculateEffectiveDamage = (
   attackingStack: FightStack,
   defendingStack: FightStack
-): number => {
+): {realDamage:number, trucateDamage:number} => {
   const bonusStr = attackingStack.unit.strBonus || 0
   const featureBonus = getBonusByCategory(attackingStack, defendingStack.unit.category)
   const featureBonus2 = getBonusByCategory(attackingStack, defendingStack.unit.subGroup)
@@ -423,7 +428,7 @@ export const calculateEffectiveDamage = (
     defendingStack.unitsAmount *
       defendingStack.unit.BASEHP *
       (1 + (defendingStack.unit.hpBonus || 0) / 100) -
-    defendingStack.accumulatedDamage
+    defendingStack.accumulatedDamageAliveUnits
 
   // console.log(
   //   'calculateEffectiveDamage: attackingStack',
@@ -440,13 +445,17 @@ export const calculateEffectiveDamage = (
   //   totalHealth
   // )
   // if health is less than strength, discard extra damage
-  return Math.min(totalStrength, totalHealth)
+  return {
+    realDamage: totalStrength,
+    trucateDamage: Math.min(totalStrength, totalHealth)
+  }
 }
 
 export const applyDamage = (
   attackingStack: FightStack,
   defendingStack: FightStack,
-  damage: number
+  damage: number,
+  realDamage: number
 ): number => {
   // Calculate units to remove from the defending stack
   // console.log('damage', attackingStack, JSON.stringify(defendingStack), damage)
@@ -454,15 +463,16 @@ export const applyDamage = (
   const unitHealth = defendingStack.unit.BASEHP * (1 + (defendingStack.unit.hpBonus || 0) / 100)
 
   // Add damage to accumulated damage
-  defendingStack.accumulatedDamage += damage
+  defendingStack.accumulatedDamageAliveUnits += damage
+  defendingStack.totalAccumulatedDamage += realDamage
 
   // Calculate units to remove based on accumulated damage
-  const unitsToRemove = Math.trunc(defendingStack.accumulatedDamage / unitHealth)
+  const unitsToRemove = Math.trunc(defendingStack.accumulatedDamageAliveUnits / unitHealth)
   defendingStack.unitsAmount = Math.max(0, defendingStack.unitsAmount - unitsToRemove)
 
   console.log(
     'damage formula',
-    defendingStack.accumulatedDamage,
+    defendingStack.accumulatedDamageAliveUnits,
     ' /',
     unitHealth,
     '=',
@@ -475,7 +485,7 @@ export const applyDamage = (
     'unitHealth',
     unitHealth,
     'acumulatedDamage',
-    defendingStack.accumulatedDamage,
+    defendingStack.accumulatedDamageAliveUnits,
     'damage',
     damage,
     'unitsToRemove',
@@ -483,7 +493,8 @@ export const applyDamage = (
   )
 
   // Reduce accumulated damage by the health of the units killed
-  defendingStack.accumulatedDamage -= unitsToRemove * unitHealth
+  // keep accumulated damage on alive units only
+  defendingStack.accumulatedDamageAliveUnits -= unitsToRemove * unitHealth
 
   console.log(
     `%c ${attackingStack.id}:${attackingStack.unit.name} attacked ${defendingStack.id}:${defendingStack.unit.name} , dealing ${damage} damage, killing ${unitsToRemove} units`,
@@ -583,8 +594,8 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
         )
         // console.log('target found', structuredClone(targetStack))
         if (targetStack) {
-          const damage = calculateEffectiveDamage(stack, targetStack)
-          const unitsKilled = applyDamage(stack, targetStack, damage)
+          const {realDamage, trucateDamage:damage} = calculateEffectiveDamage(stack, targetStack)
+          const unitsKilled = applyDamage(stack, targetStack, damage, realDamage)
 
           if (isPlayerTurn) {
             const bonus1 = getBonus(stack, targetStack.unit.category)
@@ -606,13 +617,16 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
               lineCounter: lineCounter++,
               attackerUnits: stack.unitsAmount,
               attackerName: stack.unit.name,
+              attacker:stack,
               attackerUnitLost: 0,
               isAttackerDead: false,
               oponentUnits: unitsKilled + targetStack.unitsAmount,
               oponentName: targetStack.unit.name,
+              opponent: targetStack,
               oponentUnitLost: unitsKilled,
               isOponentDead: targetStack.unitsAmount === 0,
               damage: damage,
+              acummulatedDamage: targetStack.totalAccumulatedDamage,
               usedFeat:
                 getBonus(stack, targetStack.unit.category) +
                   getBonus(stack, targetStack.unit.subGroup) >
@@ -624,13 +638,16 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
               lineCounter: lineCounter++,
               attackerUnits: unitsKilled + targetStack.unitsAmount,
               attackerName: targetStack.unit.name,
+              attacker: targetStack,
               attackerUnitLost: unitsKilled,
               isAttackerDead: targetStack.unitsAmount === 0,
               oponentUnits: stack.unitsAmount,
               oponentName: stack.unit.name,
+              opponent: stack,
               oponentUnitLost: 0,
               isOponentDead: false,
               damage: damage,
+              acummulatedDamage: targetStack.totalAccumulatedDamage,
               usedFeat:
                 getBonus(stack, targetStack.unit.category) +
                   getBonus(stack, targetStack.unit.subGroup) >
