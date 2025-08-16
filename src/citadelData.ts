@@ -66,8 +66,22 @@ export const objBuilder = (props: Partial<ObjProps>): ObjProps => {
     ...props
   }
 }
+export const stackBuilder = (id:string, unit:ObjProps, unitsAmount:number)=>{
+  return {
+    id,
+    unit,
+    unitsAmount,
+    originalUnitsAmount: unitsAmount,
+    accumulatedDamageAliveUnits: 0,
+    totalAccumulatedDamage:0,
+    attackReason:''
+  }
+}
 
-const objectDB: Record<string, ObjProps> = {}
+type MonsterData = {
+  [key:string]:ObjProps
+}
+export const objectDB = {} as MonsterData
 
 objectDB.bearV = objBuilder({
   name: 'Bear V',
@@ -175,7 +189,7 @@ objectDB.bullRiderV = objBuilder({
   category: 'mounted',
   BASESTR: 29000,
   BASEHP: 87000,
-  vsRangedPercent: 65
+  vsRangedPercent: 55
 })
 objectDB.wereWolfII = objBuilder({
   name: 'WereWolf II',
@@ -183,7 +197,7 @@ objectDB.wereWolfII = objBuilder({
   subGroup: 'beast',
   BASESTR: 360,
   BASEHP: 1080,
-  vsMountedPercent: 65
+  vsMountedPercent: 45
 })
 objectDB.cursedDendroidVI = objBuilder({
   name: 'Cursed dendroid VI',

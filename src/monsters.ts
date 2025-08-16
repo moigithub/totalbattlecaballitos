@@ -1,7 +1,7 @@
 //doomsday nigromante strength 720, health 2160
 //ancient/tinman arbalesteraAncestrengthal strength 720, health 2160, ranged
 
-import { Citadel, objBuilder } from './citadelData'
+import { Citadel, objBuilder, objectDB, stackBuilder } from './citadelData'
 // import { Category } from './types'
 
 // export type MonsterType = 'jormungandr' | 'swarm' | 'ancient' | 'guardsman' | 'demon' | 'monster'
@@ -265,3 +265,57 @@ export const lvl17HeroicElfSquad: Citadel = {
 //   'lvl17HeroicElfSquad.stacks',
 //   lvl17HeroicElfSquad.stacks.map(s => ({ ...s, sstr: s.unit.BASESTR * s.unitsAmount }))
 // )
+
+objectDB.fireHorseRider= objBuilder({
+  name: 'FireHorseRiderIII',
+  category: 'mounted',
+  BASESTR: 4100,
+  BASEHP: 12300,
+  vsRangedPercent: 50
+})
+objectDB.overseer= objBuilder({
+  name: 'OverseerIII',
+  category: 'ranged',
+  BASESTR: 6500,
+  BASEHP: 19500,
+  vsMeleePercent: 70
+})
+
+
+objectDB.ogreShamanIII= objBuilder({
+  name: 'ogreShamanIII',
+  category: 'ranged',
+  BASESTR: 3200,
+  BASEHP: 9600,
+  vsMountedPercent: 60
+})
+
+objectDB.goblin= objBuilder({
+  name: 'goblin',
+  category: 'melee',
+  BASESTR: 28,
+  BASEHP: 84,
+  vsMountedPercent: 10
+})
+
+
+export const mobCommonInfernoSquad31: Citadel = {
+  stacks: [
+    stackBuilder('0', objectDB.fireHorseRider, 53000),
+    stackBuilder('1', objectDB.overseer, 33000)      
+  ]
+}
+
+export const mobCommonCursedSquad29: Citadel = {
+    stacks: [
+        stackBuilder('0', objectDB.deathRiderIII, 41000),
+        stackBuilder('1', objectDB.wereWolfII, 160000)      
+      ]
+}
+
+export const mobCommonBarbarianSquad28: Citadel = {
+  stacks: [
+      stackBuilder('0', objectDB.ogreShamanIII, 30_000),
+      stackBuilder('1', objectDB.goblin, 1_500_000)      
+    ]
+}

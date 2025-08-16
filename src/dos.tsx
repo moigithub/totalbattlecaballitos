@@ -48,7 +48,7 @@ import {
   citadele30
 } from './citadelData.ts'
 import { Tips } from './tips.tsx'
-import { lvl17HeroicElfSquad } from './monsters.ts'
+import { lvl17HeroicElfSquad, mobCommonBarbarianSquad28, mobCommonCursedSquad29, mobCommonInfernoSquad31 } from './monsters.ts'
 import { decodeAndLoadArmySetup, prepareExportData } from './utils.ts'
 import { encodeHash } from './hashStore.ts'
 import PageTitle from './pageTitle.tsx'
@@ -78,7 +78,7 @@ import {
   testsequence1,
   elf30somebearsurvive,
   elf30somebearsurvive2,
-  elfHeroic17,
+  elfHeroic17, 
   cursed25Test,
   cursed25M6Mercs,
   testSeq3,
@@ -93,10 +93,13 @@ import {
   elf15G5M3b,
   elf15G5M3c,
   elf10G5M3,
-  cursed20G5S5Merc
+  cursed20G5S5Merc,
+  cursed20G5S5M6,
+  elf10G4
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
 import { Checkbox } from 'flowbite-react'
+import { MonsterData } from './monsterData.tsx'
 
 function Dos() {
   const leadership = useStackStore(state => state.leadership)
@@ -204,6 +207,19 @@ function Dos() {
       console.log('select target lvl17heroic', lvl17HeroicElfSquad)
       selectedCitadel = lvl17HeroicElfSquad
     }
+    if (selectedTarget === 'mobCommonInfernoSquad31') {
+      console.log('select target mobCommonInfernoSquad31', mobCommonInfernoSquad31)
+      selectedCitadel = mobCommonInfernoSquad31
+    }
+    if (selectedTarget === 'mobCommonCursedSquad29') {
+      console.log('select target mobCommonCursedSquad29', mobCommonCursedSquad29)
+      selectedCitadel = mobCommonCursedSquad29
+    }
+    if (selectedTarget === 'mobCommonBarbarianSquad28') {
+      console.log('select target mobCommonBarbarianSquad28', mobCommonBarbarianSquad28)
+      selectedCitadel = mobCommonBarbarianSquad28
+    }
+     
 
     setCitadel(selectedCitadel)
   }, [selectedTarget])
@@ -1393,7 +1409,7 @@ ignora lo que continua abajo de esta linea:
     switch (event.target.value) {
       case 'elfHeroic17':
         decodeAndLoadArmySetup(elfHeroic17)
-        break
+        break 
       case 'testsequence1':
         decodeAndLoadArmySetup(testsequence1)
         break
@@ -1406,6 +1422,9 @@ ignora lo que continua abajo de esta linea:
 
       case 'testElf30':
         decodeAndLoadArmySetup(testElf30)
+        break
+      case 'elf10G4':
+        decodeAndLoadArmySetup(elf10G4)
         break
       case 'elf10G5M3':
         decodeAndLoadArmySetup(elf10G5M3)
@@ -1455,6 +1474,10 @@ ignora lo que continua abajo de esta linea:
       case 'cursed20G5S5M4':
         decodeAndLoadArmySetup(cursed20G5S5M4)
         break
+      case 'cursed20G5S5M6':
+        decodeAndLoadArmySetup(cursed20G5S5M6)
+        break
+        
       case 'cursed20G5S5Merc':
         decodeAndLoadArmySetup(cursed20G5S5Merc)
         break
@@ -1610,6 +1633,9 @@ ignora lo que continua abajo de esta linea:
                 <option value='citadelc20'>Cursed Citadel lvl 20</option>
                 <option value='citadelc25'>Cursed Citadel lvl 25</option>
                 <option value='lvl17HeroicElfSquad'>lvl 17 Heroic Elf Squad</option>
+                <option value='mobCommonInfernoSquad31'>mobCommonInfernoSquad31</option>
+                <option value='mobCommonCursedSquad29'>mobCommonCursedSquad29</option>
+                <option value='mobCommonBarbarianSquad28'>mobCommonBarbarianSquad28</option>
               </select>
             </div>
 
@@ -1634,7 +1660,13 @@ ignora lo que continua abajo de esta linea:
             {selectedTarget === 'citadele30' && <CitadelData type='e30' />}
             {selectedTarget === 'citadelc20' && <CitadelData type='c20' />}
             {selectedTarget === 'citadelc25' && <CitadelData type='c25' />}
-            {selectedTarget === 'lvl17HeroicElfSquad' && <div>lvl17 Heroic Elf Squad</div>}
+            {selectedTarget === 'lvl17HeroicElfSquad' && <div className='px-1 py-0.5 border-4 border-lime-600'>lvl17 Heroic Elf Squad</div>}
+            {selectedTarget === 'mobCommonInfernoSquad31' && <MonsterData monster={mobCommonInfernoSquad31}/>}
+            {selectedTarget === 'mobCommonCursedSquad29' && <MonsterData monster={mobCommonCursedSquad29}/>}
+            {selectedTarget === 'mobCommonBarbarianSquad28' && <MonsterData monster={mobCommonBarbarianSquad28}/>}
+            
+
+
           </div>
         )}
 
@@ -1853,6 +1885,7 @@ ignora lo que continua abajo de esta linea:
 
                       <option value='cursed20G5S5M4'>Citadel Cursed 20, G5,S5,M4</option>
                       <option value='cursed20G5S5Merc'>Citadel Cursed 20, G5,S5,Mercs</option>
+                      <option value='cursed20G5S5M6'>Citadel Cursed 20, G5,S5,M6</option>
                       
                       <option value='dash' disabled>
                         ------------------
@@ -1874,6 +1907,9 @@ ignora lo que continua abajo de esta linea:
                       </option>
                       <option value='dash' disabled>
                         ------------------
+                      </option>
+                      <option value='elf10G4' className='bg-orange-800'>
+                        Citadel Elf 10 G4
                       </option>
                       <option value='elf10G3M5Mercs' className='bg-orange-800'>
                         Citadel Elf 10 G3,M4, Mercs
@@ -1975,6 +2011,7 @@ ignora lo que continua abajo de esta linea:
                       <option value='testSeq4Elf25'>testSeq4 elf25</option>
                       <option value='cursed25Test'>cursed25Test</option>
                       <option value='elfHeroic17'>elfHeroic17</option>
+                      
                     </select>
                   </div>
                 </div>
