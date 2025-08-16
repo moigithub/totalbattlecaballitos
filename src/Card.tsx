@@ -334,9 +334,15 @@ export const Card = ({
       </div>
       <div className='stack-attack-info text-sm'>
         <span className='text-yellow-500'>
-          {stack.unit.group === 'monster' ? stack.unit.subGroup : stack.unit.group}
+          { stack.unit.group}
         </span>
-        :{stack.unit.category} <span className='text-red-600'>vs</span>{' '}
+        {stack.unit.subGroup && <span className='text-fuchsia-500'>
+          :{ stack.unit.subGroup}
+        </span>}
+        {stack.unit.category && <span className='text-fuchsia-500'>
+          :{ stack.unit.category}
+        </span>}
+        <span className='text-red-600'>{' vs '}</span>
         <span className='text-green-600'>{whoCanIAttack(stack.unit).join(',')}</span>
       </div>
       <div className='stack-basic-info'>
