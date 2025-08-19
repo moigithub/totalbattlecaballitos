@@ -289,7 +289,8 @@ export const ArmyList = () => {
       strLimit: 0,
       strLimitType: '',
       useHpLimit: false,
-      HpLimit: 0
+      HpLimit: 0,
+      attackOrder: 0
     }
     addStack(stack)
   }

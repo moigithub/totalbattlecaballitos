@@ -34,8 +34,7 @@ const createFightStack = (
     unitsAmount,
     originalUnitsAmount: unitsAmount,
     accumulatedDamageAliveUnits: 0,
-    totalAccumulatedDamage:0,
-    attackReason:''
+    totalAccumulatedDamage: 0
   }
 }
 

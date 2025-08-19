@@ -42,6 +42,7 @@ const unitBuilder = <T>(props: Partial<BasicUnit> & Pick<BasicUnit, 'id'>): T =>
     group: '',
     subGroup: '',
     level: '1',
+    sortOrderBase: 0,
     ...props
   } as T
 }
@@ -69,7 +70,8 @@ const riderBuilder = (
     vsSiegePercent,
     category: 'mounted',
     group: 'guardsman',
-    level
+    level,
+    sortOrderBase: 20
   })
 }
 const errorUnit = riderBuilder('error', 'error', 'error', 0, 0, 0, 0, '0')
@@ -105,7 +107,8 @@ const swordmanBuilder = (
     vsMountedPercent,
     category: 'melee',
     group: 'specialist',
-    level
+    level,
+    sortOrderBase: 10
   })
 }
 const SwordmanS1 = swordmanBuilder(
@@ -185,7 +188,8 @@ const spyBuilder = (
     INITIATIVE: 10,
     category: 'scout',
     group: 'specialist',
-    level
+    level,
+    sortOrderBase: 20
   })
 }
 
@@ -210,7 +214,8 @@ const deadshotV = unitBuilder<SpecialistUnit>({
   vsFlyingPercent: 170,
   category: 'ranged',
   group: 'specialist',
-  level: '5'
+  level: '5',
+  sortOrderBase: 10
 })
 const deadshotVI = unitBuilder<SpecialistUnit>({
   id: 'deadshotVI',
@@ -226,7 +231,8 @@ const deadshotVI = unitBuilder<SpecialistUnit>({
   vsFlyingPercent: 254,
   category: 'ranged',
   group: 'specialist',
-  level: '6'
+  level: '6',
+  sortOrderBase: 10
 })
 const deadshotVII = unitBuilder<SpecialistUnit>({
   id: 'deadshotVII',
@@ -242,7 +248,8 @@ const deadshotVII = unitBuilder<SpecialistUnit>({
   vsFlyingPercent: 382,
   category: 'ranged',
   group: 'specialist',
-  level: '7'
+  level: '7',
+  sortOrderBase: 10
 })
 const lionRiderV = unitBuilder<SpecialistUnit>({
   id: 'lionRiderV',
@@ -258,7 +265,8 @@ const lionRiderV = unitBuilder<SpecialistUnit>({
   vsSiegePercent: 137,
   category: 'mounted',
   group: 'specialist',
-  level: '5'
+  level: '5',
+  sortOrderBase: 10
 })
 const lionRiderVI = unitBuilder<SpecialistUnit>({
   id: 'lionRiderVI',
@@ -274,7 +282,8 @@ const lionRiderVI = unitBuilder<SpecialistUnit>({
   vsSiegePercent: 205,
   category: 'mounted',
   group: 'specialist',
-  level: '6'
+  level: '6',
+  sortOrderBase: 10
 })
 const lionRiderVII = unitBuilder<SpecialistUnit>({
   id: 'lionRiderVII',
@@ -290,7 +299,8 @@ const lionRiderVII = unitBuilder<SpecialistUnit>({
   vsSiegePercent: 308,
   category: 'mounted',
   group: 'specialist',
-  level: '7'
+  level: '7',
+  sortOrderBase: 10
 })
 const vulturesV = unitBuilder<SpecialistUnit>({
   id: 'vulturesV',
@@ -306,7 +316,8 @@ const vulturesV = unitBuilder<SpecialistUnit>({
   vsFortificationsPercent: 104,
   category: 'flying',
   group: 'specialist',
-  level: '5'
+  level: '5',
+  sortOrderBase: 10
 })
 const vulturesVI = unitBuilder<SpecialistUnit>({
   id: 'vulturesVI',
@@ -322,7 +333,8 @@ const vulturesVI = unitBuilder<SpecialistUnit>({
   vsFortificationsPercent: 156,
   category: 'flying',
   group: 'specialist',
-  level: '6'
+  level: '6',
+  sortOrderBase: 10
 })
 const vulturesVII = unitBuilder<SpecialistUnit>({
   id: 'vulturesVII',
@@ -338,7 +350,8 @@ const vulturesVII = unitBuilder<SpecialistUnit>({
   vsFortificationsPercent: 234,
   category: 'flying',
   group: 'specialist',
-  level: '7'
+  level: '7',
+  sortOrderBase: 10
 })
 const heavyKnightVI = unitBuilder<SpecialistUnit>({
   id: 'heavyKnightVI',
@@ -354,7 +367,8 @@ const heavyKnightVI = unitBuilder<SpecialistUnit>({
   vsBeastPercent: 304,
   category: 'melee',
   group: 'specialist',
-  level: '6'
+  level: '6',
+  sortOrderBase: 10
 })
 const heavyKnightVII = unitBuilder<SpecialistUnit>({
   id: 'heavyKnightVII',
@@ -370,7 +384,8 @@ const heavyKnightVII = unitBuilder<SpecialistUnit>({
   vsBeastPercent: 456,
   category: 'melee',
   group: 'specialist',
-  level: '7'
+  level: '7',
+  sortOrderBase: 10
 })
 const swiftJaegerVI = unitBuilder<SpecialistUnit>({
   id: 'swiftJaegerVI',
@@ -383,7 +398,8 @@ const swiftJaegerVI = unitBuilder<SpecialistUnit>({
   INITIATIVE: 10,
   category: 'scout',
   group: 'specialist',
-  level: '6'
+  level: '6',
+  sortOrderBase: 10
 })
 const swiftJaegerVII = unitBuilder<SpecialistUnit>({
   id: 'swiftJaegerVII',
@@ -396,7 +412,8 @@ const swiftJaegerVII = unitBuilder<SpecialistUnit>({
   INITIATIVE: 10,
   category: 'scout',
   group: 'specialist',
-  level: '7'
+  level: '7',
+  sortOrderBase: 10
 })
 const legitimistI = unitBuilder<SpecialistUnit>({
   id: 'legitimistI',
@@ -411,7 +428,8 @@ const legitimistI = unitBuilder<SpecialistUnit>({
   vsFlyingPercent: 572,
   category: 'ranged',
   group: 'specialist',
-  level: '8'
+  level: '8',
+  sortOrderBase: 10
 })
 const legitimistII = unitBuilder<SpecialistUnit>({
   id: 'legitimistII',
@@ -426,7 +444,8 @@ const legitimistII = unitBuilder<SpecialistUnit>({
   vsFlyingPercent: 859,
   category: 'ranged',
   group: 'specialist',
-  level: '9'
+  level: '9',
+  sortOrderBase: 10
 })
 const duelistI = unitBuilder<SpecialistUnit>({
   id: 'duelistI',
@@ -441,7 +460,8 @@ const duelistI = unitBuilder<SpecialistUnit>({
   vsBeastPercent: 680,
   category: 'melee',
   group: 'specialist',
-  level: '8'
+  level: '8',
+  sortOrderBase: 10
 })
 const duelistII = unitBuilder<SpecialistUnit>({
   id: 'duelistII',
@@ -456,7 +476,8 @@ const duelistII = unitBuilder<SpecialistUnit>({
   vsBeastPercent: 1025,
   category: 'melee',
   group: 'specialist',
-  level: '9'
+  level: '9',
+  sortOrderBase: 10
 })
 const whitemaneI = unitBuilder<SpecialistUnit>({
   id: 'whitemaneI',
@@ -471,7 +492,8 @@ const whitemaneI = unitBuilder<SpecialistUnit>({
   vsSiegePercent: 461,
   category: 'mounted',
   group: 'specialist',
-  level: '8'
+  level: '8',
+  sortOrderBase: 10
 })
 const whitemaneII = unitBuilder<SpecialistUnit>({
   id: 'whitemaneII',
@@ -486,7 +508,8 @@ const whitemaneII = unitBuilder<SpecialistUnit>({
   vsSiegePercent: 692,
   category: 'mounted',
   group: 'specialist',
-  level: '9'
+  level: '9',
+  sortOrderBase: 10
 })
 const royalLionI = unitBuilder<SpecialistUnit>({
   id: 'royalLionI',
@@ -502,7 +525,8 @@ const royalLionI = unitBuilder<SpecialistUnit>({
   category: 'flying',
   group: 'specialist',
   subGroup: 'beast',
-  level: '8'
+  level: '8',
+  sortOrderBase: 10
 })
 const royalLionII = unitBuilder<SpecialistUnit>({
   id: 'royalLionII',
@@ -518,7 +542,8 @@ const royalLionII = unitBuilder<SpecialistUnit>({
   category: 'flying',
   group: 'specialist',
   subGroup: 'beast',
-  level: '9'
+  level: '9',
+  sortOrderBase: 10
 })
 const panopticI = unitBuilder<SpecialistUnit>({
   id: 'panopticI',
@@ -531,7 +556,8 @@ const panopticI = unitBuilder<SpecialistUnit>({
   INITIATIVE: 10,
   category: 'scout',
   group: 'specialist',
-  level: '8'
+  level: '8',
+  sortOrderBase: 10
 })
 const panopticII = unitBuilder<SpecialistUnit>({
   id: 'panopticII',
@@ -544,7 +570,8 @@ const panopticII = unitBuilder<SpecialistUnit>({
   INITIATIVE: 10,
   category: 'scout',
   group: 'specialist',
-  level: '9'
+  level: '9',
+  sortOrderBase: 10
 })
 //----------------------------------
 const spearmanBuilder = (
@@ -570,7 +597,8 @@ const spearmanBuilder = (
     vsMountedPercent,
     category: 'melee', // vs beast||mounted
     group: 'guardsman',
-    level
+    level,
+    sortOrderBase: 20
   })
 }
 
@@ -622,7 +650,8 @@ const archerBuilder = (
     vsMeleePercent,
     category: 'ranged',
     group: 'guardsman',
-    level
+    level,
+    sortOrderBase: 20
   })
 }
 const ArcherG1 = archerBuilder('ArcherG1', 'ArcherG1', 'ArqueroG1', 150, 50, 67, 52, '1')
@@ -646,7 +675,8 @@ const battleGriffinV = unitBuilder<GuardsmanUnit>({
   category: 'flying',
   group: 'guardsman',
   subGroup: 'beast',
-  level: '5'
+  level: '5',
+  sortOrderBase: 20
 })
 const battleGriffinVI = unitBuilder<GuardsmanUnit>({
   id: 'battleGriffinVI',
@@ -663,7 +693,8 @@ const battleGriffinVI = unitBuilder<GuardsmanUnit>({
   category: 'flying',
   group: 'guardsman',
   subGroup: 'beast',
-  level: '6'
+  level: '6',
+  sortOrderBase: 20
 })
 const battleGriffinVII = unitBuilder<GuardsmanUnit>({
   id: 'battleGriffinVII',
@@ -680,7 +711,8 @@ const battleGriffinVII = unitBuilder<GuardsmanUnit>({
   category: 'flying',
   group: 'guardsman',
   subGroup: 'beast',
-  level: '7'
+  level: '7',
+  sortOrderBase: 20
 })
 
 const heavyArbalesterVI = unitBuilder<GuardsmanUnit>({
@@ -696,7 +728,8 @@ const heavyArbalesterVI = unitBuilder<GuardsmanUnit>({
   vsFlyingPercent: 509,
   category: 'ranged',
   group: 'guardsman',
-  level: '6'
+  level: '6',
+  sortOrderBase: 20
 })
 const heavyArbalesterVII = unitBuilder<GuardsmanUnit>({
   id: 'heavyArbalesterVII',
@@ -711,7 +744,8 @@ const heavyArbalesterVII = unitBuilder<GuardsmanUnit>({
   vsFlyingPercent: 763,
   category: 'ranged',
   group: 'guardsman',
-  level: '7'
+  level: '7',
+  sortOrderBase: 20
 })
 const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
   id: 'heavyHalberdierVI',
@@ -726,7 +760,8 @@ const heavyHalberdierVI = unitBuilder<GuardsmanUnit>({
   vsBeastPercent: 608,
   category: 'melee',
   group: 'guardsman',
-  level: '6'
+  level: '6',
+  sortOrderBase: 20
 })
 const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
   id: 'heavyHalberdierVII',
@@ -741,7 +776,8 @@ const heavyHalberdierVII = unitBuilder<GuardsmanUnit>({
   vsBeastPercent: 911,
   category: 'melee',
   group: 'guardsman',
-  level: '7'
+  level: '7',
+  sortOrderBase: 20
 })
 const mountedKnightVI = unitBuilder<GuardsmanUnit>({
   id: 'mountedKnightVI',
@@ -756,7 +792,8 @@ const mountedKnightVI = unitBuilder<GuardsmanUnit>({
   vsSiegePercent: 410,
   category: 'mounted',
   group: 'guardsman',
-  level: '6'
+  level: '6',
+  sortOrderBase: 20
 })
 const mountedKnightVII = unitBuilder<GuardsmanUnit>({
   id: 'mountedKnightVII',
@@ -771,7 +808,8 @@ const mountedKnightVII = unitBuilder<GuardsmanUnit>({
   vsSiegePercent: 615,
   category: 'mounted',
   group: 'guardsman',
-  level: '7'
+  level: '7',
+  sortOrderBase: 20
 })
 const purifierI = unitBuilder<GuardsmanUnit>({
   id: 'purifierI',
@@ -786,7 +824,8 @@ const purifierI = unitBuilder<GuardsmanUnit>({
   vsFlyingPercent: 1145,
   category: 'ranged',
   group: 'guardsman',
-  level: '8'
+  level: '8',
+  sortOrderBase: 20
 })
 const purifierII = unitBuilder<GuardsmanUnit>({
   id: 'purifierII',
@@ -801,7 +840,8 @@ const purifierII = unitBuilder<GuardsmanUnit>({
   vsFlyingPercent: 1717,
   category: 'ranged',
   group: 'guardsman',
-  level: '9'
+  level: '9',
+  sortOrderBase: 20
 })
 const punisherI = unitBuilder<GuardsmanUnit>({
   id: 'punisherI',
@@ -816,7 +856,8 @@ const punisherI = unitBuilder<GuardsmanUnit>({
   vsBeastPercent: 1367,
   category: 'melee',
   group: 'guardsman',
-  level: '8'
+  level: '8',
+  sortOrderBase: 20
 })
 const punisherII = unitBuilder<GuardsmanUnit>({
   id: 'punisherII',
@@ -831,7 +872,8 @@ const punisherII = unitBuilder<GuardsmanUnit>({
   vsBeastPercent: 2050,
   category: 'melee',
   group: 'guardsman',
-  level: '9'
+  level: '9',
+  sortOrderBase: 20
 })
 const smiterI = unitBuilder<GuardsmanUnit>({
   id: 'smiterI',
@@ -846,7 +888,8 @@ const smiterI = unitBuilder<GuardsmanUnit>({
   vsSiegePercent: 923,
   category: 'mounted',
   group: 'guardsman',
-  level: '6'
+  level: '6',
+  sortOrderBase: 20
 })
 const smiterII = unitBuilder<GuardsmanUnit>({
   id: 'smiterII',
@@ -861,7 +904,8 @@ const smiterII = unitBuilder<GuardsmanUnit>({
   vsSiegePercent: 1384,
   category: 'mounted',
   group: 'guardsman',
-  level: '6'
+  level: '6',
+  sortOrderBase: 20
 })
 const coraxI = unitBuilder<GuardsmanUnit>({
   id: 'coraxI',
@@ -876,7 +920,8 @@ const coraxI = unitBuilder<GuardsmanUnit>({
   vsFortificationsPercent: 701,
   category: 'flying',
   group: 'guardsman',
-  level: '8'
+  level: '8',
+  sortOrderBase: 20
 })
 const coraxII = unitBuilder<GuardsmanUnit>({
   id: 'coraxII',
@@ -891,7 +936,8 @@ const coraxII = unitBuilder<GuardsmanUnit>({
   vsFortificationsPercent: 1051,
   category: 'flying',
   group: 'guardsman',
-  level: '9'
+  level: '9',
+  sortOrderBase: 20
 })
 //----------------------------------
 const catapultBuilder = (
@@ -916,7 +962,8 @@ const catapultBuilder = (
     vsFortificationsPercent,
     category: 'siege',
     group: 'engineer',
-    level
+    level,
+    sortOrderBase: 20
   })
 }
 
@@ -979,7 +1026,8 @@ const waterElementalIII = unitBuilder<MonsterUnit>({
   category: 'ranged',
   group: 'monster',
   subGroup: 'elemental',
-  level: '3'
+  level: '3',
+  sortOrderBase: 30
 })
 const icePhoenixIV = unitBuilder<MonsterUnit>({
   id: 'icePhoenixIV',
@@ -995,7 +1043,8 @@ const icePhoenixIV = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'elemental',
   category: 'flying',
-  level: '4'
+  level: '4',
+  sortOrderBase: 30
 })
 const flamingCentaurV = unitBuilder<MonsterUnit>({
   id: 'flamingCentaurV',
@@ -1011,7 +1060,8 @@ const flamingCentaurV = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'elemental',
   category: 'mounted',
-  level: '5'
+  level: '5',
+  sortOrderBase: 30
 })
 const rubiGolemVI = unitBuilder<MonsterUnit>({
   id: 'rubiGolemVI',
@@ -1027,7 +1077,8 @@ const rubiGolemVI = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'elemental',
   category: 'melee',
-  level: '6'
+  level: '6',
+  sortOrderBase: 30
 })
 const windLordVII = unitBuilder<MonsterUnit>({
   id: 'windLordVII',
@@ -1043,7 +1094,8 @@ const windLordVII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'elemental',
   category: 'melee',
-  level: '7'
+  level: '7',
+  sortOrderBase: 30
 })
 const firePhoenixI = unitBuilder<MonsterUnit>({
   id: 'firePhoenixI',
@@ -1059,7 +1111,8 @@ const firePhoenixI = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'elemental',
   category: 'flying',
-  level: '8'
+  level: '8',
+  sortOrderBase: 30
 })
 const firePhoenixII = unitBuilder<MonsterUnit>({
   id: 'firePhoenixII',
@@ -1075,7 +1128,8 @@ const firePhoenixII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'elemental',
   category: 'flying',
-  level: '9'
+  level: '9',
+  sortOrderBase: 30
 })
 
 //-----------------------------
@@ -1093,7 +1147,8 @@ const battleBoarIII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'beast',
   category: 'mounted',
-  level: '3'
+  level: '3',
+  sortOrderBase: 30
 })
 const gorgonMedusaIV = unitBuilder<MonsterUnit>({
   id: 'gorgonMedusaIV',
@@ -1109,7 +1164,8 @@ const gorgonMedusaIV = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'beast',
   category: 'ranged',
-  level: '4'
+  level: '4',
+  sortOrderBase: 30
 })
 const fearsomeManticoraV = unitBuilder<MonsterUnit>({
   id: 'fearsomeManticoraV',
@@ -1125,7 +1181,8 @@ const fearsomeManticoraV = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'beast',
   category: 'flying',
-  level: '5'
+  level: '5',
+  sortOrderBase: 30
 })
 const jungleDestroyerVI = unitBuilder<MonsterUnit>({
   id: 'jungleDestroyerVI',
@@ -1141,7 +1198,8 @@ const jungleDestroyerVI = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'beast',
   category: 'melee',
-  level: '6'
+  level: '6',
+  sortOrderBase: 30
 })
 const ancientTerrorVII = unitBuilder<MonsterUnit>({
   id: 'ancientTerrorVII',
@@ -1157,7 +1215,8 @@ const ancientTerrorVII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'beast',
   category: 'mounted',
-  level: '7'
+  level: '7',
+  sortOrderBase: 30
 })
 const tricksterI = unitBuilder<MonsterUnit>({
   id: 'tricksterI',
@@ -1173,7 +1232,8 @@ const tricksterI = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'beast',
   category: 'ranged',
-  level: '8'
+  level: '8',
+  sortOrderBase: 30
 })
 const tricksterII = unitBuilder<MonsterUnit>({
   id: 'tricksterII',
@@ -1189,7 +1249,8 @@ const tricksterII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'beast',
   category: 'ranged',
-  level: '9'
+  level: '9',
+  sortOrderBase: 30
 })
 //-----------------------------
 const emeraldDragonIII = unitBuilder<MonsterUnit>({
@@ -1206,7 +1267,8 @@ const emeraldDragonIII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'dragon',
   category: 'flying',
-  level: '3'
+  level: '3',
+  sortOrderBase: 30
 })
 const magicDragonIV = unitBuilder<MonsterUnit>({
   id: 'magicDragonIV',
@@ -1222,7 +1284,8 @@ const magicDragonIV = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'dragon',
   category: 'ranged',
-  level: '4'
+  level: '4',
+  sortOrderBase: 30
 })
 const desertConquerV = unitBuilder<MonsterUnit>({
   id: 'desertConquerV',
@@ -1238,7 +1301,8 @@ const desertConquerV = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'dragon',
   category: 'mounted',
-  level: '5'
+  level: '5',
+  sortOrderBase: 30
 })
 
 const crystalDragonVI = unitBuilder<MonsterUnit>({
@@ -1255,7 +1319,8 @@ const crystalDragonVI = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'dragon',
   category: 'melee',
-  level: '6'
+  level: '6',
+  sortOrderBase: 30
 })
 const blackDragonVII = unitBuilder<MonsterUnit>({
   id: 'blackDragonVII',
@@ -1271,7 +1336,8 @@ const blackDragonVII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'dragon',
   category: 'flying',
-  level: '7'
+  level: '7',
+  sortOrderBase: 30
 })
 const devastatorI = unitBuilder<MonsterUnit>({
   id: 'devastatorI',
@@ -1287,7 +1353,8 @@ const devastatorI = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'dragon',
   category: 'mounted',
-  level: '8'
+  level: '8',
+  sortOrderBase: 30
 })
 const devastatorII = unitBuilder<MonsterUnit>({
   id: 'devastatorII',
@@ -1303,7 +1370,8 @@ const devastatorII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'dragon',
   category: 'mounted',
-  level: '9'
+  level: '9',
+  sortOrderBase: 30
 })
 
 const stoneGargoyleIII = unitBuilder<MonsterUnit>({
@@ -1320,7 +1388,8 @@ const stoneGargoyleIII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'giant',
   category: 'flying',
-  level: '3'
+  level: '3',
+  sortOrderBase: 30
 })
 const manyArmedGuardianIV = unitBuilder<MonsterUnit>({
   id: 'manyArmedGuardianIV',
@@ -1336,7 +1405,8 @@ const manyArmedGuardianIV = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'giant',
   category: 'melee',
-  level: '4'
+  level: '4',
+  sortOrderBase: 30
 })
 const EttinV = unitBuilder<MonsterUnit>({
   id: 'EttinV',
@@ -1352,7 +1422,8 @@ const EttinV = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'giant',
   category: 'melee',
-  level: '5'
+  level: '5',
+  sortOrderBase: 30
 })
 const trollRiderVI = unitBuilder<MonsterUnit>({
   id: 'trollRiderVI',
@@ -1368,7 +1439,8 @@ const trollRiderVI = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'giant',
   category: 'mounted',
-  level: '6'
+  level: '6',
+  sortOrderBase: 30
 })
 const destructiveColossusVII = unitBuilder<MonsterUnit>({
   id: 'destructiveColossusVII',
@@ -1384,7 +1456,8 @@ const destructiveColossusVII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'giant',
   category: 'ranged',
-  level: '7'
+  level: '7',
+  sortOrderBase: 30
 })
 const krakenI = unitBuilder<MonsterUnit>({
   id: 'krakenI',
@@ -1400,7 +1473,8 @@ const krakenI = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'giant',
   category: 'melee',
-  level: '8'
+  level: '8',
+  sortOrderBase: 30
 })
 const krakenII = unitBuilder<MonsterUnit>({
   id: 'krakenII',
@@ -1416,7 +1490,8 @@ const krakenII = unitBuilder<MonsterUnit>({
   group: 'monster',
   subGroup: 'giant',
   category: 'melee',
-  level: '9'
+  level: '9',
+  sortOrderBase: 30
 })
 
 // mercenaries
@@ -1434,7 +1509,8 @@ const scorpionRiderV: MercUnit = unitBuilder<MercUnit>({
   vsRangedPercent: 40,
   category: 'mounted',
   group: 'mercs',
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 
 const cyclopsV: MercUnit = unitBuilder<MercUnit>({
@@ -1452,7 +1528,8 @@ const cyclopsV: MercUnit = unitBuilder<MercUnit>({
   category: 'ranged',
   group: 'mercs',
   subGroup: 'giant',
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 
 const gargoyleV: MercUnit = unitBuilder<MercUnit>({
@@ -1469,7 +1546,8 @@ const gargoyleV: MercUnit = unitBuilder<MercUnit>({
   category: 'flying',
   group: 'mercs', //'undead',
   subGroup: 'beast',
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 
 const bearV: MercUnit = unitBuilder<MercUnit>({
@@ -1486,7 +1564,8 @@ const bearV: MercUnit = unitBuilder<MercUnit>({
   category: 'melee',
   subGroup: 'beast',
   group: 'mercs', //'elf',
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 
 const ifritV: MercUnit = unitBuilder<MercUnit>({
@@ -1503,7 +1582,8 @@ const ifritV: MercUnit = unitBuilder<MercUnit>({
   category: 'flying',
   group: 'mercs', //
   subGroup: 'elemental',
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 const swiftMarksmanV: MercUnit = unitBuilder<MercUnit>({
   id: 'swiftMarksmanV',
@@ -1519,7 +1599,8 @@ const swiftMarksmanV: MercUnit = unitBuilder<MercUnit>({
   category: 'ranged',
   group: 'mercs',
   subGroup: '',
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 const giantZombieV: MercUnit = unitBuilder<MercUnit>({
   id: 'giantZombieV',
@@ -1535,7 +1616,8 @@ const giantZombieV: MercUnit = unitBuilder<MercUnit>({
   category: 'melee',
   group: 'mercs', // 'cursed',
   subGroup: 'giant',
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 
 const firewormRiderV: MercUnit = unitBuilder<MercUnit>({
@@ -1551,7 +1633,8 @@ const firewormRiderV: MercUnit = unitBuilder<MercUnit>({
   category: 'mounted',
   group: 'mercs',
   // subGroup :'',
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 
 const unicornRiderV: MercUnit = unitBuilder<MercUnit>({
@@ -1566,7 +1649,8 @@ const unicornRiderV: MercUnit = unitBuilder<MercUnit>({
   vsRangedPercent: 65,
   category: 'mounted',
   group: 'mercs', //
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 
 const bullRiderV: MercUnit = unitBuilder<MercUnit>({
@@ -1581,7 +1665,8 @@ const bullRiderV: MercUnit = unitBuilder<MercUnit>({
   vsRangedPercent: 55,
   category: 'mounted',
   group: 'mercs', //
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 //------------------------------------
 
@@ -1598,7 +1683,8 @@ const chariotVI: MercUnit = unitBuilder<MercUnit>({
   vsSiegePercent: 410,
   category: 'mounted',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const legionaryVI: MercUnit = unitBuilder<MercUnit>({
@@ -1614,7 +1700,8 @@ const legionaryVI: MercUnit = unitBuilder<MercUnit>({
   vsBeastPercent: 608,
   category: 'melee',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const arbalesterVI: MercUnit = unitBuilder<MercUnit>({
@@ -1630,7 +1717,8 @@ const arbalesterVI: MercUnit = unitBuilder<MercUnit>({
   vsMeleePercent: 394,
   category: 'ranged',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const sphynxVI: MercUnit = unitBuilder<MercUnit>({
@@ -1646,7 +1734,8 @@ const sphynxVI: MercUnit = unitBuilder<MercUnit>({
   vsMountedPercent: 592,
   category: 'flying',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const knightVI: MercUnit = unitBuilder<MercUnit>({
@@ -1663,7 +1752,8 @@ const knightVI: MercUnit = unitBuilder<MercUnit>({
   vsMountedPercent: 148,
   category: 'melee',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 const trailseekerVI: MercUnit = unitBuilder<MercUnit>({
   id: 'trailseekerVI',
@@ -1679,7 +1769,8 @@ const trailseekerVI: MercUnit = unitBuilder<MercUnit>({
   vsMeleePercent: 198,
   category: 'ranged',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 const rhinoRiderVI: MercUnit = unitBuilder<MercUnit>({
   id: 'rhinoRiderVI',
@@ -1695,7 +1786,8 @@ const rhinoRiderVI: MercUnit = unitBuilder<MercUnit>({
   vsSiegePercent: 205,
   category: 'mounted',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const deathChariotVI: MercUnit = unitBuilder<MercUnit>({
@@ -1710,7 +1802,8 @@ const deathChariotVI: MercUnit = unitBuilder<MercUnit>({
   vsRangedPercent: 60,
   category: 'mounted',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const sheduVI: MercUnit = unitBuilder<MercUnit>({
@@ -1728,7 +1821,8 @@ const sheduVI: MercUnit = unitBuilder<MercUnit>({
   category: 'flying',
   subGroup: 'beast',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const entVI: MercUnit = unitBuilder<MercUnit>({
@@ -1745,7 +1839,8 @@ const entVI: MercUnit = unitBuilder<MercUnit>({
   category: 'melee',
   subGroup: 'elemental',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 const abominationVI: MercUnit = unitBuilder<MercUnit>({
   id: 'abominationVI',
@@ -1761,7 +1856,8 @@ const abominationVI: MercUnit = unitBuilder<MercUnit>({
   category: 'melee',
   subGroup: 'beast',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 const boneGolemVI: MercUnit = unitBuilder<MercUnit>({
   id: 'boneGolemVI',
@@ -1775,7 +1871,8 @@ const boneGolemVI: MercUnit = unitBuilder<MercUnit>({
   vsDragonPercent: 40,
   category: 'melee',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const archdemonVI: MercUnit = unitBuilder<MercUnit>({
@@ -1792,7 +1889,8 @@ const archdemonVI: MercUnit = unitBuilder<MercUnit>({
   category: 'melee',
   subGroup: 'giant',
   group: 'mercs', //'demon',
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 const pathFinderVI: MercUnit = unitBuilder<MercUnit>({
   id: 'pathFinderVI',
@@ -1805,7 +1903,8 @@ const pathFinderVI: MercUnit = unitBuilder<MercUnit>({
   INITIATIVE: 10,
   category: 'scout',
   group: 'mercs',
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const cursedDendroidVI: MercUnit = unitBuilder<MercUnit>({
@@ -1822,7 +1921,8 @@ const cursedDendroidVI: MercUnit = unitBuilder<MercUnit>({
   category: 'melee',
   subGroup: 'elemental',
   group: 'mercs',
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const lightningLordVII: MercUnit = unitBuilder<MercUnit>({
@@ -1839,7 +1939,8 @@ const lightningLordVII: MercUnit = unitBuilder<MercUnit>({
   category: 'ranged',
   subGroup: 'giant',
   group: 'mercs', //
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 
 const cursedDragonVII: MercUnit = unitBuilder<MercUnit>({
@@ -1856,7 +1957,8 @@ const cursedDragonVII: MercUnit = unitBuilder<MercUnit>({
   category: 'flying',
   subGroup: 'dragon',
   group: 'mercs', //'cursed',
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 
 const seaLordVII: MercUnit = unitBuilder<MercUnit>({
@@ -1873,7 +1975,8 @@ const seaLordVII: MercUnit = unitBuilder<MercUnit>({
   category: 'mounted',
   subGroup: 'elemental',
   group: 'mercs', //
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 
 const sandwormVII: MercUnit = unitBuilder<MercUnit>({
@@ -1890,7 +1993,8 @@ const sandwormVII: MercUnit = unitBuilder<MercUnit>({
   category: 'melee',
   subGroup: 'elemental',
   group: 'mercs', //'barbarian',
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 
 const lifeDragonVII: MercUnit = unitBuilder<MercUnit>({
@@ -1907,7 +2011,8 @@ const lifeDragonVII: MercUnit = unitBuilder<MercUnit>({
   category: 'flying',
   group: 'mercs',
   subGroup: 'dragon',
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 
 const goldenDragonVII: MercUnit = unitBuilder<MercUnit>({
@@ -1924,7 +2029,8 @@ const goldenDragonVII: MercUnit = unitBuilder<MercUnit>({
   category: 'flying',
   subGroup: 'dragon',
   group: 'mercs', //
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 const overlordVII: MercUnit = unitBuilder<MercUnit>({
   id: 'overlordVII',
@@ -1940,7 +2046,8 @@ const overlordVII: MercUnit = unitBuilder<MercUnit>({
   category: 'ranged',
   group: 'mercs',
   subGroup: 'giant',
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 
 const fireLordVII: MercUnit = unitBuilder<MercUnit>({
@@ -1957,7 +2064,8 @@ const fireLordVII: MercUnit = unitBuilder<MercUnit>({
   category: 'ranged',
   subGroup: 'elemental',
   group: 'mercs', //'demon',
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 const jungleKingVII: MercUnit = unitBuilder<MercUnit>({
   id: 'jungleKingVII',
@@ -1973,7 +2081,8 @@ const jungleKingVII: MercUnit = unitBuilder<MercUnit>({
   category: 'melee',
   subGroup: 'beast',
   group: 'mercs', //
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 
 const wyvernII: MercUnit = unitBuilder<MercUnit>({
@@ -1988,7 +2097,8 @@ const wyvernII: MercUnit = unitBuilder<MercUnit>({
   vsMeleePercent: 75,
   category: 'flying',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const palintoneVII: MercUnit = unitBuilder<MercUnit>({
   id: 'palintoneVII',
@@ -2003,7 +2113,8 @@ const palintoneVII: MercUnit = unitBuilder<MercUnit>({
   vsFortificationsPercent: 740,
   category: 'siege',
   group: 'mercs', //
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 const trebuchetVI: MercUnit = unitBuilder<MercUnit>({
   id: 'trebuchetVI',
@@ -2018,7 +2129,8 @@ const trebuchetVI: MercUnit = unitBuilder<MercUnit>({
   vsFortificationsPercent: 494,
   category: 'siege',
   group: 'mercs', //
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 const scorpionV: MercUnit = unitBuilder<MercUnit>({
   id: 'scorpionV',
@@ -2033,7 +2145,8 @@ const scorpionV: MercUnit = unitBuilder<MercUnit>({
   vsFortificationsPercent: 329,
   category: 'siege',
   group: 'mercs', //
-  level: '5'
+  level: '5',
+  sortOrderBase: 40
 })
 const arielII: MercUnit = unitBuilder<MercUnit>({
   id: 'arielII',
@@ -2048,7 +2161,8 @@ const arielII: MercUnit = unitBuilder<MercUnit>({
   vsFortificationsPercent: 1667,
   category: 'siege',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 
 const jagoII: MercUnit = unitBuilder<MercUnit>({
@@ -2064,7 +2178,8 @@ const jagoII: MercUnit = unitBuilder<MercUnit>({
   vsFortificationsPercent: 525,
   category: 'flying',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 
 const eternalCannoneerII: MercUnit = unitBuilder<MercUnit>({
@@ -2079,7 +2194,8 @@ const eternalCannoneerII: MercUnit = unitBuilder<MercUnit>({
   vsFlyingPercent: 65,
   category: 'ranged',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const warregalII: MercUnit = unitBuilder<MercUnit>({
   id: 'warregalII',
@@ -2095,7 +2211,8 @@ const warregalII: MercUnit = unitBuilder<MercUnit>({
   category: 'flying',
   subGroup: 'beast',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 
 const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
@@ -2112,7 +2229,8 @@ const epicMonsterHunterVI: MercUnit = unitBuilder<MercUnit>({
   vsEpicPercent: 609,
   category: '', // //
   group: 'mercs',
-  level: '6'
+  level: '6',
+  sortOrderBase: 40
 })
 
 const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
@@ -2127,7 +2245,8 @@ const epicMonsterHunterVII: MercUnit = unitBuilder<MercUnit>({
   vsEpicPercent: 934,
   category: '', //
   group: 'mercs',
-  level: '7'
+  level: '7',
+  sortOrderBase: 40
 })
 const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
   id: 'epicMonsterHunterII',
@@ -2141,7 +2260,8 @@ const epicMonsterHunterII: MercUnit = unitBuilder<MercUnit>({
   vsEpicPercent: 1000,
   category: '', //
   group: 'mercs',
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 
 const demonicSalamanderII: MercUnit = unitBuilder<MercUnit>({
@@ -2156,7 +2276,8 @@ const demonicSalamanderII: MercUnit = unitBuilder<MercUnit>({
   vsMountedPercent: 65,
   category: 'melee',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const slavicWarriorII: MercUnit = unitBuilder<MercUnit>({
   id: 'slavicWarriorII',
@@ -2171,7 +2292,8 @@ const slavicWarriorII: MercUnit = unitBuilder<MercUnit>({
   vsMountedPercent: 1000,
   category: 'melee',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const pounderII: MercUnit = unitBuilder<MercUnit>({
   id: 'pounderII',
@@ -2186,7 +2308,8 @@ const pounderII: MercUnit = unitBuilder<MercUnit>({
   vsFlyingPercent: 859,
   category: 'ranged',
   group: 'mercs',
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const highlanderII: MercUnit = unitBuilder<MercUnit>({
   id: 'highlanderII',
@@ -2201,7 +2324,8 @@ const highlanderII: MercUnit = unitBuilder<MercUnit>({
   vsFlyingPercent: 1717,
   category: 'ranged',
   group: 'mercs',
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const wardenII: MercUnit = unitBuilder<MercUnit>({
   id: 'wardenII',
@@ -2215,7 +2339,8 @@ const wardenII: MercUnit = unitBuilder<MercUnit>({
   vsRangedPercent: 70,
   category: 'mounted',
   group: 'mercs', // 'elves',
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const graceII: MercUnit = unitBuilder<MercUnit>({
   id: 'graceII',
@@ -2228,7 +2353,8 @@ const graceII: MercUnit = unitBuilder<MercUnit>({
   INITIATIVE: 10,
   category: 'scout',
   group: 'mercs',
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const galloperII: MercUnit = unitBuilder<MercUnit>({
   id: 'galloperII',
@@ -2243,7 +2369,8 @@ const galloperII: MercUnit = unitBuilder<MercUnit>({
   vsSiegePercent: 692,
   category: 'mounted',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const quicksandII: MercUnit = unitBuilder<MercUnit>({
   id: 'quicksandII',
@@ -2258,7 +2385,8 @@ const quicksandII: MercUnit = unitBuilder<MercUnit>({
   vsSiegePercent: 1384,
   category: 'mounted',
   group: 'mercs', //
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const scarfaceII: MercUnit = unitBuilder<MercUnit>({
   id: 'scarfaceII',
@@ -2273,7 +2401,8 @@ const scarfaceII: MercUnit = unitBuilder<MercUnit>({
   vsBeastPercent: 1025,
   category: 'melee',
   group: 'mercs', // 'specialist',
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 const bunnieII: MercUnit = unitBuilder<MercUnit>({
   id: 'bunnieII',
@@ -2287,7 +2416,8 @@ const bunnieII: MercUnit = unitBuilder<MercUnit>({
   // vsBeastManPercent:1000, //contra hombres bestia
   category: '',
   group: 'mercs', // 'specialist',
-  level: '9'
+  level: '9',
+  sortOrderBase: 40
 })
 export interface Army {
   [key: string]: BasicUnit

@@ -81,6 +81,7 @@ export interface BasicUnit {
   group: Group // 'guardsman' specialist engineer mercs
   subGroup: SubGroup //'elemental' | 'dragon' | 'beast' | 'giant'
   level: string
+  sortOrderBase: number
 }
 
 interface HumanUnit extends BasicUnit {
@@ -94,6 +95,7 @@ export interface GuardsmanUnit extends HumanUnit {
   // race: 'human' | 'beast'
   clasification: 'army'
   category: keyof Guardsman
+  sortOrderBase: 20
 }
 
 export interface MercUnit extends BasicUnit {
@@ -104,6 +106,7 @@ export interface MercUnit extends BasicUnit {
   // race: 'human'
   clasification: 'merc'
   category: keyof Mercs
+  sortOrderBase: 40
 }
 
 export interface SpecialistUnit extends HumanUnit {
@@ -111,6 +114,7 @@ export interface SpecialistUnit extends HumanUnit {
   // race: 'human' | 'beast'
   clasification: 'army'
   category: keyof Specialist
+  sortOrderBase: 10
 }
 
 export interface EngineerUnit extends HumanUnit {
@@ -118,6 +122,7 @@ export interface EngineerUnit extends HumanUnit {
   // race: 'human'
   clasification: 'army'
   category: keyof Engineer
+  sortOrderBase: 20
 }
 
 export interface MonsterUnit extends BasicUnit {
@@ -129,6 +134,7 @@ export interface MonsterUnit extends BasicUnit {
   // race: 'monster'
   clasification: 'monster'
   category: keyof Monster
+  sortOrderBase: 30
 }
 
 export type Unit = GuardsmanUnit | SpecialistUnit | EngineerUnit | MonsterUnit | MercUnit
@@ -157,4 +163,5 @@ export interface Stack {
   HpLimit: number
   unitsAmount: number
   limit: number // max unit value
+  attackOrder: number
 }

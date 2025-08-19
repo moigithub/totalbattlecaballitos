@@ -21,7 +21,7 @@ import {
   // sortableKeyboardCoordinates
 } from '@dnd-kit/sortable'
 import { /* getStats, getSTRWithBonus,*/ useStackStore } from './stackStore'
-import { Stack /*, Unit */ } from './types'
+import { BasicUnit, Stack /*, Unit */ } from './types'
 
 import { SmallCard } from './SmallCard'
 import { CitadelData } from './citadel.tsx'
@@ -54,7 +54,7 @@ import {
   mobCommonCursedSquad29,
   mobCommonInfernoSquad31
 } from './monsters.ts'
-import { decodeAndLoadArmySetup, prepareExportData } from './utils.ts'
+import { decodeAndLoadArmySetup, prepareExportData, whoCanIAttack } from './utils.ts'
 import { encodeHash } from './hashStore.ts'
 import PageTitle from './pageTitle.tsx'
 import { ARMY } from './soldiers.ts'
@@ -2125,6 +2125,70 @@ ignora lo que continua abajo de esta linea:
                   }}
                 >
                   health (ascending)
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-lg px-3.5 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  onClick={() => {
+                    const armyWithAtkOrder = armyRef.current.map(stack => {
+                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                      console.log({ attkBonus })
+                      // melee tiene vsMount
+                      // flying tiene vsMount
+                      // rider tiene vsRanged
+                      // ranged tiene vsFlying + vsMelee
+                      let attackOrder = 0
+                      if (attkBonus.includes('Mounted')) {
+                        attackOrder = 1
+                      }
+                      if (attkBonus.includes('Flying')) {
+                        attackOrder = 2
+                      }
+                      if (attkBonus.includes('Ranged')) {
+                        attackOrder = 3
+                      }
+                      if (attkBonus.includes('Melee')) {
+                        attackOrder = 4
+                      }
+
+                      return { ...stack, attackOrder }
+                    })
+                    console.log(
+                      armyWithAtkOrder[0].unit,
+                      armyWithAtkOrder[0].attackOrder,
+                      whoCanIAttack(armyWithAtkOrder[0].unit as BasicUnit)
+                    )
+
+                    console.log(armyWithAtkOrder.map(a => a.unit.sortOrderBase))
+
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
+                        // sort based on attack order ascending: flying, melee,mounted, ranged
+                        // ranged have vsMelee bonus, so should last longer to kill melee units
+                        /*
+                          sorted should be like
+
+                          specialist ranged
+                          guardsman ranged
+                          monster ranged
+                          mercs ranged
+
+                          specialist melee
+                          guardsman melee
+                          monster melee
+                          mercs melee
+                         */
+
+                        return (
+                          a.attackOrder - b.attackOrder ||
+                          a.unit.sortOrderBase - b.unit.sortOrderBase
+                        )
+                      })
+                    )
+                  }}
+                >
+                  KMelee
                 </button>
 
                 {showCatasVsWallWarning && (
