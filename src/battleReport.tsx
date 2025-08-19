@@ -57,16 +57,17 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
       isOponentDead,
       damage,
       acummulatedDamage,
-      usedFeat
+      usedFeat,
+      attackReason
     } = data
 
     const bgColor = isPlayerTurn
       ? 'bg-gradient-to-r from-gray-800 from-10%  to-gray-700 to-80% '
       : 'bg-gradient-to-l from-gray-800 from-10%  to-gray-700 to-80% '
 
-     
-    const neededHpBonusToSurvive =  Math.ceil((acummulatedDamage*100/ attacker.unit.BASEHP-100)*100)/100
-  
+    const neededHpBonusToSurvive =
+      Math.ceil(((acummulatedDamage * 100) / attacker.unit.BASEHP - 100) * 100) / 100
+
     return (
       <div key={`rpt${i}`} className={`p-2 flex gap-1.5 items-center ${bgColor}`}>
         <div className='p-4'>{lineCounter}</div>
@@ -114,16 +115,19 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
           )}
         </div>
         <div>
-          the {isPlayerTurn ? 'attacker' : 'monster'} squad dealt {damage.toFixed(2)} of damage{' '}
-          {usedFeat ? '+ aditional damage' : ''}
-          <br />
-          <span className='text-xs text-red-600'>
+          <p>
+            the {isPlayerTurn ? 'attacker' : 'monster'} squad dealt {damage.toFixed(2)} of damage{' '}
+            {usedFeat ? '+ aditional damage' : ''}
+          </p>
+          <p className='text-xs text-red-600'>
             {acummulatedDamage > 0 ? `(accum dmg: ${acummulatedDamage.toFixed(2)})` : ''}
-          </span>
-          <br /> 
-          <span className='text-xs text-cyan-500'>
-            {attackerUnitLost > 0 && acummulatedDamage > 0 && `(need ${neededHpBonusToSurvive}% hp to survive)`}
-          </span>
+          </p>
+          <p className='text-xs text-cyan-500'>
+            {attackerUnitLost > 0 &&
+              acummulatedDamage > 0 &&
+              `(need ${neededHpBonusToSurvive}% hp to survive)`}
+          </p>
+          <p className='text-xs text-green-400'>{attackReason} </p>
         </div>
       </div>
     )
@@ -147,15 +151,16 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
       isOponentDead,
       damage,
       acummulatedDamage,
-      usedFeat
+      usedFeat,
+      attackReason
     } = data
 
     const bgColor = isPlayerTurn
       ? 'bg-gradient-to-r from-gray-800 from-10%  to-gray-700 to-80% '
       : 'bg-gradient-to-l from-gray-800 from-10%  to-gray-700 to-80% '
 
-      
-    const neededHpBonusToSurvive = Math.ceil((acummulatedDamage*100/ opponent.unit.BASEHP-100)*100)/100
+    const neededHpBonusToSurvive =
+      Math.ceil(((acummulatedDamage * 100) / opponent.unit.BASEHP - 100) * 100) / 100
 
     return (
       <div key={`rpt${i}`} className={`p-2 flex gap-1.5 items-center ${bgColor}`}>
@@ -204,17 +209,19 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
           )}
         </div>
         <div>
-          the {isPlayerTurn ? 'attacker' : 'monster'} squad dealt {damage.toFixed(2)} of damage{' '}
-          {usedFeat ? '+ aditional damage' : ''}
-          <br />
-          <span className='text-xs text-red-600'>
+          <p>
+            the {isPlayerTurn ? 'attacker' : 'monster'} squad dealt {damage.toFixed(2)} of damage{' '}
+            {usedFeat ? '+ aditional damage' : ''}
+          </p>
+          <p className='text-xs text-red-600'>
             {acummulatedDamage > 0 ? `(accum dmg: ${acummulatedDamage.toFixed(2)})` : ''}
-          </span>
-          <br />
-
-          <span className='text-xs text-cyan-500'>
-            {oponentUnitLost > 0 && acummulatedDamage > 0 && `(need ${neededHpBonusToSurvive}% hp to survive)`}
-          </span>
+          </p>
+          <p className='text-xs text-cyan-500'>
+            {oponentUnitLost > 0 &&
+              acummulatedDamage > 0 &&
+              `(need ${neededHpBonusToSurvive}% hp to survive)`}
+          </p>
+          <p className='text-xs text-green-400'>{attackReason} </p>
         </div>
       </div>
     )

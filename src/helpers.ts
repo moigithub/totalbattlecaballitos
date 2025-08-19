@@ -9,7 +9,7 @@ export interface ColumnResult {
   attackerUnits: number
   attackerName: string
   attackerUnitLost: number
-  attacker:FightStack
+  attacker: FightStack
   isAttackerDead: boolean
 
   oponentUnits: number
@@ -20,6 +20,7 @@ export interface ColumnResult {
 
   damage: number
   acummulatedDamage: number
+  attackReason: string
   usedFeat: boolean
 }
 
@@ -357,9 +358,8 @@ export const prepareArmyData = (army: Stack[]): FightStack[] => {
       id: stack.id,
       unitsAmount: stack.unitsAmount,
       originalUnitsAmount: stack.unitsAmount,
-      attackReason: '', 
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
+      totalAccumulatedDamage: 0
     }
   })
 }
@@ -413,7 +413,7 @@ const getStrongestStack = (stacks: FightStack[]): FightStack | null => {
 export const calculateEffectiveDamage = (
   attackingStack: FightStack,
   defendingStack: FightStack
-): {realDamage:number, trucateDamage:number} => {
+): { realDamage: number; trucateDamage: number } => {
   const bonusStr = attackingStack.unit.strBonus || 0
   const featureBonus = getBonusByCategory(attackingStack, defendingStack.unit.category)
   const featureBonus2 = getBonusByCategory(attackingStack, defendingStack.unit.subGroup)
@@ -587,14 +587,14 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
 
       if (stack) {
         // Procesar el stack si está vivo y no ha atacado en este ciclo
-        const targetStack = selectTargetToAttack(
+        const { target: targetStack, reason } = selectTargetToAttack(
           stack,
           isPlayerTurn ? defender : attacker
           // attackedStacks
         )
         // console.log('target found', structuredClone(targetStack))
         if (targetStack) {
-          const {realDamage, trucateDamage:damage} = calculateEffectiveDamage(stack, targetStack)
+          const { realDamage, trucateDamage: damage } = calculateEffectiveDamage(stack, targetStack)
           const unitsKilled = applyDamage(stack, targetStack, damage, realDamage)
 
           if (isPlayerTurn) {
@@ -617,7 +617,7 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
               lineCounter: lineCounter++,
               attackerUnits: stack.unitsAmount,
               attackerName: stack.unit.name,
-              attacker:stack,
+              attacker: stack,
               attackerUnitLost: 0,
               isAttackerDead: false,
               oponentUnits: unitsKilled + targetStack.unitsAmount,
@@ -630,7 +630,8 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
               usedFeat:
                 getBonus(stack, targetStack.unit.category) +
                   getBonus(stack, targetStack.unit.subGroup) >
-                0
+                0,
+              attackReason: reason
             })
           } else {
             addReportData(checkResult, {
@@ -651,7 +652,8 @@ export const fight = (attacker: FightStack[], defender: FightStack[]): ColumnRes
               usedFeat:
                 getBonus(stack, targetStack.unit.category) +
                   getBonus(stack, targetStack.unit.subGroup) >
-                0
+                0,
+              attackReason: reason
             })
           }
 

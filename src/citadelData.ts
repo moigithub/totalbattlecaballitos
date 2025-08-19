@@ -31,7 +31,6 @@ export interface FightStack {
   originalUnitsAmount: number
   accumulatedDamageAliveUnits: number
   totalAccumulatedDamage: number
-  attackReason: string
 }
 
 export interface Citadel {
@@ -66,20 +65,19 @@ export const objBuilder = (props: Partial<ObjProps>): ObjProps => {
     ...props
   }
 }
-export const stackBuilder = (id:string, unit:ObjProps, unitsAmount:number)=>{
+export const stackBuilder = (id: string, unit: ObjProps, unitsAmount: number) => {
   return {
     id,
     unit,
     unitsAmount,
     originalUnitsAmount: unitsAmount,
     accumulatedDamageAliveUnits: 0,
-    totalAccumulatedDamage:0,
-    attackReason:''
+    totalAccumulatedDamage: 0
   }
 }
 
 type MonsterData = {
-  [key:string]:ObjProps
+  [key: string]: ObjProps
 }
 export const objectDB = {} as MonsterData
 
@@ -225,20 +223,23 @@ export const citadele10: Citadel = {
       unitsAmount: 90,
       originalUnitsAmount: 90,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
-    { id: '1', unit: objectDB.bearV, unitsAmount: 9, originalUnitsAmount: 9, accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:'' },
+    {
+      id: '1',
+      unit: objectDB.bearV,
+      unitsAmount: 9,
+      originalUnitsAmount: 9,
+      accumulatedDamageAliveUnits: 0,
+      totalAccumulatedDamage: 0
+    },
     {
       id: '2',
       unit: objectDB.pegasoRiderIV,
       unitsAmount: 19,
       originalUnitsAmount: 19,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '3',
@@ -246,8 +247,7 @@ export const citadele10: Citadel = {
       unitsAmount: 1200,
       originalUnitsAmount: 1200,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '4',
@@ -255,8 +255,7 @@ export const citadele10: Citadel = {
       unitsAmount: 100,
       originalUnitsAmount: 100,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '5',
@@ -264,8 +263,7 @@ export const citadele10: Citadel = {
       unitsAmount: 2200,
       originalUnitsAmount: 2200,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     }
   ]
 }
@@ -279,8 +277,7 @@ export const citadele15: Citadel = {
       unitsAmount: 700,
       originalUnitsAmount: 700,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
 
     {
@@ -289,8 +286,7 @@ export const citadele15: Citadel = {
       unitsAmount: 21,
       originalUnitsAmount: 21,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '2',
@@ -298,8 +294,7 @@ export const citadele15: Citadel = {
       unitsAmount: 47,
       originalUnitsAmount: 47,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '3',
@@ -307,8 +302,7 @@ export const citadele15: Citadel = {
       unitsAmount: 1100,
       originalUnitsAmount: 1100,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '4',
@@ -316,8 +310,7 @@ export const citadele15: Citadel = {
       unitsAmount: 290,
       originalUnitsAmount: 290,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '5',
@@ -325,8 +318,7 @@ export const citadele15: Citadel = {
       unitsAmount: 5000,
       originalUnitsAmount: 5000,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     }
   ]
 }
@@ -340,8 +332,7 @@ export const citadele20: Citadel = {
       unitsAmount: 3650,
       originalUnitsAmount: 3650,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '1',
@@ -350,8 +341,7 @@ export const citadele20: Citadel = {
       unitsAmount: 41,
       originalUnitsAmount: 41,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '2',
@@ -360,8 +350,7 @@ export const citadele20: Citadel = {
       unitsAmount: 110,
       originalUnitsAmount: 110,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '3',
@@ -370,8 +359,7 @@ export const citadele20: Citadel = {
       unitsAmount: 2500,
       originalUnitsAmount: 2500,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '4',
@@ -380,8 +368,7 @@ export const citadele20: Citadel = {
       unitsAmount: 230,
       originalUnitsAmount: 230,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '5',
@@ -390,8 +377,7 @@ export const citadele20: Citadel = {
       unitsAmount: 3600,
       originalUnitsAmount: 3600,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     }
   ]
 }
@@ -404,8 +390,7 @@ export const citadele25: Citadel = {
       unitsAmount: 31900,
       originalUnitsAmount: 31900,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '1',
@@ -413,8 +398,7 @@ export const citadele25: Citadel = {
       unitsAmount: 480,
       originalUnitsAmount: 480,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '2',
@@ -422,8 +406,7 @@ export const citadele25: Citadel = {
       unitsAmount: 880,
       originalUnitsAmount: 880,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '3',
@@ -431,8 +414,7 @@ export const citadele25: Citadel = {
       unitsAmount: 2400,
       originalUnitsAmount: 2400,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '4',
@@ -440,8 +422,7 @@ export const citadele25: Citadel = {
       unitsAmount: 4300,
       originalUnitsAmount: 4300,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '5',
@@ -449,8 +430,7 @@ export const citadele25: Citadel = {
       unitsAmount: 10000,
       originalUnitsAmount: 10000,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     }
   ]
 }
@@ -464,8 +444,7 @@ export const citadele30: Citadel = {
       unitsAmount: 135000,
       originalUnitsAmount: 135000,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '1',
@@ -473,8 +452,7 @@ export const citadele30: Citadel = {
       unitsAmount: 2300,
       originalUnitsAmount: 2300,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '2',
@@ -482,8 +460,7 @@ export const citadele30: Citadel = {
       unitsAmount: 4300,
       originalUnitsAmount: 4300,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '3',
@@ -491,8 +468,7 @@ export const citadele30: Citadel = {
       unitsAmount: 12000,
       originalUnitsAmount: 12000,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '4',
@@ -500,8 +476,7 @@ export const citadele30: Citadel = {
       unitsAmount: 21000,
       originalUnitsAmount: 21000,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '5',
@@ -509,8 +484,7 @@ export const citadele30: Citadel = {
       unitsAmount: 49000,
       originalUnitsAmount: 49000,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     }
   ]
 }
@@ -524,8 +498,7 @@ export const citadelc20: Citadel = {
       unitsAmount: 9200,
       originalUnitsAmount: 9200,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '1',
@@ -533,8 +506,7 @@ export const citadelc20: Citadel = {
       unitsAmount: 10,
       originalUnitsAmount: 10,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '2',
@@ -542,8 +514,7 @@ export const citadelc20: Citadel = {
       unitsAmount: 80,
       originalUnitsAmount: 80,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '3',
@@ -551,8 +522,7 @@ export const citadelc20: Citadel = {
       unitsAmount: 650,
       originalUnitsAmount: 650,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '4',
@@ -560,8 +530,7 @@ export const citadelc20: Citadel = {
       unitsAmount: 54,
       originalUnitsAmount: 54,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '5',
@@ -569,8 +538,7 @@ export const citadelc20: Citadel = {
       unitsAmount: 2900,
       originalUnitsAmount: 2900,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     }
   ]
 }
@@ -583,8 +551,7 @@ export const citadelc25: Citadel = {
       unitsAmount: 77500,
       originalUnitsAmount: 77500,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '1',
@@ -592,8 +559,7 @@ export const citadelc25: Citadel = {
       unitsAmount: 120,
       originalUnitsAmount: 120,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '2',
@@ -601,8 +567,7 @@ export const citadelc25: Citadel = {
       unitsAmount: 205,
       originalUnitsAmount: 205,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '3',
@@ -610,8 +575,7 @@ export const citadelc25: Citadel = {
       unitsAmount: 540,
       originalUnitsAmount: 540,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '4',
@@ -619,8 +583,7 @@ export const citadelc25: Citadel = {
       unitsAmount: 400,
       originalUnitsAmount: 400,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     },
     {
       id: '5',
@@ -628,8 +591,7 @@ export const citadelc25: Citadel = {
       unitsAmount: 2750,
       originalUnitsAmount: 2750,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage:0,
-      attackReason:''
+      totalAccumulatedDamage: 0
     }
   ]
 }

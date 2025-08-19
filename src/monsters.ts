@@ -80,8 +80,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 130,
       originalUnitsAmount: 130,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'e2',
@@ -89,8 +88,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 130,
       originalUnitsAmount: 130,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'e3',
@@ -98,8 +96,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 130,
       originalUnitsAmount: 130,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'e4',
@@ -107,8 +104,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 130,
       originalUnitsAmount: 130,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'e5',
@@ -116,8 +112,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 130,
       originalUnitsAmount: 130,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
 
     {
@@ -126,8 +121,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 114,
       originalUnitsAmount: 114,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'ur2',
@@ -135,8 +129,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 114,
       originalUnitsAmount: 114,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'ur3',
@@ -144,8 +137,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 114,
       originalUnitsAmount: 114,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'ur4',
@@ -153,8 +145,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 114,
       originalUnitsAmount: 114,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'ur5',
@@ -162,8 +153,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 114,
       originalUnitsAmount: 114,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
 
     {
@@ -172,8 +162,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 170,
       originalUnitsAmount: 170,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'pr2',
@@ -181,8 +170,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 170,
       originalUnitsAmount: 170,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'pr3',
@@ -190,8 +178,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 170,
       originalUnitsAmount: 170,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'pr4',
@@ -199,8 +186,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 170,
       originalUnitsAmount: 170,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'pr5',
@@ -208,8 +194,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 170,
       originalUnitsAmount: 170,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'd1',
@@ -217,8 +202,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'd2',
@@ -226,8 +210,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'd3',
@@ -235,8 +218,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'd4',
@@ -244,8 +226,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     },
     {
       id: 'd5',
@@ -253,8 +234,7 @@ export const lvl17HeroicElfSquad: Citadel = {
       unitsAmount: 1720,
       originalUnitsAmount: 1720,
       accumulatedDamageAliveUnits: 0,
-      totalAccumulatedDamage: 0,
-      attackReason: ''
+      totalAccumulatedDamage: 0
     }
   ]
 }
@@ -266,14 +246,14 @@ export const lvl17HeroicElfSquad: Citadel = {
 //   lvl17HeroicElfSquad.stacks.map(s => ({ ...s, sstr: s.unit.BASESTR * s.unitsAmount }))
 // )
 
-objectDB.fireHorseRider= objBuilder({
+objectDB.fireHorseRider = objBuilder({
   name: 'FireHorseRiderIII',
   category: 'mounted',
   BASESTR: 4100,
   BASEHP: 12300,
   vsRangedPercent: 50
 })
-objectDB.overseer= objBuilder({
+objectDB.overseer = objBuilder({
   name: 'OverseerIII',
   category: 'ranged',
   BASESTR: 6500,
@@ -281,8 +261,7 @@ objectDB.overseer= objBuilder({
   vsMeleePercent: 70
 })
 
-
-objectDB.ogreShamanIII= objBuilder({
+objectDB.ogreShamanIII = objBuilder({
   name: 'ogreShamanIII',
   category: 'ranged',
   BASESTR: 3200,
@@ -290,7 +269,7 @@ objectDB.ogreShamanIII= objBuilder({
   vsMountedPercent: 60
 })
 
-objectDB.goblin= objBuilder({
+objectDB.goblin = objBuilder({
   name: 'goblin',
   category: 'melee',
   BASESTR: 28,
@@ -298,24 +277,23 @@ objectDB.goblin= objBuilder({
   vsMountedPercent: 10
 })
 
-
 export const mobCommonInfernoSquad31: Citadel = {
   stacks: [
     stackBuilder('0', objectDB.fireHorseRider, 53000),
-    stackBuilder('1', objectDB.overseer, 33000)      
+    stackBuilder('1', objectDB.overseer, 33000)
   ]
 }
 
 export const mobCommonCursedSquad29: Citadel = {
-    stacks: [
-        stackBuilder('0', objectDB.deathRiderIII, 41000),
-        stackBuilder('1', objectDB.wereWolfII, 160000)      
-      ]
+  stacks: [
+    stackBuilder('0', objectDB.deathRiderIII, 41000),
+    stackBuilder('1', objectDB.wereWolfII, 160000)
+  ]
 }
 
 export const mobCommonBarbarianSquad28: Citadel = {
   stacks: [
-      stackBuilder('0', objectDB.ogreShamanIII, 30_000),
-      stackBuilder('1', objectDB.goblin, 1_500_000)      
-    ]
+    stackBuilder('0', objectDB.ogreShamanIII, 30_000),
+    stackBuilder('1', objectDB.goblin, 1_500_000)
+  ]
 }

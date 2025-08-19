@@ -28,18 +28,22 @@ function getBonuses(attacker: FightStack): { vsBonus: string; value: number }[] 
 /**
  * Selects optimal attack target based on combat rules
  */
+interface AttackTarget {
+  target: FightStack | null
+  reason: string
+}
 export function selectTargetToAttack(
   attacker: FightStack,
   defenders: FightStack[]
   // attackedStacks: Set<string>
-): FightStack | null {
+): AttackTarget {
   // 1. Filter out dead defenders
   const aliveDefenders = defenders.filter(defender => {
     const defenderHealth = calculateDefenderHealth(defender)
     return defenderHealth > 0
   })
 
-  if (aliveDefenders.length === 0) return null
+  if (aliveDefenders.length === 0) return { target: null, reason: '' }
 
   const attackerHealth =
     attacker.unit.BASEHP * (1 + (attacker.unit.hpBonus || 0) / 100) * attacker.unitsAmount -
@@ -87,14 +91,14 @@ export function selectTargetToAttack(
     }))
   )
 
+  let reason = 'Most damage'
   if (sortedByMostDmg.length > 1) {
-   sortedByMostDmg[0].defender.attackReason = 'most damage'
-   if (sortedByMostDmg[0].stats.mostDamage === sortedByMostDmg[1].stats.mostDamage) {
-    sortedByMostDmg[0].defender.attackReason = 'most threatening'
-   } 
+    if (sortedByMostDmg[0].stats.mostDamage === sortedByMostDmg[1].stats.mostDamage) {
+      reason = 'EQ dmg, most threatening'
+    }
   }
 
-  return sortedByMostDmg[0]?.defender ?? null
+  return { target: sortedByMostDmg[0]?.defender ?? null, reason }
 }
 
 // Helper functions
