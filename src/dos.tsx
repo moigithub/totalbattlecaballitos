@@ -2108,7 +2108,7 @@ ignora lo que continua abajo de esta linea:
                     )
                   }}
                 >
-                  Sort by health (descending)
+                  Health (↓)
                 </button>
                 <button
                   className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
@@ -2124,49 +2124,43 @@ ignora lo que continua abajo de esta linea:
                     )
                   }}
                 >
-                  health (ascending)
+                  Health (↑)
                 </button>
                 <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-lg px-3.5 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
                   onClick={() => {
                     const armyWithAtkOrder = armyRef.current.map(stack => {
                       const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      console.log({ attkBonus })
                       // melee tiene vsMount
                       // flying tiene vsMount
                       // rider tiene vsRanged
                       // ranged tiene vsFlying + vsMelee
+
+                      // send ranged+flying only
                       let attackOrder = 0
-                      if (attkBonus.includes('Mounted')) {
+                      if (attkBonus.includes('Ranged')) {
+                        //es un rider
                         attackOrder = 1
                       }
-                      if (attkBonus.includes('Flying')) {
+                      if (attkBonus.includes('Mounted')) {
+                        //es un melee(126k dmg) o fly
                         attackOrder = 2
                       }
-                      if (attkBonus.includes('Ranged')) {
+                      if (attkBonus.includes('Flying')) {
+                        //es un ranged
                         attackOrder = 3
                       }
                       if (attkBonus.includes('Melee')) {
+                        //es un ranged
                         attackOrder = 4
                       }
 
                       return { ...stack, attackOrder }
                     })
-                    console.log(
-                      armyWithAtkOrder[0].unit,
-                      armyWithAtkOrder[0].attackOrder,
-                      whoCanIAttack(armyWithAtkOrder[0].unit as BasicUnit)
-                    )
 
-                    console.log(armyWithAtkOrder.map(a => a.unit.sortOrderBase))
-
-                    setArmy(
-                      //set order values
-
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        // sort based on attack order ascending: flying, melee,mounted, ranged
-                        // ranged have vsMelee bonus, so should last longer to kill melee units
-                        /*
+                    // sort based on attack order ascending: flying, melee,mounted, ranged
+                    // ranged have vsMelee bonus, so should last longer to kill melee units
+                    /*
                           sorted should be like
 
                           specialist ranged
@@ -2180,6 +2174,104 @@ ignora lo que continua abajo de esta linea:
                           mercs melee
                          */
 
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
+                        return (
+                          a.attackOrder - b.attackOrder ||
+                          a.unit.sortOrderBase - b.unit.sortOrderBase
+                        )
+                      })
+                    )
+                  }}
+                  title='should not send rider they get 145k dmg, or melee:126k dmg'
+                >
+                  KMelee
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  onClick={() => {
+                    const armyWithAtkOrder = armyRef.current.map(stack => {
+                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                      // melee tiene vsMount
+                      // flying tiene vsMount
+                      // rider tiene vsRanged
+                      // ranged tiene vsFlying + vsMelee
+
+                      // send ranged mounted flying
+                      let attackOrder = 0
+                      if (attkBonus.includes('Mounted')) {
+                        //es un melee(126k dmg) o fly
+                        attackOrder = 1
+                      }
+                      if (attkBonus.includes('Ranged')) {
+                        //es un rider, deberia estar desbloqueado
+                        attackOrder = 2
+                      }
+                      if (attkBonus.includes('Melee')) {
+                        //es un ranged
+                        attackOrder = 3
+                      }
+                      if (attkBonus.includes('Flying')) {
+                        //es un ranged
+                        attackOrder = 4
+                      }
+
+                      return { ...stack, attackOrder }
+                    })
+
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
+                        return (
+                          a.attackOrder - b.attackOrder ||
+                          a.unit.sortOrderBase - b.unit.sortOrderBase
+                        )
+                      })
+                    )
+                  }}
+                  title='should not send rider they get 145k dmg, or melee:126k dmg'
+                >
+                  KFly
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  onClick={() => {
+                    const armyWithAtkOrder = armyRef.current.map(stack => {
+                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                      // melee tiene vsMount
+                      // flying tiene vsMount
+                      // rider tiene vsRanged
+                      // ranged tiene vsFlying + vsMelee
+
+                      //send melee mounted flying
+                      let attackOrder = 0
+                      if (attkBonus.includes('Melee')) {
+                        //es un ranged
+                        attackOrder = 1
+                      }
+                      if (attkBonus.includes('Ranged')) {
+                        //es un rider, desbloqueado
+                        attackOrder = 2
+                      }
+                      if (attkBonus.includes('Flying')) {
+                        //es un ranged
+                        attackOrder = 3
+                      }
+                      if (attkBonus.includes('Mounted')) {
+                        //es un melee(126k dmg) o fly(desbloqueado)
+                        attackOrder = 4
+                      }
+
+                      return { ...stack, attackOrder }
+                    })
+
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
                         return (
                           a.attackOrder - b.attackOrder ||
                           a.unit.sortOrderBase - b.unit.sortOrderBase
@@ -2188,7 +2280,51 @@ ignora lo que continua abajo de esta linea:
                     )
                   }}
                 >
-                  KMelee
+                  KMount
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  onClick={() => {
+                    const armyWithAtkOrder = armyRef.current.map(stack => {
+                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                      // melee tiene vsMount
+                      // flying tiene vsMount
+                      // rider tiene vsRanged
+                      // ranged tiene vsFlying + vsMelee
+                      let attackOrder = 0
+                      if (attkBonus.includes('Mounted')) {
+                        //es un melee o fly
+                        attackOrder = 1
+                      }
+                      if (attkBonus.includes('Melee')) {
+                        //es un ranged
+                        attackOrder = 2
+                      }
+                      if (attkBonus.includes('Flying')) {
+                        //es un ranged
+                        attackOrder = 3
+                      }
+                      if (attkBonus.includes('Ranged')) {
+                        //es un rider
+                        attackOrder = 4
+                      }
+
+                      return { ...stack, attackOrder }
+                    })
+
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
+                        return (
+                          a.attackOrder - b.attackOrder ||
+                          a.unit.sortOrderBase - b.unit.sortOrderBase
+                        )
+                      })
+                    )
+                  }}
+                >
+                  KRang
                 </button>
 
                 {showCatasVsWallWarning && (
