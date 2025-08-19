@@ -88,7 +88,8 @@ const getData = (stack: Stack) => {
     unitsAmount: stack.unitsAmount || 0,
     limit: stack.limit || 0,
     // ...stack,
-    unit: unit || ARMY.errorUnit
+    unit: unit || ARMY.errorUnit,
+    attackOrder: 0
   }
 }
 
