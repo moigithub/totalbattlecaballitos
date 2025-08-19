@@ -169,14 +169,14 @@ describe('selectTargetToAttack, citadel30', () => {
        *
        */
       const attacker = playerStacks[0] // coraxI
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('LifeDragonVII')
     })
 
     test('3. EntVI should hit coraxI , biggest threat', () => {
       enemyStacks[0].unitsAmount = 0 // lifeDragons dead
       const attacker = enemyStacks[1] // Ent VI
-      const target = selectTargetToAttack(attacker, playerStacks)
+      const { target } = selectTargetToAttack(attacker, playerStacks)
       expect(target?.unit.name).toBe('coraxI')
     })
 
@@ -188,7 +188,7 @@ describe('selectTargetToAttack, citadel30', () => {
       playerStacks[0].unitsAmount -= 77 // coraxI lost units
       enemyStacks[2].unitsAmount -= 11990 // bears lost units
       const attacker = enemyStacks[3] // Pegaso Rider IV
-      const target = selectTargetToAttack(attacker, playerStacks)
+      const { target } = selectTargetToAttack(attacker, playerStacks)
       expect(target?.unit.name).toBe('coraxI')
     })
 
@@ -201,7 +201,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 // coraxI lost units
       const attacker = playerStacks[3] // battleGriffinVII
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('EntVI')
     })
 
@@ -215,7 +215,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 // coraxI lost units
       const attacker = playerStacks[4] // vulturesVII
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('EntVI')
     })
 
@@ -230,7 +230,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 // coraxI lost units
       const attacker = playerStacks[6] // CatapultE6
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('EntVI')
     })
 
@@ -245,7 +245,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 // coraxI lost units
       const attacker = playerStacks[7] // battleGriffinVI
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('PegasoRiderIV')
     })
 
@@ -262,7 +262,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 // coraxI lost units
       const attacker = enemyStacks[3] // PegasoRiderIV
-      const target = selectTargetToAttack(attacker, playerStacks)
+      const { target } = selectTargetToAttack(attacker, playerStacks)
       expect(target?.unit.name).toBe('coraxI')
     })
 
@@ -277,7 +277,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 - 11 // coraxI lost units
       const attacker = playerStacks[3] // PegasoRiderIV
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('PegasoRiderIV')
     })
 
@@ -292,7 +292,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 - 11 // coraxI lost units
       const attacker = enemyStacks[1] // EntVI
-      const target = selectTargetToAttack(attacker, playerStacks)
+      const { target } = selectTargetToAttack(attacker, playerStacks)
       expect(target?.unit.name).toBe('coraxI')
     })
 
@@ -307,7 +307,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 - 11 - 3 // coraxI lost units
       const attacker = playerStacks[1] // firePhoenixI
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('EntVI')
     })
 
@@ -322,7 +322,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 - 11 - 3 // coraxI lost units
       const attacker = playerStacks[2] // vulturesVI
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('BearV')
     })
   })
@@ -332,7 +332,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[0].unitsAmount = 0 // lifeDragons dead
       playerStacks[0].unitsAmount -= 77 // coraxI lost units
       const attacker = playerStacks[1] // firePhoenixI
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('BearV')
     })
 
@@ -344,7 +344,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[2].unitsAmount = 12000 - 11990 // bears lost units
       playerStacks[0].unitsAmount -= 77 + 43 // coraxI lost units
       const attacker = playerStacks[2] // vulturesVI
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('CentaurIII')
     })
 
@@ -357,7 +357,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 // coraxI lost units
       const attacker = enemyStacks[2] // BearV
-      const target = selectTargetToAttack(attacker, playerStacks)
+      const { target } = selectTargetToAttack(attacker, playerStacks)
       expect(target?.unit.name).toBe('firePhoenixI')
     })
 
@@ -371,7 +371,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 // coraxI lost units
       const attacker = playerStacks[5] // fearsomeManticoraV
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('PegasoRiderIV')
     })
 
@@ -386,7 +386,7 @@ describe('selectTargetToAttack, citadel30', () => {
       enemyStacks[4].unitsAmount = 0 // CentaurIII dead
       playerStacks[0].unitsAmount = 2960 - 77 - 43 - 11 - 3 // coraxI lost units
       const attacker = enemyStacks[2] // BearV
-      const target = selectTargetToAttack(attacker, playerStacks)
+      const { target } = selectTargetToAttack(attacker, playerStacks)
       expect(target?.unit.name).toBe('firePhoenixI')
     })
   })
@@ -518,7 +518,7 @@ describe('selectTargetToAttack, vsBonus', () => {
       enemyStacks[0].unitsAmount = 0 // lifeDragons dead
       playerStacks[0].unitsAmount = 2273 - 74 // coraxI lost units
       const attacker = playerStacks[1] // firePhoenixI
-      const target = selectTargetToAttack(attacker, enemyStacks)
+      const { target } = selectTargetToAttack(attacker, enemyStacks)
       expect(target?.unit.name).toBe('EntVI')
     })
   })
@@ -675,7 +675,7 @@ describe('selectTargetToAttack', () => {
       // battleGriffinVI  blackDragonVII  windLordVII  destructiveColossusVII  ancientTerrorVII  CatapultE6
       // LifeDragonVII  EntVI  CentaurIII  BearV  DruidII
       const attacker = enemyStacks[0] // LifeDragonVII
-      const target = selectTargetToAttack(attacker, playerStacks)
+      const { target } = selectTargetToAttack(attacker, playerStacks)
       expect(target?.unit.name).toBe('ancientTerrorVII')
     })
   })
