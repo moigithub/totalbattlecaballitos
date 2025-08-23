@@ -11,7 +11,7 @@ export const SmallCard = ({ stack }: { stack: Stack }) => {
   // const updateMinSetup = useStackStore(state => state.updateMinSetup)
 
   const removeStack = useStackStore(state => state.removeStack)
-  const resetStack = useStackStore(state => state.resetStack)
+  // const resetStack = useStackStore(state => state.resetStack)
   // const toggleLockMin = useStackStore(state => state.toggleLockMin)
   const addUnits = useStackStore(state => state.addUnits)
   const removeUnits = useStackStore(state => state.removeUnits)
