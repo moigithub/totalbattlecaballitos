@@ -6,7 +6,8 @@ import { ARMY } from './soldiers'
 import { whoCanIAttack } from './utils'
 // import { useState } from 'react'
 
-export const ArmyList = () => {
+export const ArmyList = ({isVisible, toggleSidebar}: {isVisible: boolean, toggleSidebar: () => void}) => {
+
   const [search, setSearch] = useState('')
   const [filterVsTypes, setFilterVsTypes] = useState<string[]>(() => {
     // getting stored value
@@ -761,12 +762,22 @@ export const ArmyList = () => {
 
   const mercs = [mercLvl5, mercLvl6, mercLvl7, mercLvl9].filter(m => m.length > 0)
 
+
+
   return (
-    <aside
-      id='sidebar-multi-level-sidebar'
-      className='fixed top-[56px] left-0 z-1 w-64 h-[calc(100vh-56px)] transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700'
-      aria-label='Sidebar'
-    >
+    <>
+      <button 
+        onClick={toggleSidebar}
+        className={`fixed top-20 ${isVisible ? 'left-64' : 'left-0'} z-50 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-3 rounded-r-lg transition-all duration-300 ease-in-out`}
+        aria-label={isVisible ? 'Hide Army List' : 'Show Army List'}
+      >
+        {isVisible ? '◀' : '▶'}
+      </button>
+      <aside
+        id='sidebar-multi-level-sidebar'
+        className={`fixed top-[56px] left-0 z-40 w-64 h-[calc(100vh-56px)] transition-transform duration-300 ease-in-out ${isVisible ? 'translate-x-0' : '-translate-x-full'} bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700`}
+        aria-label='Sidebar'
+      >
       <div className=' w-full px-4 py-2  bg-gray-800'>
         <label>Search :</label>
 
@@ -1688,5 +1699,6 @@ export const ArmyList = () => {
         </div>
       </div>
     </aside>
+    </>
   )
 }

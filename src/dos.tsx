@@ -54,7 +54,7 @@ import {
   mobCommonCursedSquad29,
   mobCommonInfernoSquad31
 } from './monsters.ts'
-import { decodeAndLoadArmySetup, prepareExportData, whoCanIAttack } from './utils.ts'
+import { cn, decodeAndLoadArmySetup, prepareExportData, whoCanIAttack } from './utils.ts'
 import { encodeHash } from './hashStore.ts'
 import PageTitle from './pageTitle.tsx'
 import { ARMY } from './soldiers.ts'
@@ -157,6 +157,8 @@ function Dos() {
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const [isVisible, setIsVisible] = useState(true);
+
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
   //     delay: 100,
@@ -238,6 +240,10 @@ function Dos() {
       loadPresetArmy(preset)
     }
   }, [])
+
+  const toggleSidebar = () => {
+    setIsVisible(!isVisible);
+  };
 
   const changeMobTarget = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setReportMeAttacks([])
@@ -1626,22 +1632,12 @@ ignora lo que continua abajo de esta linea:
   return (
     <>
       <PageTitle title='Calc' />
-      <ArmyList />
+      <ArmyList isVisible={isVisible} toggleSidebar={toggleSidebar} />
 
-      <nav className='pt-[57px] sm:ml-64 flex flex-col'>
+      <nav className={cn('pt-[57px]   flex flex-col', isVisible ? 'ml-64' : '')}>
         <div className='px-3 py-3 lg:px-5 lg:pl-3 flex'>
           <div className='config-container flex items-center'>
-            <div className=''>
-              <button
-                data-drawer-target='sidebar-multi-level-sidebar'
-                data-drawer-toggle='sidebar-multi-level-sidebar'
-                aria-controls='sidebar-multi-level-sidebar'
-                type='button'
-                className='cursor-pointer sm:hidden focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300   rounded-lg text-xs px-0.5 py-0.5 me-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'
-              >
-                Show Army
-              </button>
-            </div>
+            
 
             <div className='ml-2 flex items-center'>
               <label>Target </label>
@@ -1970,7 +1966,7 @@ ignora lo que continua abajo de esta linea:
 
             <div className=''>
               <button
-                className='px-5 py-4 cursor-pointer bg-green-500 text-md font-bold text-white rounded-lg text-3xl leading-5 tracking-widest'
+                className='px-5 py-4 cursor-pointer bg-green-500 text-md font-bold text-white rounded-lg text-lg md:text-3xl leading-5 tracking-widest'
                 onClick={verifyCitadel}
                 disabled={loading}
               >
@@ -1982,7 +1978,7 @@ ignora lo que continua abajo de esta linea:
       </nav>
 
       <div
-        className='p-1 sm:ml-64  bg-gray-900'
+        className={cn('p-1   bg-gray-900', isVisible ? 'ml-64' : '')}
         onClick={() => {
           navigator.clipboard.writeText(troopsSummary)
         }}
@@ -1990,7 +1986,7 @@ ignora lo que continua abajo de esta linea:
         <p className='block w-full'>click to copy</p>
         {troopsSummary}
       </div>
-      <div className='pt-[57px] sm:ml-64 flex bg-gray-900'>
+      <div className={cn('pt-[57px] flex bg-gray-900', isVisible ? 'ml-64' : '')}>
         <div className='p-4 border-2 border-blue-400/25 min-w-[860px] w-full '>
           <div className='stack-container'>
             <div className='sticky  top-[57px] mb-4'>

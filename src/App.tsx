@@ -52,6 +52,7 @@ function App() {
   }, [])
 
   return (
+    <div>
     <nav className='z-10'>
       <Navbar fluid rounded>
         <NavbarBrand>
@@ -69,11 +70,12 @@ function App() {
           <NavbarLink href='/info'>old info</NavbarLink>
         </NavbarCollapse>
       </Navbar>
+    </nav>
 
       <Outlet />
 
       {/* <Disclaimer /> */}
-    </nav>
+    </div>
   )
 }
 
