@@ -271,14 +271,6 @@ table th {
 
 .stack-delete {
   grid-area: delete;
-  display: flex;
-  justify-content: right;
-  align-items: flex-start;
-
-  .remove-btn {
-    background-color: red;
-    color: white;
-  }
 }
 .stack-reset {
   grid-area: reset;

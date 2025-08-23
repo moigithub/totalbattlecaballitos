@@ -60,9 +60,9 @@ export const TinyCard = ({ stack }: { stack: Stack }) => {
         </button>
       </div>
 
-      <div className='stack-delete'>
+      <div className='stack-delete flex justify-end'>
         <button
-          className='shrink-0 bg-red-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+          className='shrink-0 bg-red-500 text-white text-2xl p-4 cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
           onClick={() => removeStack(stack.id!)}
         >
           X

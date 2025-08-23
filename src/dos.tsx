@@ -1993,7 +1993,7 @@ ignora lo que continua abajo de esta linea:
       <div className='pt-[57px] sm:ml-64 flex bg-gray-900'>
         <div className='p-4 border-2 border-blue-400/25 min-w-[860px] w-full '>
           <div className='stack-container'>
-            <div className='sticky  top-[57px]'>
+            <div className='sticky  top-[57px] mb-4'>
               <div className='w-full'>
                 {presetArmy && (
                   <p className='text-right  px-3 pb-1'>

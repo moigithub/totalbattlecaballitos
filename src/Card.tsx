@@ -52,7 +52,7 @@ export const Card = ({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    marginBottom: `${stack.gapPercent / 5}px`
+    marginBottom: `${stack.gapPercent / 5 + 8}px`
   }
 
   const checkFeatBonus = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -367,7 +367,7 @@ export const Card = ({
       <div className='card-section-5'>
         <div className='stack-delete'>
           <button
-            className='shrink-0 bg-red-500  cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+            className='shrink-0 bg-red-500 text-white text-2xl p-4 cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
             onClick={() => removeStack(stack.id!)}
           >
             X
