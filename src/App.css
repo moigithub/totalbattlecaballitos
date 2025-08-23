@@ -67,26 +67,13 @@ table th {
   overflow: auto;
 }
 
-/* .dos-main {
-  display: flex;
-  flex-direction: column;
 
-  overflow: hidden;
-  padding: 16px;
-} */
 
 .config-container {
   grid-area: config;
 }
 
 
-/* .stack-army {
-  grid-area: content;
-  display: grid;
-  grid-template-areas: 'army stack';
-  overflow-y: auto;
-  grid-template-columns: 30% 70%;
-} */
 .army-container {
   grid-area: army;
   width: 100%;
@@ -101,22 +88,7 @@ table th {
   margin: 0.5rem;
 }
 
-/* .stack-container {
-  grid-area: stack;
-  width: 100%;
-  height: 100%;
-  overflow: scroll;
-  position: relative;
 
-  .skill-info {
-    font-size: 10px;
-    margin: 0;
-
-    td {
-      font-weight: bolder;
-    }
-  }
-} */
 .sticky {
   position: sticky;
   top: 0;
@@ -147,30 +119,27 @@ table th {
   margin: 10px 0;
 }
 .stack-card {
-  display: grid;
-  grid-template-columns: 30px 80px 200px auto auto auto;
-  /* grid-template-rows: auto;
-  grid-template-areas:
-    'handle units name      name          delete'
-    'handle units atk       atk           reset'
-    'handle units action    .             config'; */
-
-  /* grid-template-columns: 30px 100px 200px auto auto auto; */
   grid-template-rows: auto;
-  grid-template-areas:
-    'handle units       name              name           action      delete'
-    'handle units       atk               atk            unitLimit   reset'
-    'handle units       basic             strBonus        strLimit    config'
-    'handle units       healthstrength    hpBonus         hpLimit     .'
-    'handle leadership  otherStrength     otherStrength  otherStrength .'
-    'handle  gapSlider  gapSlider         comment        comment     comment';
+  grid-template-areas: 'section1 section2 section3 section4 section5'
+  'section1 comment comment comment comment';
 
-  gap: 8px;
-  min-width: 600px;
-  max-width: 1200px;
-  width: 100%;
-  margin: 10px 0;
 }
+.card-section-1 {
+  grid-area: section1;
+}
+.card-section-2 {
+  grid-area: section2;
+}
+.card-section-3 {
+  grid-area: section3;
+}
+.card-section-4 {
+  grid-area: section4;
+}
+.card-section-5 {
+  grid-area: section5;
+}
+
 .stack-comment {
   grid-area: comment;
 }
@@ -225,28 +194,14 @@ table th {
 }
 .stack-name {
   grid-area: name;
-  margin: 0;
-  font-size: 0.8rem;
-  font-weight: 500;
-  width: 100%;
-  max-width: 200px;
-  /* text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap; */
-  display: flex;
-  align-items: baseline;
 }
 
 .stack-health-strength {
   grid-area: healthstrength;
-  margin: 0;
-  /* display: none; */
 }
 
 .stack-other-strength {
   grid-area: otherStrength;
-  margin: 0;
-  /* display: none; */
 }
 
 .stack-health-small {
@@ -261,17 +216,8 @@ table th {
 }
 .stack-leadership {
   grid-area: leadership;
-  margin: 0;
-  color: cadetblue;
-  font-size: 0.8rem;
-  /* display: none; */
 }
-/* .stack-minSetup {
-  grid-area: minSetup;
-  margin: 0;
-  color: darkgoldenrod;
-  font-size: 0.8rem;
-} */
+
 .stack-action {
   grid-area: action;
 }
@@ -347,12 +293,9 @@ table th {
 }
 .stack-attack-info {
   grid-area: atk;
-
-
 }
 .stack-basic-info {
   grid-area: basic;
-  /* display: none; */
 }
 
 /* ----------------- */
@@ -429,35 +372,8 @@ table th {
     margin: 1rem 0;
   }
 
-  /* .stack-container {
-    .header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 20px;
-    }
-  } */
-
-  .stack-card {
-    /* display: grid; */
-    grid-template-columns: 30px 100px 200px auto auto auto;
-    grid-template-rows: auto;
-    grid-template-areas:
-      'handle units      name            name           strBonus          action      delete'
-      'handle units      atk            atk             hpBonus         unitLimit   reset'
-      'handle units      basic          basic           otherStrength    strLimit    config'
-      'handle leadership healthstrength healthstrength  otherStrength    hpLimit     .'
-      'handle   gapSlider       gapSlider    .   comment   comment    comment';
 
 
-    .stack-name {
-      font-size: 1.2rem;
-
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-  }
 
   .stack-card-small {
     .stack-name {
