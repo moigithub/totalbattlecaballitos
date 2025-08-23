@@ -142,7 +142,7 @@ function Dos() {
   const [citadel, setCitadel] = useState<Citadel>(citadele20)
 
   // const [selectedTarget, setSelectedTarget] = useState('citadele10')
-  const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
+  // const [addUnitMode, setAddUnitMode] = useState('previousStackStatsLimit')
   const [reportMeAttacks, setReportMeAttacks] = useState<ColumnResult[]>([])
   const [reportMeDefends, setReportMeDefends] = useState<ColumnResult[]>([])
 
@@ -319,7 +319,7 @@ function Dos() {
     const totalSTRPerUnit = stack.unit.BASESTR * (1 + stack.strBonus / 100) // ahora individual cada stack tiene su prpio bonus
     const newStackStrength = totalSTRPerUnit * unitsCount
 
-    // 3. calcular str del sacrificio
+    // 3. calcular str del sacrificio/primer grupo
     const sacrificeGroupStrength = getStackStrength(ARMY, 0)
     // console.log('sacrifice strength', sacrificeGroupStrength)
 
@@ -327,11 +327,11 @@ function Dos() {
     const gapStrength = (sacrificeGroupStrength * gapBasePercent) / 100
 
     const finalGapStrength = (gapStrength * ARMY[i - 1].gapPercent) / 100
-    let groupStrength = sacrificeGroupStrength - finalGapStrength
-    if (addUnitMode === 'previousStackStatsLimit') {
-      const previousGroupStrength = getStackStrength(ARMY, i - 1)
-      groupStrength = previousGroupStrength - finalGapStrength
-    }
+    // let groupStrength = sacrificeGroupStrength - finalGapStrength
+    // if (addUnitMode === 'previousStackStatsLimit') {
+    const previousGroupStrength = getStackStrength(ARMY, i - 1)
+    const groupStrength = previousGroupStrength - finalGapStrength
+    // }
     console.log('group with gap', stackStrength + newStackStrength, '>', groupStrength)
     if (stackStrength + newStackStrength >= groupStrength) {
       // 9. agregar al stack
@@ -1673,6 +1673,149 @@ ignora lo que continua abajo de esta linea:
                 />
               </label>
             </div>
+
+            <div className='ml-5 flex items-center'>
+              <label>Preset</label>
+              <select
+                className='ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                onChange={onChangePresetArmy}
+                value={presetArmy}
+              >
+                <option value='' disabled>
+                  Select preset
+                </option>
+
+                <option value='cursed20G5Mercs'>Citadel Cursed 20, G5,Mercs</option>
+                <option value='cursed20G5S5M4'>Citadel Cursed 20, G5,S5,M4</option>
+                <option value='cursed20G5S5Merc'>Citadel Cursed 20, G5,S5,Mercs</option>
+                <option value='cursed20G5S5M6'>Citadel Cursed 20, G5,S5,M6</option>
+
+                <option value='dash' disabled>
+                  ------------------
+                </option>
+                <option value='cursed25' className='bg-green-800'>
+                  Citadel Cursed 25
+                </option>
+                <option value='cursed25M6Mercs' className='bg-green-800'>
+                  Citadel Cursed 25 M6,Mercs
+                </option>
+                <option value='cursed25G6M7Mercs' className='bg-green-800'>
+                  Citadel Cursed 25 G6,M7,Mercs
+                </option>
+                <option value='cursed25G6M7MercsB' className='bg-green-800'>
+                  Citadel Cursed 25 G6,M7,Mercs (2)
+                </option>
+                <option value='cursed25G8M9' className='bg-green-800'>
+                  Citadel Cursed 25 G8,M9
+                </option>
+                <option value='dash' disabled>
+                  ------------------
+                </option>
+                <option value='elf10G4' className='bg-orange-800'>
+                  Citadel Elf 10 G4
+                </option>
+                <option value='elf10G3M5Mercs' className='bg-orange-800'>
+                  Citadel Elf 10 G3,M4, Mercs
+                </option>
+
+                <option value='elf10G5M3' className='bg-orange-800'>
+                  Citadel Elf 10 G5,M3
+                </option>
+                <option value='elf10G5M5b' className='bg-orange-800'>
+                  Citadel Elf 10 G5,M5(2)
+                </option>
+                <option value='elf10G5M5' className='bg-orange-800'>
+                  Citadel Elf 10 G5,M5
+                </option>
+                <option value='elf10G5M5S5' className='bg-orange-800'>
+                  Citadel Elf 10 G5,M5,S5
+                </option>
+                <option value='dash' disabled>
+                  ------------------
+                </option>
+                <option value='elf15G5M3' className='bg-blue-600'>
+                  Citadel Elf 15 G5,M3
+                </option>
+                <option value='elf15G5M3b' className='bg-blue-600'>
+                  Citadel Elf 15 G5,M3(2)
+                </option>
+                <option value='elf15G5M3c' className='bg-blue-600'>
+                  Citadel Elf 15 G5,M3(3)
+                </option>
+                <option value='elf15G5S6' className='bg-blue-600'>
+                  Citadel Elf 15 G5,S6
+                </option>
+                <option value='elf15G5M5' className='bg-blue-600'>
+                  Citadel Elf 15 G5,M5
+                </option>
+                <option value='elf15G5M5S5' className='bg-blue-600'>
+                  Citadel Elf 15 G5,M5,S5
+                </option>
+                <option value='dash' disabled>
+                  ------------------
+                </option>
+                <option value='elf20G6Mercs' className='bg-green-800'>
+                  Citadel Elf 20 G6,Mercs
+                </option>
+                <option value='elf20G6S5Mercs' className='bg-green-800'>
+                  Citadel Elf 20 G6,S5,Mercs
+                </option>
+                <option value='elf20G7M7' className='bg-green-800'>
+                  Citadel Elf 20 G7,M7
+                </option>
+                <option value='elf20G7Mercs' className='bg-green-800'>
+                  Citadel Elf 20 G7,Mercs
+                </option>
+                <option value='elf20G7Mercs2' className='bg-green-800'>
+                  Citadel Elf 20 G7,Mercs(2)
+                </option>
+                <option value='dash' disabled>
+                  ------------------
+                </option>
+                <option value='elf25G7S6M5' className='bg-orange-600'>
+                  Citadel Elf 25 G7,S6,M5
+                </option>
+                <option value='elf25G7S6M5b' className='bg-orange-600'>
+                  Citadel Elf 25 G7,S6,M5 (2)
+                </option>
+                <option value='elf25G7S7M5' className='bg-orange-600'>
+                  Citadel Elf 25 G7,S7,M5
+                </option>
+                <option value='elf25G8S7' className='bg-orange-600'>
+                  Citadel Elf 25 G8,S7
+                </option>
+                <option value='dash' disabled>
+                  ------------------
+                </option>
+
+                <option value='elf30G8S6M5' className='bg-green-800'>
+                  Citadel Elf 30 G8,M5,S6
+                </option>
+                <option value='elf30G8S8M8' className='bg-green-800'>
+                  Citadel Elf 30 G8,M8,S8
+                </option>
+                <option value='elf30G9S9' className='bg-green-800'>
+                  Citadel Elf 30 G9,M9,S9 (1)
+                </option>
+                <option value='elf30G9S9b' className='bg-green-800'>
+                  Citadel Elf 30 G9,M9,S9 (2)
+                </option>
+
+                <option value='dash' disabled>
+                  ------------------
+                </option>
+
+                <option value='testElf30'>test simulator Elf30</option>
+                <option value='testsequence1'>testsequence1</option>
+                <option value='testsequence2'>someBearMustSurvive</option>
+                <option value='testsequence3'>someBearMustSurvive2</option>
+                <option value='testSeq4Elf20'>testSeq4 elf20</option>
+                <option value='testSeq3'>testSeq3 elf25</option>
+                <option value='testSeq4Elf25'>testSeq4 elf25</option>
+                <option value='cursed25Test'>cursed25Test</option>
+                <option value='elfHeroic17'>elfHeroic17</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -1735,7 +1878,7 @@ ignora lo que continua abajo de esta linea:
           </div>
 
           <div>
-            <div className=' border border-blue-400/25 p-2 border-opacity-10'>
+            {/* <div className=' border border-blue-400/25 p-2 border-opacity-10'>
               <div className=' '>
                 <label>Sacrifice strength limit</label>
                 <input
@@ -1760,9 +1903,9 @@ ignora lo que continua abajo de esta linea:
                   }}
                 />
               </div>
-            </div>
+            </div> */}
 
-            <div className='mt-2  border border-blue-400/25 p-2 border-opacity-10 flex'>
+            <div className='   border border-blue-400/25 p-2 border-opacity-10 flex'>
               <label>
                 Show tips <Checkbox checked={showTips} onChange={() => setShowTips(!showTips)} />
               </label>
@@ -1848,9 +1991,26 @@ ignora lo que continua abajo de esta linea:
         {troopsSummary}
       </div>
       <div className='pt-[57px] sm:ml-64 flex bg-gray-900'>
-        <div className='p-4 border-2 border-blue-400/25  w-full min-w-[1100px]'>
+        <div className='p-4 border-2 border-blue-400/25 min-w-[860px] w-full '>
           <div className='stack-container'>
             <div className='sticky  top-[57px]'>
+              <div className='w-full'>
+                {presetArmy && (
+                  <p className='text-right  px-3 pb-1'>
+                    share link &rarr;
+                    <span
+                      className='cursor-pointer text-sm  text-blue-500'
+                      onClick={() =>
+                        navigator.clipboard.writeText(
+                          `${import.meta.env.VITE_SITE_URL}/?preset=${presetArmy}`
+                        )
+                      }
+                    >
+                      {import.meta.env.VITE_SITE_URL}/?preset={presetArmy}
+                    </span>
+                  </p>
+                )}
+              </div>
               <div className='flex items-center  '>
                 <table className='skill-info'>
                   <thead>
@@ -1901,166 +2061,6 @@ ignora lo que continua abajo de esta linea:
                   >
                     Export army
                   </button>
-
-                  <div className='ml-10 w-full flex flex-col'>
-                    {presetArmy && (
-                      <p className='text-right  px-3 pb-1'>
-                        share link &rarr;
-                        <span
-                          className='cursor-pointer text-sm  text-blue-500'
-                          onClick={() =>
-                            navigator.clipboard.writeText(
-                              `${import.meta.env.VITE_SITE_URL}/?preset=${presetArmy}`
-                            )
-                          }
-                        >
-                          {import.meta.env.VITE_SITE_URL}/?preset={presetArmy}
-                        </span>
-                      </p>
-                    )}
-                    <div className='min-w-[250px] flex items-center'>
-                      <label>Preset</label>
-                      <select
-                        className='ml-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                        onChange={onChangePresetArmy}
-                        value={presetArmy}
-                      >
-                        <option value='' disabled>
-                          Select preset
-                        </option>
-
-                        <option value='cursed20G5Mercs'>Citadel Cursed 20, G5,Mercs</option>
-                        <option value='cursed20G5S5M4'>Citadel Cursed 20, G5,S5,M4</option>
-                        <option value='cursed20G5S5Merc'>Citadel Cursed 20, G5,S5,Mercs</option>
-                        <option value='cursed20G5S5M6'>Citadel Cursed 20, G5,S5,M6</option>
-
-                        <option value='dash' disabled>
-                          ------------------
-                        </option>
-                        <option value='cursed25' className='bg-green-800'>
-                          Citadel Cursed 25
-                        </option>
-                        <option value='cursed25M6Mercs' className='bg-green-800'>
-                          Citadel Cursed 25 M6,Mercs
-                        </option>
-                        <option value='cursed25G6M7Mercs' className='bg-green-800'>
-                          Citadel Cursed 25 G6,M7,Mercs
-                        </option>
-                        <option value='cursed25G6M7MercsB' className='bg-green-800'>
-                          Citadel Cursed 25 G6,M7,Mercs (2)
-                        </option>
-                        <option value='cursed25G8M9' className='bg-green-800'>
-                          Citadel Cursed 25 G8,M9
-                        </option>
-                        <option value='dash' disabled>
-                          ------------------
-                        </option>
-                        <option value='elf10G4' className='bg-orange-800'>
-                          Citadel Elf 10 G4
-                        </option>
-                        <option value='elf10G3M5Mercs' className='bg-orange-800'>
-                          Citadel Elf 10 G3,M4, Mercs
-                        </option>
-
-                        <option value='elf10G5M3' className='bg-orange-800'>
-                          Citadel Elf 10 G5,M3
-                        </option>
-                        <option value='elf10G5M5b' className='bg-orange-800'>
-                          Citadel Elf 10 G5,M5(2)
-                        </option>
-                        <option value='elf10G5M5' className='bg-orange-800'>
-                          Citadel Elf 10 G5,M5
-                        </option>
-                        <option value='elf10G5M5S5' className='bg-orange-800'>
-                          Citadel Elf 10 G5,M5,S5
-                        </option>
-                        <option value='dash' disabled>
-                          ------------------
-                        </option>
-                        <option value='elf15G5M3' className='bg-blue-600'>
-                          Citadel Elf 15 G5,M3
-                        </option>
-                        <option value='elf15G5M3b' className='bg-blue-600'>
-                          Citadel Elf 15 G5,M3(2)
-                        </option>
-                        <option value='elf15G5M3c' className='bg-blue-600'>
-                          Citadel Elf 15 G5,M3(3)
-                        </option>
-                        <option value='elf15G5S6' className='bg-blue-600'>
-                          Citadel Elf 15 G5,S6
-                        </option>
-                        <option value='elf15G5M5' className='bg-blue-600'>
-                          Citadel Elf 15 G5,M5
-                        </option>
-                        <option value='elf15G5M5S5' className='bg-blue-600'>
-                          Citadel Elf 15 G5,M5,S5
-                        </option>
-                        <option value='dash' disabled>
-                          ------------------
-                        </option>
-                        <option value='elf20G6Mercs' className='bg-green-800'>
-                          Citadel Elf 20 G6,Mercs
-                        </option>
-                        <option value='elf20G6S5Mercs' className='bg-green-800'>
-                          Citadel Elf 20 G6,S5,Mercs
-                        </option>
-                        <option value='elf20G7M7' className='bg-green-800'>
-                          Citadel Elf 20 G7,M7
-                        </option>
-                        <option value='elf20G7Mercs' className='bg-green-800'>
-                          Citadel Elf 20 G7,Mercs
-                        </option>
-                        <option value='elf20G7Mercs2' className='bg-green-800'>
-                          Citadel Elf 20 G7,Mercs(2)
-                        </option>
-                        <option value='dash' disabled>
-                          ------------------
-                        </option>
-                        <option value='elf25G7S6M5' className='bg-orange-600'>
-                          Citadel Elf 25 G7,S6,M5
-                        </option>
-                        <option value='elf25G7S6M5b' className='bg-orange-600'>
-                          Citadel Elf 25 G7,S6,M5 (2)
-                        </option>
-                        <option value='elf25G7S7M5' className='bg-orange-600'>
-                          Citadel Elf 25 G7,S7,M5
-                        </option>
-                        <option value='elf25G8S7' className='bg-orange-600'>
-                          Citadel Elf 25 G8,S7
-                        </option>
-                        <option value='dash' disabled>
-                          ------------------
-                        </option>
-
-                        <option value='elf30G8S6M5' className='bg-green-800'>
-                          Citadel Elf 30 G8,M5,S6
-                        </option>
-                        <option value='elf30G8S8M8' className='bg-green-800'>
-                          Citadel Elf 30 G8,M8,S8
-                        </option>
-                        <option value='elf30G9S9' className='bg-green-800'>
-                          Citadel Elf 30 G9,M9,S9 (1)
-                        </option>
-                        <option value='elf30G9S9b' className='bg-green-800'>
-                          Citadel Elf 30 G9,M9,S9 (2)
-                        </option>
-
-                        <option value='dash' disabled>
-                          ------------------
-                        </option>
-
-                        <option value='testElf30'>test simulator Elf30</option>
-                        <option value='testsequence1'>testsequence1</option>
-                        <option value='testsequence2'>someBearMustSurvive</option>
-                        <option value='testsequence3'>someBearMustSurvive2</option>
-                        <option value='testSeq4Elf20'>testSeq4 elf20</option>
-                        <option value='testSeq3'>testSeq3 elf25</option>
-                        <option value='testSeq4Elf25'>testSeq4 elf25</option>
-                        <option value='cursed25Test'>cursed25Test</option>
-                        <option value='elfHeroic17'>elfHeroic17</option>
-                      </select>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -2077,90 +2077,94 @@ ignora lo que continua abajo de esta linea:
                 </div>
               )}
 
-              <div className='btn-group'>
-                <button
-                  className='text-center items-center cursor-pointer focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300  text-lg px-[20%] py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed'
-                  onClick={calcSTR}
-                  disabled={loading}
-                >
-                  {loading ? '.....thinking' : 'CALCULATE'}
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300    text-lg px-3.5 py-0.5 me-2  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
-                  onClick={() => {
-                    setArmy([])
-                    setPresetArmy('')
-                  }}
-                >
-                  Clear
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
-                  onClick={() => {
-                    setArmy(
-                      armyRef.current.toSorted((a, b) => {
-                        // sort based on unit total health descending
-                        return (
-                          b.unit.BASEHP * (1 + b.hpBonus / 100) -
-                          a.unit.BASEHP * (1 + a.hpBonus / 100)
-                        )
+              <div className='btn-group flex justify-between'>
+                <div className='flex '>
+                  <button
+                    className='w-[250px] text-center items-center cursor-pointer focus:outline-none font-extrabold text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 text-lg md:text-2xl lg:text-3xl px-2 py-0.5   dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:opacity-50 disabled:cursor-not-allowed'
+                    onClick={calcSTR}
+                    disabled={loading}
+                  >
+                    {loading ? '.....thinking' : 'CALCULATE'}
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300    text-lg px-3.5 py-0.5 me-2  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'
+                    onClick={() => {
+                      setArmy([])
+                      setPresetArmy('')
+                    }}
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                <div className='flex'>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
+                    onClick={() => {
+                      setArmy(
+                        armyRef.current.toSorted((a, b) => {
+                          // sort based on unit total health descending
+                          return (
+                            b.unit.BASEHP * (1 + b.hpBonus / 100) -
+                            a.unit.BASEHP * (1 + a.hpBonus / 100)
+                          )
+                        })
+                      )
+                    }}
+                  >
+                    Health (↓)
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
+                    onClick={() => {
+                      setArmy(
+                        armyRef.current.toSorted((a, b) => {
+                          // sort based on unit total health ascending
+                          return (
+                            a.unit.BASEHP * (1 + a.hpBonus / 100) -
+                            b.unit.BASEHP * (1 + b.hpBonus / 100)
+                          )
+                        })
+                      )
+                    }}
+                  >
+                    Health (↑)
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                    onClick={() => {
+                      const armyWithAtkOrder = armyRef.current.map(stack => {
+                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                        // melee tiene vsMount
+                        // flying tiene vsMount
+                        // rider tiene vsRanged
+                        // ranged tiene vsFlying + vsMelee
+
+                        // send ranged+flying only
+                        let attackOrder = 0
+                        if (attkBonus.includes('Ranged')) {
+                          //es un rider
+                          attackOrder = 1
+                        }
+                        if (attkBonus.includes('Mounted')) {
+                          //es un melee(126k dmg) o fly
+                          attackOrder = 2
+                        }
+                        if (attkBonus.includes('Flying')) {
+                          //es un ranged
+                          attackOrder = 3
+                        }
+                        if (attkBonus.includes('Melee')) {
+                          //es un ranged
+                          attackOrder = 4
+                        }
+
+                        return { ...stack, attackOrder }
                       })
-                    )
-                  }}
-                >
-                  Health (↓)
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
-                  onClick={() => {
-                    setArmy(
-                      armyRef.current.toSorted((a, b) => {
-                        // sort based on unit total health ascending
-                        return (
-                          a.unit.BASEHP * (1 + a.hpBonus / 100) -
-                          b.unit.BASEHP * (1 + b.hpBonus / 100)
-                        )
-                      })
-                    )
-                  }}
-                >
-                  Health (↑)
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                  onClick={() => {
-                    const armyWithAtkOrder = armyRef.current.map(stack => {
-                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      // melee tiene vsMount
-                      // flying tiene vsMount
-                      // rider tiene vsRanged
-                      // ranged tiene vsFlying + vsMelee
 
-                      // send ranged+flying only
-                      let attackOrder = 0
-                      if (attkBonus.includes('Ranged')) {
-                        //es un rider
-                        attackOrder = 1
-                      }
-                      if (attkBonus.includes('Mounted')) {
-                        //es un melee(126k dmg) o fly
-                        attackOrder = 2
-                      }
-                      if (attkBonus.includes('Flying')) {
-                        //es un ranged
-                        attackOrder = 3
-                      }
-                      if (attkBonus.includes('Melee')) {
-                        //es un ranged
-                        attackOrder = 4
-                      }
-
-                      return { ...stack, attackOrder }
-                    })
-
-                    // sort based on attack order ascending: flying, melee,mounted, ranged
-                    // ranged have vsMelee bonus, so should last longer to kill melee units
-                    /*
+                      // sort based on attack order ascending: flying, melee,mounted, ranged
+                      // ranged have vsMelee bonus, so should last longer to kill melee units
+                      /*
                           sorted should be like
 
                           specialist ranged
@@ -2174,165 +2178,164 @@ ignora lo que continua abajo de esta linea:
                           mercs melee
                          */
 
-                    setArmy(
-                      //set order values
+                      setArmy(
+                        //set order values
 
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        return (
-                          a.attackOrder - b.attackOrder ||
-                          a.unit.sortOrderBase - b.unit.sortOrderBase
-                        )
+                        armyWithAtkOrder.toSorted((a, b) => {
+                          return (
+                            a.attackOrder - b.attackOrder ||
+                            a.unit.sortOrderBase - b.unit.sortOrderBase
+                          )
+                        })
+                      )
+                    }}
+                    title='should not send rider they get 145k dmg, or melee:126k dmg'
+                  >
+                    KMelee
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                    onClick={() => {
+                      const armyWithAtkOrder = armyRef.current.map(stack => {
+                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                        // melee tiene vsMount
+                        // flying tiene vsMount
+                        // rider tiene vsRanged
+                        // ranged tiene vsFlying + vsMelee
+
+                        // send ranged mounted flying
+                        let attackOrder = 0
+                        if (attkBonus.includes('Mounted')) {
+                          //es un melee(126k dmg) o fly
+                          attackOrder = 1
+                        }
+                        if (attkBonus.includes('Ranged')) {
+                          //es un rider, deberia estar desbloqueado
+                          attackOrder = 2
+                        }
+                        if (attkBonus.includes('Melee')) {
+                          //es un ranged
+                          attackOrder = 3
+                        }
+                        if (attkBonus.includes('Flying')) {
+                          //es un ranged
+                          attackOrder = 4
+                        }
+
+                        return { ...stack, attackOrder }
                       })
-                    )
-                  }}
-                  title='should not send rider they get 145k dmg, or melee:126k dmg'
-                >
-                  KMelee
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                  onClick={() => {
-                    const armyWithAtkOrder = armyRef.current.map(stack => {
-                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      // melee tiene vsMount
-                      // flying tiene vsMount
-                      // rider tiene vsRanged
-                      // ranged tiene vsFlying + vsMelee
 
-                      // send ranged mounted flying
-                      let attackOrder = 0
-                      if (attkBonus.includes('Mounted')) {
-                        //es un melee(126k dmg) o fly
-                        attackOrder = 1
-                      }
-                      if (attkBonus.includes('Ranged')) {
-                        //es un rider, deberia estar desbloqueado
-                        attackOrder = 2
-                      }
-                      if (attkBonus.includes('Melee')) {
-                        //es un ranged
-                        attackOrder = 3
-                      }
-                      if (attkBonus.includes('Flying')) {
-                        //es un ranged
-                        attackOrder = 4
-                      }
+                      setArmy(
+                        //set order values
 
-                      return { ...stack, attackOrder }
-                    })
+                        armyWithAtkOrder.toSorted((a, b) => {
+                          return (
+                            a.attackOrder - b.attackOrder ||
+                            a.unit.sortOrderBase - b.unit.sortOrderBase
+                          )
+                        })
+                      )
+                    }}
+                    title='should not send rider they get 145k dmg, or melee:126k dmg'
+                  >
+                    KFly
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                    onClick={() => {
+                      const armyWithAtkOrder = armyRef.current.map(stack => {
+                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                        // melee tiene vsMount
+                        // flying tiene vsMount
+                        // rider tiene vsRanged
+                        // ranged tiene vsFlying + vsMelee
 
-                    setArmy(
-                      //set order values
+                        //send melee mounted flying
+                        let attackOrder = 0
+                        if (attkBonus.includes('Melee')) {
+                          //es un ranged
+                          attackOrder = 1
+                        }
+                        if (attkBonus.includes('Ranged')) {
+                          //es un rider, desbloqueado
+                          attackOrder = 2
+                        }
+                        if (attkBonus.includes('Flying')) {
+                          //es un ranged
+                          attackOrder = 3
+                        }
+                        if (attkBonus.includes('Mounted')) {
+                          //es un melee(126k dmg) o fly(desbloqueado)
+                          attackOrder = 4
+                        }
 
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        return (
-                          a.attackOrder - b.attackOrder ||
-                          a.unit.sortOrderBase - b.unit.sortOrderBase
-                        )
+                        return { ...stack, attackOrder }
                       })
-                    )
-                  }}
-                  title='should not send rider they get 145k dmg, or melee:126k dmg'
-                >
-                  KFly
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                  onClick={() => {
-                    const armyWithAtkOrder = armyRef.current.map(stack => {
-                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      // melee tiene vsMount
-                      // flying tiene vsMount
-                      // rider tiene vsRanged
-                      // ranged tiene vsFlying + vsMelee
 
-                      //send melee mounted flying
-                      let attackOrder = 0
-                      if (attkBonus.includes('Melee')) {
-                        //es un ranged
-                        attackOrder = 1
-                      }
-                      if (attkBonus.includes('Ranged')) {
-                        //es un rider, desbloqueado
-                        attackOrder = 2
-                      }
-                      if (attkBonus.includes('Flying')) {
-                        //es un ranged
-                        attackOrder = 3
-                      }
-                      if (attkBonus.includes('Mounted')) {
-                        //es un melee(126k dmg) o fly(desbloqueado)
-                        attackOrder = 4
-                      }
+                      setArmy(
+                        //set order values
 
-                      return { ...stack, attackOrder }
-                    })
+                        armyWithAtkOrder.toSorted((a, b) => {
+                          return (
+                            a.attackOrder - b.attackOrder ||
+                            a.unit.sortOrderBase - b.unit.sortOrderBase
+                          )
+                        })
+                      )
+                    }}
+                  >
+                    KMount
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                    onClick={() => {
+                      const armyWithAtkOrder = armyRef.current.map(stack => {
+                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                        // melee tiene vsMount
+                        // flying tiene vsMount
+                        // rider tiene vsRanged
+                        // ranged tiene vsFlying + vsMelee
+                        let attackOrder = 0
+                        if (attkBonus.includes('Mounted')) {
+                          //es un melee o fly
+                          attackOrder = 1
+                        }
+                        if (attkBonus.includes('Melee')) {
+                          //es un ranged
+                          attackOrder = 2
+                        }
+                        if (attkBonus.includes('Flying')) {
+                          //es un ranged
+                          attackOrder = 3
+                        }
+                        if (attkBonus.includes('Ranged')) {
+                          //es un rider
+                          attackOrder = 4
+                        }
 
-                    setArmy(
-                      //set order values
-
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        return (
-                          a.attackOrder - b.attackOrder ||
-                          a.unit.sortOrderBase - b.unit.sortOrderBase
-                        )
+                        return { ...stack, attackOrder }
                       })
-                    )
-                  }}
-                >
-                  KMount
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                  onClick={() => {
-                    const armyWithAtkOrder = armyRef.current.map(stack => {
-                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      // melee tiene vsMount
-                      // flying tiene vsMount
-                      // rider tiene vsRanged
-                      // ranged tiene vsFlying + vsMelee
-                      let attackOrder = 0
-                      if (attkBonus.includes('Mounted')) {
-                        //es un melee o fly
-                        attackOrder = 1
-                      }
-                      if (attkBonus.includes('Melee')) {
-                        //es un ranged
-                        attackOrder = 2
-                      }
-                      if (attkBonus.includes('Flying')) {
-                        //es un ranged
-                        attackOrder = 3
-                      }
-                      if (attkBonus.includes('Ranged')) {
-                        //es un rider
-                        attackOrder = 4
-                      }
 
-                      return { ...stack, attackOrder }
-                    })
+                      setArmy(
+                        //set order values
 
-                    setArmy(
-                      //set order values
-
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        return (
-                          a.attackOrder - b.attackOrder ||
-                          a.unit.sortOrderBase - b.unit.sortOrderBase
-                        )
-                      })
-                    )
-                  }}
-                >
-                  KRang
-                </button>
-
-                {showCatasVsWallWarning && (
-                  <span className='ml-auto text-red-700'>
-                    Not enough catas to kill citadel walls
-                  </span>
-                )}
+                        armyWithAtkOrder.toSorted((a, b) => {
+                          return (
+                            a.attackOrder - b.attackOrder ||
+                            a.unit.sortOrderBase - b.unit.sortOrderBase
+                          )
+                        })
+                      )
+                    }}
+                  >
+                    KRang
+                  </button>
+                </div>
               </div>
+
+              {showCatasVsWallWarning && (
+                <span className='ml-auto text-red-700'>Not enough catas to kill citadel walls</span>
+              )}
             </div>
 
             <div className='stack-list'>
