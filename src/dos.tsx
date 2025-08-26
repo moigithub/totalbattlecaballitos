@@ -1661,6 +1661,7 @@ ignora lo que continua abajo de esta linea:
 
   const showCatasVsWallWarning = !isEnoughCatasToKillWalls()
   const troopsSummary = army
+    .filter(stack => !stack.disabled)
     .map(stack => {
       return `${stack.unitsAmount} ${stack.unit.name}`
     })
@@ -2399,7 +2400,6 @@ ignora lo que continua abajo de esta linea:
             <div className='stack-list'>
               <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
                 <SortableContext items={army}>
-                  // fiter overflow first. then check if is on overflow list
                   {army.map(stack => {
                     if (stack.disabled) {
                       return <DisabledCard stack={stack} key={stack.id} />
