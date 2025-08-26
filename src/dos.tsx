@@ -691,9 +691,9 @@ second REMAINS second
         const aStack = ACTIVE_ARMY.find(activeStack => stack.id === activeStack.id)
         stack.unitsAmount = aStack?.unitsAmount ?? 0
 
-        //     leadership: totalUnits * leadership,
-        // authority: totalUnits * authority,
-        // dominance: totalUnits * dominance
+        stack.leadership = aStack?.leadership ?? 0
+        stack.authority = aStack?.authority ?? 0
+        stack.dominance = aStack?.dominance ?? 0
       }
     })
     setArmy(ARMY)
