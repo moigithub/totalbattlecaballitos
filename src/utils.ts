@@ -90,7 +90,7 @@ const getData = (stack: Stack) => {
     // ...stack,
     unit: unit || ARMY.errorUnit,
     attackOrder: 0,
-    disabled: false
+    disabled: stack.disabled || false
   }
 }
 
