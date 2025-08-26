@@ -73,6 +73,7 @@ export const MercList = () => {
         <table>
           <thead>
             <th></th>
+            <th></th>
             <th>Name</th>
             <th>Category</th>
             <th>Feat.bonus</th>

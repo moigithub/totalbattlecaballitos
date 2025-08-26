@@ -29,6 +29,7 @@ export const Card = ({
   const setStrLimit = useStackStore(state => state.setStackStrLimit)
   const setStrLimitType = useStackStore(state => state.setStackStrLimitType)
   const toggleUseHpLimit = useStackStore(state => state.toggleUseHpLimit)
+  const toggleDisable = useStackStore(state => state.toggleDisable)
   const togglePlusOne = useStackStore(state => state.togglePlusOne)
   const toggleMinusOne = useStackStore(state => state.toggleMinusOne)
   const setHpLimit = useStackStore(state => state.setStackHpLimit)
@@ -50,7 +51,8 @@ export const Card = ({
   })
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    // transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition,
     marginBottom: `${stack.gapPercent / 5 + 8}px`
   }
@@ -125,7 +127,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        'stack-card min-w-[820px] mx-[10px] gap-2 w-full grid grid-cols-[30px_320px_150px_auto_30px] md:grid-cols-[30px_320px_150px_auto_30px]',
+        'stack-card min-w-[820px]   gap-2 w-full grid grid-cols-[30px_320px_150px_auto_30px] md:grid-cols-[30px_320px_150px_auto_30px]',
         overflow ? 'border-red-600 border-3' : 'border border-gray-500 '
       )}
       ref={setNodeRef}
@@ -371,6 +373,14 @@ export const Card = ({
             onClick={() => removeStack(stack.id!)}
           >
             X
+          </button>
+        </div>
+        <div className='stack-disabled mt-2'>
+          <button
+            className='shrink-0 bg-gray-500 text-white text-2xl p-4 cursor-pointer  inline-flex items-center justify-center border border-gray-300 rounded-md h-5 w-5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+            onClick={() => toggleDisable(stack.id!)}
+          >
+            D
           </button>
         </div>
         {/* <div className='stack-reset'>

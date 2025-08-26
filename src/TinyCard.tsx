@@ -13,7 +13,8 @@ export const TinyCard = ({ stack }: { stack: Stack }) => {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: stack.id })
 
   const style = {
-    transform: CSS.Transform.toString(transform),
+    // transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition
   }
 

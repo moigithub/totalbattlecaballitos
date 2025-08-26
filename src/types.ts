@@ -164,4 +164,5 @@ export interface Stack {
   unitsAmount: number
   limit: number // max unit value
   attackOrder: number
+  disabled: boolean
 }

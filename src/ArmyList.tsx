@@ -6,8 +6,13 @@ import { ARMY } from './soldiers'
 import { whoCanIAttack } from './utils'
 // import { useState } from 'react'
 
-export const ArmyList = ({isVisible, toggleSidebar}: {isVisible: boolean, toggleSidebar: () => void}) => {
-
+export const ArmyList = ({
+  isVisible,
+  toggleSidebar
+}: {
+  isVisible: boolean
+  toggleSidebar: () => void
+}) => {
   const [search, setSearch] = useState('')
   const [filterVsTypes, setFilterVsTypes] = useState<string[]>(() => {
     // getting stored value
@@ -291,7 +296,8 @@ export const ArmyList = ({isVisible, toggleSidebar}: {isVisible: boolean, toggle
       strLimitType: '',
       useHpLimit: false,
       HpLimit: 0,
-      attackOrder: 0
+      attackOrder: 0,
+      disabled: false
     }
     addStack(stack)
   }
@@ -762,943 +768,945 @@ export const ArmyList = ({isVisible, toggleSidebar}: {isVisible: boolean, toggle
 
   const mercs = [mercLvl5, mercLvl6, mercLvl7, mercLvl9].filter(m => m.length > 0)
 
-
-
   return (
     <>
-      <button 
+      <button
         onClick={toggleSidebar}
-        className={`fixed top-20 ${isVisible ? 'left-64' : 'left-0'} z-50 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-3 rounded-r-lg transition-all duration-300 ease-in-out`}
+        className={`fixed top-20 ${
+          isVisible ? 'left-64' : 'left-0'
+        } z-50 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-3 rounded-r-lg transition-all duration-300 ease-in-out`}
         aria-label={isVisible ? 'Hide Army List' : 'Show Army List'}
       >
         {isVisible ? '◀' : '▶'}
       </button>
       <aside
         id='sidebar-multi-level-sidebar'
-        className={`fixed top-[56px] left-0 z-40 w-64 h-[calc(100vh-56px)] transition-transform duration-300 ease-in-out ${isVisible ? 'translate-x-0' : '-translate-x-full'} bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700`}
+        className={`fixed top-[56px] left-0 z-40 w-64 h-[calc(100vh-56px)] transition-transform duration-300 ease-in-out ${
+          isVisible ? 'translate-x-0' : '-translate-x-full'
+        } bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700`}
         aria-label='Sidebar'
       >
-      <div className=' w-full px-4 py-2  bg-gray-800'>
-        <label>Search :</label>
+        <div className=' w-full px-4 py-2  bg-gray-800'>
+          <label>Search :</label>
 
-        <input
-          className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full   p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-          type='text'
-          placeholder='Unit name, ie: spearman'
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-      </div>
-      <section className='px-4 py-2 max-h-[300px] overflow-y-auto bg-gray-50 dark:bg-gray-800'>
-        <button
-          className='w-full cursor-pointer my-1 px-1 py-0.5 text-sm bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-          type='button'
-          onClick={resetFilters}
-        >
-          Reset all filters
-        </button>
-        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
-          <div className='flex space-between items-center w-full mx-1'>
-            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Category
-            </p>
-            <button
-              className='cursor-pointer my-0.5 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={clearCategoryFilters}
-            >
-              Clear
-            </button>
-            <button
-              className='ml-1 cursor-pointer my-0.5 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={resetCategoryFilters}
-            >
-              Reset
-            </button>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Melee
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'melee'}
-                checked={filterTypes.includes('melee')}
-                onChange={markTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Ranged
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'ranged'}
-                checked={filterTypes.includes('ranged')}
-                onChange={markTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Flying
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'flying'}
-                checked={filterTypes.includes('flying')}
-                onChange={markTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Mounted
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'mounted'}
-                checked={filterTypes.includes('mounted')}
-                onChange={markTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Scout
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'scout'}
-                checked={filterTypes.includes('scout')}
-                onChange={markTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Siege
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'siege'}
-                checked={filterTypes.includes('siege')}
-                onChange={markTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Others
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={''}
-                checked={filterTypes.includes('')}
-                onChange={markTypes}
-              />
-            </label>
-          </div>
+          <input
+            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500   w-full   p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            type='text'
+            placeholder='Unit name, ie: spearman'
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
         </div>
-        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
-          <div className='flex space-between items-center w-full mx-1'>
-            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Sub Category
-            </p>
-            <button
-              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={clearSubCategoryFilters}
-            >
-              Clear
-            </button>
-            <button
-              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={resetSubCategoryFilters}
-            >
-              Reset
-            </button>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Dragon
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'dragon'}
-                checked={filterGroups.includes('dragon')}
-                onChange={markGroups}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Elemental
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'elemental'}
-                checked={filterGroups.includes('elemental')}
-                onChange={markGroups}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Beast
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'beast'}
-                checked={filterGroups.includes('beast')}
-                onChange={markGroups}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Giant
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'giant'}
-                checked={filterGroups.includes('giant')}
-                onChange={markGroups}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Others
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={''}
-                checked={filterGroups.includes('')}
-                onChange={markGroups}
-              />
-            </label>
-          </div>
-        </div>
-        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
-          <div className='flex space-between items-center w-full mx-1'>
-            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Feat.Bonus Target
-            </p>
-            <button
-              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={clearTargetBonusFilters}
-            >
-              Clear
-            </button>
-            <button
-              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={resetTargetBonusFilters}
-            >
-              Reset
-            </button>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsMelee
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Melee'}
-                checked={filterVsTypes.includes('Melee')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsRanged
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Ranged'}
-                checked={filterVsTypes.includes('Ranged')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsFlying
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Flying'}
-                checked={filterVsTypes.includes('Flying')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsMounted
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Mounted'}
-                checked={filterVsTypes.includes('Mounted')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsSiege
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Siege'}
-                checked={filterVsTypes.includes('Siege')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsFortification
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Fortifications'}
-                checked={filterVsTypes.includes('Fortifications')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsDragon
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Dragon'}
-                checked={filterVsTypes.includes('Dragon')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsElemental
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Elemental'}
-                checked={filterVsTypes.includes('Elemental')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsBeast
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Beast'}
-                checked={filterVsTypes.includes('Beast')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
-              vsGiant
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'Giant'}
-                checked={filterVsTypes.includes('Giant')}
-                onChange={markVsTypes}
-              />
-            </label>
-          </div>
-        </div>
-        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
-          <div className='flex space-between items-center w-full mx-1'>
-            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Guards Level
-            </p>
-            <button
-              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={clearGuardsLevelFilters}
-            >
-              Clear
-            </button>
-            <button
-              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={resetGuardsLevelFilters}
-            >
-              Reset
-            </button>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              1
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'1'}
-                checked={filterGuardLevels.includes('1')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              2
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'2'}
-                checked={filterGuardLevels.includes('2')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              3
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'3'}
-                checked={filterGuardLevels.includes('3')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              4
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'4'}
-                checked={filterGuardLevels.includes('4')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              5
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'5'}
-                checked={filterGuardLevels.includes('5')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              6
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'6'}
-                checked={filterGuardLevels.includes('6')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              7
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'7'}
-                checked={filterGuardLevels.includes('7')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              8
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'8'}
-                checked={filterGuardLevels.includes('8')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              9
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'9'}
-                checked={filterGuardLevels.includes('9')}
-                onChange={markGuardLevels}
-              />
-            </label>
-          </div>
-        </div>
-        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
-          <div className='flex space-between items-center w-full mx-1'>
-            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Specialist Level
-            </p>
-            <button
-              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={clearSpecialistLevelFilters}
-            >
-              Clear
-            </button>
-            <button
-              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={resetSpecialistLevelFilters}
-            >
-              Reset
-            </button>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              1
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'1'}
-                checked={filterSpecialistLevels.includes('1')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              2
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'2'}
-                checked={filterSpecialistLevels.includes('2')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              3
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'3'}
-                checked={filterSpecialistLevels.includes('3')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              4
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'4'}
-                checked={filterSpecialistLevels.includes('4')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              5
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'5'}
-                checked={filterSpecialistLevels.includes('5')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              6
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'6'}
-                checked={filterSpecialistLevels.includes('6')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              7
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'7'}
-                checked={filterSpecialistLevels.includes('7')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              8
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'8'}
-                checked={filterSpecialistLevels.includes('8')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              9
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'9'}
-                checked={filterSpecialistLevels.includes('9')}
-                onChange={markSpecialistLevels}
-              />
-            </label>
-          </div>
-        </div>
-        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
-          <div className='flex space-between items-center w-full mx-1'>
-            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Monster Level
-            </p>
-            <button
-              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={clearMonsterLevelFilters}
-            >
-              Clear
-            </button>
-            <button
-              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={resetMonsterLevelFilters}
-            >
-              Reset
-            </button>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              3
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'3'}
-                checked={filterMonsterLevels.includes('3')}
-                onChange={markMonsterLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              4
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'4'}
-                checked={filterMonsterLevels.includes('4')}
-                onChange={markMonsterLevels}
-              />
-            </label>
-          </div>
-
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              5
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'5'}
-                checked={filterMonsterLevels.includes('5')}
-                onChange={markMonsterLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              6
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'6'}
-                checked={filterMonsterLevels.includes('6')}
-                onChange={markMonsterLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              7
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'7'}
-                checked={filterMonsterLevels.includes('7')}
-                onChange={markMonsterLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              8
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'8'}
-                checked={filterMonsterLevels.includes('8')}
-                onChange={markMonsterLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              9
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'9'}
-                checked={filterMonsterLevels.includes('9')}
-                onChange={markMonsterLevels}
-              />
-            </label>
-          </div>
-        </div>
-        <div className='flex flex-wrap p-0.5 w-full border  my-2'>
-          <div className='flex space-between items-center w-full mx-1'>
-            <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
-              Merc Level
-            </p>
-            <button
-              className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={clearMercLevelFilters}
-            >
-              Clear
-            </button>
-            <button
-              className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
-              type='button'
-              onClick={resetMercLevelFilters}
-            >
-              Reset
-            </button>
-          </div>
-
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              5
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'5'}
-                checked={filterMercLevels.includes('5')}
-                onChange={markMercLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              6
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'6'}
-                checked={filterMercLevels.includes('6')}
-                onChange={markMercLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              7
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'7'}
-                checked={filterMercLevels.includes('7')}
-                onChange={markMercLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              8
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'8'}
-                checked={filterMercLevels.includes('8')}
-                onChange={markMercLevels}
-              />
-            </label>
-          </div>
-          <div className='mx-1'>
-            <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
-              9
-              <input
-                className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
-                type='checkbox'
-                value={'9'}
-                checked={filterMercLevels.includes('9')}
-                onChange={markMercLevels}
-              />
-            </label>
-          </div>
-        </div>
-      </section>
-      <div className='h-[calc(100%-300px-74px-56px)] mt-2 px-3 py-2 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
-        <h2 className='header-title'>Army</h2>
-        <div className='army-list'>
-          {guardsman.length > 0 &&
-            guardsman.map(({ title, troops, keyName }, idx) => {
-              return troops.length > 0 ? (
-                <div className='guardsmen' key={`alguards-${idx}`}>
-                  <p className='group-title'>{title}</p>
-                  <div className='btn-group'>
-                    {troops.map(u => {
-                      return (
-                        <button
-                          key={`alb-${u.id}`}
-                          className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                          onClick={() => {
-                            addTroops(u.id)
-                          }}
-                        >
-                          {keyName}
-                          {u.level}
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              ) : null
-            })}
-
-          {specialist.length > 0 &&
-            specialist.map(({ title, troops, keyName }, idx) => {
-              return troops.length > 0 ? (
-                <div className='specialists' key={`alspclist-${idx}`}>
-                  <p className='group-title'>{title}</p>
-                  <div className='btn-group'>
-                    {troops.map(u => {
-                      return (
-                        <button
-                          key={`alb-${u.id}`}
-                          className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                          onClick={() => {
-                            addTroops(u.id)
-                          }}
-                        >
-                          {keyName}
-                          {u.level}
-                        </button>
-                      )
-                    })}
-                  </div>
-                </div>
-              ) : null
-            })}
-
-          <div className='engineer'>
-            <p className='group-title'>Catapult/catapulta</p>
-            <div className='btn-group'>
-              {engineers.map(u => {
-                return (
-                  <button
-                    key={`alb-${u.id}`}
-                    className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                    onClick={() => {
-                      addTroops(u.id)
-                    }}
-                  >
-                    {u.name}
-                  </button>
-                )
-              })}
+        <section className='px-4 py-2 max-h-[300px] overflow-y-auto bg-gray-50 dark:bg-gray-800'>
+          <button
+            className='w-full cursor-pointer my-1 px-1 py-0.5 text-sm bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+            type='button'
+            onClick={resetFilters}
+          >
+            Reset all filters
+          </button>
+          <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+            <div className='flex space-between items-center w-full mx-1'>
+              <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Category
+              </p>
+              <button
+                className='cursor-pointer my-0.5 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={clearCategoryFilters}
+              >
+                Clear
+              </button>
+              <button
+                className='ml-1 cursor-pointer my-0.5 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={resetCategoryFilters}
+              >
+                Reset
+              </button>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Melee
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'melee'}
+                  checked={filterTypes.includes('melee')}
+                  onChange={markTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Ranged
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'ranged'}
+                  checked={filterTypes.includes('ranged')}
+                  onChange={markTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Flying
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'flying'}
+                  checked={filterTypes.includes('flying')}
+                  onChange={markTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Mounted
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'mounted'}
+                  checked={filterTypes.includes('mounted')}
+                  onChange={markTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Scout
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'scout'}
+                  checked={filterTypes.includes('scout')}
+                  onChange={markTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Siege
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'siege'}
+                  checked={filterTypes.includes('siege')}
+                  onChange={markTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Others
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={''}
+                  checked={filterTypes.includes('')}
+                  onChange={markTypes}
+                />
+              </label>
             </div>
           </div>
-
-          {monsters.length > 0 && (
-            <div className='monsters'>
-              <p className='group-title'>Monsters</p>
-              {monsters.map((monster, idx) => {
-                return (
-                  <div className='btn-group' key={`almonstr-${idx}`}>
-                    {monster.map(m => {
-                      return (
-                        <button
-                          key={`alb-${m.id}`}
-                          className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                          onClick={() => {
-                            addTroops(m.id)
-                          }}
-                        >
-                          {m.name}
-                        </button>
-                      )
-                    })}
-                  </div>
-                )
-              })}
+          <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+            <div className='flex space-between items-center w-full mx-1'>
+              <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Sub Category
+              </p>
+              <button
+                className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={clearSubCategoryFilters}
+              >
+                Clear
+              </button>
+              <button
+                className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={resetSubCategoryFilters}
+              >
+                Reset
+              </button>
             </div>
-          )}
-
-          {mercs.length > 0 && (
-            <div className='mercs'>
-              <p className='group-title'>mercs</p>
-              {mercs.map((u, idx) => {
-                return (
-                  <div className='btn-group' key={`almerc-${idx}`}>
-                    {u.map(m => {
-                      return (
-                        <button
-                          key={`alb-${m.id}`}
-                          className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
-                          onClick={() => {
-                            addTroops(m.id)
-                          }}
-                        >
-                          {m.name}
-                        </button>
-                      )
-                    })}
-                  </div>
-                )
-              })}
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Dragon
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'dragon'}
+                  checked={filterGroups.includes('dragon')}
+                  onChange={markGroups}
+                />
+              </label>
             </div>
-          )}
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Elemental
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'elemental'}
+                  checked={filterGroups.includes('elemental')}
+                  onChange={markGroups}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Beast
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'beast'}
+                  checked={filterGroups.includes('beast')}
+                  onChange={markGroups}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Giant
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'giant'}
+                  checked={filterGroups.includes('giant')}
+                  onChange={markGroups}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Others
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={''}
+                  checked={filterGroups.includes('')}
+                  onChange={markGroups}
+                />
+              </label>
+            </div>
+          </div>
+          <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+            <div className='flex space-between items-center w-full mx-1'>
+              <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Feat.Bonus Target
+              </p>
+              <button
+                className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={clearTargetBonusFilters}
+              >
+                Clear
+              </button>
+              <button
+                className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={resetTargetBonusFilters}
+              >
+                Reset
+              </button>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsMelee
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Melee'}
+                  checked={filterVsTypes.includes('Melee')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsRanged
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Ranged'}
+                  checked={filterVsTypes.includes('Ranged')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsFlying
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Flying'}
+                  checked={filterVsTypes.includes('Flying')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsMounted
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Mounted'}
+                  checked={filterVsTypes.includes('Mounted')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsSiege
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Siege'}
+                  checked={filterVsTypes.includes('Siege')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsFortification
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Fortifications'}
+                  checked={filterVsTypes.includes('Fortifications')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsDragon
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Dragon'}
+                  checked={filterVsTypes.includes('Dragon')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsElemental
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Elemental'}
+                  checked={filterVsTypes.includes('Elemental')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsBeast
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Beast'}
+                  checked={filterVsTypes.includes('Beast')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='text-xs font-medium text-gray-900 dark:text-gray-300'>
+                vsGiant
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'Giant'}
+                  checked={filterVsTypes.includes('Giant')}
+                  onChange={markVsTypes}
+                />
+              </label>
+            </div>
+          </div>
+          <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+            <div className='flex space-between items-center w-full mx-1'>
+              <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Guards Level
+              </p>
+              <button
+                className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={clearGuardsLevelFilters}
+              >
+                Clear
+              </button>
+              <button
+                className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={resetGuardsLevelFilters}
+              >
+                Reset
+              </button>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                1
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'1'}
+                  checked={filterGuardLevels.includes('1')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                2
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'2'}
+                  checked={filterGuardLevels.includes('2')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                3
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'3'}
+                  checked={filterGuardLevels.includes('3')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                4
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'4'}
+                  checked={filterGuardLevels.includes('4')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                5
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'5'}
+                  checked={filterGuardLevels.includes('5')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                6
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'6'}
+                  checked={filterGuardLevels.includes('6')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                7
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'7'}
+                  checked={filterGuardLevels.includes('7')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                8
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'8'}
+                  checked={filterGuardLevels.includes('8')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                9
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'9'}
+                  checked={filterGuardLevels.includes('9')}
+                  onChange={markGuardLevels}
+                />
+              </label>
+            </div>
+          </div>
+          <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+            <div className='flex space-between items-center w-full mx-1'>
+              <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Specialist Level
+              </p>
+              <button
+                className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={clearSpecialistLevelFilters}
+              >
+                Clear
+              </button>
+              <button
+                className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={resetSpecialistLevelFilters}
+              >
+                Reset
+              </button>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                1
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'1'}
+                  checked={filterSpecialistLevels.includes('1')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                2
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'2'}
+                  checked={filterSpecialistLevels.includes('2')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                3
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'3'}
+                  checked={filterSpecialistLevels.includes('3')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                4
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'4'}
+                  checked={filterSpecialistLevels.includes('4')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                5
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'5'}
+                  checked={filterSpecialistLevels.includes('5')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                6
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'6'}
+                  checked={filterSpecialistLevels.includes('6')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                7
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'7'}
+                  checked={filterSpecialistLevels.includes('7')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                8
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'8'}
+                  checked={filterSpecialistLevels.includes('8')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                9
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'9'}
+                  checked={filterSpecialistLevels.includes('9')}
+                  onChange={markSpecialistLevels}
+                />
+              </label>
+            </div>
+          </div>
+          <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+            <div className='flex space-between items-center w-full mx-1'>
+              <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Monster Level
+              </p>
+              <button
+                className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={clearMonsterLevelFilters}
+              >
+                Clear
+              </button>
+              <button
+                className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={resetMonsterLevelFilters}
+              >
+                Reset
+              </button>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                3
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'3'}
+                  checked={filterMonsterLevels.includes('3')}
+                  onChange={markMonsterLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                4
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'4'}
+                  checked={filterMonsterLevels.includes('4')}
+                  onChange={markMonsterLevels}
+                />
+              </label>
+            </div>
+
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                5
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'5'}
+                  checked={filterMonsterLevels.includes('5')}
+                  onChange={markMonsterLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                6
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'6'}
+                  checked={filterMonsterLevels.includes('6')}
+                  onChange={markMonsterLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                7
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'7'}
+                  checked={filterMonsterLevels.includes('7')}
+                  onChange={markMonsterLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                8
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'8'}
+                  checked={filterMonsterLevels.includes('8')}
+                  onChange={markMonsterLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                9
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'9'}
+                  checked={filterMonsterLevels.includes('9')}
+                  onChange={markMonsterLevels}
+                />
+              </label>
+            </div>
+          </div>
+          <div className='flex flex-wrap p-0.5 w-full border  my-2'>
+            <div className='flex space-between items-center w-full mx-1'>
+              <p className='block w-full text-xs font-medium text-gray-900 dark:text-gray-300'>
+                Merc Level
+              </p>
+              <button
+                className='cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={clearMercLevelFilters}
+              >
+                Clear
+              </button>
+              <button
+                className='ml-1 cursor-pointer my-1 px-1 py-0.5 text-xs bg-blue-500 border border-blue-500 rounded-lg text-gray-200 hover:bg-blue-700 hover:text-white focus:ring-blue-500 focus:ring-offset-blue-200 dark:focus:ring-offset-gray-800'
+                type='button'
+                onClick={resetMercLevelFilters}
+              >
+                Reset
+              </button>
+            </div>
+
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                5
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'5'}
+                  checked={filterMercLevels.includes('5')}
+                  onChange={markMercLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                6
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'6'}
+                  checked={filterMercLevels.includes('6')}
+                  onChange={markMercLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                7
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'7'}
+                  checked={filterMercLevels.includes('7')}
+                  onChange={markMercLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                8
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'8'}
+                  checked={filterMercLevels.includes('8')}
+                  onChange={markMercLevels}
+                />
+              </label>
+            </div>
+            <div className='mx-1'>
+              <label className='mr-0.5 text-xs font-medium text-gray-900 dark:text-gray-300'>
+                9
+                <input
+                  className='ml-1 w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-purple-500 dark:focus:ring-purple-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  type='checkbox'
+                  value={'9'}
+                  checked={filterMercLevels.includes('9')}
+                  onChange={markMercLevels}
+                />
+              </label>
+            </div>
+          </div>
+        </section>
+        <div className='h-[calc(100%-300px-74px-56px)] mt-2 px-3 py-2 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
+          <h2 className='header-title'>Army</h2>
+          <div className='army-list'>
+            {guardsman.length > 0 &&
+              guardsman.map(({ title, troops, keyName }, idx) => {
+                return troops.length > 0 ? (
+                  <div className='guardsmen' key={`alguards-${idx}`}>
+                    <p className='group-title'>{title}</p>
+                    <div className='btn-group'>
+                      {troops.map(u => {
+                        return (
+                          <button
+                            key={`alb-${u.id}`}
+                            className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                            onClick={() => {
+                              addTroops(u.id)
+                            }}
+                          >
+                            {keyName}
+                            {u.level}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ) : null
+              })}
+
+            {specialist.length > 0 &&
+              specialist.map(({ title, troops, keyName }, idx) => {
+                return troops.length > 0 ? (
+                  <div className='specialists' key={`alspclist-${idx}`}>
+                    <p className='group-title'>{title}</p>
+                    <div className='btn-group'>
+                      {troops.map(u => {
+                        return (
+                          <button
+                            key={`alb-${u.id}`}
+                            className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                            onClick={() => {
+                              addTroops(u.id)
+                            }}
+                          >
+                            {keyName}
+                            {u.level}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ) : null
+              })}
+
+            <div className='engineer'>
+              <p className='group-title'>Catapult/catapulta</p>
+              <div className='btn-group'>
+                {engineers.map(u => {
+                  return (
+                    <button
+                      key={`alb-${u.id}`}
+                      className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                      onClick={() => {
+                        addTroops(u.id)
+                      }}
+                    >
+                      {u.name}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+
+            {monsters.length > 0 && (
+              <div className='monsters'>
+                <p className='group-title'>Monsters</p>
+                {monsters.map((monster, idx) => {
+                  return (
+                    <div className='btn-group' key={`almonstr-${idx}`}>
+                      {monster.map(m => {
+                        return (
+                          <button
+                            key={`alb-${m.id}`}
+                            className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                            onClick={() => {
+                              addTroops(m.id)
+                            }}
+                          >
+                            {m.name}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+
+            {mercs.length > 0 && (
+              <div className='mercs'>
+                <p className='group-title'>mercs</p>
+                {mercs.map((u, idx) => {
+                  return (
+                    <div className='btn-group' key={`almerc-${idx}`}>
+                      {u.map(m => {
+                        return (
+                          <button
+                            key={`alb-${m.id}`}
+                            className='shrink-0 bg-gray-800  cursor-pointer  inline-flex items-center justify-center border border-gray-700 mx-0.5 my-0.5 rounded-md px-0.5 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none'
+                            onClick={() => {
+                              addTroops(m.id)
+                            }}
+                          >
+                            {m.name}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
     </>
   )
 }

@@ -15,9 +15,9 @@
   position: relative;
 }
 
-table {
+/* table {
   margin: 1rem 0;
-}
+} */
 
 table,
 th,
@@ -104,7 +104,7 @@ table th {
 
   /* width: 100%; */
   border: 1px solid grey;
-  margin: 10px 0;
+  /* margin: 10px 0; */
 }
 .stack-card-small {
   display: grid;
@@ -116,7 +116,7 @@ table th {
 
   /* width: 100%; */
   border: 1px solid grey;
-  margin: 10px 0;
+  /* margin: 10px 0; */
 }
 .stack-card {
   grid-template-rows: auto;

@@ -39,6 +39,7 @@ interface StackStore extends StackStoreBasic {
   setStackStrLimit: (id: string, value: number) => void
   setStackStrLimitType: (id: string, value: string) => void
   setStackComment: (id: string, value: string) => void
+  toggleDisable: (id: string) => void
   toggleUseHpLimit: (id: string) => void
   setStackHpLimit: (id: string, value: number) => void
 
@@ -241,6 +242,15 @@ const stackSlice: StateCreator<StackStore, [], [['zustand/persist', unknown]]> =
           }
         }
         return stack
+      })
+    }))
+  },
+  toggleDisable: (id: string) => {
+    set(state => ({
+      army: state.army.map(stack => {
+        if (stack.id === id) {
+          return { ...stack, disabled: !stack.disabled }
+        } else return stack
       })
     }))
   },
