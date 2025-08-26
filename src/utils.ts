@@ -89,7 +89,8 @@ const getData = (stack: Stack) => {
     limit: stack.limit || 0,
     // ...stack,
     unit: unit || ARMY.errorUnit,
-    attackOrder: 0
+    attackOrder: 0,
+    disabled: false
   }
 }
 
