@@ -52,7 +52,8 @@ import {
   lvl17HeroicElfSquad,
   mobCommonBarbarianSquad28,
   mobCommonCursedSquad29,
-  mobCommonInfernoSquad31
+  mobCommonInfernoSquad31,
+  olympusBasilisk
 } from './monsters.ts'
 import { cn, decodeAndLoadArmySetup, prepareExportData, whoCanIAttack } from './utils.ts'
 import { encodeHash } from './hashStore.ts'
@@ -101,11 +102,15 @@ import {
   cursed20G5S5Merc,
   cursed20G5S5M6,
   elf10G4,
-  cursed20G5Mercs
+  cursed20G5Mercs,
+  elf10G3M3Merc,
+  elf15G4M4Merc,
+  elf20G5M5S4
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
 import { Checkbox } from 'flowbite-react'
 import { MonsterData } from './monsterData.tsx'
+import { DisabledCard } from './DisabledCard.tsx'
 
 function Dos() {
   const leadership = useStackStore(state => state.leadership)
@@ -157,7 +162,7 @@ function Dos() {
   const [openModal, setOpenModal] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(true)
 
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
@@ -227,6 +232,10 @@ function Dos() {
       console.log('select target mobCommonBarbarianSquad28', mobCommonBarbarianSquad28)
       selectedCitadel = mobCommonBarbarianSquad28
     }
+    if (selectedTarget === 'olympusBasilisk') {
+      console.log('select target olympusBasilisk', olympusBasilisk)
+      selectedCitadel = olympusBasilisk
+    }
 
     setCitadel(selectedCitadel)
   }, [selectedTarget])
@@ -242,8 +251,8 @@ function Dos() {
   }, [])
 
   const toggleSidebar = () => {
-    setIsVisible(!isVisible);
-  };
+    setIsVisible(!isVisible)
+  }
 
   const changeMobTarget = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setReportMeAttacks([])
@@ -438,6 +447,9 @@ second REMAINS second
     // deep copy the army to a normal object
     const ARMY = structuredClone(armyRef.current)
 
+    // filter disabled stacks
+    const ACTIVE_ARMY = ARMY.filter(stack => !stack.disabled)
+
     // console.log('max leadership', leadership)
     // console.log('max authority', authority)
     // console.log('max dominance', dominance)
@@ -456,38 +468,38 @@ second REMAINS second
     while (playing) {
       // 1. check leadership acumulado del army
       // 2. agregar 1 unit al sacrificio
-      const stackZero: Stack | null = ARMY[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
+      const stackZero: Stack | null = ACTIVE_ARMY[0] // el primero de la lista es el sacrificio, incrementa de 1 en 1
       // console.log('army0', army[0], armyRef.current[0])
 
       let canIAddToFirstStack = true
       if (
         stackZero.unit.clasification === 'army' &&
-        getArmyLeadership(ARMY) + stackZero.unit.LEADERSHIP > leadership
+        getArmyLeadership(ACTIVE_ARMY) + stackZero.unit.LEADERSHIP > leadership
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
       } else if (
         stackZero.unit.clasification === 'merc' &&
-        getArmyAuthority(ARMY) + stackZero.unit.AUTHORITY > authority
+        getArmyAuthority(ACTIVE_ARMY) + stackZero.unit.AUTHORITY > authority
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
       } else if (
         stackZero.unit.clasification === 'monster' &&
-        getArmyDominance(ARMY) + stackZero.unit.DOMINANCE > dominance
+        getArmyDominance(ACTIVE_ARMY) + stackZero.unit.DOMINANCE > dominance
       ) {
         canIAddToFirstStack = false
         // addArmyUnits(ARMY, 0, 1)
       }
 
-      if (ARMY[0].useUnitLimit && ARMY[0].unitsAmount >= ARMY[0].unitLimit) {
+      if (ACTIVE_ARMY[0].useUnitLimit && ACTIVE_ARMY[0].unitsAmount >= ACTIVE_ARMY[0].unitLimit) {
         canIAddToFirstStack = false
       }
 
       // const unitStrength = stack.unit.BASESTR * (1 + stack.strBonus / 100)
-      console.log('use str limit 0', ARMY[0].useStrLimit, stackZero.strLimitType)
-      if (ARMY[0].useStrLimit) {
-        const stackStrengthWithBonus = getStrengthWithBonus(ARMY[0])
+      console.log('use str limit 0', ACTIVE_ARMY[0].useStrLimit, stackZero.strLimitType)
+      if (ACTIVE_ARMY[0].useStrLimit) {
+        const stackStrengthWithBonus = getStrengthWithBonus(ACTIVE_ARMY[0])
 
         const featBonus =
           stackZero.strLimitType
@@ -537,79 +549,82 @@ second REMAINS second
 
         console.log('ZERO stackstrength', stackStrength)
         console.log('unitstrengt', unitStrength)
-        console.log('both', stackStrength + unitStrength, '>', ARMY[0].strLimit)
+        console.log('both', stackStrength + unitStrength, '>', ACTIVE_ARMY[0].strLimit)
         console.log('featBonus', featBonus)
         console.log('allBonusesPercent', allBonusesPercent)
-        if (stackStrength + unitStrength >= ARMY[0].strLimit) {
+        if (stackStrength + unitStrength >= ACTIVE_ARMY[0].strLimit) {
           console.log('no zero add')
           canIAddToFirstStack = false
         }
       }
 
       const unitHealth = stackZero.unit.BASEHP * (1 + stackZero.hpBonus / 100)
-      if (ARMY[0].useHpLimit && getStackHealth(ARMY, 0) + unitHealth >= ARMY[0].HpLimit) {
+      if (
+        ACTIVE_ARMY[0].useHpLimit &&
+        getStackHealth(ACTIVE_ARMY, 0) + unitHealth >= ACTIVE_ARMY[0].HpLimit
+      ) {
         canIAddToFirstStack = false
       }
 
       if (canIAddToFirstStack) {
-        addArmyUnits(ARMY, 0, 1)
+        addArmyUnits(ACTIVE_ARMY, 0, 1)
       }
 
       // console.log('army0', army[0], armyRef.current[0])
 
-      for (let i = 1; i < ARMY.length; i++) {
-        if (!ARMY[i]) {
+      for (let i = 1; i < ACTIVE_ARMY.length; i++) {
+        if (!ACTIVE_ARMY[i]) {
           playing = false
           break
         }
         // console.log('current stack', stack)
 
         /**manejo de leadership */
-        if (ARMY[i].unit.clasification === 'army') {
+        if (ACTIVE_ARMY[i].unit.clasification === 'army') {
           // 6. check leadership del nuevo grupo
           const unitsCount = 1 // por ahora siempre 1
-          const newStackLeadership = ARMY[i].unit.LEADERSHIP * unitsCount
+          const newStackLeadership = ACTIVE_ARMY[i].unit.LEADERSHIP * unitsCount
 
           // 7 check leadership acumulado + leadership nuevo sea menor que el disponible
 
-          while (getArmyLeadership(ARMY) + newStackLeadership <= leadership) {
-            if (!shouldAddArmy(ARMY, i)) {
+          while (getArmyLeadership(ACTIVE_ARMY) + newStackLeadership <= leadership) {
+            if (!shouldAddArmy(ACTIVE_ARMY, i)) {
               break
             }
 
             // console.log('leadership: agregando units a ', ARMY[i].unit.name)
-            addArmyUnits(ARMY, i, unitsCount)
+            addArmyUnits(ACTIVE_ARMY, i, unitsCount)
 
             // console.log('new army', ARMY)
           }
         }
 
-        if (ARMY[i].unit.clasification === 'merc') {
+        if (ACTIVE_ARMY[i].unit.clasification === 'merc') {
           // 5. check authority acumulado del mercenaries
           // 6. check authority del nuevo grupo
           // const unitsCount = stack.lockMinSetup ? unitsNeededToKill1Mob : 1
           const unitsCount = 1 //siempre 1
-          const newStackAuthority = ARMY[i].unit.AUTHORITY * unitsCount
+          const newStackAuthority = ACTIVE_ARMY[i].unit.AUTHORITY * unitsCount
           // 7 check authority acumulado + authority nuevo sea menor que el disponible
-          while (getArmyAuthority(ARMY) + newStackAuthority <= authority) {
-            if (!shouldAddArmy(ARMY, i)) {
+          while (getArmyAuthority(ACTIVE_ARMY) + newStackAuthority <= authority) {
+            if (!shouldAddArmy(ACTIVE_ARMY, i)) {
               break
             }
 
             // 9. agregar al stack
             // console.log('authority: agregando units en ', ARMY[i].unit.name)
-            addArmyUnits(ARMY, i, unitsCount)
+            addArmyUnits(ACTIVE_ARMY, i, unitsCount)
           }
         }
 
-        if (ARMY[i].unit.clasification === 'monster') {
+        if (ACTIVE_ARMY[i].unit.clasification === 'monster') {
           // 5. check DOMINANCE acumulado del mercenaries
           // 6. check DOMINANCE del nuevo grupo
           const unitsCount = 1
-          const newStackDominance = ARMY[i].unit.DOMINANCE * unitsCount
+          const newStackDominance = ACTIVE_ARMY[i].unit.DOMINANCE * unitsCount
 
           // 7 check DOMINANCE acumulado + DOMINANCE nuevo sea menor que el disponible
-          while (getArmyDominance(ARMY) + newStackDominance <= dominance) {
+          while (getArmyDominance(ACTIVE_ARMY) + newStackDominance <= dominance) {
             // console.log(
             //   '...domi',
             //   stack.unit.name,
@@ -621,12 +636,12 @@ second REMAINS second
             // )
             // 8. check HP acumulado + hp nuevo sea menor que el del sacrificio
 
-            if (!shouldAddArmy(ARMY, i)) {
+            if (!shouldAddArmy(ACTIVE_ARMY, i)) {
               break
             }
 
-            console.log('dominance: agregando units en ', ARMY[i].unit.name)
-            addArmyUnits(ARMY, i, unitsCount)
+            console.log('dominance: agregando units en ', ACTIVE_ARMY[i].unit.name)
+            addArmyUnits(ACTIVE_ARMY, i, unitsCount)
           }
         }
       }
@@ -634,27 +649,27 @@ second REMAINS second
       // check if there were any changes
 
       if (
-        lastLeadershipCalculated === getArmyLeadership(ARMY) &&
-        lastAuthorityCalculated === getArmyAuthority(ARMY) &&
-        lastDominanceCalculated === getArmyDominance(ARMY)
+        lastLeadershipCalculated === getArmyLeadership(ACTIVE_ARMY) &&
+        lastAuthorityCalculated === getArmyAuthority(ACTIVE_ARMY) &&
+        lastDominanceCalculated === getArmyDominance(ACTIVE_ARMY)
       ) {
         // console.log('no changes to leadership,authority or dominance, ending')
         playing = false
         break
       }
-      lastLeadershipCalculated = getArmyLeadership(ARMY)
-      lastAuthorityCalculated = getArmyAuthority(ARMY)
-      lastDominanceCalculated = getArmyDominance(ARMY)
+      lastLeadershipCalculated = getArmyLeadership(ACTIVE_ARMY)
+      lastAuthorityCalculated = getArmyAuthority(ACTIVE_ARMY)
+      lastDominanceCalculated = getArmyDominance(ACTIVE_ARMY)
 
       console.log('quedan .........')
-      console.log('leadership ', leadership, getArmyLeadership(ARMY))
-      console.log('Authority ', authority, getArmyAuthority(ARMY))
-      console.log('Dominance ', dominance, getArmyDominance(ARMY))
+      console.log('leadership ', leadership, getArmyLeadership(ACTIVE_ARMY))
+      console.log('Authority ', authority, getArmyAuthority(ACTIVE_ARMY))
+      console.log('Dominance ', dominance, getArmyDominance(ACTIVE_ARMY))
 
       if (
-        getArmyAuthority(ARMY) > authority ||
-        getArmyDominance(ARMY) > dominance ||
-        getArmyLeadership(ARMY) > leadership
+        getArmyAuthority(ACTIVE_ARMY) > authority ||
+        getArmyDominance(ACTIVE_ARMY) > dominance ||
+        getArmyLeadership(ACTIVE_ARMY) > leadership
       ) {
         // no deberia pasar
         playing = false
@@ -670,9 +685,20 @@ second REMAINS second
     }
 
     // update UI
+    // pass values from ACTIVE_ARMY to ARMY
+    ARMY.forEach(stack => {
+      if (!stack.disabled) {
+        const aStack = ACTIVE_ARMY.find(activeStack => stack.id === activeStack.id)
+        stack.unitsAmount = aStack?.unitsAmount ?? 0
+
+        //     leadership: totalUnits * leadership,
+        // authority: totalUnits * authority,
+        // dominance: totalUnits * dominance
+      }
+    })
     setArmy(ARMY)
 
-    setGapStrength((getStackStrength(ARMY, 0) * gapBasePercent) / 100)
+    setGapStrength((getStackStrength(ACTIVE_ARMY, 0) * gapBasePercent) / 100)
 
     setTimeout(() => {
       setLoading(false)
@@ -1073,7 +1099,7 @@ available soldiers JSON data (#soldiers): ${JSON.stringify(allArmy)}
     navigator.clipboard.writeText(prompt2)
   }
 
-  const verifyCitadel = () => {
+  const SimulateFight = () => {
     setLoading(true)
     console.log('verifying citadele20')
 
@@ -1086,7 +1112,8 @@ available soldiers JSON data (#soldiers): ${JSON.stringify(allArmy)}
     // INFO: I DO first attack
 
     // prepare army units for fighting, format data to have same structure as citadel
-    const myArmy = prepareArmyData(army)
+    const activeArmy = army.filter(stack => !stack.disabled)
+    const myArmy = prepareArmyData(activeArmy)
 
     const citadelWithoutWalls = citadel.stacks.filter(
       stack => stack.unit.category !== 'fortification'
@@ -1098,7 +1125,7 @@ available soldiers JSON data (#soldiers): ${JSON.stringify(allArmy)}
     const attackResult = fight(myArmy, citadelClone)
 
     setReportMeAttacks(attackResult)
-    const myArmy2 = prepareArmyData(army)
+    const myArmy2 = prepareArmyData(activeArmy)
 
     const citadelWithoutWalls2 = citadel.stacks.filter(
       stack => stack.unit.category !== 'fortification'
@@ -1448,6 +1475,9 @@ ignora lo que continua abajo de esta linea:
       case 'testElf30':
         decodeAndLoadArmySetup(testElf30)
         break
+      case 'elf10G3M3Merc':
+        decodeAndLoadArmySetup(elf10G3M3Merc)
+        break
       case 'elf10G4':
         decodeAndLoadArmySetup(elf10G4)
         break
@@ -1462,6 +1492,10 @@ ignora lo que continua abajo de esta linea:
         break
       case 'elf10G3M5Mercs':
         decodeAndLoadArmySetup(elf10G3M5Mercs)
+        break
+
+      case 'elf15G4M4Merc':
+        decodeAndLoadArmySetup(elf15G4M4Merc)
         break
       case 'elf15G5M3':
         decodeAndLoadArmySetup(elf15G5M3)
@@ -1480,6 +1514,9 @@ ignora lo que continua abajo de esta linea:
         break
       case 'elf15G5M5S5':
         decodeAndLoadArmySetup(elf15G5M5S5)
+        break
+      case 'elf20G5M5S4':
+        decodeAndLoadArmySetup(elf20G5M5S4)
         break
       case 'elf20G6Mercs':
         decodeAndLoadArmySetup(elf20G6Mercs)
@@ -1629,6 +1666,22 @@ ignora lo que continua abajo de esta linea:
     })
     .join(', ')
 
+  const overflowStackIds = army
+    .filter(stack => !stack.disabled)
+    .filter((stack, i, arr) => {
+      if (i === 0) return false
+
+      const stackBonus = stack.strBonus > 0 ? 1 + stack.strBonus / 100 : 1
+      const stackStr = stack.unit.BASESTR * stackBonus * stack.unitsAmount
+
+      const prevStack = arr[i - 1]
+      const prevStackBonus = prevStack.strBonus > 0 ? 1 + prevStack.strBonus / 100 : 1
+      const prevStackStr = prevStack.unit.BASESTR * prevStackBonus * prevStack.unitsAmount
+
+      return stackStr > prevStackStr
+    })
+    .map(stack => stack.id)
+
   return (
     <>
       <PageTitle title='Calc' />
@@ -1637,8 +1690,6 @@ ignora lo que continua abajo de esta linea:
       <nav className={cn('pt-[57px]   flex flex-col', isVisible ? 'ml-64' : '')}>
         <div className='px-3 py-3 lg:px-5 lg:pl-3 flex'>
           <div className='config-container flex items-center'>
-            
-
             <div className='ml-2 flex items-center'>
               <label>Target </label>
               <select
@@ -1657,6 +1708,7 @@ ignora lo que continua abajo de esta linea:
                 <option value='mobCommonInfernoSquad31'>mobCommonInfernoSquad31</option>
                 <option value='mobCommonCursedSquad29'>mobCommonCursedSquad29</option>
                 <option value='mobCommonBarbarianSquad28'>mobCommonBarbarianSquad28</option>
+                <option value='olympusBasilisk'>olympusBasilisk</option>
               </select>
             </div>
 
@@ -1707,9 +1759,14 @@ ignora lo que continua abajo de esta linea:
                 <option value='dash' disabled>
                   ------------------
                 </option>
+
+                <option value='elf10G3M3Merc' className='bg-orange-800'>
+                  Citadel Elf 10 G3, M3, Merc
+                </option>
                 <option value='elf10G4' className='bg-orange-800'>
                   Citadel Elf 10 G4
                 </option>
+
                 <option value='elf10G3M5Mercs' className='bg-orange-800'>
                   Citadel Elf 10 G3,M4, Mercs
                 </option>
@@ -1728,6 +1785,9 @@ ignora lo que continua abajo de esta linea:
                 </option>
                 <option value='dash' disabled>
                   ------------------
+                </option>
+                <option value='elf15G4M4Merc' className='bg-blue-600'>
+                  Citadel Elf 15 G4,M4,Merc
                 </option>
                 <option value='elf15G5M3' className='bg-blue-600'>
                   Citadel Elf 15 G5,M3
@@ -1749,6 +1809,9 @@ ignora lo que continua abajo de esta linea:
                 </option>
                 <option value='dash' disabled>
                   ------------------
+                </option>
+                <option value='elf20G5M5S4' className='bg-green-800'>
+                  Citadel Elf 20 G5,M5,S4
                 </option>
                 <option value='elf20G6Mercs' className='bg-green-800'>
                   Citadel Elf 20 G6,Mercs
@@ -1836,6 +1899,7 @@ ignora lo que continua abajo de esta linea:
             {selectedTarget === 'mobCommonBarbarianSquad28' && (
               <MonsterData monster={mobCommonBarbarianSquad28} />
             )}
+            {selectedTarget === 'olympusBasilisk' && <MonsterData monster={olympusBasilisk} />}
           </div>
         )}
 
@@ -1963,16 +2027,6 @@ ignora lo que continua abajo de esta linea:
                 />
               </div>
             </div>
-
-            <div className=''>
-              <button
-                className='px-5 py-4 cursor-pointer bg-green-500 text-md font-bold text-white rounded-lg text-lg md:text-3xl leading-5 tracking-widest'
-                onClick={verifyCitadel}
-                disabled={loading}
-              >
-                {loading ? '.....thinking' : 'SIMULATE Fight'}
-              </button>
-            </div>
           </div>
         </div>
       </nav>
@@ -2007,8 +2061,8 @@ ignora lo que continua abajo de esta linea:
                   </p>
                 )}
               </div>
-              <div className='flex items-center  '>
-                <table className='skill-info'>
+              <div className='flex items-center mb-2 '>
+                <table className=' '>
                   <thead>
                     <tr>
                       <th onClick={copyToClipboardHashedArmyData} className='cursor-pointer'>
@@ -2073,6 +2127,241 @@ ignora lo que continua abajo de esta linea:
                 </div>
               )}
 
+              <div className='flex mb-2'>
+                <button
+                  className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
+                  onClick={() => {
+                    setArmy(
+                      armyRef.current.toSorted((a, b) => {
+                        // sort based on unit total health descending
+                        return (
+                          b.unit.BASEHP * (1 + b.hpBonus / 100) -
+                          a.unit.BASEHP * (1 + a.hpBonus / 100)
+                        )
+                      })
+                    )
+                  }}
+                >
+                  Health (↓)
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
+                  onClick={() => {
+                    setArmy(
+                      armyRef.current.toSorted((a, b) => {
+                        // sort based on unit total health ascending
+                        return (
+                          a.unit.BASEHP * (1 + a.hpBonus / 100) -
+                          b.unit.BASEHP * (1 + b.hpBonus / 100)
+                        )
+                      })
+                    )
+                  }}
+                >
+                  Health (↑)
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  onClick={() => {
+                    const armyWithAtkOrder = armyRef.current.map(stack => {
+                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                      // melee tiene vsMount
+                      // flying tiene vsMount
+                      // rider tiene vsRanged
+                      // ranged tiene vsFlying + vsMelee
+
+                      // send ranged+flying only
+                      let attackOrder = 0
+                      if (attkBonus.includes('Ranged')) {
+                        //es un rider
+                        attackOrder = 1
+                      }
+                      if (attkBonus.includes('Mounted')) {
+                        //es un melee(126k dmg) o fly
+                        attackOrder = 2
+                      }
+                      if (attkBonus.includes('Flying')) {
+                        //es un ranged
+                        attackOrder = 3
+                      }
+                      if (attkBonus.includes('Melee')) {
+                        //es un ranged
+                        attackOrder = 4
+                      }
+
+                      return { ...stack, attackOrder }
+                    })
+
+                    // sort based on attack order ascending: flying, melee,mounted, ranged
+                    // ranged have vsMelee bonus, so should last longer to kill melee units
+                    /*
+                          sorted should be like
+
+                          specialist ranged
+                          guardsman ranged
+                          monster ranged
+                          mercs ranged
+
+                          specialist melee
+                          guardsman melee
+                          monster melee
+                          mercs melee
+                         */
+
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
+                        return (
+                          a.attackOrder - b.attackOrder ||
+                          a.unit.sortOrderBase - b.unit.sortOrderBase
+                        )
+                      })
+                    )
+                  }}
+                  title='should not send rider they get 145k dmg, or melee:126k dmg'
+                >
+                  KMelee
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  onClick={() => {
+                    const armyWithAtkOrder = armyRef.current.map(stack => {
+                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                      // melee tiene vsMount
+                      // flying tiene vsMount
+                      // rider tiene vsRanged
+                      // ranged tiene vsFlying + vsMelee
+
+                      // send ranged mounted flying
+                      let attackOrder = 0
+                      if (attkBonus.includes('Mounted')) {
+                        //es un melee(126k dmg) o fly
+                        attackOrder = 1
+                      }
+                      if (attkBonus.includes('Ranged')) {
+                        //es un rider, deberia estar desbloqueado
+                        attackOrder = 2
+                      }
+                      if (attkBonus.includes('Melee')) {
+                        //es un ranged
+                        attackOrder = 3
+                      }
+                      if (attkBonus.includes('Flying')) {
+                        //es un ranged
+                        attackOrder = 4
+                      }
+
+                      return { ...stack, attackOrder }
+                    })
+
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
+                        return (
+                          a.attackOrder - b.attackOrder ||
+                          a.unit.sortOrderBase - b.unit.sortOrderBase
+                        )
+                      })
+                    )
+                  }}
+                  title='should not send rider they get 145k dmg, or melee:126k dmg'
+                >
+                  KFly
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  onClick={() => {
+                    const armyWithAtkOrder = armyRef.current.map(stack => {
+                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                      // melee tiene vsMount
+                      // flying tiene vsMount
+                      // rider tiene vsRanged
+                      // ranged tiene vsFlying + vsMelee
+
+                      //send melee mounted flying
+                      let attackOrder = 0
+                      if (attkBonus.includes('Melee')) {
+                        //es un ranged
+                        attackOrder = 1
+                      }
+                      if (attkBonus.includes('Ranged')) {
+                        //es un rider, desbloqueado
+                        attackOrder = 2
+                      }
+                      if (attkBonus.includes('Flying')) {
+                        //es un ranged
+                        attackOrder = 3
+                      }
+                      if (attkBonus.includes('Mounted')) {
+                        //es un melee(126k dmg) o fly(desbloqueado)
+                        attackOrder = 4
+                      }
+
+                      return { ...stack, attackOrder }
+                    })
+
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
+                        return (
+                          a.attackOrder - b.attackOrder ||
+                          a.unit.sortOrderBase - b.unit.sortOrderBase
+                        )
+                      })
+                    )
+                  }}
+                >
+                  KMount
+                </button>
+                <button
+                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                  onClick={() => {
+                    const armyWithAtkOrder = armyRef.current.map(stack => {
+                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                      // melee tiene vsMount
+                      // flying tiene vsMount
+                      // rider tiene vsRanged
+                      // ranged tiene vsFlying + vsMelee
+                      let attackOrder = 0
+                      if (attkBonus.includes('Mounted')) {
+                        //es un melee o fly
+                        attackOrder = 1
+                      }
+                      if (attkBonus.includes('Melee')) {
+                        //es un ranged
+                        attackOrder = 2
+                      }
+                      if (attkBonus.includes('Flying')) {
+                        //es un ranged
+                        attackOrder = 3
+                      }
+                      if (attkBonus.includes('Ranged')) {
+                        //es un rider
+                        attackOrder = 4
+                      }
+
+                      return { ...stack, attackOrder }
+                    })
+
+                    setArmy(
+                      //set order values
+
+                      armyWithAtkOrder.toSorted((a, b) => {
+                        return (
+                          a.attackOrder - b.attackOrder ||
+                          a.unit.sortOrderBase - b.unit.sortOrderBase
+                        )
+                      })
+                    )
+                  }}
+                >
+                  KRang
+                </button>
+              </div>
+
               <div className='btn-group flex justify-between'>
                 <div className='flex '>
                   <button
@@ -2091,240 +2380,13 @@ ignora lo que continua abajo de esta linea:
                   >
                     Clear
                   </button>
-                </div>
 
-                <div className='flex'>
                   <button
-                    className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
-                    onClick={() => {
-                      setArmy(
-                        armyRef.current.toSorted((a, b) => {
-                          // sort based on unit total health descending
-                          return (
-                            b.unit.BASEHP * (1 + b.hpBonus / 100) -
-                            a.unit.BASEHP * (1 + a.hpBonus / 100)
-                          )
-                        })
-                      )
-                    }}
+                    className='px-5 py-4 cursor-pointer bg-green-500 text-md font-bold text-white rounded-lg text-lg md:text-3xl leading-5 tracking-widest'
+                    onClick={SimulateFight}
+                    disabled={loading}
                   >
-                    Health (↓)
-                  </button>
-                  <button
-                    className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
-                    onClick={() => {
-                      setArmy(
-                        armyRef.current.toSorted((a, b) => {
-                          // sort based on unit total health ascending
-                          return (
-                            a.unit.BASEHP * (1 + a.hpBonus / 100) -
-                            b.unit.BASEHP * (1 + b.hpBonus / 100)
-                          )
-                        })
-                      )
-                    }}
-                  >
-                    Health (↑)
-                  </button>
-                  <button
-                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                    onClick={() => {
-                      const armyWithAtkOrder = armyRef.current.map(stack => {
-                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                        // melee tiene vsMount
-                        // flying tiene vsMount
-                        // rider tiene vsRanged
-                        // ranged tiene vsFlying + vsMelee
-
-                        // send ranged+flying only
-                        let attackOrder = 0
-                        if (attkBonus.includes('Ranged')) {
-                          //es un rider
-                          attackOrder = 1
-                        }
-                        if (attkBonus.includes('Mounted')) {
-                          //es un melee(126k dmg) o fly
-                          attackOrder = 2
-                        }
-                        if (attkBonus.includes('Flying')) {
-                          //es un ranged
-                          attackOrder = 3
-                        }
-                        if (attkBonus.includes('Melee')) {
-                          //es un ranged
-                          attackOrder = 4
-                        }
-
-                        return { ...stack, attackOrder }
-                      })
-
-                      // sort based on attack order ascending: flying, melee,mounted, ranged
-                      // ranged have vsMelee bonus, so should last longer to kill melee units
-                      /*
-                          sorted should be like
-
-                          specialist ranged
-                          guardsman ranged
-                          monster ranged
-                          mercs ranged
-
-                          specialist melee
-                          guardsman melee
-                          monster melee
-                          mercs melee
-                         */
-
-                      setArmy(
-                        //set order values
-
-                        armyWithAtkOrder.toSorted((a, b) => {
-                          return (
-                            a.attackOrder - b.attackOrder ||
-                            a.unit.sortOrderBase - b.unit.sortOrderBase
-                          )
-                        })
-                      )
-                    }}
-                    title='should not send rider they get 145k dmg, or melee:126k dmg'
-                  >
-                    KMelee
-                  </button>
-                  <button
-                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                    onClick={() => {
-                      const armyWithAtkOrder = armyRef.current.map(stack => {
-                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                        // melee tiene vsMount
-                        // flying tiene vsMount
-                        // rider tiene vsRanged
-                        // ranged tiene vsFlying + vsMelee
-
-                        // send ranged mounted flying
-                        let attackOrder = 0
-                        if (attkBonus.includes('Mounted')) {
-                          //es un melee(126k dmg) o fly
-                          attackOrder = 1
-                        }
-                        if (attkBonus.includes('Ranged')) {
-                          //es un rider, deberia estar desbloqueado
-                          attackOrder = 2
-                        }
-                        if (attkBonus.includes('Melee')) {
-                          //es un ranged
-                          attackOrder = 3
-                        }
-                        if (attkBonus.includes('Flying')) {
-                          //es un ranged
-                          attackOrder = 4
-                        }
-
-                        return { ...stack, attackOrder }
-                      })
-
-                      setArmy(
-                        //set order values
-
-                        armyWithAtkOrder.toSorted((a, b) => {
-                          return (
-                            a.attackOrder - b.attackOrder ||
-                            a.unit.sortOrderBase - b.unit.sortOrderBase
-                          )
-                        })
-                      )
-                    }}
-                    title='should not send rider they get 145k dmg, or melee:126k dmg'
-                  >
-                    KFly
-                  </button>
-                  <button
-                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                    onClick={() => {
-                      const armyWithAtkOrder = armyRef.current.map(stack => {
-                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                        // melee tiene vsMount
-                        // flying tiene vsMount
-                        // rider tiene vsRanged
-                        // ranged tiene vsFlying + vsMelee
-
-                        //send melee mounted flying
-                        let attackOrder = 0
-                        if (attkBonus.includes('Melee')) {
-                          //es un ranged
-                          attackOrder = 1
-                        }
-                        if (attkBonus.includes('Ranged')) {
-                          //es un rider, desbloqueado
-                          attackOrder = 2
-                        }
-                        if (attkBonus.includes('Flying')) {
-                          //es un ranged
-                          attackOrder = 3
-                        }
-                        if (attkBonus.includes('Mounted')) {
-                          //es un melee(126k dmg) o fly(desbloqueado)
-                          attackOrder = 4
-                        }
-
-                        return { ...stack, attackOrder }
-                      })
-
-                      setArmy(
-                        //set order values
-
-                        armyWithAtkOrder.toSorted((a, b) => {
-                          return (
-                            a.attackOrder - b.attackOrder ||
-                            a.unit.sortOrderBase - b.unit.sortOrderBase
-                          )
-                        })
-                      )
-                    }}
-                  >
-                    KMount
-                  </button>
-                  <button
-                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                    onClick={() => {
-                      const armyWithAtkOrder = armyRef.current.map(stack => {
-                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                        // melee tiene vsMount
-                        // flying tiene vsMount
-                        // rider tiene vsRanged
-                        // ranged tiene vsFlying + vsMelee
-                        let attackOrder = 0
-                        if (attkBonus.includes('Mounted')) {
-                          //es un melee o fly
-                          attackOrder = 1
-                        }
-                        if (attkBonus.includes('Melee')) {
-                          //es un ranged
-                          attackOrder = 2
-                        }
-                        if (attkBonus.includes('Flying')) {
-                          //es un ranged
-                          attackOrder = 3
-                        }
-                        if (attkBonus.includes('Ranged')) {
-                          //es un rider
-                          attackOrder = 4
-                        }
-
-                        return { ...stack, attackOrder }
-                      })
-
-                      setArmy(
-                        //set order values
-
-                        armyWithAtkOrder.toSorted((a, b) => {
-                          return (
-                            a.attackOrder - b.attackOrder ||
-                            a.unit.sortOrderBase - b.unit.sortOrderBase
-                          )
-                        })
-                      )
-                    }}
-                  >
-                    KRang
+                    {loading ? '.....thinking' : 'SIMULATE Fight'}
                   </button>
                 </div>
               </div>
@@ -2337,40 +2399,23 @@ ignora lo que continua abajo de esta linea:
             <div className='stack-list'>
               <DndContext onDragEnd={handleDrag} /*sensors={sensors}*/>
                 <SortableContext items={army}>
-                  {army.map((stack, i, arr) => {
-                    if (cardType === 'tinycard') {
+                  // fiter overflow first. then check if is on overflow list
+                  {army.map(stack => {
+                    if (stack.disabled) {
+                      return <DisabledCard stack={stack} key={stack.id} />
+                    } else if (cardType === 'tinycard') {
                       return <TinyCard stack={stack} key={stack.id} />
                     } else if (cardType === 'smallcard') {
                       return <SmallCard stack={stack} key={stack.id} />
                     } else {
-                      if (i > 0) {
-                        const stackBonus = stack.strBonus > 0 ? 1 + stack.strBonus / 100 : 1
-                        const stackStr = stack.unit.BASESTR * stackBonus * stack.unitsAmount
-
-                        const prevStack = arr[i - 1]
-                        const prevStackBonus =
-                          prevStack.strBonus > 0 ? 1 + prevStack.strBonus / 100 : 1
-                        const prevStackStr =
-                          prevStack.unit.BASESTR * prevStackBonus * prevStack.unitsAmount
-
-                        return (
-                          <Card
-                            stack={stack}
-                            key={stack.id}
-                            gapValue={gapStrength}
-                            overflow={stackStr > prevStackStr}
-                          />
-                        )
-                      } else {
-                        return (
-                          <Card
-                            stack={stack}
-                            key={stack.id}
-                            gapValue={gapStrength}
-                            overflow={false}
-                          />
-                        )
-                      }
+                      return (
+                        <Card
+                          stack={stack}
+                          key={stack.id}
+                          gapValue={gapStrength}
+                          overflow={overflowStackIds.includes(stack.id)}
+                        />
+                      )
                     }
                   })}
                 </SortableContext>

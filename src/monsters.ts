@@ -297,3 +297,100 @@ export const mobCommonBarbarianSquad28: Citadel = {
     stackBuilder('1', objectDB.goblin, 1_500_000)
   ]
 }
+
+// olympus
+// quimera
+
+objectDB.harpyIII = objBuilder({
+  name: 'harpyIII',
+  category: 'flying',
+  BASESTR: 70000,
+  BASEHP: 210000,
+  vsMeleePercent: 80
+})
+objectDB.chimeraVI = objBuilder({
+  name: 'chimeraVI',
+  category: 'melee',
+  BASESTR: 100000,
+  BASEHP: 300000,
+  vsMountedPercent: 45
+})
+objectDB.centaurVI = objBuilder({
+  name: 'centaurVI',
+  category: 'mounted',
+  BASESTR: 57000,
+  BASEHP: 171000,
+  vsRangedPercent: 60
+})
+objectDB.satyrII = objBuilder({
+  name: 'satyrII',
+  category: 'ranged',
+  BASESTR: 720,
+  BASEHP: 2160,
+  vsFlyingPercent: 50
+})
+
+export const olympusChimera: Citadel = {
+  stacks: [
+    stackBuilder('0', objectDB.harpyIII, 2_531_250),
+    stackBuilder('1', objectDB.harpyIII, 2_531_250),
+    stackBuilder('2', objectDB.harpyIII, 2_531_250),
+    stackBuilder('3', objectDB.harpyIII, 2_531_250),
+
+    stackBuilder('4', objectDB.centaurVI, 2_749_999),
+    stackBuilder('5', objectDB.centaurVI, 2_749_999),
+    stackBuilder('6', objectDB.centaurVI, 2_749_999),
+    stackBuilder('7', objectDB.centaurVI, 2_749_999),
+
+    stackBuilder('8', objectDB.chimeraVI, 2_239_283),
+    stackBuilder('9', objectDB.chimeraVI, 2_239_283),
+    stackBuilder('10', objectDB.chimeraVI, 2_239_283),
+    stackBuilder('11', objectDB.chimeraVI, 2_239_283),
+
+    stackBuilder('12', objectDB.satyrII, 217_187_504),
+    stackBuilder('13', objectDB.satyrII, 217_187_504),
+    stackBuilder('14', objectDB.satyrII, 217_187_504),
+    stackBuilder('15', objectDB.satyrII, 217_187_504)
+  ]
+}
+
+objectDB.basiliskIII = objBuilder({
+  name: 'basiliskIII',
+  category: 'melee',
+  BASESTR: 100000,
+  BASEHP: 300000,
+  vsMountedPercent: 75
+})
+
+objectDB.harpyV = objBuilder({
+  name: 'harpyV',
+  category: 'flying',
+  BASESTR: 44000,
+  BASEHP: 132000,
+  vsMeleePercent: 70
+})
+
+objectDB.centaurV = objBuilder({
+  name: 'centaurV',
+  category: 'mounted',
+  BASESTR: 50000,
+  BASEHP: 150000,
+  vsRangedPercent: 55
+})
+
+objectDB.satyrIII = objBuilder({
+  name: 'satyrIII',
+  category: 'ranged',
+  BASESTR: 6500,
+  BASEHP: 19500,
+  vsFlyingPercent: 70
+})
+
+export const olympusBasilisk: Citadel = {
+  stacks: [
+    stackBuilder('0', objectDB.basiliskIII, 2_430_000),
+    stackBuilder('1', objectDB.harpyV, 5_500_000),
+    stackBuilder('2', objectDB.centaurV, 4_820_000),
+    stackBuilder('3', objectDB.satyrIII, 37_075_000)
+  ]
+}
