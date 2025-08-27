@@ -2375,7 +2375,7 @@ ignora lo que continua abajo de esta linea:
 
               <div className='ml-auto flex   items-center'>
                 <input type="checkbox" onChange={(e) => setShowMiniCardOrderer(e.target.checked)} checked={showMiniCardOrderer}/>
-                <label className='ml-2'>show/hide Mini card orderer</label>
+                <label className='ml-2'>show/hide MiniCard sorter</label>
               </div>
               </div>
               <div className='btn-group flex justify-between'>

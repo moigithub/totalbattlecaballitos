@@ -44,7 +44,7 @@ const MiniCardSort = ({ stack }: { stack: Stack }) => {
     <div
       className={cn(
         ' text-gray-900 border border-blue-700 cursor-pointer select-none touch-none',
-        stack.disabled ? 'bg-gray-600' : 'bg-green-500'
+        stack.disabled ? 'bg-gray-500 line-through' : 'bg-green-500'
       )}
       ref={setNodeRef}
       style={style}
