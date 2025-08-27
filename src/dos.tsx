@@ -2056,6 +2056,7 @@ ignora lo que continua abajo de esta linea:
                           `${import.meta.env.VITE_SITE_URL}/?preset=${presetArmy}`
                         )
                       }
+                      title='click to copy'
                     >
                       {import.meta.env.VITE_SITE_URL}/?preset={presetArmy}
                     </span>

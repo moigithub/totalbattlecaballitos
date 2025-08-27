@@ -77,9 +77,10 @@ export const Card = ({
   const otherStrengthInfo = stackAllStrength.map(data => {
     return (
       <span
-        className={`ml-2 whitespace-nowrap text-xs flex items-center ${data.type}`}
+        className={`ml-2 cursor-pointer hover:text-lime-400 hover:font-bold  whitespace-nowrap text-xs flex items-center ${data.type}`}
         key={data.type}
         onClick={() => navigator.clipboard.writeText(data.str.toString())}
+        title='click to copy'
       >
         {data.type}({data.percent}%) {data.str.toLocaleString().replace(/,/g, '_')}
         {stack.useStrLimit && (
