@@ -111,6 +111,7 @@ import { BattleReport } from './battleReport.tsx'
 import { Checkbox } from 'flowbite-react'
 import { MonsterData } from './monsterData.tsx'
 import { DisabledCard } from './DisabledCard.tsx'
+import { MiniCardSorter } from './miniCardSorter.tsx'
 
 function Dos() {
   const leadership = useStackStore(state => state.leadership)
@@ -163,6 +164,7 @@ function Dos() {
   const [loading, setLoading] = useState(false)
 
   const [isVisible, setIsVisible] = useState(true)
+  const [showMiniCardOrderer, setShowMiniCardOrderer] = useState(false)
 
   // const sensors = useSensor(PointerSensor, {
   //   activationConstraint: {
@@ -2032,7 +2034,7 @@ ignora lo que continua abajo de esta linea:
         </div>
       </nav>
 
-      <div
+      <section
         className={cn('p-1   bg-gray-900', isVisible ? 'ml-64' : '')}
         onClick={() => {
           navigator.clipboard.writeText(troopsSummary)
@@ -2040,9 +2042,15 @@ ignora lo que continua abajo de esta linea:
       >
         <p className='block w-full'>click to copy</p>
         {troopsSummary}
-      </div>
-      <div className={cn('pt-[57px] flex bg-gray-900', isVisible ? 'ml-64' : '')}>
-        <div className='p-4 border-2 border-blue-400/25 min-w-[860px] w-full '>
+      </section>
+
+      <section
+        className={cn(
+          'pt-[57px] h-full flex bg-gray-900 ',
+          isVisible ? 'ml-64 w-[calc(100% - 64px)]' : 'w-full '
+        )}
+      >
+        <div className={cn('p-4 border-2 border-blue-400/25 max-w-[960px] min-w-[860px] ',isVisible ? 'w-[calc(100% - 64px)]' : ' w-full')}>
           <div className='stack-container'>
             <div className='sticky  top-[57px] mb-4'>
               <div className='w-full'>
@@ -2129,6 +2137,7 @@ ignora lo que continua abajo de esta linea:
                 </div>
               )}
 
+<div className="flex">
               <div className='flex mb-2'>
                 <button
                   className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
@@ -2364,6 +2373,11 @@ ignora lo que continua abajo de esta linea:
                 </button>
               </div>
 
+              <div className='ml-auto flex   items-center'>
+                <input type="checkbox" onChange={(e) => setShowMiniCardOrderer(e.target.checked)} checked={showMiniCardOrderer}/>
+                <label className='ml-2'>show/hide Mini card orderer</label>
+              </div>
+              </div>
               <div className='btn-group flex justify-between'>
                 <div className='flex '>
                   <button
@@ -2424,15 +2438,22 @@ ignora lo que continua abajo de esta linea:
             </div>
           </div>
         </div>
-        <div className='flex flex-col w-full min-w-[350px]'>
-          <BattleReport
-            open={openModal}
-            onOpen={setOpenModal}
-            attackReport={reportMeAttacks}
-            defendReport={reportMeDefends}
-            title={selectedTarget}
-          />
-        </div>
+
+        <div className="relative">
+        {showMiniCardOrderer && <section className={cn('p-1 bg-gray-900 max-w-[220px] sticky top-[57px]')}>
+          <MiniCardSorter />
+        </section>}
+      </div>
+      </section>
+
+      <div className='flex flex-col w-full min-w-[350px]'>
+        <BattleReport
+          open={openModal}
+          onOpen={setOpenModal}
+          attackReport={reportMeAttacks}
+          defendReport={reportMeDefends}
+          title={selectedTarget}
+        />
       </div>
 
       {/* <div className='p-4 border-2 border-gray-300'>
