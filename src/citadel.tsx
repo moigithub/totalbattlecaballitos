@@ -116,7 +116,10 @@ export const CitadelData = ({ type }: { type: string }) => {
                         </span>
                       )}
                       {data.percent === 0 && <span className={data.badge}>{data.desc}</span>}
-                      <span>{data.value.toLocaleString().replace(/,/g, '_')}</span>
+                      <span className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
+                        onClick={() => {
+                          navigator.clipboard.writeText(data.value.toString())
+                        }}>{data.value.toLocaleString().replace(/,/g, '_')}</span>
                     </div>
                   </div>
                 ))}
@@ -261,7 +264,11 @@ export const LargeCitadel = ({ citadel }: { citadel: Citadel }) => {
                           {data.desc}
                         </span>
                       )}
-                      <span>{data.value.toLocaleString().replace(/,/g, '_')}</span>
+                      <span
+                        className='px-1 py-0.5 text-gray-300 cursor-pointer hover:text-lime-400 hover:font-bold'
+                        onClick={() => {
+                          navigator.clipboard.writeText(data.value.toString())
+                        }}>{data.value.toLocaleString().replace(/,/g, '_')}</span>
                     </div>
                   </div>
                 ))}
