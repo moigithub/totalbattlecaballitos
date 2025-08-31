@@ -394,3 +394,48 @@ export const olympusBasilisk: Citadel = {
     stackBuilder('3', objectDB.satyrIII, 37_075_000)
   ]
 }
+
+objectDB.darkElfIII = objBuilder({
+  //epic monster, fenrir squad, flying unit
+  name: 'darkElfIII',
+  category: 'flying',
+  BASESTR: 70000,
+  BASEHP: 210000,
+  vsMeleePercent: 80
+})
+
+objectDB.fenrirVI = objBuilder({
+  //epic monster, fenrir squad, melee unit
+  name: 'fenrirVI',
+  category: 'melee',
+  BASESTR: 100000,
+  BASEHP: 300000,
+  vsMountedPercent: 45
+})
+
+objectDB.valkyrieVI = objBuilder({
+  //epic monster, fenrir squad, mounted unit
+  name: 'valkyrieVI',
+  category: 'mounted',
+  BASESTR: 57000,
+  BASEHP: 171000,
+  vsRangedPercent: 60
+})
+
+objectDB.draugMageIII = objBuilder({
+  //epic monster, fenrir squad, ranged unit
+  name: 'draugMageIII',
+  category: 'ranged',
+  BASESTR: 720,
+  BASEHP: 2160,
+  vsFlyingPercent: 50
+})
+
+export const jormungandrFenrir: Citadel = {
+  stacks: [
+    stackBuilder('0', objectDB.darkElfIII, 3_375_000),
+    stackBuilder('1', objectDB.fenrirVI, 3_666_665),
+    stackBuilder('2', objectDB.valkyrieVI, 2_985_710),
+    stackBuilder('3', objectDB.draugMageIII, 289_583_328)
+  ]
+}

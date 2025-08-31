@@ -49,6 +49,7 @@ import {
 } from './citadelData.ts'
 import { Tips } from './tips.tsx'
 import {
+  jormungandrFenrir,
   lvl17HeroicElfSquad,
   mobCommonBarbarianSquad28,
   mobCommonCursedSquad29,
@@ -237,6 +238,10 @@ function Dos() {
     if (selectedTarget === 'olympusBasilisk') {
       console.log('select target olympusBasilisk', olympusBasilisk)
       selectedCitadel = olympusBasilisk
+    }
+    if (selectedTarget === 'jormungandrFenrir') {
+      console.log('select target jormungandrFenrir', jormungandrFenrir)
+      selectedCitadel = jormungandrFenrir
     }
 
     setCitadel(selectedCitadel)
@@ -1712,6 +1717,7 @@ ignora lo que continua abajo de esta linea:
                 <option value='mobCommonCursedSquad29'>mobCommonCursedSquad29</option>
                 <option value='mobCommonBarbarianSquad28'>mobCommonBarbarianSquad28</option>
                 <option value='olympusBasilisk'>olympusBasilisk</option>
+                <option value='jormungandrFenrir'>jormungandrFenrir</option>
               </select>
             </div>
 
@@ -1903,6 +1909,7 @@ ignora lo que continua abajo de esta linea:
               <MonsterData monster={mobCommonBarbarianSquad28} />
             )}
             {selectedTarget === 'olympusBasilisk' && <MonsterData monster={olympusBasilisk} />}
+            {selectedTarget === 'jormungandrFenrir' && <MonsterData monster={jormungandrFenrir} />}
           </div>
         )}
 
@@ -2050,7 +2057,12 @@ ignora lo que continua abajo de esta linea:
           isVisible ? 'ml-64 w-[calc(100% - 64px)]' : 'w-full '
         )}
       >
-        <div className={cn('p-4 border-2 border-blue-400/25 max-w-[960px] min-w-[860px] ',isVisible ? 'w-[calc(100% - 64px)]' : ' w-full')}>
+        <div
+          className={cn(
+            'p-4 border-2 border-blue-400/25 max-w-[960px] min-w-[860px] ',
+            isVisible ? 'w-[calc(100% - 64px)]' : ' w-full'
+          )}
+        >
           <div className='stack-container'>
             <div className='sticky  top-[57px] mb-4'>
               <div className='w-full'>
@@ -2137,75 +2149,75 @@ ignora lo que continua abajo de esta linea:
                 </div>
               )}
 
-<div className="flex">
-              <div className='flex mb-2'>
-                <button
-                  className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
-                  onClick={() => {
-                    setArmy(
-                      armyRef.current.toSorted((a, b) => {
-                        // sort based on unit total health descending
-                        return (
-                          b.unit.BASEHP * (1 + b.hpBonus / 100) -
-                          a.unit.BASEHP * (1 + a.hpBonus / 100)
-                        )
+              <div className='flex'>
+                <div className='flex mb-2'>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
+                    onClick={() => {
+                      setArmy(
+                        armyRef.current.toSorted((a, b) => {
+                          // sort based on unit total health descending
+                          return (
+                            b.unit.BASEHP * (1 + b.hpBonus / 100) -
+                            a.unit.BASEHP * (1 + a.hpBonus / 100)
+                          )
+                        })
+                      )
+                    }}
+                  >
+                    Health (↓)
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
+                    onClick={() => {
+                      setArmy(
+                        armyRef.current.toSorted((a, b) => {
+                          // sort based on unit total health ascending
+                          return (
+                            a.unit.BASEHP * (1 + a.hpBonus / 100) -
+                            b.unit.BASEHP * (1 + b.hpBonus / 100)
+                          )
+                        })
+                      )
+                    }}
+                  >
+                    Health (↑)
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                    onClick={() => {
+                      const armyWithAtkOrder = armyRef.current.map(stack => {
+                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                        // melee tiene vsMount
+                        // flying tiene vsMount
+                        // rider tiene vsRanged
+                        // ranged tiene vsFlying + vsMelee
+
+                        // send ranged+flying only
+                        let attackOrder = 0
+                        if (attkBonus.includes('Ranged')) {
+                          //es un rider
+                          attackOrder = 1
+                        }
+                        if (attkBonus.includes('Mounted')) {
+                          //es un melee(126k dmg) o fly
+                          attackOrder = 2
+                        }
+                        if (attkBonus.includes('Flying')) {
+                          //es un ranged
+                          attackOrder = 3
+                        }
+                        if (attkBonus.includes('Melee')) {
+                          //es un ranged
+                          attackOrder = 4
+                        }
+
+                        return { ...stack, attackOrder }
                       })
-                    )
-                  }}
-                >
-                  Health (↓)
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300    text-lg px-3.5 py-0.5 me-2  dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800'
-                  onClick={() => {
-                    setArmy(
-                      armyRef.current.toSorted((a, b) => {
-                        // sort based on unit total health ascending
-                        return (
-                          a.unit.BASEHP * (1 + a.hpBonus / 100) -
-                          b.unit.BASEHP * (1 + b.hpBonus / 100)
-                        )
-                      })
-                    )
-                  }}
-                >
-                  Health (↑)
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                  onClick={() => {
-                    const armyWithAtkOrder = armyRef.current.map(stack => {
-                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      // melee tiene vsMount
-                      // flying tiene vsMount
-                      // rider tiene vsRanged
-                      // ranged tiene vsFlying + vsMelee
 
-                      // send ranged+flying only
-                      let attackOrder = 0
-                      if (attkBonus.includes('Ranged')) {
-                        //es un rider
-                        attackOrder = 1
-                      }
-                      if (attkBonus.includes('Mounted')) {
-                        //es un melee(126k dmg) o fly
-                        attackOrder = 2
-                      }
-                      if (attkBonus.includes('Flying')) {
-                        //es un ranged
-                        attackOrder = 3
-                      }
-                      if (attkBonus.includes('Melee')) {
-                        //es un ranged
-                        attackOrder = 4
-                      }
-
-                      return { ...stack, attackOrder }
-                    })
-
-                    // sort based on attack order ascending: flying, melee,mounted, ranged
-                    // ranged have vsMelee bonus, so should last longer to kill melee units
-                    /*
+                      // sort based on attack order ascending: flying, melee,mounted, ranged
+                      // ranged have vsMelee bonus, so should last longer to kill melee units
+                      /*
                           sorted should be like
 
                           specialist ranged
@@ -2219,164 +2231,170 @@ ignora lo que continua abajo de esta linea:
                           mercs melee
                          */
 
-                    setArmy(
-                      //set order values
+                      setArmy(
+                        //set order values
 
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        return (
-                          a.attackOrder - b.attackOrder ||
-                          a.unit.sortOrderBase - b.unit.sortOrderBase
-                        )
+                        armyWithAtkOrder.toSorted((a, b) => {
+                          return (
+                            a.attackOrder - b.attackOrder ||
+                            a.unit.sortOrderBase - b.unit.sortOrderBase
+                          )
+                        })
+                      )
+                    }}
+                    title='should not send rider they get 145k dmg, or melee:126k dmg'
+                  >
+                    KMelee
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                    onClick={() => {
+                      const armyWithAtkOrder = armyRef.current.map(stack => {
+                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                        // melee tiene vsMount
+                        // flying tiene vsMount
+                        // rider tiene vsRanged
+                        // ranged tiene vsFlying + vsMelee
+
+                        // send ranged mounted flying
+                        let attackOrder = 0
+                        if (attkBonus.includes('Mounted')) {
+                          //es un melee(126k dmg) o fly
+                          attackOrder = 1
+                        }
+                        if (attkBonus.includes('Ranged')) {
+                          //es un rider, deberia estar desbloqueado
+                          attackOrder = 2
+                        }
+                        if (attkBonus.includes('Melee')) {
+                          //es un ranged
+                          attackOrder = 3
+                        }
+                        if (attkBonus.includes('Flying')) {
+                          //es un ranged
+                          attackOrder = 4
+                        }
+
+                        return { ...stack, attackOrder }
                       })
-                    )
-                  }}
-                  title='should not send rider they get 145k dmg, or melee:126k dmg'
-                >
-                  KMelee
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                  onClick={() => {
-                    const armyWithAtkOrder = armyRef.current.map(stack => {
-                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      // melee tiene vsMount
-                      // flying tiene vsMount
-                      // rider tiene vsRanged
-                      // ranged tiene vsFlying + vsMelee
 
-                      // send ranged mounted flying
-                      let attackOrder = 0
-                      if (attkBonus.includes('Mounted')) {
-                        //es un melee(126k dmg) o fly
-                        attackOrder = 1
-                      }
-                      if (attkBonus.includes('Ranged')) {
-                        //es un rider, deberia estar desbloqueado
-                        attackOrder = 2
-                      }
-                      if (attkBonus.includes('Melee')) {
-                        //es un ranged
-                        attackOrder = 3
-                      }
-                      if (attkBonus.includes('Flying')) {
-                        //es un ranged
-                        attackOrder = 4
-                      }
+                      setArmy(
+                        //set order values
 
-                      return { ...stack, attackOrder }
-                    })
+                        armyWithAtkOrder.toSorted((a, b) => {
+                          return (
+                            a.attackOrder - b.attackOrder ||
+                            a.unit.sortOrderBase - b.unit.sortOrderBase
+                          )
+                        })
+                      )
+                    }}
+                    title='should not send rider they get 145k dmg, or melee:126k dmg'
+                  >
+                    KFly
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                    onClick={() => {
+                      const armyWithAtkOrder = armyRef.current.map(stack => {
+                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                        // melee tiene vsMount
+                        // flying tiene vsMount
+                        // rider tiene vsRanged
+                        // ranged tiene vsFlying + vsMelee
 
-                    setArmy(
-                      //set order values
+                        //send melee mounted flying
+                        let attackOrder = 0
+                        if (attkBonus.includes('Melee')) {
+                          //es un ranged
+                          attackOrder = 1
+                        }
+                        if (attkBonus.includes('Ranged')) {
+                          //es un rider, desbloqueado
+                          attackOrder = 2
+                        }
+                        if (attkBonus.includes('Flying')) {
+                          //es un ranged
+                          attackOrder = 3
+                        }
+                        if (attkBonus.includes('Mounted')) {
+                          //es un melee(126k dmg) o fly(desbloqueado)
+                          attackOrder = 4
+                        }
 
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        return (
-                          a.attackOrder - b.attackOrder ||
-                          a.unit.sortOrderBase - b.unit.sortOrderBase
-                        )
+                        return { ...stack, attackOrder }
                       })
-                    )
-                  }}
-                  title='should not send rider they get 145k dmg, or melee:126k dmg'
-                >
-                  KFly
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                  onClick={() => {
-                    const armyWithAtkOrder = armyRef.current.map(stack => {
-                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      // melee tiene vsMount
-                      // flying tiene vsMount
-                      // rider tiene vsRanged
-                      // ranged tiene vsFlying + vsMelee
 
-                      //send melee mounted flying
-                      let attackOrder = 0
-                      if (attkBonus.includes('Melee')) {
-                        //es un ranged
-                        attackOrder = 1
-                      }
-                      if (attkBonus.includes('Ranged')) {
-                        //es un rider, desbloqueado
-                        attackOrder = 2
-                      }
-                      if (attkBonus.includes('Flying')) {
-                        //es un ranged
-                        attackOrder = 3
-                      }
-                      if (attkBonus.includes('Mounted')) {
-                        //es un melee(126k dmg) o fly(desbloqueado)
-                        attackOrder = 4
-                      }
+                      setArmy(
+                        //set order values
 
-                      return { ...stack, attackOrder }
-                    })
+                        armyWithAtkOrder.toSorted((a, b) => {
+                          return (
+                            a.attackOrder - b.attackOrder ||
+                            a.unit.sortOrderBase - b.unit.sortOrderBase
+                          )
+                        })
+                      )
+                    }}
+                  >
+                    KMount
+                  </button>
+                  <button
+                    className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
+                    onClick={() => {
+                      const armyWithAtkOrder = armyRef.current.map(stack => {
+                        const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
+                        // melee tiene vsMount
+                        // flying tiene vsMount
+                        // rider tiene vsRanged
+                        // ranged tiene vsFlying + vsMelee
+                        let attackOrder = 0
+                        if (attkBonus.includes('Mounted')) {
+                          //es un melee o fly
+                          attackOrder = 1
+                        }
+                        if (attkBonus.includes('Melee')) {
+                          //es un ranged
+                          attackOrder = 2
+                        }
+                        if (attkBonus.includes('Flying')) {
+                          //es un ranged
+                          attackOrder = 3
+                        }
+                        if (attkBonus.includes('Ranged')) {
+                          //es un rider
+                          attackOrder = 4
+                        }
 
-                    setArmy(
-                      //set order values
-
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        return (
-                          a.attackOrder - b.attackOrder ||
-                          a.unit.sortOrderBase - b.unit.sortOrderBase
-                        )
+                        return { ...stack, attackOrder }
                       })
-                    )
-                  }}
-                >
-                  KMount
-                </button>
-                <button
-                  className='cursor-pointer focus:outline-none text-white border-s-orange-400 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300    text-sm px-1 py-0.5 me-2  dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800'
-                  onClick={() => {
-                    const armyWithAtkOrder = armyRef.current.map(stack => {
-                      const attkBonus = whoCanIAttack(stack.unit as BasicUnit)
-                      // melee tiene vsMount
-                      // flying tiene vsMount
-                      // rider tiene vsRanged
-                      // ranged tiene vsFlying + vsMelee
-                      let attackOrder = 0
-                      if (attkBonus.includes('Mounted')) {
-                        //es un melee o fly
-                        attackOrder = 1
-                      }
-                      if (attkBonus.includes('Melee')) {
-                        //es un ranged
-                        attackOrder = 2
-                      }
-                      if (attkBonus.includes('Flying')) {
-                        //es un ranged
-                        attackOrder = 3
-                      }
-                      if (attkBonus.includes('Ranged')) {
-                        //es un rider
-                        attackOrder = 4
-                      }
 
-                      return { ...stack, attackOrder }
-                    })
+                      setArmy(
+                        //set order values
 
-                    setArmy(
-                      //set order values
+                        armyWithAtkOrder.toSorted((a, b) => {
+                          return (
+                            a.attackOrder - b.attackOrder ||
+                            a.unit.sortOrderBase - b.unit.sortOrderBase
+                          )
+                        })
+                      )
+                    }}
+                  >
+                    KRang
+                  </button>
+                </div>
 
-                      armyWithAtkOrder.toSorted((a, b) => {
-                        return (
-                          a.attackOrder - b.attackOrder ||
-                          a.unit.sortOrderBase - b.unit.sortOrderBase
-                        )
-                      })
-                    )
-                  }}
-                >
-                  KRang
-                </button>
-              </div>
-
-              <div className='ml-auto flex   items-center'>
-                <input type="checkbox" onChange={(e) => setShowMiniCardOrderer(e.target.checked)} checked={showMiniCardOrderer}/>
-                <label className='ml-2'>show/hide MiniCard sorter</label>
-              </div>
+                <div className='ml-auto flex   items-center'>
+                  <label className='ml-2'>
+                    <input
+                      type='checkbox'
+                      onChange={e => setShowMiniCardOrderer(e.target.checked)}
+                      checked={showMiniCardOrderer}
+                    />
+                    show/hide MiniCard sorter
+                  </label>
+                </div>
               </div>
               <div className='btn-group flex justify-between'>
                 <div className='flex '>
@@ -2439,11 +2457,13 @@ ignora lo que continua abajo de esta linea:
           </div>
         </div>
 
-        <div className="relative">
-        {showMiniCardOrderer && <section className={cn('p-1 bg-gray-900 max-w-[220px] sticky top-[57px]')}>
-          <MiniCardSorter />
-        </section>}
-      </div>
+        <div className='relative'>
+          {showMiniCardOrderer && (
+            <section className={cn('p-1 bg-gray-900 max-w-[220px] sticky top-[57px]')}>
+              <MiniCardSorter />
+            </section>
+          )}
+        </div>
       </section>
 
       <div className='flex flex-col w-full min-w-[350px]'>
