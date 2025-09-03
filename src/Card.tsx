@@ -192,6 +192,7 @@ export const Card = ({
               onChange={e => {
                 const value = parseFloat(e.target.value) || 0
                 setStrBonus(stack.id!, value)
+                localStorage.setItem(`str:${stack.id!}`, String(value))
               }}
             />
           </div>
@@ -204,6 +205,7 @@ export const Card = ({
               onChange={e => {
                 const value = parseFloat(e.target.value) || 0
                 setHpBonus(stack.id!, value)
+                localStorage.setItem(`hp:${stack.id!}`, String(value))
               }}
             />
           </div>
