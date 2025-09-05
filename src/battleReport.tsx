@@ -67,19 +67,22 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
 
     const neededHpBonusToSurvive =
       Math.ceil(((acummulatedDamage * 100) / attacker.unit.BASEHP - 100) * 100) / 100
+    const attackerHP =
+      attackerUnits * attacker.unit.BASEHP * (1 + (attacker.unit?.hpBonus ?? 0) / 100)
+    const attackerSTR =
+      attackerUnits * attacker.unit.BASESTR * (1 + (attacker.unit?.strBonus ?? 0) / 100)
+    const opponentHP =
+      oponentUnits * opponent.unit.BASEHP * (1 + (opponent.unit?.hpBonus ?? 0) / 100)
+    const opponentSTR =
+      oponentUnits * opponent.unit.BASESTR * (1 + (opponent.unit?.strBonus ?? 0) / 100)
 
     return (
       <div key={`rpt${i}`} className={`p-2 flex gap-1.5 items-center ${bgColor}`}>
         <div className='p-4'>{lineCounter}</div>
-        <div className='flex flex-col shrink-0 relative border border-fuchsia-500/80 w-[200px] h-[80px]'>
+        <div className='flex flex-col shrink-0 relative border border-fuchsia-500/80 w-[200px] h-[96px]'>
           <div className='font-bold text-center px-2'>{attackerName}</div>
-          <div className='text-xs text-center text-red-600'>
-            HP: {attackerUnits * attacker.unit.BASEHP * (1 + (attacker.unit?.hpBonus ?? 0) / 100)}
-          </div>
-          <div className='text-xs text-center text-green-600'>
-            STR:{' '}
-            {attackerUnits * attacker.unit.BASESTR * (1 + (attacker.unit?.strBonus ?? 0) / 100)}
-          </div>
+          <div className='text-xs text-center text-red-600'>HP: {attackerHP.toFixed(2)}</div>
+          <div className='text-xs text-center text-green-600'>STR: {attackerSTR.toFixed(2)}</div>
           <div className='grow'></div>
           <div>
             <div className='text-right px-2 text-white text-xs bg-gradient-to-r from-transparent from-30% via-gray-700 via-60% to-gray-900 to-100% '>
@@ -101,14 +104,10 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
           )}
         </div>
         <div className='font-extrabold text-5xl'>{isPlayerTurn ? '⇒' : '⇐'}</div>
-        <div className='flex flex-col  shrink-0  relative border border-fuchsia-500/80 w-[200px] h-[80px]'>
+        <div className='flex flex-col  shrink-0  relative border border-fuchsia-500/80 w-[200px] h-[96px]'>
           <div className='font-bold text-center px-2'>{oponentName}</div>
-          <div className='text-xs text-center text-red-600'>
-            HP: {oponentUnits * opponent.unit.BASEHP * (1 + (opponent.unit?.hpBonus ?? 0) / 100)}
-          </div>
-          <div className='text-xs text-center text-red-600'>
-            STR: {oponentUnits * opponent.unit.BASESTR * (1 + (opponent.unit?.strBonus ?? 0) / 100)}
-          </div>
+          <div className='text-xs text-center text-red-600'>HP: {opponentHP.toFixed(2)}</div>
+          <div className='text-xs text-center text-green-600'>STR: {opponentSTR.toFixed(2)}</div>
           <div className='grow'></div>
           <div>
             <div className='text-right px-2 text-white text-xs bg-gradient-to-r from-transparent from-30% via-gray-700 via-60% to-gray-900 to-100% '>
@@ -176,18 +175,22 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
 
     const neededHpBonusToSurvive =
       Math.ceil(((acummulatedDamage * 100) / opponent.unit.BASEHP - 100) * 100) / 100
+    const attackerHP =
+      attackerUnits * attacker.unit.BASEHP * (1 + (attacker.unit?.hpBonus ?? 0) / 100)
+    const attackerSTR =
+      attackerUnits * attacker.unit.BASESTR * (1 + (attacker.unit?.strBonus ?? 0) / 100)
+    const opponentHP =
+      oponentUnits * opponent.unit.BASEHP * (1 + (opponent.unit?.hpBonus ?? 0) / 100)
+    const opponentSTR =
+      oponentUnits * opponent.unit.BASESTR * (1 + (opponent.unit?.strBonus ?? 0) / 100)
 
     return (
       <div key={`rpt${i}`} className={`p-2 flex gap-1.5 items-center ${bgColor}`}>
         <div className='p-4'>{lineCounter}</div>
-        <div className='flex flex-col shrink-0 relative border border-fuchsia-500/80 w-[200px] h-[80px]'>
+        <div className='flex flex-col shrink-0 relative border border-fuchsia-500/80 w-[200px] h-[96px]'>
           <div className='font-bold text-center px-2'>{oponentName}</div>
-          <div className='text-xs text-center text-red-600'>
-            HP: {oponentUnits * opponent.unit.BASEHP * (1 + (opponent.unit?.hpBonus ?? 0) / 100)}
-          </div>
-          <div className='text-xs text-center text-red-600'>
-            STR: {oponentUnits * opponent.unit.BASESTR * (1 + (opponent.unit?.strBonus ?? 0) / 100)}
-          </div>
+          <div className='text-xs text-center text-red-600'>HP: {opponentHP.toFixed(2)}</div>
+          <div className='text-xs text-center text-green-600'>STR: {opponentSTR.toFixed(2)}</div>
           <div className='grow'></div>
           <div>
             <div className='text-right px-2 text-white text-xs bg-gradient-to-r from-transparent from-30% via-gray-700 via-60% to-gray-900 to-100% '>
@@ -209,15 +212,10 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
           )}
         </div>
         <div className='font-extrabold text-5xl'>{isPlayerTurn ? '⇐' : '⇒'}</div>
-        <div className='flex flex-col shrink-0  relative border border-fuchsia-500/80 w-[200px] h-[80px]'>
+        <div className='flex flex-col shrink-0  relative border border-fuchsia-500/80 w-[200px] h-[96px]'>
           <div className='font-bold text-center px-2'>{attackerName}</div>
-          <div className='text-xs text-center text-red-600'>
-            HP: {attackerUnits * attacker.unit.BASEHP * (1 + (attacker.unit?.hpBonus ?? 0) / 100)}
-          </div>
-          <div className='text-xs text-center text-red-600'>
-            STR:{' '}
-            {attackerUnits * attacker.unit.BASESTR * (1 + (attacker.unit?.strBonus ?? 0) / 100)}
-          </div>
+          <div className='text-xs text-center text-red-600'>HP: {attackerHP.toFixed(2)}</div>
+          <div className='text-xs text-center text-green-600'>STR: {attackerSTR.toFixed(2)}</div>
           <div className='grow'></div>
           <div>
             <div className='text-right px-2 text-white text-xs bg-gradient-to-r from-transparent from-30% via-gray-700 via-60% to-gray-900 to-100% '>
