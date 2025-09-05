@@ -106,7 +106,8 @@ import {
   cursed20G5Mercs,
   elf10G3M3Merc,
   elf15G4M4Merc,
-  elf20G5M5S4
+  elf20G5M5S4,
+  elf20G5M5S4Mercs
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
 import { Checkbox } from 'flowbite-react'
@@ -1525,6 +1526,10 @@ ignora lo que continua abajo de esta linea:
       case 'elf20G5M5S4':
         decodeAndLoadArmySetup(elf20G5M5S4)
         break
+      case 'elf20G5M5S4Mercs':
+        decodeAndLoadArmySetup(elf20G5M5S4Mercs)
+        break
+
       case 'elf20G6Mercs':
         decodeAndLoadArmySetup(elf20G6Mercs)
         break
@@ -1821,6 +1826,9 @@ ignora lo que continua abajo de esta linea:
                 </option>
                 <option value='elf20G5M5S4' className='bg-green-800'>
                   Citadel Elf 20 G5,M5,S4
+                </option>
+                <option value='elf20G5M5S4Mercs' className='bg-green-800'>
+                  Citadel Elf 20 G5,M5,S4,Mercs
                 </option>
                 <option value='elf20G6Mercs' className='bg-green-800'>
                   Citadel Elf 20 G6,Mercs
