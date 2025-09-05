@@ -95,7 +95,7 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
             )}
           </div>
           {isAttackerDead && (
-            <div className='absolute top-0  w-full h-full flex items-center justify-center text-red-600 '>
+            <div className='absolute top-0  w-full h-full flex items-center justify-center text-red-600 hover:hidden'>
               {/* <span className='font-lg font-bold text-2xl'>Dead</span>
                */}
               <div className='bg-gray-900/70 absolute w-full h-full'></div>
@@ -120,7 +120,7 @@ const ReportContentAtkFirst = ({ report }: { report: ColumnResult[] }) => {
             )}
           </div>
           {isOponentDead && (
-            <div className='absolute  top-0 w-full h-full flex items-center justify-center text-red-600'>
+            <div className='absolute  top-0 w-full h-full flex items-center justify-center text-red-600 hover:hidden'>
               {/* <span className='font-lg font-bold text-2xl'>Dead</span>
                */}
               <div className='bg-gray-900/70 absolute w-full h-full'></div>
@@ -203,7 +203,7 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
             )}
           </div>
           {isOponentDead && (
-            <div className='absolute top-0  w-full h-full flex items-center justify-center text-red-600'>
+            <div className='absolute top-0  w-full h-full flex items-center justify-center text-red-600 hover:hidden'>
               {/* <span className='font-lg font-bold text-2xl'>Dead</span>
                */}
               <div className='bg-gray-900/70 absolute  w-full h-full'></div>
@@ -228,7 +228,7 @@ const ReportContentAtkSecond = ({ report }: { report: ColumnResult[] }) => {
             )}
           </div>
           {isAttackerDead && (
-            <div className='absolute  top-0 w-full h-full flex items-center justify-center text-red-600'>
+            <div className='absolute  top-0 w-full h-full flex items-center justify-center text-red-600 hover:hidden'>
               {/* <span className='font-lg font-bold text-2xl'>Dead</span>
                */}
               <div className='bg-gray-900/70 absolute w-full h-full'></div>
