@@ -11,6 +11,8 @@ import { MercList } from './mercList.tsx'
 import { Citadels } from './citadels.tsx'
 import { GameCombatInfo } from './gameCombatInfo.tsx'
 import { MercFinder } from './mercFinder.tsx'
+import { TroopList } from './troopList.tsx'
+import { MonsterList } from './monsterList.tsx'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: 'mercenaries',
         element: <MercList />
+      },
+      {
+        path: 'monsters',
+        element: <MonsterList />
+      },
+      {
+        path: 'troops',
+        element: <TroopList />
       },
       {
         path: 'citadels-catas',

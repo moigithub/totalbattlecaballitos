@@ -4,7 +4,6 @@ import { whoCanIAttack } from './utils'
 
 export const MercList = () => {
   const mercList = [
-    ARMY.epicMonsterHunterVI,
     ARMY.swiftMarksmanV,
     ARMY.gargoyleV,
     ARMY.unicornRiderV,
@@ -14,13 +13,13 @@ export const MercList = () => {
     ARMY.ifritV,
     ARMY.firewormRiderV,
     ARMY.cyclopsV,
-
     ARMY.bearV,
+    ARMY.scorpionV,
+    ARMY.epicMonsterHunterVI,
     ARMY.chariotVI,
     ARMY.pathFinderVI,
     ARMY.trebuchetVI,
     ARMY.cursedDendroidVI,
-    ARMY.scorpionV,
     ARMY.deathChariotVI,
     ARMY.legionaryVI,
     ARMY.arbalesterVI,
@@ -44,7 +43,6 @@ export const MercList = () => {
     ARMY.jungleKingVII,
     ARMY.fireLordVII,
     ARMY.epicMonsterHunterVII,
-
     ARMY.wyvernII,
     ARMY.arielII,
     ARMY.warregalII,
@@ -59,7 +57,8 @@ export const MercList = () => {
     ARMY.quicksandII,
     ARMY.scarfaceII,
     ARMY.pounderII,
-    ARMY.graceII
+    ARMY.graceII,
+    ARMY.bunnieII
   ]
 
   mercList.sort((a, b) => a.BASEHP - b.BASEHP)

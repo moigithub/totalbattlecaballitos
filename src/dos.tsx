@@ -49,6 +49,10 @@ import {
 } from './citadelData.ts'
 import { Tips } from './tips.tsx'
 import {
+  assaultRunics20,
+  assaultRunics21,
+  assaultRunics24,
+  doomsDay,
   jormungandrFenrir,
   lvl17HeroicElfSquad,
   mobCommonBarbarianSquad28,
@@ -107,7 +111,9 @@ import {
   elf10G3M3Merc,
   elf15G4M4Merc,
   elf20G5M5S4,
-  elf20G5M5S4Mercs
+  elf20G5M5S4Mercs,
+  elf20G6Mercs2,
+  elf20G6Mercs3
 } from '@/citadelPresets.ts'
 import { BattleReport } from './battleReport.tsx'
 import { Checkbox } from 'flowbite-react'
@@ -243,6 +249,22 @@ function Dos() {
     if (selectedTarget === 'jormungandrFenrir') {
       console.log('select target jormungandrFenrir', jormungandrFenrir)
       selectedCitadel = jormungandrFenrir
+    }
+    if (selectedTarget === 'doomsDay') {
+      console.log('select target doomsDay', doomsDay)
+      selectedCitadel = doomsDay
+    }
+    if (selectedTarget === 'assaultRunics24') {
+      console.log('select target assaultRunics24', assaultRunics24)
+      selectedCitadel = assaultRunics24
+    }
+    if (selectedTarget === 'assaultRunics21') {
+      console.log('select target assaultRunics21', assaultRunics21)
+      selectedCitadel = assaultRunics21
+    }
+    if (selectedTarget === 'assaultRunics20') {
+      console.log('select target assaultRunics20', assaultRunics20)
+      selectedCitadel = assaultRunics20
     }
 
     setCitadel(selectedCitadel)
@@ -1533,6 +1555,12 @@ ignora lo que continua abajo de esta linea:
       case 'elf20G6Mercs':
         decodeAndLoadArmySetup(elf20G6Mercs)
         break
+      case 'elf20G6Mercs2':
+        decodeAndLoadArmySetup(elf20G6Mercs2)
+        break
+      case 'elf20G6Mercs3':
+        decodeAndLoadArmySetup(elf20G6Mercs3)
+        break
       case 'elf20G6S5Mercs':
         decodeAndLoadArmySetup(elf20G6S5Mercs)
         break
@@ -1723,6 +1751,10 @@ ignora lo que continua abajo de esta linea:
                 <option value='mobCommonBarbarianSquad28'>mobCommonBarbarianSquad28</option>
                 <option value='olympusBasilisk'>olympusBasilisk</option>
                 <option value='jormungandrFenrir'>jormungandrFenrir</option>
+                <option value='doomsDay'>doomsDay</option>
+                <option value='assaultRunics24'>assaultRunics24</option>
+                <option value='assaultRunics21'>assaultRunics21</option>
+                <option value='assaultRunics20'>assaultRunics20</option>
               </select>
             </div>
 
@@ -1833,6 +1865,12 @@ ignora lo que continua abajo de esta linea:
                 <option value='elf20G6Mercs' className='bg-green-800'>
                   Citadel Elf 20 G6,Mercs
                 </option>
+                <option value='elf20G6Mercs2' className='bg-green-800'>
+                  Citadel Elf 20 G6,Mercs(2)
+                </option>
+                <option value='elf20G6Mercs3' className='bg-green-800'>
+                  Citadel Elf 20 G6,Mercs(3) cannoneer low health
+                </option>
                 <option value='elf20G6S5Mercs' className='bg-green-800'>
                   Citadel Elf 20 G6,S5,Mercs
                 </option>
@@ -1918,6 +1956,10 @@ ignora lo que continua abajo de esta linea:
             )}
             {selectedTarget === 'olympusBasilisk' && <MonsterData monster={olympusBasilisk} />}
             {selectedTarget === 'jormungandrFenrir' && <MonsterData monster={jormungandrFenrir} />}
+            {selectedTarget === 'doomsDay' && <MonsterData monster={doomsDay} />}
+            {selectedTarget === 'assaultRunics24' && <MonsterData monster={assaultRunics24} />}
+            {selectedTarget === 'assaultRunics21' && <MonsterData monster={assaultRunics21} />}
+            {selectedTarget === 'assaultRunics20' && <MonsterData monster={assaultRunics20} />}
           </div>
         )}
 

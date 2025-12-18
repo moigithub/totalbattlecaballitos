@@ -53,24 +53,26 @@ function App() {
 
   return (
     <div>
-    <nav className='z-10'>
-      <Navbar fluid rounded>
-        <NavbarBrand>
-          <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white'>
-            Troops Counter
-          </span>
-        </NavbarBrand>
-        <NavbarToggle />
-        <NavbarCollapse>
-          <NavbarLink href='/calc'>Stack Calc</NavbarLink>
-          <NavbarLink href='/mercenaries'>Mercenaries</NavbarLink>
-          <NavbarLink href='/citadels-catas'>Citadels catapults</NavbarLink>
-          <NavbarLink href='/game-combat'>Game combat</NavbarLink>
-          <NavbarLink href='/merc-finder'>Merc finder tools</NavbarLink>
-          <NavbarLink href='/info'>old info</NavbarLink>
-        </NavbarCollapse>
-      </Navbar>
-    </nav>
+      <nav className='z-10'>
+        <Navbar fluid rounded>
+          <NavbarBrand>
+            <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white'>
+              Troops Counter
+            </span>
+          </NavbarBrand>
+          <NavbarToggle />
+          <NavbarCollapse>
+            <NavbarLink href='/calc'>Stack Calc</NavbarLink>
+            <NavbarLink href='/monsters'>Monsters</NavbarLink>
+            <NavbarLink href='/mercenaries'>Mercenaries</NavbarLink>
+            <NavbarLink href='/troops'>Troops</NavbarLink>
+            <NavbarLink href='/citadels-catas'>Citadels catapults</NavbarLink>
+            <NavbarLink href='/game-combat'>Game combat</NavbarLink>
+            <NavbarLink href='/merc-finder'>Merc finder tools</NavbarLink>
+            <NavbarLink href='/info'>old info</NavbarLink>
+          </NavbarCollapse>
+        </Navbar>
+      </nav>
 
       <Outlet />
 

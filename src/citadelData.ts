@@ -37,7 +37,9 @@ export interface Citadel {
   // walls: {
   //   hp: number
   // }
-
+  id?: string
+  vp?: number
+  svp?: string
   stacks: FightStack[]
 }
 
@@ -79,7 +81,7 @@ export const stackBuilder = (id: string, unit: ObjProps, unitsAmount: number) =>
 type MonsterData = {
   [key: string]: ObjProps
 }
-export const objectDB = {} as MonsterData
+export const objectDB: MonsterData = {}
 
 objectDB.bearV = objBuilder({
   name: 'Bear V',
