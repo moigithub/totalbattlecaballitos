@@ -31,6 +31,38 @@ import {
   mobCommonBarbarianSquad44,
   mobCommonBarbarianSquad45
 } from './monsters'
+import {
+  mobCommonInfernoSquad5,
+  mobCommonInfernoSquad10,
+  mobCommonInfernoSquad13,
+  mobCommonInfernoSquad15,
+  mobCommonInfernoSquad17,
+  mobCommonInfernoSquad19,
+  mobCommonInfernoSquad20,
+  mobCommonInfernoSquad21,
+  mobCommonInfernoSquad22,
+  mobCommonInfernoSquad23,
+  mobCommonInfernoSquad24,
+  mobCommonInfernoSquad25,
+  mobCommonInfernoSquad26,
+  mobCommonInfernoSquad27,
+  mobCommonInfernoSquad28,
+  mobCommonInfernoSquad29,
+  mobCommonInfernoSquad30,
+  mobCommonInfernoSquad31,
+  mobCommonInfernoSquad32,
+  mobCommonInfernoSquad33,
+  mobCommonInfernoSquad34,
+  mobCommonInfernoSquad35,
+  mobCommonInfernoSquad37,
+  mobCommonInfernoSquad38,
+  mobCommonInfernoSquad39,
+  mobCommonInfernoSquad40,
+  mobCommonInfernoSquad42,
+  mobCommonInfernoSquad43,
+  mobCommonInfernoSquad44,
+  mobCommonInfernoSquad45
+} from './monstera'
 import { whoCanIAttack } from './utils'
 import { BasicUnit } from './types'
 import { useState } from 'react'
@@ -70,7 +102,37 @@ export const MonsterList = () => {
     mobCommonBarbarianSquad41,
     mobCommonBarbarianSquad43,
     mobCommonBarbarianSquad44,
-    mobCommonBarbarianSquad45
+    mobCommonBarbarianSquad45,
+    mobCommonInfernoSquad5,
+    mobCommonInfernoSquad10,
+    mobCommonInfernoSquad13,
+    mobCommonInfernoSquad15,
+    mobCommonInfernoSquad17,
+    mobCommonInfernoSquad19,
+    mobCommonInfernoSquad20,
+    mobCommonInfernoSquad21,
+    mobCommonInfernoSquad22,
+    mobCommonInfernoSquad23,
+    mobCommonInfernoSquad24,
+    mobCommonInfernoSquad25,
+    mobCommonInfernoSquad26,
+    mobCommonInfernoSquad27,
+    mobCommonInfernoSquad28,
+    mobCommonInfernoSquad29,
+    mobCommonInfernoSquad30,
+    mobCommonInfernoSquad31,
+    mobCommonInfernoSquad32,
+    mobCommonInfernoSquad33,
+    mobCommonInfernoSquad34,
+    mobCommonInfernoSquad35,
+    mobCommonInfernoSquad37,
+    mobCommonInfernoSquad38,
+    mobCommonInfernoSquad39,
+    mobCommonInfernoSquad40,
+    mobCommonInfernoSquad42,
+    mobCommonInfernoSquad43,
+    mobCommonInfernoSquad44,
+    mobCommonInfernoSquad45
   ]
 
   let monsterList = monsterSquads.map(squad => ({

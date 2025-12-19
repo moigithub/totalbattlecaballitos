@@ -36,9 +36,9 @@ import { Citadel, objBuilder, objectDB, stackBuilder } from './citadelData'
 //   category: Category
 //   level: string
 // }
-const vp_B = 1_000_000_000
-const vp_M = 1_000_000
-const vp_K = 1_000
+export const vp_B = 1_000_000_000
+export const vp_M = 1_000_000
+export const vp_K = 1_000
 
 const pegasusRiderIV = objBuilder({
   name: 'Pegaso Rider IV',
@@ -249,21 +249,6 @@ export const lvl17HeroicElfSquad: Citadel = {
 //   lvl17HeroicElfSquad.stacks.map(s => ({ ...s, sstr: s.unit.BASESTR * s.unitsAmount }))
 // )
 
-objectDB.fireHorseRider = objBuilder({
-  name: 'FireHorseRiderIII',
-  category: 'mounted',
-  BASESTR: 4100,
-  BASEHP: 12300,
-  vsRangedPercent: 50
-})
-objectDB.overseer = objBuilder({
-  name: 'OverseerIII',
-  category: 'ranged',
-  BASESTR: 6500,
-  BASEHP: 19500,
-  vsMeleePercent: 70
-})
-
 objectDB.ogreShamanIII = objBuilder({
   name: 'ogreShamanIII',
   category: 'ranged',
@@ -279,13 +264,6 @@ objectDB.goblin = objBuilder({
   BASEHP: 84,
   vsMountedPercent: 10
 })
-
-export const mobCommonInfernoSquad31: Citadel = {
-  stacks: [
-    stackBuilder('0', objectDB.fireHorseRider, 53000),
-    stackBuilder('1', objectDB.overseer, 33000)
-  ]
-}
 
 export const mobCommonCursedSquad29: Citadel = {
   stacks: [
