@@ -63,6 +63,38 @@ import {
   mobCommonInfernoSquad44,
   mobCommonInfernoSquad45
 } from './monstera'
+import {
+  mobCommonUndeadSquad1,
+  mobCommonUndeadSquad6,
+  mobCommonUndeadSquad11,
+  mobCommonUndeadSquad13,
+  mobCommonUndeadSquad16,
+  mobCommonUndeadSquad17,
+  mobCommonUndeadSquad19,
+  mobCommonUndeadSquad21,
+  mobCommonUndeadSquad22,
+  mobCommonUndeadSquad23,
+  mobCommonUndeadSquad24,
+  mobCommonUndeadSquad25,
+  mobCommonUndeadSquad26,
+  mobCommonUndeadSquad27,
+  mobCommonUndeadSquad28,
+  mobCommonUndeadSquad29,
+  mobCommonUndeadSquad30,
+  mobCommonUndeadSquad31,
+  mobCommonUndeadSquad32,
+  mobCommonUndeadSquad33,
+  mobCommonUndeadSquad34,
+  mobCommonUndeadSquad35,
+  mobCommonUndeadSquad36,
+  mobCommonUndeadSquad37,
+  mobCommonUndeadSquad38,
+  mobCommonUndeadSquad39,
+  mobCommonUndeadSquad41,
+  mobCommonUndeadSquad42,
+  mobCommonUndeadSquad43,
+  mobCommonUndeadSquad44
+} from './monsterb'
 import { whoCanIAttack } from './utils'
 import { BasicUnit } from './types'
 import { useState } from 'react'
@@ -132,12 +164,42 @@ export const MonsterList = () => {
     mobCommonInfernoSquad42,
     mobCommonInfernoSquad43,
     mobCommonInfernoSquad44,
-    mobCommonInfernoSquad45
+    mobCommonInfernoSquad45,
+    mobCommonUndeadSquad1,
+    mobCommonUndeadSquad6,
+    mobCommonUndeadSquad11,
+    mobCommonUndeadSquad13,
+    mobCommonUndeadSquad16,
+    mobCommonUndeadSquad17,
+    mobCommonUndeadSquad19,
+    mobCommonUndeadSquad21,
+    mobCommonUndeadSquad22,
+    mobCommonUndeadSquad23,
+    mobCommonUndeadSquad24,
+    mobCommonUndeadSquad25,
+    mobCommonUndeadSquad26,
+    mobCommonUndeadSquad27,
+    mobCommonUndeadSquad28,
+    mobCommonUndeadSquad29,
+    mobCommonUndeadSquad30,
+    mobCommonUndeadSquad31,
+    mobCommonUndeadSquad32,
+    mobCommonUndeadSquad33,
+    mobCommonUndeadSquad34,
+    mobCommonUndeadSquad35,
+    mobCommonUndeadSquad36,
+    mobCommonUndeadSquad37,
+    mobCommonUndeadSquad38,
+    mobCommonUndeadSquad39,
+    mobCommonUndeadSquad41,
+    mobCommonUndeadSquad42,
+    mobCommonUndeadSquad43,
+    mobCommonUndeadSquad44
   ]
 
   let monsterList = monsterSquads.map(squad => ({
     id: squad.id,
-    vp: squad.vp,
+    vp: squad.vp || 0,
     svp: squad.svp,
     stacks: squad.stacks.map(s => ({
       name: s.unit.name,
@@ -164,7 +226,7 @@ export const MonsterList = () => {
     maxHp: Math.max(...squad.stacks.map(s => s.unit.BASEHP * s.unitsAmount))
   }))
 
-  // monsterList.sort((a, b) => a.BASEHP - b.BASEHP)
+  monsterList.sort((a, b) => b.vp - a.vp)
 
   if (useFilter) {
     monsterList = monsterList.filter(merc => merc.maxStr <= myHp)
@@ -225,7 +287,7 @@ export const MonsterList = () => {
             <div key={`monster${i}`} className='max-w-[500px] my-2 border border-purple-600'>
               <div className='flex justify-between'>
                 <span className='font-bold text-xl'>{merc.id}</span>
-                <span className='font-bold text-xl'>
+                <span className='font-bold text-xl text-pink-500'>
                   {merc.svp} <span className='text-xs font-light'>VP</span>
                 </span>
                 {useFilter && (

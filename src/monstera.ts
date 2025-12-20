@@ -25,8 +25,8 @@ objectDB.hornedDemonII = objBuilder({
   BASEHP: 2160,
   vsMountedPercent: 40
 })
-objectDB.firehorseRiderIII = objBuilder({
-  name: 'firehorseRiderIII',
+objectDB.fireHorseRiderIII = objBuilder({
+  name: 'fireHorseRiderIII',
   category: 'mounted',
   BASESTR: 4100,
   BASEHP: 12300,
@@ -101,7 +101,7 @@ export const mobCommonInfernoSquad17: Citadel = {
   vp: 167 * vp_K,
   svp: '167K',
   stacks: [
-    stackBuilder('0', objectDB.firehorseRiderIII, 260),
+    stackBuilder('0', objectDB.fireHorseRiderIII, 260),
     stackBuilder('1', objectDB.hornedDemonII, 640)
   ]
 }
@@ -146,7 +146,7 @@ export const mobCommonInfernoSquad23: Citadel = {
   vp: 2.81 * vp_M,
   svp: '2.81M',
   stacks: [
-    stackBuilder('0', objectDB.firehorseRiderIII, 3100),
+    stackBuilder('0', objectDB.fireHorseRiderIII, 3100),
     stackBuilder('1', objectDB.magogI, 110_000)
   ]
 }
@@ -155,7 +155,7 @@ export const mobCommonInfernoSquad24: Citadel = {
   vp: 4.68 * vp_M,
   svp: '4.68M',
   stacks: [
-    stackBuilder('0', objectDB.firehorseRiderIII, 5000),
+    stackBuilder('0', objectDB.fireHorseRiderIII, 5000),
     stackBuilder('1', objectDB.fiend, 310_000)
   ]
 }

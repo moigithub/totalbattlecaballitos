@@ -57,7 +57,6 @@ import {
   lvl17HeroicElfSquad,
   mobCommonBarbarianSquad28,
   mobCommonCursedSquad29,
-  mobCommonInfernoSquad31,
   olympusBasilisk
 } from './monsters.ts'
 import { cn, decodeAndLoadArmySetup, prepareExportData, whoCanIAttack } from './utils.ts'
@@ -120,6 +119,7 @@ import { Checkbox } from 'flowbite-react'
 import { MonsterData } from './monsterData.tsx'
 import { DisabledCard } from './DisabledCard.tsx'
 import { MiniCardSorter } from './miniCardSorter.tsx'
+import { mobCommonInfernoSquad31 } from './monstera.ts'
 
 function Dos() {
   const leadership = useStackStore(state => state.leadership)
