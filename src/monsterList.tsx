@@ -96,13 +96,20 @@ import {
   mobCommonUndeadSquad44
 } from './monsterb'
 import { whoCanIAttack } from './utils'
-import { BasicUnit } from './types'
-import { useState } from 'react'
+import { BasicUnit, Stack } from './types'
+
+import { useStackStore } from './stackStore'
+import { useCommonMonsterStore } from './commonMonsterStore'
 
 export const MonsterList = () => {
-  const [myHp, setMyHp] = useState(1000000)
-  const [myStr, setMyStr] = useState(1000000)
-  const [useFilter, setUseFilter] = useState(false)
+  const army = useStackStore(state => state.army)
+
+  const setTroopStr = useCommonMonsterStore(state => state.setTroopStr)
+  const setTroopHp = useCommonMonsterStore(state => state.setTroopHp)
+  const toggleTroopStackHealthLimit = useCommonMonsterStore(
+    state => state.toggleTroopStackHealthLimit
+  )
+  const { str, hp, useStackHealthLimit } = useCommonMonsterStore()
 
   const monsterSquads = [
     mobCommonBarbarianSquad4,
@@ -228,8 +235,8 @@ export const MonsterList = () => {
 
   monsterList.sort((a, b) => b.vp - a.vp)
 
-  if (useFilter) {
-    monsterList = monsterList.filter(merc => merc.maxStr <= myHp)
+  if (useStackHealthLimit) {
+    monsterList = monsterList.filter(merc => merc.maxStr <= hp)
   }
 
   return (
@@ -243,29 +250,33 @@ export const MonsterList = () => {
             show only monster i can survive first hit{' '}
             <input
               type='checkbox'
-              checked={useFilter}
+              checked={useStackHealthLimit}
               className='text-black'
-              onChange={() => setUseFilter(!useFilter)}
+              onChange={() => toggleTroopStackHealthLimit()}
             />
           </label>
         </p>
 
-        {useFilter && (
+        {useStackHealthLimit && (
           <>
             <p className='p-3'>
               example: enter your (one) wyvern health/strength +bonus%, and this will show which
               squad can do lossless and how many wyverns need to send
+            </p>
+            <p className='p-3'>
+              by default it shows hp/str of the first troop selected on "stack calc"
             </p>
 
             <label>
               My HP
               <input
                 type='text'
-                value={myHp}
+                value={hp}
                 className='text-black'
                 onChange={e => {
                   // get only numbers from input
-                  setMyHp(Number(e.target.value.replace(/[^0-9]/g, '')))
+                  const MyHp = Number(e.target.value.replace(/[^0-9]/g, ''))
+                  setTroopHp(MyHp)
                 }}
               />
             </label>
@@ -274,15 +285,37 @@ export const MonsterList = () => {
               My STR
               <input
                 type='text'
-                value={myStr}
+                value={str}
                 className='text-black'
-                onChange={e => setMyStr(Number(e.target.value.replace(/[^0-9]/g, '')))}
+                onChange={e => {
+                  const MyStr = Number(e.target.value.replace(/[^0-9]/g, ''))
+                  setTroopStr(MyStr)
+                }}
               />
             </label>
+
+            <button
+              onClick={() => {
+                const firstArmyUnit: Stack = army[0]
+                if (firstArmyUnit) {
+                  const unitStrength = Number(
+                    (firstArmyUnit.unit.BASESTR * (1 + firstArmyUnit.strBonus / 100)).toFixed(0)
+                  )
+                  setTroopStr(unitStrength)
+                  const unitHealth = Number(
+                    (firstArmyUnit.unit.BASEHP * (1 + firstArmyUnit.hpBonus / 100)).toFixed(0)
+                  )
+                  setTroopHp(unitHealth)
+                }
+              }}
+              className='ml-5 focus:outline-none font-extrabold text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300   rounded-lg text-xs px-10 py-2 me-2  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+            >
+              Use first troop value
+            </button>
           </>
         )}
         {monsterList.map((merc, i) => {
-          const unitsNeededToKill1Mob = Math.ceil(merc.maxHp / myStr)
+          const unitsNeededToKill1Mob = Math.ceil(merc.maxHp / str)
           return (
             <div key={`monster${i}`} className='max-w-[500px] my-2 border border-purple-600'>
               <div className='flex justify-between'>
@@ -290,7 +323,7 @@ export const MonsterList = () => {
                 <span className='font-bold text-xl text-pink-500'>
                   {merc.svp} <span className='text-xs font-light'>VP</span>
                 </span>
-                {useFilter && (
+                {useStackHealthLimit && (
                   <p>
                     <span className='text-xs font-light'>to Kill this squad needs</span>{' '}
                     {unitsNeededToKill1Mob}
