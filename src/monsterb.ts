@@ -1,4 +1,4 @@
-import { objectDB, objBuilder, stackBuilder, ObjProps } from './citadelData'
+import { objectDB, objBuilder, stackBuilder, FightStack, Citadel } from './citadelData'
 
 objectDB.ghoul = objBuilder({
   name: 'ghoul',
@@ -84,8 +84,8 @@ export const createCommonMob = (
   type: string = 'type',
   level: number = 1,
   svp: string = '0',
-  stacks: { id: string; unit: ObjProps; unitsAmount: number }[] = []
-) => {
+  stacks: FightStack[] = []
+): Citadel => {
   // extract last character from svp variable,and the rest, and compare if last character is k , convert rest to number and multiply by 1000
   const temp = svp.slice(-1).toLocaleLowerCase()
   let multiplier = 1

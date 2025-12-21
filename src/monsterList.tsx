@@ -388,7 +388,7 @@ export const MonsterList = () => {
               squad can do lossless and how many wyverns need to send
             </p>
             <p className='p-3'>
-              by default it shows hp/str of the first troop selected on "stack calc"
+              by default it shows hp/str of the first troop added on "stack calc"
             </p>
 
             <label>
