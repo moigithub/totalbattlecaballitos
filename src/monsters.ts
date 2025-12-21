@@ -265,12 +265,6 @@ objectDB.goblin = objBuilder({
   vsMountedPercent: 10
 })
 
-export const mobCommonCursedSquad29: Citadel = {
-  stacks: [
-    stackBuilder('0', objectDB.deathRiderIII, 41000),
-    stackBuilder('1', objectDB.wereWolfII, 160000)
-  ]
-}
 export const mobCommonBarbarianSquad4: Citadel = {
   id: 'CommonBarbarianSquad4',
   vp: 440,
@@ -781,24 +775,6 @@ objectDB.demonIII = objBuilder({
   BASESTR: 100000,
   BASEHP: 300000,
   vsMeleePercent: 80
-})
-
-objectDB.deathChariotVI = objBuilder({
-  //epic monster, mounted unit
-  name: 'deathChariotVI',
-  category: 'mounted',
-  BASESTR: 57000,
-  BASEHP: 171000,
-  vsRangedPercent: 60
-})
-
-objectDB.boneGolemVI = objBuilder({
-  //epic monster, melee unit
-  name: 'boneGolemVI',
-  category: 'melee',
-  BASESTR: 70000,
-  BASEHP: 210000,
-  vsMountedPercent: 45
 })
 
 objectDB.necromancerII = objBuilder({

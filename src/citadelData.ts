@@ -81,7 +81,19 @@ export const stackBuilder = (id: string, unit: ObjProps, unitsAmount: number) =>
 type MonsterData = {
   [key: string]: ObjProps
 }
-export const objectDB: MonsterData = {}
+const objectStore: MonsterData = {}
+export const objectDB = new Proxy(objectStore, {
+  set(obj, prop, value) {
+    if (typeof prop !== 'string') {
+      throw new Error('Only string keys are allowed')
+    }
+    if (prop in obj) {
+      throw new Error(`Cannot overwrite existing key: ${prop}`)
+    }
+    obj[prop] = value
+    return true
+  }
+})
 
 objectDB.bearV = objBuilder({
   name: 'Bear V',
@@ -108,8 +120,8 @@ objectDB.unicornRiderV = objBuilder({
   BASEHP: 81000,
   vsRangedPercent: 65
 })
-objectDB.elfArcherI = objBuilder({
-  name: 'Elf archer I',
+objectDB.elvenArcherI = objBuilder({
+  name: 'Elven archer I',
   category: 'ranged',
   BASESTR: 100,
   BASEHP: 300,
@@ -205,8 +217,8 @@ objectDB.cursedDendroidVI = objBuilder({
   subGroup: 'elemental',
   BASESTR: 110000,
   BASEHP: 330000,
-  vsRangedPercent: 55,
-  vsDragonPercent: 45
+  vsRangedPercent: 65,
+  vsDragonPercent: 50
 })
 objectDB.walls = objBuilder({
   name: 'Walls',
@@ -245,7 +257,7 @@ export const citadele10: Citadel = {
     },
     {
       id: '3',
-      unit: objectDB.elfArcherI,
+      unit: objectDB.elvenArcherI,
       unitsAmount: 1200,
       originalUnitsAmount: 1200,
       accumulatedDamageAliveUnits: 0,
@@ -316,7 +328,7 @@ export const citadele15: Citadel = {
     },
     {
       id: '5',
-      unit: objectDB.elfArcherI,
+      unit: objectDB.elvenArcherI,
       unitsAmount: 5000,
       originalUnitsAmount: 5000,
       accumulatedDamageAliveUnits: 0,

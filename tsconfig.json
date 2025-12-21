@@ -13,6 +13,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "noUncheckedIndexedAccess": true,
     "types": ["vitest/globals"]
   }
 }

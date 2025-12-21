@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import reactGA from 'react-ga4'
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 'flowbite-react'
 
-reactGA.initialize('G-6K9SG0Z6WS')
+reactGA.initialize('G-3DWYCGLPV9') // 'G-6K9SG0Z6WS')
 
 function subtractDates(date1: Date, date2: Date) {
   const oneDay = 24 * 60 * 60 * 1000 // milliseconds in one day
